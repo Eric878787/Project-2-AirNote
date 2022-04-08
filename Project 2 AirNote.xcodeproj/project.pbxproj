@@ -13,6 +13,7 @@
 		42DE585E28005A7200D764F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE585C28005A7200D764F7 /* Main.storyboard */; };
 		42DE586028005A7600D764F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42DE585F28005A7600D764F7 /* Assets.xcassets */; };
 		42DE586328005A7600D764F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE586128005A7600D764F7 /* LaunchScreen.storyboard */; };
+		42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42DE586A28006CF400D764F7 /* GoogleService-Info.plist */; };
 		F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		42DE585F28005A7600D764F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42DE586228005A7600D764F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42DE586428005A7600D764F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42DE586A28006CF400D764F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_2_AirNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.release.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,7 +50,6 @@
 				345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */,
 				ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -80,6 +81,7 @@
 				42DE585F28005A7600D764F7 /* Assets.xcassets */,
 				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
 				42DE586428005A7600D764F7 /* Info.plist */,
+				42DE586A28006CF400D764F7 /* GoogleService-Info.plist */,
 			);
 			path = "Project 2 AirNote";
 			sourceTree = "<group>";
@@ -103,6 +105,7 @@
 				42DE584F28005A7200D764F7 /* Sources */,
 				42DE585028005A7200D764F7 /* Frameworks */,
 				42DE585128005A7200D764F7 /* Resources */,
+				B6714534911FD7B79A819894 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42DE586328005A7600D764F7 /* LaunchScreen.storyboard in Resources */,
+				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
 			);
@@ -180,6 +184,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B6714534911FD7B79A819894 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
