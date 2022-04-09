@@ -10,6 +10,8 @@ import UIKit
 private enum Tab {
 
     case discoverNotes
+    
+    case discoverStudyGroups
 
     func controller() -> UIViewController {
 
@@ -18,6 +20,8 @@ private enum Tab {
         switch self {
 
         case .discoverNotes: controller = UIStoryboard.discoverNotes.instantiateInitialViewController()!
+            
+        case .discoverStudyGroups: controller = UIStoryboard.discoverStudyGroups.instantiateInitialViewController()!
 
         }
 
@@ -28,24 +32,32 @@ private enum Tab {
         return controller
     }
 
+    //MARK: To be changed into enum of UIImage
     func tabBarItem() -> UITabBarItem {
 
         switch self {
 
         case .discoverNotes:
             return UITabBarItem(
-                // To be changed into enum of UIImage
                 title: "探索筆記",
                 image: nil,
                 selectedImage: nil
             )
+            
+        case .discoverStudyGroups:
+            return UITabBarItem(
+                title: "探索讀書會",
+                image: nil,
+                selectedImage: nil
+            )
+            
         }
     }
 }
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
-    private let tabs: [Tab] = [.discoverNotes]
+    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups]
     
     override func viewDidLoad() {
         super.viewDidLoad()

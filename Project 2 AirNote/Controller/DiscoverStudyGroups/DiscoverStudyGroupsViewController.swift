@@ -7,10 +7,13 @@
 
 import UIKit
 
-class DiscoverNotesViewController: UIViewController {
+class DiscoverStudyGroupsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set Up Navigation Item
+        navigationItem.title = "探索讀書會"
 
     }
 }
