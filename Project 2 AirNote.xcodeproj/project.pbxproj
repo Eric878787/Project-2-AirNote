@@ -17,6 +17,8 @@
 		42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE58702801696800D764F7 /* DiscoverNotes.storyboard */; };
 		42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */; };
 		42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */; };
+		42DE587A2801808600D764F7 /* DiscoverStudyGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */; };
+		42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */; };
 		F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,7 +35,9 @@
 		42DE586A28006CF400D764F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42DE58702801696800D764F7 /* DiscoverNotes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DiscoverNotes.storyboard; sourceTree = "<group>"; };
 		42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
-		42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiscoverNotesViewController.swift; path = Base/DiscoverNotesViewController.swift; sourceTree = "<group>"; };
+		42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverNotesViewController.swift; sourceTree = "<group>"; };
+		42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DiscoverStudyGroups.storyboard; sourceTree = "<group>"; };
+		42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverStudyGroupsViewController.swift; sourceTree = "<group>"; };
 		73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_2_AirNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.release.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +103,7 @@
 				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
 				42DE585C28005A7200D764F7 /* Main.storyboard */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
+				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -114,7 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				42DE58722801772C00D764F7 /* Base */,
-				42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */,
+				42DE587828017FAD00D764F7 /* DiscoverNotes */,
+				42DE587B2801809100D764F7 /* DiscoverStudyGroups */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -142,6 +148,22 @@
 				42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		42DE587828017FAD00D764F7 /* DiscoverNotes */ = {
+			isa = PBXGroup;
+			children = (
+				42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */,
+			);
+			path = DiscoverNotes;
+			sourceTree = "<group>";
+		};
+		42DE587B2801809100D764F7 /* DiscoverStudyGroups */ = {
+			isa = PBXGroup;
+			children = (
+				42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */,
+			);
+			path = DiscoverStudyGroups;
 			sourceTree = "<group>";
 		};
 		489FDFB4AFF8981481B9B72D /* Frameworks */ = {
@@ -213,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42DE586328005A7600D764F7 /* LaunchScreen.storyboard in Resources */,
+				42DE587A2801808600D764F7 /* DiscoverStudyGroups.storyboard in Resources */,
 				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
@@ -269,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */,
 				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
 				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
