@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585628005A7200D764F7 /* AppDelegate.swift */; };
 		42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585828005A7200D764F7 /* SceneDelegate.swift */; };
-		42DE585B28005A7200D764F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585A28005A7200D764F7 /* ViewController.swift */; };
+		42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585A28005A7200D764F7 /* TabBarViewController.swift */; };
 		42DE585E28005A7200D764F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE585C28005A7200D764F7 /* Main.storyboard */; };
 		42DE586028005A7600D764F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42DE585F28005A7600D764F7 /* Assets.xcassets */; };
 		42DE586328005A7600D764F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE586128005A7600D764F7 /* LaunchScreen.storyboard */; };
 		42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42DE586A28006CF400D764F7 /* GoogleService-Info.plist */; };
+		42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE58702801696800D764F7 /* DiscoverNotes.storyboard */; };
+		42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */; };
+		42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */; };
 		F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */; };
 /* End PBXBuildFile section */
 
@@ -22,12 +25,15 @@
 		42DE585328005A7200D764F7 /* Project 2 AirNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project 2 AirNote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DE585628005A7200D764F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42DE585828005A7200D764F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		42DE585A28005A7200D764F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		42DE585A28005A7200D764F7 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		42DE585D28005A7200D764F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		42DE585F28005A7600D764F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42DE586228005A7600D764F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42DE586428005A7600D764F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42DE586A28006CF400D764F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42DE58702801696800D764F7 /* DiscoverNotes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DiscoverNotes.storyboard; sourceTree = "<group>"; };
+		42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
+		42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiscoverNotesViewController.swift; path = Base/DiscoverNotesViewController.swift; sourceTree = "<group>"; };
 		73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_2_AirNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.release.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,16 +80,68 @@
 		42DE585528005A7200D764F7 /* Project 2 AirNote */ = {
 			isa = PBXGroup;
 			children = (
-				42DE585628005A7200D764F7 /* AppDelegate.swift */,
+				42DE586F280164B000D764F7 /* Resource */,
+				42DE58732801781700D764F7 /* Extension */,
+				42DE586D2801642F00D764F7 /* Model */,
+				42DE586E2801644000D764F7 /* Controller */,
+				42DE586C2801641C00D764F7 /* View */,
 				42DE585828005A7200D764F7 /* SceneDelegate.swift */,
-				42DE585A28005A7200D764F7 /* ViewController.swift */,
-				42DE585C28005A7200D764F7 /* Main.storyboard */,
-				42DE585F28005A7600D764F7 /* Assets.xcassets */,
-				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
+				42DE585628005A7200D764F7 /* AppDelegate.swift */,
 				42DE586428005A7600D764F7 /* Info.plist */,
 				42DE586A28006CF400D764F7 /* GoogleService-Info.plist */,
 			);
 			path = "Project 2 AirNote";
+			sourceTree = "<group>";
+		};
+		42DE586C2801641C00D764F7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
+				42DE585C28005A7200D764F7 /* Main.storyboard */,
+				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		42DE586D2801642F00D764F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		42DE586E2801644000D764F7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				42DE58722801772C00D764F7 /* Base */,
+				42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		42DE586F280164B000D764F7 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				42DE585F28005A7600D764F7 /* Assets.xcassets */,
+			);
+			name = Resource;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		42DE58722801772C00D764F7 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		42DE58732801781700D764F7 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		489FDFB4AFF8981481B9B72D /* Frameworks */ = {
@@ -158,6 +216,7 @@
 				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
+				42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,8 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42DE585B28005A7200D764F7 /* ViewController.swift in Sources */,
+				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
+				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
+				42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
