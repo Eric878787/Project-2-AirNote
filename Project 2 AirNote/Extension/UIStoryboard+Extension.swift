@@ -18,15 +18,14 @@ private struct StoryboardCategory {
 
 extension UIStoryboard {
 
-    static var main: UIStoryboard { return Storyboard(name: StoryboardCategory.main) }
+    static var main: UIStoryboard { return storyboard(name: StoryboardCategory.main) }
 
-    static var discoverNotes: UIStoryboard { return Storyboard(name: StoryboardCategory.discoverNotes) }
+    static var discoverNotes: UIStoryboard { return storyboard(name: StoryboardCategory.discoverNotes) }
     
-    static var discoverStudyGroups: UIStoryboard { return Storyboard(name: StoryboardCategory.discoverStudyGroups) }
+    static var discoverStudyGroups: UIStoryboard { return storyboard(name: StoryboardCategory.discoverStudyGroups) }
 
-    private static func Storyboard(name: String) -> UIStoryboard {
+    private static func storyboard(name: String) -> UIStoryboard {
 
         return UIStoryboard(name: name, bundle: nil)
     }
 }
-
