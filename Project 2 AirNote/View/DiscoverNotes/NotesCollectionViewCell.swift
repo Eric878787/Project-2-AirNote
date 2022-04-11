@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HotNotesCollectionViewCell: UICollectionViewCell {
+class NotesCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
