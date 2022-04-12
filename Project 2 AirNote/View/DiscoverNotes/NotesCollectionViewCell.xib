@@ -70,6 +70,9 @@
                 <constraint firstAttribute="bottom" secondItem="PQQ-Xv-63H" secondAttribute="bottom" constant="10" id="tav-uw-gIj"/>
             </constraints>
             <size key="customSize" width="268" height="341"/>
+            <connections>
+                <outlet property="titleLabel" destination="XiO-0G-d8H" id="Ck8-Ot-7M3"/>
+            </connections>
             <point key="canvasLocation" x="27.536231884057973" y="175.11160714285714"/>
         </collectionViewCell>
     </objects>
