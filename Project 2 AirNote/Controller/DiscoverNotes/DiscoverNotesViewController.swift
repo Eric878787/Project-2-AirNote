@@ -10,7 +10,7 @@ import UIKit
 class DiscoverNotesViewController: UIViewController {
     
     // MARK: CollecitonView Properties
-    var categoryCollecitonView: UICollectionView = {
+    private var categoryCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         var categoryCollecitonView = UICollectionView(
@@ -24,7 +24,7 @@ class DiscoverNotesViewController: UIViewController {
         return categoryCollecitonView
     }()
     
-    var notesCollectionView: UICollectionView = {
+    private var notesCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         var notesCollectionViewCell = UICollectionView(
@@ -38,9 +38,21 @@ class DiscoverNotesViewController: UIViewController {
         return notesCollectionViewCell
     }()
     
+    private var selectedCategoryIndex = 0
+    
+    // MARK: Search Button
+    private var searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: DiscoverNotesViewController.self, action: #selector(toSearchPage))
+    
     // MARK: Mock Data
     var category: [String] = ["所有筆記", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
-    var notes: [String] = ["所有筆記1", "投資理財2", "運動健身3", "語言學習4", "人際溝通5", "廣告行銷6", "生活風格7", "藝文娛樂8","所有筆記2", "投資理財3", "運動健身4"]
+    var mockNotes: [String] = ["投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂", "投資理財", "運動健身"]
+    
+    // MARK: Data Provider
+    var notesManager = NotesManager()
+    
+    // MARK: Data
+    var notes: [Note] = []
+    var filterNotes: [Note] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,8 +66,37 @@ class DiscoverNotesViewController: UIViewController {
         // Set Up Notes CollecitonView
         configureNotesCollectionView()
         
+        // Search Button
+        self.navigationItem.rightBarButtonItem = searchButton
+        
+        // Fetch Data
+        self.notesManager.fetchArticles { [weak self] result in
+            
+            switch result {
+                
+            case .success(let existingNote):
+                
+                DispatchQueue.main.async {
+                self?.notes = existingNote
+                self?.filterNotes = self?.notes ?? existingNote
+                self?.notesCollectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                
+                print("fetchData.failure: \(error)")
+            }
+        }
+        
     }
     
+}
+
+extension DiscoverNotesViewController {
+    
+    @objc private func toSearchPage() {
+        
+    }
 }
 
 // MARK: Configure Category CollectionView
@@ -63,16 +104,16 @@ extension DiscoverNotesViewController {
     
     private func configureCategoryCollectionView() {
         
-        categoryCollecitonView.dataSource = self
-        categoryCollecitonView.delegate = self
+        categoryCollectionView.dataSource = self
+        categoryCollectionView.delegate = self
         
-        view.addSubview(categoryCollecitonView)
+        view.addSubview(categoryCollectionView)
         
-        categoryCollecitonView.translatesAutoresizingMaskIntoConstraints = false
-        categoryCollecitonView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        categoryCollecitonView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        categoryCollecitonView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        categoryCollecitonView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        categoryCollectionView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
 }
@@ -88,7 +129,7 @@ extension DiscoverNotesViewController {
         
         notesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         notesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        notesCollectionView.topAnchor.constraint(equalTo: categoryCollecitonView.bottomAnchor).isActive = true
+        notesCollectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor).isActive = true
         notesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         notesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
@@ -98,46 +139,49 @@ extension DiscoverNotesViewController {
 // MARK: CollectionView DataSource
 extension DiscoverNotesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == categoryCollecitonView {
+        if collectionView == categoryCollectionView {
             return category.count
         } else {
-            return notes.count
+            return filterNotes.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == categoryCollecitonView {
+        if collectionView == categoryCollectionView {
             let categoryCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath)
             guard let cell = categoryCollectionViewCell as? CategoryCollectionViewCell else {return categoryCollectionViewCell}
             cell.categoryLabel.text = category[indexPath.item]
+            if selectedCategoryIndex == indexPath.row {
+                cell.categoryLabel.textColor = .black
+            } else {
+                cell.categoryLabel.textColor = .systemGray2
+            }
             cell.isMultipleTouchEnabled = false
             return cell
         } else {
             let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
             guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return notesCollectionViewCell}
+            cell.titleLabel.text = filterNotes[indexPath.row].noteTitle
             return cell
         }
     }
 }
 
-
 // MARK: CollectionView Delegate
 extension DiscoverNotesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == categoryCollecitonView {
+        if collectionView == categoryCollectionView {
             guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {return}
-            cell.categoryLabel.textColor = .black
-            print(indexPath)
-        } else {
-            let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
-            guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return}
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if collectionView == categoryCollecitonView {
-            guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {return}
-            cell.categoryLabel.textColor = .systemGray2
+            selectedCategoryIndex = indexPath.row
+            collectionView.reloadData()
+            
+            if cell.categoryLabel.text != "所有筆記" {
+                filterNotes = notes.filter { $0.noteCategory == cell.categoryLabel.text }
+            } else {
+                filterNotes = notes
+            }
+            notesCollectionView.reloadData()
+            
         } else {
             let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
             guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return}
@@ -149,12 +193,12 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
 // MARK: CollectionView FlowLayout
 extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == categoryCollecitonView {
+        if collectionView == categoryCollectionView {
             return CGSize(width: 100, height: 30)
         } else {
             let maxWidth = UIScreen.main.bounds.width
             let numberOfItemsPerRow = CGFloat(2)
-            let interItemSpacing = CGFloat(5)
+            let interItemSpacing = CGFloat(0)
             let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
             let itemHeight = itemWidth * 1.8
             return CGSize(width: itemWidth, height: itemHeight)
@@ -171,15 +215,15 @@ extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(
         _ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == categoryCollecitonView {
-            return 0
-        } else {
-            return 0
+            if collectionView == categoryCollectionView {
+                return 0
+            } else {
+                return 0
+            }
         }
-    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == categoryCollecitonView {
+        if collectionView == categoryCollectionView {
             return 0
         } else {
             return 0

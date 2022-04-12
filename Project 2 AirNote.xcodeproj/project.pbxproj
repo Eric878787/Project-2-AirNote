@@ -23,6 +23,8 @@
 		42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */; };
 		42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */; };
 		42F936302803F5950058EB07 /* CategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362E2803F5950058EB07 /* CategoryCollectionViewCell.xib */; };
+		42F93632280554170058EB07 /* NotesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93631280554170058EB07 /* NotesManager.swift */; };
+		42F93634280554AA0058EB07 /* NotesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93633280554AA0058EB07 /* NotesDataModel.swift */; };
 		F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +48,8 @@
 		42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesCollectionViewCell.xib; sourceTree = "<group>"; };
 		42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		42F9362E2803F5950058EB07 /* CategoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		42F93631280554170058EB07 /* NotesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesManager.swift; sourceTree = "<group>"; };
+		42F93633280554AA0058EB07 /* NotesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesDataModel.swift; sourceTree = "<group>"; };
 		73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_2_AirNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.release.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +124,9 @@
 		42DE586D2801642F00D764F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				42F93635280554B30058EB07 /* Notes */,
+				42F93631280554170058EB07 /* NotesManager.swift */,
+				42F93633280554AA0058EB07 /* NotesDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -184,6 +191,13 @@
 				42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */,
 			);
 			path = DiscoverNotes;
+			sourceTree = "<group>";
+		};
+		42F93635280554B30058EB07 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Notes;
 			sourceTree = "<group>";
 		};
 		489FDFB4AFF8981481B9B72D /* Frameworks */ = {
@@ -339,6 +353,8 @@
 				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
 				42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */,
+				42F93634280554AA0058EB07 /* NotesDataModel.swift in Sources */,
+				42F93632280554170058EB07 /* NotesManager.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
