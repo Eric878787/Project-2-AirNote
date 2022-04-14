@@ -12,6 +12,8 @@ private enum Tab {
     case discoverNotes
     
     case discoverStudyGroups
+    
+    case addContent
 
     func controller() -> UIViewController {
 
@@ -22,6 +24,8 @@ private enum Tab {
         case .discoverNotes: controller = UIStoryboard.discoverNotes.instantiateInitialViewController()!
             
         case .discoverStudyGroups: controller = UIStoryboard.discoverStudyGroups.instantiateInitialViewController()!
+            
+        case.addContent: controller = UIStoryboard.addContent.instantiateInitialViewController()!
 
         }
 
@@ -51,13 +55,20 @@ private enum Tab {
                 selectedImage: nil
             )
             
+        case .addContent:
+            return UITabBarItem(
+                title: nil,
+                image: UIImage(systemName: "plus"),
+                selectedImage: nil
+            )
+            
         }
     }
 }
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
-    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups]
+    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .addContent]
     
     override func viewDidLoad() {
         super.viewDidLoad()

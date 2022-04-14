@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DiscoverNotesViewController: UIViewController {
     
@@ -18,8 +19,7 @@ class DiscoverNotesViewController: UIViewController {
             collectionViewLayout: layout
         )
         categoryCollecitonView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        let nib = UINib(nibName: "CategoryCollectionViewCell", bundle: nil)
-        categoryCollecitonView.register(nib, forCellWithReuseIdentifier: "CategoryCollectionViewCell")
+        categoryCollecitonView.registerCellWithNib(identifier: String(describing: CategoryCollectionViewCell.self), bundle: nil)
         categoryCollecitonView.backgroundColor = .clear
         return categoryCollecitonView
     }()
@@ -27,15 +27,14 @@ class DiscoverNotesViewController: UIViewController {
     private var notesCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        var notesCollectionViewCell = UICollectionView(
+        var notesCollectionView = UICollectionView(
             frame: CGRect.zero,
             collectionViewLayout: layout
         )
-        notesCollectionViewCell = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        let nib = UINib(nibName: "NotesCollectionViewCell", bundle: nil)
-        notesCollectionViewCell.register(nib, forCellWithReuseIdentifier: "NotesCollectionViewCell")
-        notesCollectionViewCell.backgroundColor = .clear
-        return notesCollectionViewCell
+        notesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        notesCollectionView.registerCellWithNib(identifier: String(describing: NotesCollectionViewCell.self), bundle: nil)
+        notesCollectionView.backgroundColor = .clear
+        return notesCollectionView
     }()
     
     private var selectedCategoryIndex = 0
@@ -48,11 +47,15 @@ class DiscoverNotesViewController: UIViewController {
     var mockNotes: [String] = ["投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂", "投資理財", "運動健身"]
     
     // MARK: Data Provider
-    var notesManager = NotesManager()
+    private var noteManager = NoteManager()
+    private var userManager = UserManager()
     
-    // MARK: Data
-    var notes: [Note] = []
-    var filterNotes: [Note] = []
+    // MARK: Notes Data
+    private var notes: [Note] = []
+    private var filterNotes: [Note] = []
+    
+    // MARK: Users Data
+    private var users: [User] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,17 +72,35 @@ class DiscoverNotesViewController: UIViewController {
         // Search Button
         self.navigationItem.rightBarButtonItem = searchButton
         
-        // Fetch Data
-        self.notesManager.fetchArticles { [weak self] result in
+        // Fetch Notes Data
+        self.noteManager.fetchNotes { [weak self] result in
             
             switch result {
                 
             case .success(let existingNote):
                 
                 DispatchQueue.main.async {
-                self?.notes = existingNote
-                self?.filterNotes = self?.notes ?? existingNote
-                self?.notesCollectionView.reloadData()
+                    self?.notes = existingNote
+                    self?.filterNotes = self?.notes ?? existingNote
+                    self?.notesCollectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                
+                print("fetchData.failure: \(error)")
+            }
+        }
+        
+        // Fetch Users Data
+        self.userManager.fetchUsers { [weak self] result in
+            
+            switch result {
+                
+            case .success(let existingUser):
+                
+                DispatchQueue.main.async {
+                    self?.users = existingUser
+                    print(self?.users)
                 }
                 
             case .failure(let error):
@@ -92,6 +113,16 @@ class DiscoverNotesViewController: UIViewController {
     
 }
 
+
+// MARK: Mapping Notes to Users
+extension DiscoverNotesViewController {
+    private func mappingNotesToUsers() {
+        
+    }
+}
+
+
+// MARK: To Next Page
 extension DiscoverNotesViewController {
     
     @objc private func toSearchPage() {
@@ -112,7 +143,7 @@ extension DiscoverNotesViewController {
         categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
         categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        categoryCollectionView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/10).isActive = true
         categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
@@ -161,7 +192,21 @@ extension DiscoverNotesViewController: UICollectionViewDataSource {
         } else {
             let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
             guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return notesCollectionViewCell}
+            let url = URL(string: filterNotes[indexPath.row].noteCover)
+            cell.coverImage.kf.indicatorType = .activity
+            cell.coverImage.kf.setImage(with: url)
             cell.titleLabel.text = filterNotes[indexPath.row].noteTitle
+            
+            // querying users' name & avatar
+            for user in users {
+                if user.userId == filterNotes[indexPath.row].authorId {
+                    cell.authorNameLabel.text = user.userName
+                    let url = URL(string: user.userAvatar)
+                    cell.userAvatarImage.kf.indicatorType = .activity
+                    cell.userAvatarImage.kf.setImage(with: url)
+                }
+            }
+            
             return cell
         }
     }

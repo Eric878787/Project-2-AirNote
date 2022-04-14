@@ -14,6 +14,8 @@ private struct StoryboardCategory {
     static let discoverNotes = "DiscoverNotes"
     
     static let discoverStudyGroups = "DiscoverStudyGroups"
+    
+    static let addContent = "AddContent"
 }
 
 extension UIStoryboard {
@@ -23,6 +25,8 @@ extension UIStoryboard {
     static var discoverNotes: UIStoryboard { return storyboard(name: StoryboardCategory.discoverNotes) }
     
     static var discoverStudyGroups: UIStoryboard { return storyboard(name: StoryboardCategory.discoverStudyGroups) }
+    
+    static var addContent: UIStoryboard { return storyboard(name: StoryboardCategory.addContent)}
 
     private static func storyboard(name: String) -> UIStoryboard {
 
