@@ -212,6 +212,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - Alamofire (5.5.0)
   - BoringSSL-GRPC (0.0.7):
     - BoringSSL-GRPC/Implementation (= 0.0.7)
     - BoringSSL-GRPC/Interface (= 0.0.7)
@@ -276,6 +277,8 @@ PODS:
     - BoringSSL-GRPC (= 0.0.7)
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
+  - IQKeyboardManagerSwift (6.5.9)
+  - Kingfisher (7.1.2)
   - leveldb-library (1.22.1)
   - nanopb (1.30906.0):
     - nanopb/decode (= 1.30906.0)
@@ -286,13 +289,17 @@ PODS:
   - SwiftLint (0.47.0)
 
 DEPENDENCIES:
+  - Alamofire
   - Firebase/Firestore
   - FirebaseFirestoreSwift
+  - IQKeyboardManagerSwift
+  - Kingfisher
   - SwiftLint
 
 SPEC REPOS:
   trunk:
     - abseil
+    - Alamofire
     - BoringSSL-GRPC
     - Firebase
     - FirebaseCore
@@ -303,6 +310,8 @@ SPEC REPOS:
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
+    - IQKeyboardManagerSwift
+    - Kingfisher
     - leveldb-library
     - nanopb
     - PromisesObjC
@@ -310,6 +319,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   Firebase: c23a36d9e4cdf7877dfcba8dd0c58add66358999
   FirebaseCore: d3a978a3cfa3240bf7e4ba7d137fdf5b22b628ec
@@ -320,11 +330,13 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
+  IQKeyboardManagerSwift: 6e839c575c4aa1078d58a596e41244e77abe918f
+  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SwiftLint: d41cc46a2ae58ac6d9f26954bc89f1d72e71fdef
 
-PODFILE CHECKSUM: c36d371ce14425ff345dc89d61ee6a44324794b9
+PODFILE CHECKSUM: f84c056d4d71562b7f08a51f5a03b38be828457f
 
 COCOAPODS: 1.11.2

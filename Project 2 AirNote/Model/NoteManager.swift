@@ -9,13 +9,13 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 
-class NotesManager {
+class NoteManager {
     
-    static let shared = NotesManager()
+    static let shared = NoteManager()
     
     lazy var db = Firestore.firestore()
     
-    func fetchArticles(completion: @escaping (Result<[Note], Error>) -> Void) {
+    func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
         
         db.collection("Notes").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
             
