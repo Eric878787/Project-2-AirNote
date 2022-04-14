@@ -19,6 +19,8 @@
 		42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */; };
 		42DE587A2801808600D764F7 /* DiscoverStudyGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */; };
 		42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */; };
+		42E2B6552807E6AC00B51D9F /* AddPhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */; };
+		42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */; };
 		42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */; };
 		42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */; };
 		42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */; };
@@ -38,8 +40,8 @@
 		42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */; };
 		42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */; };
 		42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936562806BE5D0058EB07 /* AddNoteViewController.swift */; };
-		42F9365A2807B60F0058EB07 /* addCoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936582807B60F0058EB07 /* addCoverTableViewCell.swift */; };
-		42F9365B2807B60F0058EB07 /* addCoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F936592807B60F0058EB07 /* addCoverTableViewCell.xib */; };
+		42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */; };
+		42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */; };
 		F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverNotesViewController.swift; sourceTree = "<group>"; };
 		42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DiscoverStudyGroups.storyboard; sourceTree = "<group>"; };
 		42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverStudyGroupsViewController.swift; sourceTree = "<group>"; };
+		42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotosTableViewCell.swift; sourceTree = "<group>"; };
+		42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPhotosTableViewCell.xib; sourceTree = "<group>"; };
 		42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesCollectionViewCell.xib; sourceTree = "<group>"; };
 		42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -78,8 +82,8 @@
 		42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKeywordsTableViewCell.swift; sourceTree = "<group>"; };
 		42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddKeywordsTableViewCell.xib; sourceTree = "<group>"; };
 		42F936562806BE5D0058EB07 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
-		42F936582807B60F0058EB07 /* addCoverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addCoverTableViewCell.swift; sourceTree = "<group>"; };
-		42F936592807B60F0058EB07 /* addCoverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = addCoverTableViewCell.xib; sourceTree = "<group>"; };
+		42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoverTableViewCell.swift; sourceTree = "<group>"; };
+		42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCoverTableViewCell.xib; sourceTree = "<group>"; };
 		73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_2_AirNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.release.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -264,8 +268,10 @@
 				42F9364A28066F430058EB07 /* AddContentTableViewCell.xib */,
 				42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */,
 				42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */,
-				42F936582807B60F0058EB07 /* addCoverTableViewCell.swift */,
-				42F936592807B60F0058EB07 /* addCoverTableViewCell.xib */,
+				42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */,
+				42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */,
+				42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */,
+				42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */,
 			);
 			path = AddContent;
 			sourceTree = "<group>";
@@ -349,7 +355,8 @@
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
 				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
 				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
-				42F9365B2807B60F0058EB07 /* addCoverTableViewCell.xib in Resources */,
+				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
+				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
 				42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */,
 			);
@@ -438,7 +445,8 @@
 				42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */,
 				42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
-				42F9365A2807B60F0058EB07 /* addCoverTableViewCell.swift in Sources */,
+				42E2B6552807E6AC00B51D9F /* AddPhotosTableViewCell.swift in Sources */,
+				42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */,
 				42F936482805B44E0058EB07 /* UITableView+Extension.swift in Sources */,
 				42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */,
 			);
@@ -516,7 +524,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -570,7 +578,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
