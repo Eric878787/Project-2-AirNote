@@ -15,6 +15,7 @@ class AddContentTableViewCell: UITableViewCell, UITextViewDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        titleLabel.text = "內容"
         contentTextView.delegate = self
         
     }

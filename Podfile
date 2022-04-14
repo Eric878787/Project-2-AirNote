@@ -12,5 +12,7 @@ target 'Project 2 AirNote' do
   pod 'Alamofire'
   pod 'Kingfisher'
   pod 'IQKeyboardManagerSwift'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
 
 end

@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fle-Il-LDc">
-                        <rect key="frame" x="15" y="126" width="451" height="131"/>
+                        <rect key="frame" x="15" y="116" width="451" height="159"/>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -44,14 +44,14 @@
                     <constraint firstItem="InE-Ma-SrK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="LRS-1n-jBA"/>
                     <constraint firstItem="zfN-jg-O42" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="QDP-yx-q4i"/>
                     <constraint firstItem="InE-Ma-SrK" firstAttribute="top" secondItem="Vb7-By-z4S" secondAttribute="bottom" constant="5" id="XV4-Z9-2EE"/>
-                    <constraint firstAttribute="bottom" secondItem="fle-Il-LDc" secondAttribute="bottom" constant="33" id="dn3-S1-fhB"/>
+                    <constraint firstAttribute="bottom" secondItem="fle-Il-LDc" secondAttribute="bottom" constant="15" id="ZrO-rt-arM"/>
                     <constraint firstAttribute="trailing" secondItem="InE-Ma-SrK" secondAttribute="trailing" constant="15" id="epk-8P-7Ds"/>
                     <constraint firstItem="zfN-jg-O42" firstAttribute="top" secondItem="InE-Ma-SrK" secondAttribute="bottom" constant="15" id="i02-bd-Pze"/>
                     <constraint firstAttribute="trailing" secondItem="fle-Il-LDc" secondAttribute="trailing" constant="15" id="pea-0J-VLP"/>
                     <constraint firstAttribute="trailing" secondItem="zfN-jg-O42" secondAttribute="trailing" constant="15" id="plr-Zx-snh"/>
                     <constraint firstAttribute="trailing" secondItem="Vb7-By-z4S" secondAttribute="trailing" constant="15" id="rC2-hf-A6L"/>
                     <constraint firstItem="Vb7-By-z4S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="tHP-cx-hLK"/>
-                    <constraint firstItem="fle-Il-LDc" firstAttribute="top" secondItem="zfN-jg-O42" secondAttribute="bottom" constant="15" id="xOj-2t-41S"/>
+                    <constraint firstItem="fle-Il-LDc" firstAttribute="top" secondItem="zfN-jg-O42" secondAttribute="bottom" constant="5" id="xOj-2t-41S"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
