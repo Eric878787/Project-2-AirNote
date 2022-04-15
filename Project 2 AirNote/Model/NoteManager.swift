@@ -67,6 +67,7 @@ class NoteManager {
             note.noteClicks = []
             
             try  document.setData(from: note, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
         }
         catch {
             completion(.failure(error))
@@ -82,12 +83,12 @@ class NoteManager {
         
         let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
-               print("upload failed")
+                print("upload failed")
                 return
             }
             riversRef.downloadURL { (url, error) in
                 guard let downloadURL = url else {
-                   print("download url failed")
+                    print("download url failed")
                     return
                 }
                 completion(.success(downloadURL))
