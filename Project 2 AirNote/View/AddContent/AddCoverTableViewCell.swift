@@ -1,0 +1,39 @@
+//
+//  addCoverTableViewCell.swift
+//  Project 2 AirNote
+//
+//  Created by Eric chung on 2022/4/14.
+//
+import UIKit
+
+protocol CoverDelegate {
+    func buttonDidSelect ()
+}
+
+class AddCoverTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var coverImageView: UIImageView!
+    
+    @IBOutlet weak var selectButton: UIButton!
+    
+    var delegate: CoverDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+    
+    @IBAction func addCover(_ sender: Any) {
+        delegate?.buttonDidSelect()
+        titleLabel.text = "封面"
+        selectButton.setTitle("上傳", for: .normal)
+    }
+
+}

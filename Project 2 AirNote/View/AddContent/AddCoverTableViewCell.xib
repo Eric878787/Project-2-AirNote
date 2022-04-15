@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="486" id="KGk-i7-Jjw" customClass="AddCoverTableViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="396" height="486"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="396" height="486"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVL-JC-Pp7">
+                        <rect key="frame" x="15" y="15" width="366" height="41.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVZ-4t-yYu">
+                        <rect key="frame" x="164.5" y="439.5" width="67" height="31.5"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <connections>
+                            <action selector="addCover:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pg3-Kt-cUS"/>
+                        </connections>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magazine" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oRD-oa-KME">
+                        <rect key="frame" x="114" y="61" width="168" height="364.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="oRD-oa-KME" secondAttribute="height" multiplier="1284:2778" id="KHi-Hm-p2S"/>
+                            <constraint firstAttribute="width" constant="168" id="YRb-M8-g0J"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="qVZ-4t-yYu" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="EBu-7Z-ClT"/>
+                    <constraint firstItem="qVZ-4t-yYu" firstAttribute="top" secondItem="oRD-oa-KME" secondAttribute="bottom" constant="15" id="JBr-OC-2SI"/>
+                    <constraint firstItem="oRD-oa-KME" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NIZ-lF-Hwn"/>
+                    <constraint firstItem="oRD-oa-KME" firstAttribute="top" secondItem="sVL-JC-Pp7" secondAttribute="bottom" constant="5" id="OGS-h1-tOA"/>
+                    <constraint firstItem="sVL-JC-Pp7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Y01-RQ-lZK"/>
+                    <constraint firstAttribute="bottom" secondItem="qVZ-4t-yYu" secondAttribute="bottom" constant="15" id="Z2W-7S-cWW"/>
+                    <constraint firstItem="sVL-JC-Pp7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="iCb-4O-EbW"/>
+                    <constraint firstItem="oRD-oa-KME" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="nKg-Vk-c6p"/>
+                    <constraint firstAttribute="trailing" secondItem="sVL-JC-Pp7" secondAttribute="trailing" constant="15" id="wDe-Vp-Z23"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="coverImageView" destination="oRD-oa-KME" id="pGM-IX-nJD"/>
+                <outlet property="selectButton" destination="qVZ-4t-yYu" id="6hM-uZ-LmW"/>
+                <outlet property="titleLabel" destination="sVL-JC-Pp7" id="9DI-Dt-Iu3"/>
+            </connections>
+            <point key="canvasLocation" x="150.72463768115944" y="100.44642857142857"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="magazine" catalog="system" width="113" height="128"/>
+    </resources>
+</document>

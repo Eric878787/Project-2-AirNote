@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="290" id="KGk-i7-Jjw" customClass="AddKeywordsTableViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="481" height="290"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="481" height="290"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="InE-Ma-SrK">
+                        <rect key="frame" x="15" y="41" width="451" height="34"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vb7-By-z4S">
+                        <rect key="frame" x="15" y="15" width="451" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfN-jg-O42">
+                        <rect key="frame" x="15" y="90" width="451" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fle-Il-LDc">
+                        <rect key="frame" x="15" y="116" width="451" height="159"/>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Vb7-By-z4S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="4xe-iw-b6D"/>
+                    <constraint firstItem="fle-Il-LDc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="EzU-MJ-zq6"/>
+                    <constraint firstItem="InE-Ma-SrK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="LRS-1n-jBA"/>
+                    <constraint firstItem="zfN-jg-O42" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="QDP-yx-q4i"/>
+                    <constraint firstItem="InE-Ma-SrK" firstAttribute="top" secondItem="Vb7-By-z4S" secondAttribute="bottom" constant="5" id="XV4-Z9-2EE"/>
+                    <constraint firstAttribute="bottom" secondItem="fle-Il-LDc" secondAttribute="bottom" constant="15" id="ZrO-rt-arM"/>
+                    <constraint firstAttribute="trailing" secondItem="InE-Ma-SrK" secondAttribute="trailing" constant="15" id="epk-8P-7Ds"/>
+                    <constraint firstItem="zfN-jg-O42" firstAttribute="top" secondItem="InE-Ma-SrK" secondAttribute="bottom" constant="15" id="i02-bd-Pze"/>
+                    <constraint firstAttribute="trailing" secondItem="fle-Il-LDc" secondAttribute="trailing" constant="15" id="pea-0J-VLP"/>
+                    <constraint firstAttribute="trailing" secondItem="zfN-jg-O42" secondAttribute="trailing" constant="15" id="plr-Zx-snh"/>
+                    <constraint firstAttribute="trailing" secondItem="Vb7-By-z4S" secondAttribute="trailing" constant="15" id="rC2-hf-A6L"/>
+                    <constraint firstItem="Vb7-By-z4S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="tHP-cx-hLK"/>
+                    <constraint firstItem="fle-Il-LDc" firstAttribute="top" secondItem="zfN-jg-O42" secondAttribute="bottom" constant="5" id="xOj-2t-41S"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="categoryTextField" destination="InE-Ma-SrK" id="wnb-mU-QBe"/>
+                <outlet property="categoryTitleLabel" destination="Vb7-By-z4S" id="zSn-VA-YHF"/>
+                <outlet property="keyWordsTitleLabel" destination="zfN-jg-O42" id="hyf-rM-bbn"/>
+                <outlet property="tagButtonStackView" destination="fle-Il-LDc" id="hLs-2t-emB"/>
+            </connections>
+            <point key="canvasLocation" x="-132.60869565217394" y="208.92857142857142"/>
+        </tableViewCell>
+    </objects>
+</document>
