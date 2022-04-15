@@ -6,6 +6,13 @@ target 'Project 2 AirNote' do
   use_frameworks!
 
   # Pods for Project 2 AirNote
-    pod 'SwiftLint'
+  pod 'SwiftLint'
+  pod 'Firebase/Firestore'
+  pod 'FirebaseFirestoreSwift'
+  pod 'Alamofire'
+  pod 'Kingfisher'
+  pod 'IQKeyboardManagerSwift'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
 
 end
