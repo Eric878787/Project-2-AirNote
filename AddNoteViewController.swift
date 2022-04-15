@@ -182,6 +182,12 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
         }
         controller.addAction(savedPhotosAlbumAction)
         
+        // 手繪版
+        let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
+            self.openDrawingPad()
+        }
+        controller.addAction(drawingPadAction)
+        
         // 取消
         let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
         controller.addAction(cancelAction)
@@ -227,6 +233,13 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
         self.present(imagePickerController, animated: true)
+    }
+    
+    // 開啟手繪版
+    func openDrawingPad() {
+        let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
+        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

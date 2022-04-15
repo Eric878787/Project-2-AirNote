@@ -78,7 +78,4 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         delegate = self
         
     }
-
-
 }
-
