@@ -29,7 +29,7 @@ class AddContentViewController: UIViewController {
 // Configure Buttons
 extension AddContentViewController {
     
-    func configureAddNoteButton() {
+    private func configureAddNoteButton() {
         
         addNoteButton.translatesAutoresizingMaskIntoConstraints = false
         addNoteButton.setTitle("新增筆記", for: .normal)
@@ -47,7 +47,7 @@ extension AddContentViewController {
         
     }
     
-    func configureAddGroupButton() {
+    private func configureAddGroupButton() {
         
         addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         addGroupButton.setTitle("新增讀書會", for: .normal)

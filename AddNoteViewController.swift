@@ -167,7 +167,7 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func buttonDidSelect() {
         
-        let controller = UIAlertController(title: "拍照?從照片選取?從相簿選取?", message: "", preferredStyle: .alert)
+        let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         // 相機
@@ -251,7 +251,7 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
     
     func selectMultiImages() {
         
-        let controller = UIAlertController(title: "拍照?從照片選取?從相簿選取?", message: "", preferredStyle: .alert)
+        let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         // 相機
