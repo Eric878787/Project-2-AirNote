@@ -18,25 +18,18 @@ class DrawingPadViewController: UIViewController {
     var opacity: CGFloat = 1.0
     var swiped = false
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//      guard let navController = segue.destination as? UINavigationController,
-//        let settingsController = navController.topViewController as? SetUpPadViewController else {
-//          return
-//      }
-//      settingsController.delegate = self
-//      settingsController.brush = brushWidth
-//      settingsController.opacity = opacity
-//
-//      var red: CGFloat = 0
-//      var green: CGFloat = 0
-//      var blue: CGFloat = 0
-//      color.getRed(&red, green: &green, blue: &blue, alpha: nil)
-//      settingsController.red = red
-//      settingsController.green = green
-//      settingsController.blue = blue
-//    }
+    var imageProvider: ( (UIImage) -> ())?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName:"checkmark"), style: .plain, target: self, action: #selector(backToPreviousPage))
+    }
     
     // MARK: - Actions
+    @objc func backToPreviousPage() {
+        imageProvider?(mainImageView.image ?? UIImage())
+        self.navigationController?.popViewController(animated: true)
+    }
     
     @IBAction func setUpPencil(_ sender: Any) {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)

@@ -39,9 +39,6 @@ class DiscoverNotesViewController: UIViewController {
     
     private var selectedCategoryIndex = 0
     
-    // MARK: Search Button
-    private var searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: DiscoverNotesViewController.self, action: #selector(toSearchPage))
-    
     // MARK: Mock Data
     var category: [String] = ["所有筆記", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
     var mockNotes: [String] = ["投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂", "投資理財", "運動健身"]
@@ -70,9 +67,26 @@ class DiscoverNotesViewController: UIViewController {
         configureNotesCollectionView()
         
         // Search Button
+        let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
         
         // Fetch Notes Data
+        fetchNotes()
+        
+        // Fetch Users Data
+        fetchUsers()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+}
+
+// MARK: Fetch Data
+extension DiscoverNotesViewController {
+    
+    func fetchNotes() {
         self.noteManager.fetchNotes { [weak self] result in
             
             switch result {
@@ -90,8 +104,9 @@ class DiscoverNotesViewController: UIViewController {
                 print("fetchData.failure: \(error)")
             }
         }
-        
-        // Fetch Users Data
+    }
+    
+    func fetchUsers() {
         self.userManager.fetchUsers { [weak self] result in
             
             switch result {
@@ -100,7 +115,7 @@ class DiscoverNotesViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self?.users = existingUser
-                    print(self?.users)
+                    self?.notesCollectionView.reloadData()
                 }
                 
             case .failure(let error):
@@ -108,25 +123,23 @@ class DiscoverNotesViewController: UIViewController {
                 print("fetchData.failure: \(error)")
             }
         }
-        
     }
     
 }
 
-
 // MARK: Mapping Notes to Users
 extension DiscoverNotesViewController {
     private func mappingNotesToUsers() {
-        
     }
 }
-
 
 // MARK: To Next Page
 extension DiscoverNotesViewController {
     
     @objc private func toSearchPage() {
-        
+        let storyBoard = UIStoryboard(name: "SearchContent", bundle: nil)
+        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchContentViewController") as? SearchContentViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -182,7 +195,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource {
             let categoryCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath)
             guard let cell = categoryCollectionViewCell as? CategoryCollectionViewCell else {return categoryCollectionViewCell}
             cell.categoryLabel.text = category[indexPath.item]
-            if selectedCategoryIndex == indexPath.row {
+            if selectedCategoryIndex == indexPath.item {
                 cell.categoryLabel.textColor = .black
             } else {
                 cell.categoryLabel.textColor = .systemGray2
@@ -192,21 +205,18 @@ extension DiscoverNotesViewController: UICollectionViewDataSource {
         } else {
             let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
             guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return notesCollectionViewCell}
-            let url = URL(string: filterNotes[indexPath.row].noteCover)
+            let url = URL(string: filterNotes[indexPath.item].noteCover)
             cell.coverImage.kf.indicatorType = .activity
             cell.coverImage.kf.setImage(with: url)
-            cell.titleLabel.text = filterNotes[indexPath.row].noteTitle
+            cell.titleLabel.text = filterNotes[indexPath.item].noteTitle
             
             // querying users' name & avatar
-            for user in users {
-                if user.userId == filterNotes[indexPath.row].authorId {
+            for user in users where user.userId == filterNotes[indexPath.item].authorId {
                     cell.authorNameLabel.text = user.userName
                     let url = URL(string: user.userAvatar)
                     cell.userAvatarImage.kf.indicatorType = .activity
                     cell.userAvatarImage.kf.setImage(with: url)
-                }
             }
-            
             return cell
         }
     }
@@ -217,7 +227,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == categoryCollectionView {
             guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {return}
-            selectedCategoryIndex = indexPath.row
+            selectedCategoryIndex = indexPath.item
             collectionView.reloadData()
             
             if cell.categoryLabel.text != "所有筆記" {

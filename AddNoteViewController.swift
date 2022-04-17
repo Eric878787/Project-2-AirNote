@@ -126,7 +126,7 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddCoverTableViewCell.self), for: indexPath)
             guard let addCoverCell = cell as? AddCoverTableViewCell else { return cell }
             addCoverCell.delegate = self
-            addCoverCell.coverImageView.image = coverImage ?? UIImage(systemName: "magazine")
+            addCoverCell.coverImageView.image = coverImage
             return addCoverCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddPhotosTableViewCell.self), for: indexPath)
@@ -240,6 +240,10 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
         guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
         self.navigationController?.pushViewController(vc, animated: true)
+        vc.imageProvider = { [weak self] image in
+            self?.coverImage = image
+            self?.addNoteTableView.reloadData()
+        }
     }
 }
 
@@ -320,19 +324,30 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
 }
 
 extension AddNoteViewController {
+    
     func uploadNote() {
+        
+        if note.noteTitle != "" && note.noteContent != "" && note.noteCategory != "" && note.noteKeywords != [] && coverImage != UIImage(systemName: "magazine") && contentImages != [] {
+            
+            upload()
+            
+        } else {
+            let controller = UIAlertController(title: "請上傳完整資料", message: "", preferredStyle: .alert)
+            controller.view.tintColor = UIColor.gray
+            let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
+            controller.addAction(cancelAction)
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func upload() {
+        
         let group = DispatchGroup()
         let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         group.enter()
-        guard let image = coverImage else {
-            controller.title = "沒有封面照片"
-            let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
-            controller.addAction(cancelAction)
-            self.present(controller, animated: true, completion: nil)
-            return
-        }
+        guard let image = coverImage else { return }
         noteManager.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
@@ -345,30 +360,21 @@ extension AddNoteViewController {
         }
         
         let images = contentImages
-        if images != [] {
-            for image in images {
-                group.enter()
-                noteManager.uploadPhoto(image: image) { result in
-                    switch result {
-                    case .success(let url):
-                        self.note.noteImages.append("\(url)")
-                        print("\(url)")
-                    case .failure(let error):
-                        print("\(error)")
-                    }
-                    group.leave()
+        for image in images {
+            group.enter()
+            noteManager.uploadPhoto(image: image) { result in
+                switch result {
+                case .success(let url):
+                    self.note.noteImages.append("\(url)")
+                    print("\(url)")
+                case .failure(let error):
+                    print("\(error)")
                 }
             }
-        } else {
-            controller.title = "沒有內頁照片"
-            let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
-            controller.addAction(cancelAction)
-            self.present(controller, animated: true, completion: nil)
-            return
+            group.leave()
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            self.checkTextInfo()
             self.noteManager.createNote(note: self.note) { result in
                 switch result {
                 case .success:
@@ -386,17 +392,4 @@ extension AddNoteViewController {
             }
         }
     }
-    
-    func checkTextInfo() {
-        if note.noteTitle != "" && note.noteContent != "" && note.noteCategory != "" && note.noteKeywords != [] {
-            return
-        } else {
-            let controller = UIAlertController(title: "請上傳完整資料", message: "", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
-            controller.addAction(cancelAction)
-            self.present(controller, animated: true, completion: nil)
-        }
-    }
-    
 }
