@@ -8,7 +8,18 @@
 import UIKit
 
 class NoteResultTableViewCell: UITableViewCell {
-
+    
+    
+    @IBOutlet weak var mainImageView: UIImageView!
+    
+    @IBOutlet weak var avatarImageView: UIImageView!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var authorNameLabel: UILabel!
+    
+    @IBOutlet weak var likeButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

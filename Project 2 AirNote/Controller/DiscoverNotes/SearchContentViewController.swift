@@ -9,20 +9,29 @@ import UIKit
 
 class SearchContentViewController: UIViewController {
     
-     // Search result tableview
-    var searchNotesTableView = UITableView(frame: .zero)
+    // Search result tableview
+    private var searchNotesTableView = UITableView(frame: .zero)
+    
+    // Search Controller
+    private var searchController = UISearchController()
     
     // Search Result datasource
-    var noteManager = NoteManager()
-    var userManager = UserManager()
-    var notes: [Note] = []
-    var users: [User] = []
-
+    private var noteManager = NoteManager()
+    private var userManager = UserManager()
+    private var notes: [Note] = []
+    private lazy var filteredNotes: [Note] = []
+    private var users: [User] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Configure search result tableview
         configureSearchNoteTableview()
+        
+        // Configure search controller
+        self.navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,12 +47,43 @@ class SearchContentViewController: UIViewController {
     
 }
 
+// MARK: Protocol UISearchResultsUpdating
+extension SearchContentViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text, searchText.isEmpty == false  {
+            filteredNotes = notes.filter({ note in
+                note.noteTitle.localizedStandardContains(searchText)
+            })
+            
+            lazy var filteredNotesViaTags = notes.filter({ note in
+                let keyWords = note.noteKeywords.joined()
+                return keyWords.localizedStandardContains(searchText)
+            })
+            filteredNotes += filteredNotesViaTags
+            
+            lazy var filteredNotesViaCategory = notes.filter({ note in
+                let keyWords = note.noteCategory
+                return keyWords.localizedStandardContains(searchText)
+            })
+            filteredNotes += filteredNotesViaCategory
+            
+        } else {
+            filteredNotes = notes
+        }
+        searchNotesTableView.reloadData()
+    }
+    
+}
+
 // MARK: Configure search result tableview
 extension SearchContentViewController {
     
     private func configureSearchNoteTableview() {
         
-        searchNotesTableView.registerCellWithNib(identifier: String(describing: NoteResultTableViewCell.self) , bundle: nil)
+        searchNotesTableView.registerCellWithNib(identifier: String(describing: NoteResultTableViewCell.self), bundle: nil)
+        searchNotesTableView.automaticallyAdjustsScrollIndicatorInsets = false
+        searchNotesTableView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         searchNotesTableView.dataSource = self
         searchNotesTableView.delegate = self
         
@@ -71,6 +111,7 @@ extension SearchContentViewController {
                 
                 DispatchQueue.main.async {
                     self?.notes = existingNote
+                    self?.filteredNotes = self?.notes ?? existingNote
                     self?.searchNotesTableView.reloadData()
                 }
                 
@@ -106,12 +147,25 @@ extension SearchContentViewController {
 extension SearchContentViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        notes.count
+        filteredNotes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let noteResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NoteResultTableViewCell", for: indexPath)
         guard let cell = noteResultTableViewCell as? NoteResultTableViewCell else { return noteResultTableViewCell }
+        cell.titleLabel.text = filteredNotes[indexPath.row].noteTitle
+        let mainImageUrl = URL(string: filteredNotes[indexPath.row].noteCover)
+        cell.mainImageView.kf.indicatorType = .activity
+        cell.mainImageView.kf.setImage(with: mainImageUrl)
+        
+        // querying users' name & avatar
+        for user in users where user.userId == filteredNotes[indexPath.row].authorId {
+            cell.authorNameLabel.text = user.userName
+            let avatarUrl = URL(string: user.userAvatar)
+            cell.avatarImageView.kf.indicatorType = .activity
+            cell.avatarImageView.kf.setImage(with: avatarUrl)
+        }
+        
         return cell
     }
     
@@ -120,6 +174,8 @@ extension SearchContentViewController: UITableViewDataSource {
 // MARK: Search result tableview delegate
 extension SearchContentViewController: UITableViewDelegate {
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height * 0.5
+    }
     
 }
