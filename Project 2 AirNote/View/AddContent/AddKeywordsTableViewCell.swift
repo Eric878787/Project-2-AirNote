@@ -109,23 +109,16 @@ extension AddKeywordsTableViewCell: UIPickerViewDataSource, UIPickerViewDelegate
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         categoryTextField.text = category[row].rawValue
-    }
-    
-}
-
-extension AddKeywordsTableViewCell: UITextFieldDelegate {
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
         
-        guard let category = textField.text else { return }
-        
-        selectedCategory = category
+        selectedCategory = category[row].rawValue
         
         guard let unwrappedCategory = selectedCategory else { return }
         
         tags = tagCategoryPair["\(unwrappedCategory)"] ?? []
         
         tagButtonStackView.subviews.forEach({ $0.removeFromSuperview() })
+        
+        print("\(selectedCategory)")
         
         for tag in tags {
             
@@ -140,6 +133,10 @@ extension AddKeywordsTableViewCell: UITextFieldDelegate {
         }
         
     }
+    
+}
+
+extension AddKeywordsTableViewCell: UITextFieldDelegate {
     
     @objc func didSelectButton(_ sender: UIButton) {
         sender.isSelected = true

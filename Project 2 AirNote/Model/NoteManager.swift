@@ -79,7 +79,7 @@ class NoteManager {
         
         let riversRef = Storage.storage().reference().child(UUID().uuidString + ".jpg")
         
-        guard let data = image.jpegData(compressionQuality: 0.9) else { return }
+        guard let data = image.jpegData(compressionQuality: 0.8) else { return }
         
         let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
