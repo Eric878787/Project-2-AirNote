@@ -57,10 +57,10 @@
             </objects>
             <point key="canvasLocation" x="1822" y="98"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Group View Controller-->
         <scene sceneID="xUN-Rk-VdR">
             <objects>
-                <viewController id="4Fc-J2-VXv" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddGroupViewController" id="4Fc-J2-VXv" customClass="AddGroupViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jIp-2b-yjL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

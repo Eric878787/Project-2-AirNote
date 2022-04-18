@@ -23,31 +23,17 @@ class AddNoteViewController: UIViewController {
                             noteImages: [], noteKeywords: [],
                             noteTitle: "")
     
-    private var noteTitle: String?
-    
-    private var noteContent: String?
-    
-    private var noteCategory: String?
-    
-    private var noteKeywords: [String] = []
-    
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
     
     private var coverImage = UIImage(systemName: "magazine")
     
-    private var coverImageToDB: String?
-    
     // MARK: Content Images
-    
     private let multiImagePickerController = UIImagePickerController()
     
     private var contentImages: [UIImage] = []
     
-    private var contentImageToDB: [String] = []
-    
     // MARK: Data Manager
-    
     private var noteManager = NoteManager()
     
     override func viewDidLoad() {

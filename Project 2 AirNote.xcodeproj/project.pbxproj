@@ -35,6 +35,10 @@
 		42E2B67A280D7FA700B51D9F /* GroupDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B679280D7FA700B51D9F /* GroupDataModel.swift */; };
 		42E2B67C280D8F9200B51D9F /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B67B280D8F9200B51D9F /* Date+Extension.swift */; };
 		42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */; };
+		42E2B684280DA4BE00B51D9F /* AddCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */; };
+		42E2B685280DA4BE00B51D9F /* AddCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */; };
+		42E2B688280DA4E500B51D9F /* AddAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */; };
+		42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B687280DA4E500B51D9F /* AddAddressTableViewCell.xib */; };
 		42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */; };
 		42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */; };
 		42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */; };
@@ -91,6 +95,10 @@
 		42E2B679280D7FA700B51D9F /* GroupDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDataModel.swift; sourceTree = "<group>"; };
 		42E2B67B280D8F9200B51D9F /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
+		42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCalendarTableViewCell.swift; sourceTree = "<group>"; };
+		42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCalendarTableViewCell.xib; sourceTree = "<group>"; };
+		42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAddressTableViewCell.swift; sourceTree = "<group>"; };
+		42E2B687280DA4E500B51D9F /* AddAddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAddressTableViewCell.xib; sourceTree = "<group>"; };
 		42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesCollectionViewCell.xib; sourceTree = "<group>"; };
 		42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -327,6 +335,42 @@
 			name = Groups;
 			sourceTree = "<group>";
 		};
+		42E2B67F280DA3E000B51D9F /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				42F936412805B0000058EB07 /* AddTitleTableViewCell.swift */,
+				42F936422805B0000058EB07 /* AddTitleTableViewCell.xib */,
+				42F9364928066F430058EB07 /* AddContentTableViewCell.swift */,
+				42F9364A28066F430058EB07 /* AddContentTableViewCell.xib */,
+				42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */,
+				42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */,
+				42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */,
+				42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		42E2B680280DA3F400B51D9F /* AddNote */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */,
+				42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */,
+			);
+			path = AddNote;
+			sourceTree = "<group>";
+		};
+		42E2B681280DA41600B51D9F /* AddGroup */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */,
+				42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */,
+				42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */,
+				42E2B687280DA4E500B51D9F /* AddAddressTableViewCell.xib */,
+			);
+			name = AddGroup;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
 		42F936282802BB850058EB07 /* DiscoverNotes */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,16 +414,9 @@
 		42F936402805AFB60058EB07 /* AddContent */ = {
 			isa = PBXGroup;
 			children = (
-				42F936412805B0000058EB07 /* AddTitleTableViewCell.swift */,
-				42F936422805B0000058EB07 /* AddTitleTableViewCell.xib */,
-				42F9364928066F430058EB07 /* AddContentTableViewCell.swift */,
-				42F9364A28066F430058EB07 /* AddContentTableViewCell.xib */,
-				42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */,
-				42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */,
-				42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */,
-				42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */,
-				42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */,
-				42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */,
+				42E2B67F280DA3E000B51D9F /* Base */,
+				42E2B680280DA3F400B51D9F /* AddNote */,
+				42E2B681280DA41600B51D9F /* AddGroup */,
 			);
 			path = AddContent;
 			sourceTree = "<group>";
@@ -453,6 +490,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42E2B685280DA4BE00B51D9F /* AddCalendarTableViewCell.xib in Resources */,
 				42E2B667280AD37C00B51D9F /* SearchContent.storyboard in Resources */,
 				42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */,
 				42DE586328005A7600D764F7 /* LaunchScreen.storyboard in Resources */,
@@ -466,6 +504,7 @@
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
 				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
 				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
+				42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */,
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
@@ -560,6 +599,7 @@
 				42F93634280554AA0058EB07 /* NoteDataModel.swift in Sources */,
 				42F93632280554170058EB07 /* NoteManager.swift in Sources */,
 				42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */,
+				42E2B688280DA4E500B51D9F /* AddAddressTableViewCell.swift in Sources */,
 				42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
@@ -571,6 +611,7 @@
 				42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */,
 				42F936482805B44E0058EB07 /* UITableView+Extension.swift in Sources */,
 				42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */,
+				42E2B684280DA4BE00B51D9F /* AddCalendarTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
