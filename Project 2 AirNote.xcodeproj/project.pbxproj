@@ -163,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				42F936282802BB850058EB07 /* DiscoverNotes */,
+				42E2B66D280CFC6D00B51D9F /* DiscoverGroups */,
 				42E2B66C280C03A600B51D9F /* SearchContent */,
 				42F936402805AFB60058EB07 /* AddContent */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
@@ -252,10 +253,52 @@
 		42E2B66C280C03A600B51D9F /* SearchContent */ = {
 			isa = PBXGroup;
 			children = (
+				42E2B670280D039600B51D9F /* NoteResult */,
+				42E2B671280D03E100B51D9F /* GroupResult */,
+			);
+			path = SearchContent;
+			sourceTree = "<group>";
+		};
+		42E2B66D280CFC6D00B51D9F /* DiscoverGroups */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DiscoverGroups;
+			sourceTree = "<group>";
+		};
+		42E2B66E280D032400B51D9F /* AddNote */ = {
+			isa = PBXGroup;
+			children = (
+				42F936562806BE5D0058EB07 /* AddNoteViewController.swift */,
+				42E2B6572809179F00B51D9F /* DrawingViewController.swift */,
+				42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */,
+			);
+			name = AddNote;
+			sourceTree = "<group>";
+		};
+		42E2B66F280D034F00B51D9F /* Add Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Add Group";
+			sourceTree = "<group>";
+		};
+		42E2B670280D039600B51D9F /* NoteResult */ = {
+			isa = PBXGroup;
+			children = (
 				42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */,
 				42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */,
 			);
-			path = SearchContent;
+			name = NoteResult;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
+		42E2B671280D03E100B51D9F /* GroupResult */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GroupResult;
+			path = ../../..;
 			sourceTree = "<group>";
 		};
 		42F936282802BB850058EB07 /* DiscoverNotes */ = {
@@ -291,9 +334,8 @@
 			isa = PBXGroup;
 			children = (
 				42F9363C28058BA20058EB07 /* AddContentViewController.swift */,
-				42F936562806BE5D0058EB07 /* AddNoteViewController.swift */,
-				42E2B6572809179F00B51D9F /* DrawingViewController.swift */,
-				42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */,
+				42E2B66E280D032400B51D9F /* AddNote */,
+				42E2B66F280D034F00B51D9F /* Add Group */,
 			);
 			name = "Add Content";
 			path = ../..;

@@ -53,27 +53,39 @@ extension SearchContentViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, searchText.isEmpty == false  {
             filteredNotes = notes.filter({ note in
-                note.noteTitle.localizedStandardContains(searchText)
+                let keyWord = note.noteKeywords.joined()
+                let isInKeyWords = keyWord.localizedStandardContains(searchText)
+                
+                let category = note.noteCategory
+                let isInCategory = category.localizedStandardContains(searchText)
+                
+                let isInTitle = note.noteTitle.localizedStandardContains(searchText)
+                
+                if isInKeyWords || isInCategory || isInTitle == true {
+                    return true
+                } else {
+                    return false
+                }
             })
-            
-            lazy var filteredNotesViaTags = notes.filter({ note in
-                let keyWords = note.noteKeywords.joined()
-                return keyWords.localizedStandardContains(searchText)
-            })
-            filteredNotes += filteredNotesViaTags
-            
-            lazy var filteredNotesViaCategory = notes.filter({ note in
-                let keyWords = note.noteCategory
-                return keyWords.localizedStandardContains(searchText)
-            })
-            filteredNotes += filteredNotesViaCategory
-            
+
         } else {
             filteredNotes = notes
         }
         searchNotesTableView.reloadData()
     }
     
+}
+
+extension Array where Element: Hashable {
+  func removingDuplicates() -> [Element] {
+      var addedDict = [Element: Bool]()
+      return filter {
+        addedDict.updateValue(true, forKey: $0) == nil
+      }
+   }
+   mutating func removeDuplicates() {
+      self = self.removingDuplicates()
+   }
 }
 
 // MARK: Configure search result tableview
