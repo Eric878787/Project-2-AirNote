@@ -41,7 +41,6 @@ class DiscoverNotesViewController: UIViewController {
     
     // MARK: Mock Data
     var category: [String] = ["所有筆記", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
-    var mockNotes: [String] = ["投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂", "投資理財", "運動健身"]
     
     // MARK: Data Provider
     private var noteManager = NoteManager()
@@ -70,6 +69,12 @@ class DiscoverNotesViewController: UIViewController {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
         // Fetch Notes Data
         fetchNotes()
         
@@ -77,16 +82,12 @@ class DiscoverNotesViewController: UIViewController {
         fetchUsers()
         
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
 }
 
 // MARK: Fetch Data
 extension DiscoverNotesViewController {
     
-    func fetchNotes() {
+    private func fetchNotes() {
         self.noteManager.fetchNotes { [weak self] result in
             
             switch result {
@@ -106,7 +107,7 @@ extension DiscoverNotesViewController {
         }
     }
     
-    func fetchUsers() {
+    private func fetchUsers() {
         self.userManager.fetchUsers { [weak self] result in
             
             switch result {
@@ -125,12 +126,6 @@ extension DiscoverNotesViewController {
         }
     }
     
-}
-
-// MARK: Mapping Notes to Users
-extension DiscoverNotesViewController {
-    private func mappingNotesToUsers() {
-    }
 }
 
 // MARK: To Next Page
@@ -212,10 +207,10 @@ extension DiscoverNotesViewController: UICollectionViewDataSource {
             
             // querying users' name & avatar
             for user in users where user.userId == filterNotes[indexPath.item].authorId {
-                    cell.authorNameLabel.text = user.userName
-                    let url = URL(string: user.userAvatar)
-                    cell.userAvatarImage.kf.indicatorType = .activity
-                    cell.userAvatarImage.kf.setImage(with: url)
+                cell.authorNameLabel.text = user.userName
+                let url = URL(string: user.userAvatar)
+                cell.userAvatarImage.kf.indicatorType = .activity
+                cell.userAvatarImage.kf.setImage(with: url)
             }
             return cell
         }

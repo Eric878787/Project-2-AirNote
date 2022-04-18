@@ -27,6 +27,8 @@
 		42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B65F2809735200B51D9F /* ColorOfPen.swift */; };
 		42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B662280ACFB400B51D9F /* SearchContentViewController.swift */; };
 		42E2B667280AD37C00B51D9F /* SearchContent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B666280AD37C00B51D9F /* SearchContent.storyboard */; };
+		42E2B66A280C039E00B51D9F /* NoteResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */; };
+		42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */; };
 		42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */; };
 		42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */; };
 		42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */; };
@@ -75,6 +77,8 @@
 		42E2B65F2809735200B51D9F /* ColorOfPen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOfPen.swift; sourceTree = "<group>"; };
 		42E2B662280ACFB400B51D9F /* SearchContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContentViewController.swift; sourceTree = "<group>"; };
 		42E2B666280AD37C00B51D9F /* SearchContent.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchContent.storyboard; sourceTree = "<group>"; };
+		42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteResultTableViewCell.swift; sourceTree = "<group>"; };
+		42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteResultTableViewCell.xib; sourceTree = "<group>"; };
 		42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesCollectionViewCell.xib; sourceTree = "<group>"; };
 		42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				42F936282802BB850058EB07 /* DiscoverNotes */,
+				42E2B66D280CFC6D00B51D9F /* DiscoverGroups */,
+				42E2B66C280C03A600B51D9F /* SearchContent */,
 				42F936402805AFB60058EB07 /* AddContent */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
 				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
@@ -244,6 +250,57 @@
 			name = ColorOfPen;
 			sourceTree = "<group>";
 		};
+		42E2B66C280C03A600B51D9F /* SearchContent */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B670280D039600B51D9F /* NoteResult */,
+				42E2B671280D03E100B51D9F /* GroupResult */,
+			);
+			path = SearchContent;
+			sourceTree = "<group>";
+		};
+		42E2B66D280CFC6D00B51D9F /* DiscoverGroups */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DiscoverGroups;
+			sourceTree = "<group>";
+		};
+		42E2B66E280D032400B51D9F /* AddNote */ = {
+			isa = PBXGroup;
+			children = (
+				42F936562806BE5D0058EB07 /* AddNoteViewController.swift */,
+				42E2B6572809179F00B51D9F /* DrawingViewController.swift */,
+				42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */,
+			);
+			name = AddNote;
+			sourceTree = "<group>";
+		};
+		42E2B66F280D034F00B51D9F /* Add Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Add Group";
+			sourceTree = "<group>";
+		};
+		42E2B670280D039600B51D9F /* NoteResult */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */,
+				42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */,
+			);
+			name = NoteResult;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
+		42E2B671280D03E100B51D9F /* GroupResult */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GroupResult;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
 		42F936282802BB850058EB07 /* DiscoverNotes */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,9 +334,8 @@
 			isa = PBXGroup;
 			children = (
 				42F9363C28058BA20058EB07 /* AddContentViewController.swift */,
-				42F936562806BE5D0058EB07 /* AddNoteViewController.swift */,
-				42E2B6572809179F00B51D9F /* DrawingViewController.swift */,
-				42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */,
+				42E2B66E280D032400B51D9F /* AddNote */,
+				42E2B66F280D034F00B51D9F /* Add Group */,
 			);
 			name = "Add Content";
 			path = ../..;
@@ -383,6 +439,7 @@
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
 				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
 				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
+				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
@@ -462,6 +519,7 @@
 				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
 				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,
 				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
+				42E2B66A280C039E00B51D9F /* NoteResultTableViewCell.swift in Sources */,
 				42F936462805B2AA0058EB07 /* UICollectionView+Extension.swift in Sources */,
 				42F9364B28066F430058EB07 /* AddContentTableViewCell.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
