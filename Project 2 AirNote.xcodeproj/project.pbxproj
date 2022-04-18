@@ -9,21 +9,99 @@
 /* Begin PBXBuildFile section */
 		42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585628005A7200D764F7 /* AppDelegate.swift */; };
 		42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585828005A7200D764F7 /* SceneDelegate.swift */; };
-		42DE585B28005A7200D764F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585A28005A7200D764F7 /* ViewController.swift */; };
+		42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585A28005A7200D764F7 /* TabBarViewController.swift */; };
 		42DE585E28005A7200D764F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE585C28005A7200D764F7 /* Main.storyboard */; };
 		42DE586028005A7600D764F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42DE585F28005A7600D764F7 /* Assets.xcassets */; };
 		42DE586328005A7600D764F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE586128005A7600D764F7 /* LaunchScreen.storyboard */; };
+		42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42DE586A28006CF400D764F7 /* GoogleService-Info.plist */; };
+		42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE58702801696800D764F7 /* DiscoverNotes.storyboard */; };
+		42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */; };
+		42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */; };
+		42DE587A2801808600D764F7 /* DiscoverStudyGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */; };
+		42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */; };
+		42E2B6552807E6AC00B51D9F /* AddPhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */; };
+		42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */; };
+		42E2B6582809179F00B51D9F /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B6572809179F00B51D9F /* DrawingViewController.swift */; };
+		42E2B65A280917B200B51D9F /* DrawingPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B659280917B200B51D9F /* DrawingPad.storyboard */; };
+		42E2B65E28096BD200B51D9F /* SetUpPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */; };
+		42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B65F2809735200B51D9F /* ColorOfPen.swift */; };
+		42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B662280ACFB400B51D9F /* SearchContentViewController.swift */; };
+		42E2B667280AD37C00B51D9F /* SearchContent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B666280AD37C00B51D9F /* SearchContent.storyboard */; };
+		42E2B66A280C039E00B51D9F /* NoteResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */; };
+		42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */; };
+		42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */; };
+		42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */; };
+		42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */; };
+		42F936302803F5950058EB07 /* CategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362E2803F5950058EB07 /* CategoryCollectionViewCell.xib */; };
+		42F93632280554170058EB07 /* NoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93631280554170058EB07 /* NoteManager.swift */; };
+		42F93634280554AA0058EB07 /* NoteDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93633280554AA0058EB07 /* NoteDataModel.swift */; };
+		42F93638280573A30058EB07 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93637280573A30058EB07 /* UserManager.swift */; };
+		42F9363A280573E40058EB07 /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93639280573E40058EB07 /* UserDataModel.swift */; };
+		42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9363C28058BA20058EB07 /* AddContentViewController.swift */; };
+		42F9363F28058BEB0058EB07 /* AddContent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42F9363E28058BEB0058EB07 /* AddContent.storyboard */; };
+		42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936412805B0000058EB07 /* AddTitleTableViewCell.swift */; };
+		42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F936422805B0000058EB07 /* AddTitleTableViewCell.xib */; };
+		42F936462805B2AA0058EB07 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936452805B2AA0058EB07 /* UICollectionView+Extension.swift */; };
+		42F936482805B44E0058EB07 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936472805B44E0058EB07 /* UITableView+Extension.swift */; };
+		42F9364B28066F430058EB07 /* AddContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9364928066F430058EB07 /* AddContentTableViewCell.swift */; };
+		42F9364C28066F430058EB07 /* AddContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9364A28066F430058EB07 /* AddContentTableViewCell.xib */; };
+		42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */; };
+		42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */; };
+		42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936562806BE5D0058EB07 /* AddNoteViewController.swift */; };
+		42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */; };
+		42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */; };
+		F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
 		42DE585328005A7200D764F7 /* Project 2 AirNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project 2 AirNote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DE585628005A7200D764F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42DE585828005A7200D764F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		42DE585A28005A7200D764F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		42DE585A28005A7200D764F7 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		42DE585D28005A7200D764F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		42DE585F28005A7600D764F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42DE586228005A7600D764F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42DE586428005A7600D764F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42DE586A28006CF400D764F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42DE58702801696800D764F7 /* DiscoverNotes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DiscoverNotes.storyboard; sourceTree = "<group>"; };
+		42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
+		42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverNotesViewController.swift; sourceTree = "<group>"; };
+		42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DiscoverStudyGroups.storyboard; sourceTree = "<group>"; };
+		42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverStudyGroupsViewController.swift; sourceTree = "<group>"; };
+		42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotosTableViewCell.swift; sourceTree = "<group>"; };
+		42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPhotosTableViewCell.xib; sourceTree = "<group>"; };
+		42E2B6572809179F00B51D9F /* DrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewController.swift; sourceTree = "<group>"; };
+		42E2B659280917B200B51D9F /* DrawingPad.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DrawingPad.storyboard; sourceTree = "<group>"; };
+		42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpPadViewController.swift; sourceTree = "<group>"; };
+		42E2B65F2809735200B51D9F /* ColorOfPen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOfPen.swift; sourceTree = "<group>"; };
+		42E2B662280ACFB400B51D9F /* SearchContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContentViewController.swift; sourceTree = "<group>"; };
+		42E2B666280AD37C00B51D9F /* SearchContent.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchContent.storyboard; sourceTree = "<group>"; };
+		42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteResultTableViewCell.swift; sourceTree = "<group>"; };
+		42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteResultTableViewCell.xib; sourceTree = "<group>"; };
+		42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
+		42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesCollectionViewCell.xib; sourceTree = "<group>"; };
+		42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		42F9362E2803F5950058EB07 /* CategoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		42F93631280554170058EB07 /* NoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteManager.swift; sourceTree = "<group>"; };
+		42F93633280554AA0058EB07 /* NoteDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataModel.swift; sourceTree = "<group>"; };
+		42F93637280573A30058EB07 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		42F93639280573E40058EB07 /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
+		42F9363C28058BA20058EB07 /* AddContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContentViewController.swift; sourceTree = "<group>"; };
+		42F9363E28058BEB0058EB07 /* AddContent.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddContent.storyboard; sourceTree = "<group>"; };
+		42F936412805B0000058EB07 /* AddTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTitleTableViewCell.swift; sourceTree = "<group>"; };
+		42F936422805B0000058EB07 /* AddTitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTitleTableViewCell.xib; sourceTree = "<group>"; };
+		42F936452805B2AA0058EB07 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		42F936472805B44E0058EB07 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		42F9364928066F430058EB07 /* AddContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContentTableViewCell.swift; sourceTree = "<group>"; };
+		42F9364A28066F430058EB07 /* AddContentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddContentTableViewCell.xib; sourceTree = "<group>"; };
+		42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKeywordsTableViewCell.swift; sourceTree = "<group>"; };
+		42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddKeywordsTableViewCell.xib; sourceTree = "<group>"; };
+		42F936562806BE5D0058EB07 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
+		42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoverTableViewCell.swift; sourceTree = "<group>"; };
+		42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCoverTableViewCell.xib; sourceTree = "<group>"; };
+		73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_2_AirNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.release.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +109,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		174931A29B62A1A1E9066F0A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */,
+				ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		42DE584A28005A7200D764F7 = {
 			isa = PBXGroup;
 			children = (
 				42DE585528005A7200D764F7 /* Project 2 AirNote */,
 				42DE585428005A7200D764F7 /* Products */,
+				174931A29B62A1A1E9066F0A /* Pods */,
+				489FDFB4AFF8981481B9B72D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +146,224 @@
 		42DE585528005A7200D764F7 /* Project 2 AirNote */ = {
 			isa = PBXGroup;
 			children = (
-				42DE585628005A7200D764F7 /* AppDelegate.swift */,
+				42DE586F280164B000D764F7 /* Resource */,
+				42DE58732801781700D764F7 /* Extension */,
+				42DE586D2801642F00D764F7 /* Model */,
+				42DE586E2801644000D764F7 /* Controller */,
+				42DE586C2801641C00D764F7 /* View */,
 				42DE585828005A7200D764F7 /* SceneDelegate.swift */,
-				42DE585A28005A7200D764F7 /* ViewController.swift */,
-				42DE585C28005A7200D764F7 /* Main.storyboard */,
-				42DE585F28005A7600D764F7 /* Assets.xcassets */,
-				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
+				42DE585628005A7200D764F7 /* AppDelegate.swift */,
 				42DE586428005A7600D764F7 /* Info.plist */,
+				42DE586A28006CF400D764F7 /* GoogleService-Info.plist */,
 			);
 			path = "Project 2 AirNote";
+			sourceTree = "<group>";
+		};
+		42DE586C2801641C00D764F7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				42F936282802BB850058EB07 /* DiscoverNotes */,
+				42E2B66D280CFC6D00B51D9F /* DiscoverGroups */,
+				42E2B66C280C03A600B51D9F /* SearchContent */,
+				42F936402805AFB60058EB07 /* AddContent */,
+				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
+				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
+				42E2B666280AD37C00B51D9F /* SearchContent.storyboard */,
+				42E2B659280917B200B51D9F /* DrawingPad.storyboard */,
+				42F9363E28058BEB0058EB07 /* AddContent.storyboard */,
+				42DE585C28005A7200D764F7 /* Main.storyboard */,
+				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		42DE586D2801642F00D764F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				42F93635280554B30058EB07 /* Notes */,
+				42F936362805737E0058EB07 /* Users */,
+				42E2B6612809736300B51D9F /* ColorOfPen */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		42DE586E2801644000D764F7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				42DE58722801772C00D764F7 /* Base */,
+				42DE587828017FAD00D764F7 /* DiscoverNotes */,
+				42DE587B2801809100D764F7 /* DiscoverStudyGroups */,
+				42F9363B28058B6E0058EB07 /* Add Content */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		42DE586F280164B000D764F7 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				42DE585F28005A7600D764F7 /* Assets.xcassets */,
+			);
+			name = Resource;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		42DE58722801772C00D764F7 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		42DE58732801781700D764F7 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */,
+				42F936452805B2AA0058EB07 /* UICollectionView+Extension.swift */,
+				42F936472805B44E0058EB07 /* UITableView+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		42DE587828017FAD00D764F7 /* DiscoverNotes */ = {
+			isa = PBXGroup;
+			children = (
+				42DE587628017B1C00D764F7 /* DiscoverNotesViewController.swift */,
+				42E2B662280ACFB400B51D9F /* SearchContentViewController.swift */,
+			);
+			path = DiscoverNotes;
+			sourceTree = "<group>";
+		};
+		42DE587B2801809100D764F7 /* DiscoverStudyGroups */ = {
+			isa = PBXGroup;
+			children = (
+				42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */,
+			);
+			path = DiscoverStudyGroups;
+			sourceTree = "<group>";
+		};
+		42E2B6612809736300B51D9F /* ColorOfPen */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B65F2809735200B51D9F /* ColorOfPen.swift */,
+			);
+			name = ColorOfPen;
+			sourceTree = "<group>";
+		};
+		42E2B66C280C03A600B51D9F /* SearchContent */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B670280D039600B51D9F /* NoteResult */,
+				42E2B671280D03E100B51D9F /* GroupResult */,
+			);
+			path = SearchContent;
+			sourceTree = "<group>";
+		};
+		42E2B66D280CFC6D00B51D9F /* DiscoverGroups */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DiscoverGroups;
+			sourceTree = "<group>";
+		};
+		42E2B66E280D032400B51D9F /* AddNote */ = {
+			isa = PBXGroup;
+			children = (
+				42F936562806BE5D0058EB07 /* AddNoteViewController.swift */,
+				42E2B6572809179F00B51D9F /* DrawingViewController.swift */,
+				42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */,
+			);
+			name = AddNote;
+			sourceTree = "<group>";
+		};
+		42E2B66F280D034F00B51D9F /* Add Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Add Group";
+			sourceTree = "<group>";
+		};
+		42E2B670280D039600B51D9F /* NoteResult */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */,
+				42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */,
+			);
+			name = NoteResult;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
+		42E2B671280D03E100B51D9F /* GroupResult */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GroupResult;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
+		42F936282802BB850058EB07 /* DiscoverNotes */ = {
+			isa = PBXGroup;
+			children = (
+				42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */,
+				42F9362E2803F5950058EB07 /* CategoryCollectionViewCell.xib */,
+				42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */,
+				42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */,
+			);
+			path = DiscoverNotes;
+			sourceTree = "<group>";
+		};
+		42F93635280554B30058EB07 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				42F93631280554170058EB07 /* NoteManager.swift */,
+				42F93633280554AA0058EB07 /* NoteDataModel.swift */,
+			);
+			name = Notes;
+			sourceTree = "<group>";
+		};
+		42F936362805737E0058EB07 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				42F93637280573A30058EB07 /* UserManager.swift */,
+				42F93639280573E40058EB07 /* UserDataModel.swift */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		42F9363B28058B6E0058EB07 /* Add Content */ = {
+			isa = PBXGroup;
+			children = (
+				42F9363C28058BA20058EB07 /* AddContentViewController.swift */,
+				42E2B66E280D032400B51D9F /* AddNote */,
+				42E2B66F280D034F00B51D9F /* Add Group */,
+			);
+			name = "Add Content";
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		42F936402805AFB60058EB07 /* AddContent */ = {
+			isa = PBXGroup;
+			children = (
+				42F936412805B0000058EB07 /* AddTitleTableViewCell.swift */,
+				42F936422805B0000058EB07 /* AddTitleTableViewCell.xib */,
+				42F9364928066F430058EB07 /* AddContentTableViewCell.swift */,
+				42F9364A28066F430058EB07 /* AddContentTableViewCell.xib */,
+				42F93652280674E10058EB07 /* AddKeywordsTableViewCell.swift */,
+				42F93653280674E10058EB07 /* AddKeywordsTableViewCell.xib */,
+				42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */,
+				42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */,
+				42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */,
+				42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */,
+			);
+			path = AddContent;
+			sourceTree = "<group>";
+		};
+		489FDFB4AFF8981481B9B72D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +373,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42DE586728005A7600D764F7 /* Build configuration list for PBXNativeTarget "Project 2 AirNote" */;
 			buildPhases = (
+				76A97E03F5BE181010DE8695 /* [CP] Check Pods Manifest.lock */,
 				42DE584F28005A7200D764F7 /* Sources */,
 				42DE585028005A7200D764F7 /* Frameworks */,
 				42DE585128005A7200D764F7 /* Resources */,
+				B6714534911FD7B79A819894 /* [CP] Embed Pods Frameworks */,
+				42DE587E2801954400D764F7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -125,22 +427,118 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42E2B667280AD37C00B51D9F /* SearchContent.storyboard in Resources */,
+				42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */,
 				42DE586328005A7600D764F7 /* LaunchScreen.storyboard in Resources */,
+				42F9364C28066F430058EB07 /* AddContentTableViewCell.xib in Resources */,
+				42E2B65A280917B200B51D9F /* DrawingPad.storyboard in Resources */,
+				42DE587A2801808600D764F7 /* DiscoverStudyGroups.storyboard in Resources */,
+				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
+				42F9363F28058BEB0058EB07 /* AddContent.storyboard in Resources */,
+				42F936302803F5950058EB07 /* CategoryCollectionViewCell.xib in Resources */,
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
+				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
+				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
+				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
+				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
+				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
+				42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		42DE587E2801954400D764F7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		76A97E03F5BE181010DE8695 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Project 2 AirNote-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B6714534911FD7B79A819894 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		42DE584F28005A7200D764F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42DE585B28005A7200D764F7 /* ViewController.swift in Sources */,
+				42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */,
+				42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */,
+				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
+				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
+				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,
+				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
+				42E2B66A280C039E00B51D9F /* NoteResultTableViewCell.swift in Sources */,
+				42F936462805B2AA0058EB07 /* UICollectionView+Extension.swift in Sources */,
+				42F9364B28066F430058EB07 /* AddContentTableViewCell.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
+				42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */,
+				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
+				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
+				42F9363A280573E40058EB07 /* UserDataModel.swift in Sources */,
+				42F93634280554AA0058EB07 /* NoteDataModel.swift in Sources */,
+				42F93632280554170058EB07 /* NoteManager.swift in Sources */,
+				42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */,
+				42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
+				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
+				42E2B6582809179F00B51D9F /* DrawingViewController.swift in Sources */,
+				42E2B6552807E6AC00B51D9F /* AddPhotosTableViewCell.swift in Sources */,
+				42E2B65E28096BD200B51D9F /* SetUpPadViewController.swift in Sources */,
+				42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */,
+				42F936482805B44E0058EB07 /* UITableView+Extension.swift in Sources */,
+				42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +614,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +668,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -282,6 +680,7 @@
 		};
 		42DE586828005A7600D764F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,6 +709,7 @@
 		};
 		42DE586928005A7600D764F7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

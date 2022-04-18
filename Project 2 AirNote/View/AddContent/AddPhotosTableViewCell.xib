@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="558" id="KGk-i7-Jjw" customClass="AddPhotosTableViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="396" height="558"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="396" height="558"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Dr-1v-N6E">
+                        <rect key="frame" x="15" y="15" width="366" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9U0-4x-VSe">
+                        <rect key="frame" x="164.5" y="455.5" width="67" height="31"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <connections>
+                            <action selector="selectImages:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZKQ-Xe-N0F"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Nd-Rp8">
+                        <rect key="frame" x="15" y="501.5" width="366" height="31"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Upload"/>
+                        <connections>
+                            <action selector="uploadNote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JE2-Vt-oU1"/>
+                        </connections>
+                    </button>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdl-3a-hzW">
+                        <rect key="frame" x="15" y="40.5" width="366" height="400"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="cl3-Cn-5z3">
+                                <rect key="frame" x="0.0" y="0.0" width="945" height="400"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jxG-dt-s95">
+                                        <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="jxG-dt-s95" secondAttribute="height" multiplier="9:16" id="eqf-0b-pdh"/>
+                                        </constraints>
+                                        <imageReference key="image" image="text.book.closed" catalog="system" symbolScale="default"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text.book.closed" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Kuz-n3-ySj">
+                                        <rect key="frame" x="240" y="0.0" width="225" height="400"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Kuz-n3-ySj" secondAttribute="height" multiplier="9:16" id="B63-xY-tCy"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text.book.closed" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="b5G-zZ-krc">
+                                        <rect key="frame" x="480" y="0.0" width="225" height="400"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="b5G-zZ-krc" secondAttribute="height" multiplier="9:16" id="kbH-5h-K29"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text.book.closed" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="PbF-lo-fHB">
+                                        <rect key="frame" x="720" y="0.0" width="225" height="400"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="PbF-lo-fHB" secondAttribute="height" multiplier="9:16" id="WFV-tp-FUr"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="dSF-No-6YQ"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cl3-Cn-5z3" firstAttribute="height" secondItem="jdl-3a-hzW" secondAttribute="height" id="A44-0a-GIJ"/>
+                            <constraint firstItem="cl3-Cn-5z3" firstAttribute="top" secondItem="sc9-RO-otr" secondAttribute="top" id="Azc-HZ-g03"/>
+                            <constraint firstItem="cl3-Cn-5z3" firstAttribute="bottom" secondItem="sc9-RO-otr" secondAttribute="bottom" id="Cnc-8F-lrx"/>
+                            <constraint firstItem="cl3-Cn-5z3" firstAttribute="leading" secondItem="sc9-RO-otr" secondAttribute="leading" id="gOl-bv-ZLe"/>
+                            <constraint firstItem="cl3-Cn-5z3" firstAttribute="trailing" secondItem="sc9-RO-otr" secondAttribute="trailing" id="hn0-nf-czL"/>
+                        </constraints>
+                        <viewLayoutGuide key="contentLayoutGuide" id="sc9-RO-otr"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="Vbb-lq-Fft"/>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="6Dr-1v-N6E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="0eI-f6-gPh"/>
+                    <constraint firstAttribute="trailing" secondItem="6Dr-1v-N6E" secondAttribute="trailing" constant="15" id="0sm-iJ-nxb"/>
+                    <constraint firstItem="jdl-3a-hzW" firstAttribute="top" secondItem="6Dr-1v-N6E" secondAttribute="bottom" constant="5" id="Blb-fT-Q5W"/>
+                    <constraint firstItem="jdl-3a-hzW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Ft8-Ff-4hh"/>
+                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="O1J-IK-S68"/>
+                    <constraint firstItem="9U0-4x-VSe" firstAttribute="top" secondItem="jdl-3a-hzW" secondAttribute="bottom" constant="15" id="RJf-rf-Hen"/>
+                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="top" secondItem="9U0-4x-VSe" secondAttribute="bottom" constant="15" id="bB2-ZK-7xN"/>
+                    <constraint firstItem="6Dr-1v-N6E" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="hez-LD-Qrn"/>
+                    <constraint firstAttribute="trailing" secondItem="jdl-3a-hzW" secondAttribute="trailing" constant="15" id="iQH-IP-4wN"/>
+                    <constraint firstAttribute="trailing" secondItem="79m-Nd-Rp8" secondAttribute="trailing" constant="15" id="jpG-TL-8o2"/>
+                    <constraint firstItem="9U0-4x-VSe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="xy1-jC-1JA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="addButton" destination="9U0-4x-VSe" id="a3e-3R-c2J"/>
+                <outlet property="titleLabel" destination="6Dr-1v-N6E" id="Gxh-0j-7rO"/>
+                <outletCollection property="bookImageViews" destination="jxG-dt-s95" collectionClass="NSMutableArray" id="eka-yS-UKg"/>
+                <outletCollection property="bookImageViews" destination="Kuz-n3-ySj" collectionClass="NSMutableArray" id="usx-3i-KL2"/>
+                <outletCollection property="bookImageViews" destination="b5G-zZ-krc" collectionClass="NSMutableArray" id="72b-X9-3e5"/>
+                <outletCollection property="bookImageViews" destination="PbF-lo-fHB" collectionClass="NSMutableArray" id="iR4-CK-Cfo"/>
+            </connections>
+            <point key="canvasLocation" x="82.608695652173921" y="182.14285714285714"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="text.book.closed" catalog="system" width="115" height="128"/>
+    </resources>
+</document>
