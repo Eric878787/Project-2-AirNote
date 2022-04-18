@@ -20,13 +20,13 @@
                         <rect key="frame" x="0.0" y="1" width="268" height="270.5"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="PQQ-Xv-63H">
-                        <rect key="frame" x="10" y="284.5" width="48" height="45"/>
+                        <rect key="frame" x="0.0" y="284.5" width="48" height="45"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="PQQ-Xv-63H" secondAttribute="height" multiplier="1:1" id="GfZ-pN-xuL"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kVW-Ko-cXU">
-                        <rect key="frame" x="63" y="283" width="39.5" height="48"/>
+                        <rect key="frame" x="53" y="283" width="39.5" height="48"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XiO-0G-d8H">
                                 <rect key="frame" x="0.0" y="0.0" width="39.5" height="28.5"/>
@@ -46,7 +46,7 @@
                         </constraints>
                     </stackView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Soq-dO-hbR">
-                        <rect key="frame" x="234" y="284.5" width="24" height="21.5"/>
+                        <rect key="frame" x="244" y="284.5" width="24" height="21.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Soq-dO-hbR" secondAttribute="height" multiplier="1:1" id="lbs-LF-dP1"/>
                         </constraints>
@@ -65,8 +65,8 @@
                 <constraint firstAttribute="trailing" secondItem="6g1-PB-wU9" secondAttribute="trailing" id="ZcA-tv-PPu"/>
                 <constraint firstItem="6g1-PB-wU9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="aEZ-6j-qUq"/>
                 <constraint firstItem="PQQ-Xv-63H" firstAttribute="bottom" secondItem="kVW-Ko-cXU" secondAttribute="bottom" id="eN7-1F-h4s"/>
-                <constraint firstAttribute="trailing" secondItem="Soq-dO-hbR" secondAttribute="trailing" constant="10" id="iyv-rL-dB2"/>
-                <constraint firstItem="PQQ-Xv-63H" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="kZu-IC-kOV"/>
+                <constraint firstAttribute="trailing" secondItem="Soq-dO-hbR" secondAttribute="trailing" id="iyv-rL-dB2"/>
+                <constraint firstItem="PQQ-Xv-63H" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="kZu-IC-kOV"/>
                 <constraint firstAttribute="bottom" secondItem="PQQ-Xv-63H" secondAttribute="bottom" constant="10" id="tav-uw-gIj"/>
             </constraints>
             <size key="customSize" width="268" height="341"/>

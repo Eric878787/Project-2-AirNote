@@ -21,10 +21,6 @@ struct Note: Codable {
     var noteImages: [String]
     var noteKeywords: [String]
     var noteTitle: String
-    
-    var userName: String?
-    var userAvatar: String?
-    
 }
 
 struct Comment: Codable {

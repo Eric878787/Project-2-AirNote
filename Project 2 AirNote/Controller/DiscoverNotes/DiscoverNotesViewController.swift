@@ -11,7 +11,7 @@ import Kingfisher
 class DiscoverNotesViewController: UIViewController {
     
     // MARK: CollecitonView Properties
-    private var categoryCollectionView: UICollectionView = {
+    var categoryCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         var categoryCollecitonView = UICollectionView(
@@ -37,21 +37,20 @@ class DiscoverNotesViewController: UIViewController {
         return notesCollectionView
     }()
     
+    // MARK: Category
     private var selectedCategoryIndex = 0
-    
-    // MARK: Mock Data
     var category: [String] = ["所有筆記", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
     
     // MARK: Data Provider
     private var noteManager = NoteManager()
-    private var userManager = UserManager()
+    var userManager = UserManager()
     
     // MARK: Notes Data
     private var notes: [Note] = []
     private var filterNotes: [Note] = []
     
     // MARK: Users Data
-    private var users: [User] = []
+    var users: [User] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
