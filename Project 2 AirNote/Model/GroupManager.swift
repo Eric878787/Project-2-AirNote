@@ -1,8 +1,8 @@
 //
-//  NotesManager.swift
+//  GroupManager.swift
 //  Project 2 AirNote
 //
-//  Created by Eric chung on 2022/4/12.
+//  Created by Eric chung on 2022/4/18.
 //
 
 import Foundation
@@ -11,29 +11,29 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 import UIKit
 
-class NoteManager {
+class GroupManager {
     
-    static let shared = NoteManager()
+    static let shared = GroupManager()
     
     lazy var db = Firestore.firestore()
     
-    func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
+    func fetchGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
         
-        db.collection("Notes").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
+        db.collection("Groups").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
             
             if let error = error {
                 
                 completion(.failure(error))
             } else {
                 
-                var notes = [Note]()
+                var groups = [Group]()
                 
                 for document in querySnapshot!.documents {
                     
                     do {
-                        if let note = try document.data(as: Note.self, decoder: Firestore.Decoder()) {
+                        if let group = try document.data(as: Group.self, decoder: Firestore.Decoder()) {
                             
-                            notes.append(note)
+                            groups.append(group)
                             
                         }
                         
@@ -43,27 +43,25 @@ class NoteManager {
                     }
                 }
                 
-                completion(.success(notes))
+                completion(.success(groups))
             }
         }
     }
     
-    func createNote(note: Note, completion: @escaping (Result<String, Error>) -> Void) {
+    func createGroup(group: Group, completion: @escaping (Result<String, Error>) -> Void) {
         
-        let document = db.collection("Notes").document()
+        let document = db.collection("Groups").document()
         
-        var note = note
+        var group = group
         
         do {
-            note.authorId = "qbQsVVpVHlf6I4XLfOJ6"
-            note.comments = []
+            group.groupOwner = "qbQsVVpVHlf6I4XLfOJ6"
+            group.groupMembers.append("qbQsVVpVHlf6I4XLfOJ6")
             let date = Date()
-            note.createdTime = date
-            note.noteId = document.documentID
-            note.likes = []
-            note.noteClicks = []
+            group.createdTime = date
+            group.groupId = document.documentID
             
-            try  document.setData(from: note, encoder: Firestore.Encoder())
+            try  document.setData(from: group, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
         }
         catch {
@@ -92,4 +90,5 @@ class NoteManager {
             }
         }
     }
+    
 }
