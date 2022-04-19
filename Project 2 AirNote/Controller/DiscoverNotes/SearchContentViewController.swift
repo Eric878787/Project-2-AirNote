@@ -172,7 +172,7 @@ extension SearchContentViewController: UITableViewDataSource {
         
         // querying users' name & avatar
         for user in users where user.userId == filteredNotes[indexPath.row].authorId {
-            cell.authorNameLabel.text = user.userName
+            cell.aurthorNameLabel.text = user.userName
             let avatarUrl = URL(string: user.userAvatar)
             cell.avatarImageView.kf.indicatorType = .activity
             cell.avatarImageView.kf.setImage(with: avatarUrl)

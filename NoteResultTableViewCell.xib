@@ -69,7 +69,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="authorNameLabel" destination="ZQD-n0-gHI" id="fTd-AD-zFO"/>
+                <outlet property="aurthorNameLabel" destination="ZQD-n0-gHI" id="fTd-AD-zFO"/>
                 <outlet property="avatarImageView" destination="v39-I0-C2E" id="B7b-z8-MXc"/>
                 <outlet property="likeButton" destination="pV4-Xi-mWZ" id="INH-7o-XfW"/>
                 <outlet property="mainImageView" destination="yTR-eG-T73" id="76b-XH-tmm"/>

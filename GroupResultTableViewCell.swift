@@ -1,15 +1,14 @@
 //
-//  SearchContentTableViewCell.swift
+//  GroupResultTableViewCell.swift
 //  Project 2 AirNote
 //
-//  Created by Eric chung on 2022/4/17.
+//  Created by Eric chung on 2022/4/19.
 //
 
 import UIKit
 
-class NoteResultTableViewCell: UITableViewCell {
-    
-    
+class GroupResultTableViewCell: UITableViewCell {
+
     @IBOutlet weak var mainImageView: UIImageView!
     
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -18,7 +17,11 @@ class NoteResultTableViewCell: UITableViewCell {
     
     @IBOutlet weak var aurthorNameLabel: UILabel!
     
-    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    
+    @IBOutlet weak var membersLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

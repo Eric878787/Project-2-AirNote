@@ -65,6 +65,10 @@ class DiscoverStudyGroupsViewController: UIViewController {
         // Set Up Groups CollectionView
         configureGroupsCollectionView()
         
+        // Search Button
+        let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
+        self.navigationItem.rightBarButtonItem = searchButton
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,6 +83,16 @@ class DiscoverStudyGroupsViewController: UIViewController {
     
 }
 
+// MARK: To Search Page
+
+extension DiscoverStudyGroupsViewController {
+    
+    @objc private func toSearchPage() {
+        let storyBoard = UIStoryboard(name: "SearchContent", bundle: nil)
+        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchGroupsViewController") as? SearchGroupsViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
 
 // MARK: Configure Category CollectionView
 extension DiscoverStudyGroupsViewController {

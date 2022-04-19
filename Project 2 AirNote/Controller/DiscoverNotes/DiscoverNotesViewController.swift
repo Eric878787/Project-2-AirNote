@@ -132,7 +132,7 @@ extension DiscoverNotesViewController {
     
     @objc private func toSearchPage() {
         let storyBoard = UIStoryboard(name: "SearchContent", bundle: nil)
-        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchContentViewController") as? SearchContentViewController else { return }
+        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchGroupsViewController") as? SearchGroupsViewController else { return }
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

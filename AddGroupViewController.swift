@@ -43,7 +43,6 @@ class AddGroupViewController: UIViewController {
         
         // Set up Tableview
         configureAddGroupTableView ()
-        
     }
     
 }

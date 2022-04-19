@@ -38,6 +38,9 @@
 		42E2B685280DA4BE00B51D9F /* AddCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */; };
 		42E2B688280DA4E500B51D9F /* AddAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */; };
 		42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B687280DA4E500B51D9F /* AddAddressTableViewCell.xib */; };
+		42E2B68C280EBBF700B51D9F /* SearchGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B68B280EBBF700B51D9F /* SearchGroupsViewController.swift */; };
+		42E2B68F280EBFA300B51D9F /* GroupResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B68D280EBFA300B51D9F /* GroupResultTableViewCell.swift */; };
+		42E2B690280EBFA300B51D9F /* GroupResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B68E280EBFA300B51D9F /* GroupResultTableViewCell.xib */; };
 		42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */; };
 		42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */; };
 		42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */; };
@@ -97,6 +100,9 @@
 		42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCalendarTableViewCell.xib; sourceTree = "<group>"; };
 		42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAddressTableViewCell.swift; sourceTree = "<group>"; };
 		42E2B687280DA4E500B51D9F /* AddAddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAddressTableViewCell.xib; sourceTree = "<group>"; };
+		42E2B68B280EBBF700B51D9F /* SearchGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGroupsViewController.swift; sourceTree = "<group>"; };
+		42E2B68D280EBFA300B51D9F /* GroupResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResultTableViewCell.swift; sourceTree = "<group>"; };
+		42E2B68E280EBFA300B51D9F /* GroupResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupResultTableViewCell.xib; sourceTree = "<group>"; };
 		42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesCollectionViewCell.xib; sourceTree = "<group>"; };
 		42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -213,6 +219,7 @@
 				42DE587828017FAD00D764F7 /* DiscoverNotes */,
 				42DE587B2801809100D764F7 /* DiscoverStudyGroups */,
 				42F9363B28058B6E0058EB07 /* Add Content */,
+				42E2B66F280D034F00B51D9F /* ChatRoom */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -257,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				42DE587C280180A200D764F7 /* DiscoverStudyGroupsViewController.swift */,
+				42E2B68B280EBBF700B51D9F /* SearchGroupsViewController.swift */,
 			);
 			path = DiscoverStudyGroups;
 			sourceTree = "<group>";
@@ -297,12 +305,13 @@
 			name = AddNote;
 			sourceTree = "<group>";
 		};
-		42E2B66F280D034F00B51D9F /* Add Group */ = {
+		42E2B66F280D034F00B51D9F /* ChatRoom */ = {
 			isa = PBXGroup;
 			children = (
 				42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */,
 			);
-			name = "Add Group";
+			name = ChatRoom;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		42E2B670280D039600B51D9F /* NoteResult */ = {
@@ -318,6 +327,8 @@
 		42E2B671280D03E100B51D9F /* GroupResult */ = {
 			isa = PBXGroup;
 			children = (
+				42E2B68D280EBFA300B51D9F /* GroupResultTableViewCell.swift */,
+				42E2B68E280EBFA300B51D9F /* GroupResultTableViewCell.xib */,
 			);
 			name = GroupResult;
 			path = ../../..;
@@ -402,7 +413,6 @@
 			children = (
 				42F9363C28058BA20058EB07 /* AddContentViewController.swift */,
 				42E2B66E280D032400B51D9F /* AddNote */,
-				42E2B66F280D034F00B51D9F /* Add Group */,
 			);
 			name = "Add Content";
 			path = ../..;
@@ -507,6 +517,7 @@
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
 				42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */,
+				42E2B690280EBFA300B51D9F /* GroupResultTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,8 +602,10 @@
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
+				42E2B68C280EBBF700B51D9F /* SearchGroupsViewController.swift in Sources */,
 				42F9363A280573E40058EB07 /* UserDataModel.swift in Sources */,
 				42F93634280554AA0058EB07 /* NoteDataModel.swift in Sources */,
+				42E2B68F280EBFA300B51D9F /* GroupResultTableViewCell.swift in Sources */,
 				42F93632280554170058EB07 /* NoteManager.swift in Sources */,
 				42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */,
 				42E2B688280DA4E500B51D9F /* AddAddressTableViewCell.swift in Sources */,
