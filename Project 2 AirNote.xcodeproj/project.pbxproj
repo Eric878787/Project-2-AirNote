@@ -33,7 +33,6 @@
 		42E2B675280D666500B51D9F /* GroupsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B673280D666500B51D9F /* GroupsCollectionViewCell.xib */; };
 		42E2B678280D7F9600B51D9F /* GroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B677280D7F9600B51D9F /* GroupManager.swift */; };
 		42E2B67A280D7FA700B51D9F /* GroupDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B679280D7FA700B51D9F /* GroupDataModel.swift */; };
-		42E2B67C280D8F9200B51D9F /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B67B280D8F9200B51D9F /* Date+Extension.swift */; };
 		42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */; };
 		42E2B684280DA4BE00B51D9F /* AddCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */; };
 		42E2B685280DA4BE00B51D9F /* AddCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */; };
@@ -93,7 +92,6 @@
 		42E2B673280D666500B51D9F /* GroupsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupsCollectionViewCell.xib; sourceTree = "<group>"; };
 		42E2B677280D7F9600B51D9F /* GroupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManager.swift; sourceTree = "<group>"; };
 		42E2B679280D7FA700B51D9F /* GroupDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDataModel.swift; sourceTree = "<group>"; };
-		42E2B67B280D8F9200B51D9F /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
 		42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCalendarTableViewCell.xib; sourceTree = "<group>"; };
@@ -242,7 +240,6 @@
 				42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */,
 				42F936452805B2AA0058EB07 /* UICollectionView+Extension.swift */,
 				42F936472805B44E0058EB07 /* UITableView+Extension.swift */,
-				42E2B67B280D8F9200B51D9F /* Date+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -584,7 +581,6 @@
 				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
 				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
 				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,
-				42E2B67C280D8F9200B51D9F /* Date+Extension.swift in Sources */,
 				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
 				42E2B66A280C039E00B51D9F /* NoteResultTableViewCell.swift in Sources */,
 				42F936462805B2AA0058EB07 /* UICollectionView+Extension.swift in Sources */,
