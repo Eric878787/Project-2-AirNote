@@ -21,6 +21,8 @@ class AddCoverTableViewCell: UITableViewCell {
     var delegate: CoverDelegate?
     
     override func awakeFromNib() {
+        titleLabel.text = "封面"
+        selectButton.setTitle("新增封面", for: .normal)
         super.awakeFromNib()
     }
     
@@ -32,8 +34,6 @@ class AddCoverTableViewCell: UITableViewCell {
     
     @IBAction func addCover(_ sender: Any) {
         delegate?.buttonDidSelect()
-        titleLabel.text = "封面"
-        selectButton.setTitle("上傳", for: .normal)
     }
 
 }

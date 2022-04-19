@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import CoreLocation
 
 class AddGroupViewController: UIViewController {
     
@@ -31,7 +32,7 @@ class AddGroupViewController: UIViewController {
     private var coverImage = UIImage(systemName: "magazine")
     
     // MARK: Data Manager
-    private var groupManger = GroupManager()
+    private var groupManager = GroupManager()
     
     
     override func viewDidLoad() {
@@ -55,7 +56,9 @@ extension AddGroupViewController {
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddTitleTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddContentTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddKeywordsTableViewCell.self), bundle: nil)
+        addGroupTableView.registerCellWithNib(identifier: String(describing: AddCalendarTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddCoverTableViewCell.self), bundle: nil)
+        addGroupTableView.registerCellWithNib(identifier: String(describing: AddAddressTableViewCell.self), bundle: nil)
         addGroupTableView.dataSource = self
         addGroupTableView.delegate = self
         addGroupTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +77,7 @@ extension AddGroupViewController {
 extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -101,13 +104,49 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
             }
             return addKeywordsCell
         } else if indexPath.row == 3 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddCalendarTableViewCell.self), for: indexPath)
+            guard let addCalendarCell = cell as? AddCalendarTableViewCell else { return cell }
+            addCalendarCell.calendarHandler = { [weak self] dateArray, textArray in
+                
+                self?.group.schedules = []
+                
+                for date in dateArray {
+                    let schedule = Schedule(date: date, title: "")
+                    self?.group.schedules.append(schedule)
+                }
+                
+                for title in 0..<textArray.count {
+                    self?.group.schedules[title].title = textArray[title]
+                }
+                
+            }
+            return addCalendarCell
+        } else if indexPath.row == 4{
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddCoverTableViewCell.self), for: indexPath)
             guard let addCoverCell = cell as? AddCoverTableViewCell else { return cell }
             addCoverCell.delegate = self
             addCoverCell.coverImageView.image = coverImage
             return addCoverCell
         } else {
-            return UITableViewCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddAddressTableViewCell.self), for: indexPath)
+            guard let addAddressCell = cell as? AddAddressTableViewCell else { return cell }
+            addAddressCell.delegate = self
+            let geoCoder = CLGeocoder()
+            addAddressCell.dataHandler = { [weak self] address in
+                self?.group.location.address = address
+                geoCoder.geocodeAddressString(address) { (placemarks, error) in
+                       guard
+                           let placemarks = placemarks,
+                           let location = placemarks.first?.location
+                       else {
+                           print("location not found")
+                           return
+                       }
+                    self?.group.location.latitude = location.coordinate.latitude
+                    self?.group.location.longitude = location.coordinate.longitude
+                   }
+            }
+            return addAddressCell
         }
     }
 }
@@ -116,16 +155,22 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
 extension AddGroupViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 100
-        } else if indexPath.row == 1 {
+//        if indexPath.row == 0 {
+//            return 100
+//        } else if indexPath.row == 1 {
+//            return 300
+//        } else if indexPath.row == 2 {
+//            return 165
+//        } else if indexPath.row == 3{
+//            return 500
+//        } else {
+//            return 500
+//        }
+    
+        if indexPath.row == 1 {
             return 300
-        } else if indexPath.row == 2 {
-            return 165
-        } else if indexPath.row == 3{
-            return 500
         } else {
-            return 600
+            return  UITableView.automaticDimension
         }
     }
     
@@ -202,75 +247,65 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
         }
     }
 }
-//
-//extension AddGroupViewController {
-//    
-//    func uploadNote() {
-//        
-//        if note.noteTitle != "" && note.noteContent != "" && note.noteCategory != "" && note.noteKeywords != [] && coverImage != UIImage(systemName: "magazine") && contentImages != [] {
-//            
-//            upload()
-//            
-//        } else {
-//            let controller = UIAlertController(title: "請上傳完整資料", message: "", preferredStyle: .alert)
-//            controller.view.tintColor = UIColor.gray
-//            let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
-//            controller.addAction(cancelAction)
-//            self.present(controller, animated: true, completion: nil)
-//        }
-//    }
-//    
-//    func upload() {
-//        
-//        let group = DispatchGroup()
-//        let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
-//        controller.view.tintColor = UIColor.gray
-//        
-//        group.enter()
-//        guard let image = coverImage else { return }
-//        noteManager.uploadPhoto(image: image) { result in
-//            switch result {
-//            case .success(let url):
-//                self.note.noteCover = "\(url)"
-//                print("\(url)")
-//            case .failure(let error):
-//                print("\(error)")
-//            }
-//            group.leave()
-//        }
-//        
-//        let images = contentImages
-//        for image in images {
-//            group.enter()
-//            noteManager.uploadPhoto(image: image) { result in
-//                switch result {
-//                case .success(let url):
-//                    self.note.noteImages.append("\(url)")
-//                    print("\(url)")
-//                case .failure(let error):
-//                    print("\(error)")
-//                }
-//            }
-//            group.leave()
-//        }
-//        
-//        group.notify(queue: DispatchQueue.global()) {
-//            self.noteManager.createNote(note: self.note) { result in
-//                switch result {
-//                case .success:
-//                    print(result)
-//                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-//                        self.navigationController?.popViewController(animated: true)
-//                    }
-//                    DispatchQueue.main.async {
-//                        controller.addAction(cancelAction)
-//                        self.present(controller, animated: true, completion: nil)
-//                    }
-//                case.failure:
-//                    print(result)
-//                }
-//            }
-//        }
-//    }
-//}
-//
+
+extension AddGroupViewController: UploadDelegate {
+    
+    func selectButton() {
+        
+        if group.groupCategory != "" && group.groupContent != ""
+            && group.groupTitle != "" && group.groupKeywords != []
+            && coverImage != UIImage(systemName: "magazine")
+            && group.location.latitude != 0 && group.location.longitude != 0
+            && group.location.address != ""
+        {
+            
+            upload()
+            
+        } else {
+            let controller = UIAlertController(title: "請上傳完整資料", message: "", preferredStyle: .alert)
+            controller.view.tintColor = UIColor.gray
+            let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
+            controller.addAction(cancelAction)
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func upload() {
+        
+        let group = DispatchGroup()
+        let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        group.enter()
+        guard let image = coverImage else { return }
+        self.groupManager.uploadPhoto(image: image) { result in
+            switch result {
+            case .success(let url):
+                self.group.groupCover = "\(url)"
+                print("\(url)")
+            case .failure(let error):
+                print("\(error)")
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: DispatchQueue.global()) {
+            self.groupManager.createGroup(group: self.group) { result in
+                switch result {
+                case .success:
+                    print(result)
+                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    DispatchQueue.main.async {
+                        controller.addAction(cancelAction)
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                case.failure:
+                    print(result)
+                }
+            }
+        }
+    }
+}
+
