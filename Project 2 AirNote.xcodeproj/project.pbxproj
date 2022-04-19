@@ -41,6 +41,8 @@
 		42E2B68C280EBBF700B51D9F /* SearchGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B68B280EBBF700B51D9F /* SearchGroupsViewController.swift */; };
 		42E2B68F280EBFA300B51D9F /* GroupResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B68D280EBFA300B51D9F /* GroupResultTableViewCell.swift */; };
 		42E2B690280EBFA300B51D9F /* GroupResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B68E280EBFA300B51D9F /* GroupResultTableViewCell.xib */; };
+		42E2B693280ED7C700B51D9F /* ChatroomViewLobbyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2B692280ED7C700B51D9F /* ChatroomViewLobbyController.swift */; };
+		42E2B695280ED7D400B51D9F /* ChatroomLobby.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42E2B694280ED7D400B51D9F /* ChatroomLobby.storyboard */; };
 		42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */; };
 		42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */; };
 		42F9362F2803F5950058EB07 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */; };
@@ -103,6 +105,8 @@
 		42E2B68B280EBBF700B51D9F /* SearchGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGroupsViewController.swift; sourceTree = "<group>"; };
 		42E2B68D280EBFA300B51D9F /* GroupResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResultTableViewCell.swift; sourceTree = "<group>"; };
 		42E2B68E280EBFA300B51D9F /* GroupResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupResultTableViewCell.xib; sourceTree = "<group>"; };
+		42E2B692280ED7C700B51D9F /* ChatroomViewLobbyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewLobbyController.swift; sourceTree = "<group>"; };
+		42E2B694280ED7D400B51D9F /* ChatroomLobby.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatroomLobby.storyboard; sourceTree = "<group>"; };
 		42F936292802BBB70058EB07 /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		42F9362A2802BBB70058EB07 /* NotesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesCollectionViewCell.xib; sourceTree = "<group>"; };
 		42F9362D2803F5950058EB07 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -193,8 +197,9 @@
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
 				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
 				42E2B666280AD37C00B51D9F /* SearchContent.storyboard */,
-				42E2B659280917B200B51D9F /* DrawingPad.storyboard */,
+				42E2B694280ED7D400B51D9F /* ChatroomLobby.storyboard */,
 				42F9363E28058BEB0058EB07 /* AddContent.storyboard */,
+				42E2B659280917B200B51D9F /* DrawingPad.storyboard */,
 				42DE585C28005A7200D764F7 /* Main.storyboard */,
 				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
 			);
@@ -308,7 +313,7 @@
 		42E2B66F280D034F00B51D9F /* ChatRoom */ = {
 			isa = PBXGroup;
 			children = (
-				42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */,
+				42E2B692280ED7C700B51D9F /* ChatroomViewLobbyController.swift */,
 			);
 			name = ChatRoom;
 			path = ../..;
@@ -379,6 +384,14 @@
 			path = ../../..;
 			sourceTree = "<group>";
 		};
+		42E2B691280ED78500B51D9F /* AddGroup */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */,
+			);
+			name = AddGroup;
+			sourceTree = "<group>";
+		};
 		42F936282802BB850058EB07 /* DiscoverNotes */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,6 +426,7 @@
 			children = (
 				42F9363C28058BA20058EB07 /* AddContentViewController.swift */,
 				42E2B66E280D032400B51D9F /* AddNote */,
+				42E2B691280ED78500B51D9F /* AddGroup */,
 			);
 			name = "Add Content";
 			path = ../..;
@@ -508,6 +522,7 @@
 				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
 				42F9363F28058BEB0058EB07 /* AddContent.storyboard in Resources */,
 				42F936302803F5950058EB07 /* CategoryCollectionViewCell.xib in Resources */,
+				42E2B695280ED7D400B51D9F /* ChatroomLobby.storyboard in Resources */,
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
 				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
 				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
@@ -610,6 +625,7 @@
 				42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */,
 				42E2B688280DA4E500B51D9F /* AddAddressTableViewCell.swift in Sources */,
 				42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */,
+				42E2B693280ED7C700B51D9F /* ChatroomViewLobbyController.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
 				42E2B67A280D7FA700B51D9F /* GroupDataModel.swift in Sources */,
