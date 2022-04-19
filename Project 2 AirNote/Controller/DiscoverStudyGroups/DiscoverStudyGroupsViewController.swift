@@ -167,10 +167,10 @@ extension DiscoverStudyGroupsViewController {
         view.addSubview(groupsCollectionView)
         
         groupsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        groupsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        groupsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         groupsCollectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor).isActive = true
         groupsCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        groupsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        groupsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
     }
     
 }
@@ -244,16 +244,15 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
     }
 }
 
-
 // MARK: CollectionView FlowLayout
 extension DiscoverStudyGroupsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == categoryCollectionView {
             return CGSize(width: 100, height: 30)
         } else {
-            let maxWidth = UIScreen.main.bounds.width
+            let maxWidth = UIScreen.main.bounds.width - 10
             let numberOfItemsPerRow = CGFloat(2)
-            let interItemSpacing = CGFloat(0)
+            let interItemSpacing = CGFloat(10)
             let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
             let itemHeight = itemWidth * 1.8
             return CGSize(width: itemWidth, height: itemHeight)
@@ -273,7 +272,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegateFlowLayout 
             if collectionView == categoryCollectionView {
                 return 0
             } else {
-                return 0
+                return 10
             }
         }
     

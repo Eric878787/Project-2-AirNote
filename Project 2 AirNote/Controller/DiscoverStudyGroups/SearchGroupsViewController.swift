@@ -84,18 +84,16 @@ extension SearchGroupsViewController {
     private func configureSearchGroupsTableView() {
         
         searchGroupsTableView.registerCellWithNib(identifier: String(describing: GroupResultTableViewCell.self), bundle: nil)
-        searchGroupsTableView.automaticallyAdjustsScrollIndicatorInsets = false
-        searchGroupsTableView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         searchGroupsTableView.dataSource = self
         searchGroupsTableView.delegate = self
         
         view.addSubview(searchGroupsTableView)
         
         searchGroupsTableView.translatesAutoresizingMaskIntoConstraints = false
-        searchGroupsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        searchGroupsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
         searchGroupsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         searchGroupsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        searchGroupsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        searchGroupsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
         
     }
     

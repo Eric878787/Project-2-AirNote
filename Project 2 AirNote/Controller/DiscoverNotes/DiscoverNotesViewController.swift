@@ -132,7 +132,7 @@ extension DiscoverNotesViewController {
     
     @objc private func toSearchPage() {
         let storyBoard = UIStoryboard(name: "SearchContent", bundle: nil)
-        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchGroupsViewController") as? SearchGroupsViewController else { return }
+        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchContentViewController") as? SearchContentViewController else { return }
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -166,10 +166,10 @@ extension DiscoverNotesViewController {
         view.addSubview(notesCollectionView)
         
         notesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        notesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        notesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         notesCollectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor).isActive = true
         notesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        notesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        notesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
     }
     
 }
@@ -245,9 +245,9 @@ extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == categoryCollectionView {
             return CGSize(width: 100, height: 30)
         } else {
-            let maxWidth = UIScreen.main.bounds.width
+            let maxWidth = UIScreen.main.bounds.width - 10
             let numberOfItemsPerRow = CGFloat(2)
-            let interItemSpacing = CGFloat(0)
+            let interItemSpacing = CGFloat(10)
             let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
             let itemHeight = itemWidth * 1.8
             return CGSize(width: itemWidth, height: itemHeight)
@@ -267,7 +267,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
             if collectionView == categoryCollectionView {
                 return 0
             } else {
-                return 0
+                return 10
             }
         }
     

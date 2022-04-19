@@ -44,8 +44,8 @@ class SearchContentViewController: UIViewController {
         fetchUsers()
         
     }
-    
 }
+    
 
 // MARK: Protocol UISearchResultsUpdating
 extension SearchContentViewController: UISearchResultsUpdating {
@@ -67,7 +67,7 @@ extension SearchContentViewController: UISearchResultsUpdating {
                     return false
                 }
             })
-
+            
         } else {
             filteredNotes = notes
         }
@@ -77,15 +77,15 @@ extension SearchContentViewController: UISearchResultsUpdating {
 }
 
 extension Array where Element: Hashable {
-  func removingDuplicates() -> [Element] {
-      var addedDict = [Element: Bool]()
-      return filter {
-        addedDict.updateValue(true, forKey: $0) == nil
-      }
-   }
-   mutating func removeDuplicates() {
-      self = self.removingDuplicates()
-   }
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
 }
 
 // MARK: Configure search result tableview
@@ -94,18 +94,16 @@ extension SearchContentViewController {
     private func configureSearchNoteTableview() {
         
         searchNotesTableView.registerCellWithNib(identifier: String(describing: NoteResultTableViewCell.self), bundle: nil)
-        searchNotesTableView.automaticallyAdjustsScrollIndicatorInsets = false
-        searchNotesTableView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         searchNotesTableView.dataSource = self
         searchNotesTableView.delegate = self
         
         view.addSubview(searchNotesTableView)
         
         searchNotesTableView.translatesAutoresizingMaskIntoConstraints = false
-        searchNotesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        searchNotesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10 ).isActive = true
         searchNotesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         searchNotesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        searchNotesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        searchNotesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
         
     }
     
