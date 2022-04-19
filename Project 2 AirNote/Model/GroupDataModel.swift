@@ -11,6 +11,7 @@ struct Group: Codable {
     var schedules: [Schedule]
     var createdTime: Date
     var groupCategory: String
+    var groupKeywords: [String]
     var groupContent: String
     var groupCover: String
     var groupId: String

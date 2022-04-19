@@ -190,7 +190,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDataSource {
             cell.coverImage.kf.indicatorType = .activity
             cell.coverImage.kf.setImage(with: url)
             cell.titleLabel.text = filterGroups[indexPath.item].groupTitle
-            let localDate = filterGroups[indexPath.item].createdTime.toLocalTime()
+            let localDate = filterGroups[indexPath.item].createdTime
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd"
             cell.dateLabel.text = dateFormatter.string(from: localDate)
