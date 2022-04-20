@@ -27,5 +27,11 @@ class GroupsCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 10
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        userAvatar.layer.cornerRadius = userAvatar.bounds.height/2
+        userAvatar.clipsToBounds = true
+    }
 
 }

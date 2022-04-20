@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChatroomListTableViewCell: UITableViewCell {
+class ChatRoomListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     
@@ -15,15 +15,17 @@ class ChatroomListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        avatarImageView.layer.borderColor = UIColor.systemGray6.cgColor
-        avatarImageView.layer.borderWidth = 1
-        avatarImageView.layer.masksToBounds = false
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.height/2
-        avatarImageView.clipsToBounds = true
         
     }
     
-
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        avatarImageView.layer.borderColor = UIColor.systemGray6.cgColor
+        avatarImageView.layer.borderWidth = 1
+        avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
+        avatarImageView.clipsToBounds = true
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }

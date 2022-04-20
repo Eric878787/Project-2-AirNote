@@ -25,5 +25,11 @@ class NotesCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 10
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        userAvatarImage.layer.cornerRadius = userAvatarImage.bounds.height/2
+        userAvatarImage.clipsToBounds = true
+    }
 
 }

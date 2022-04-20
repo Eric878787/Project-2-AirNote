@@ -26,6 +26,9 @@ class AddGroupViewController: UIViewController {
                               groupOwner: "",
                               groupTitle: "",
                               location: Location(address: "", latitude: 0, longitude: 0))
+    
+    private var room = ChatRoom (chatRoomId: "", groupId: "", messages: [], roomTitle: "", ownerId: "", createdTime: Date())
+    
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
 
@@ -33,6 +36,7 @@ class AddGroupViewController: UIViewController {
     
     // MARK: Data Manager
     private var groupManager = GroupManager()
+    private var chatRoomManager = ChatRoomManager()
     
     
     override func viewDidLoad() {
@@ -85,6 +89,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
             guard let addTitleCell = cell as? AddTitleTableViewCell else { return cell }
             addTitleCell.dataHandler = { [weak self] title in
                 self?.group.groupTitle = title
+                self?.room.roomTitle = title
             }
             return addTitleCell
         } else if indexPath.row == 1 {
@@ -291,14 +296,21 @@ extension AddGroupViewController: UploadDelegate {
         group.notify(queue: DispatchQueue.global()) {
             self.groupManager.createGroup(group: self.group) { result in
                 switch result {
-                case .success:
-                    print(result)
-                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                    DispatchQueue.main.async {
-                        controller.addAction(cancelAction)
-                        self.present(controller, animated: true, completion: nil)
+                case .success(let groupId):
+                    self.room.groupId = groupId
+                    self.chatRoomManager.createChatRoom(chatRoom: self.room) { result in
+                        switch result {
+                        case .success:
+                            let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                            DispatchQueue.main.async {
+                                controller.addAction(cancelAction)
+                                self.present(controller, animated: true, completion: nil)
+                            }
+                        case.failure:
+                            print(result)
+                        }
                     }
                 case.failure:
                     print(result)
@@ -307,4 +319,3 @@ extension AddGroupViewController: UploadDelegate {
         }
     }
 }
-

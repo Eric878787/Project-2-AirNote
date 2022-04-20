@@ -31,4 +31,10 @@ class NoteResultTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
+        avatarImageView.clipsToBounds = true
+    }
+    
 }
