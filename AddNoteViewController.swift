@@ -151,9 +151,6 @@ extension AddNoteViewController: UITableViewDelegate {
             return  UITableView.automaticDimension
         }
     }
-        
-    }
-    
 }
 
 // MARK: UIIMagePicker Delegate

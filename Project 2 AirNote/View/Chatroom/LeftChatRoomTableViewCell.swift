@@ -14,6 +14,8 @@ class LeftChatRoomTableViewCell: UITableViewCell {
     
     @IBOutlet weak var messageLabel: UILabel!
     
+    @IBOutlet weak var messageImage: UIImageView!
+    
     @IBOutlet weak var avatarImageView: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -28,6 +30,10 @@ class LeftChatRoomTableViewCell: UITableViewCell {
         leftBackgroundView.backgroundColor = .systemGray6
         leftBackgroundView.clipsToBounds = true
         leftBackgroundView.layer.cornerRadius = 10
+        
+        messageImage.layer.cornerRadius = 10
+        messageImage.clipsToBounds = true
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

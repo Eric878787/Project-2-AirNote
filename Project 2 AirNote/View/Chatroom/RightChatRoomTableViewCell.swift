@@ -13,6 +13,8 @@ class RightChatRoomTableViewCell: UITableViewCell {
     
     @IBOutlet weak var rightBackgroundView: UIView!
     
+    @IBOutlet weak var messageImage: UIImageView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -22,6 +24,9 @@ class RightChatRoomTableViewCell: UITableViewCell {
         rightBackgroundView.backgroundColor = .systemBlue
         rightBackgroundView.clipsToBounds = true
         rightBackgroundView.layer.cornerRadius = 10
+        
+        messageImage.layer.cornerRadius = 10
+        messageImage.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

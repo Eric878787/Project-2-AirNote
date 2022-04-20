@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ChatRoomViewController: UIViewController {
     
@@ -31,6 +32,9 @@ class ChatRoomViewController: UIViewController {
     
     // Selected Image
     private var selectedImage = UIImage()
+    
+    // Image To Show
+    private var imageToShow = UIImageView()
     
     // Users DataSource
     private var userManager = UserManager()
@@ -68,7 +72,6 @@ extension ChatRoomViewController {
                 DispatchQueue.main.async {
                     
                     self?.chatRoom = room
-                    
                     self?.chatRoom.messages.sort{
                         ( $0.createdTime ) < ( $1.createdTime )
                     }
@@ -130,8 +133,9 @@ extension ChatRoomViewController {
         imageButton.layer.borderColor = UIColor.systemGray6.cgColor
         imageButton.layer.cornerRadius = 10
         imageButton.setImage(UIImage(systemName: "photo.fill"), for: .normal)
-        
+        imageButton.addTarget(self, action: #selector(sendImageMessage), for: .touchUpInside)
         view.addSubview(imageButton)
+        
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
         imageButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -146,8 +150,8 @@ extension ChatRoomViewController {
         messageTextView.layer.borderWidth = 1
         messageTextView.layer.borderColor = UIColor.systemGray6.cgColor
         messageTextView.layer.cornerRadius = 10
-        
         view.addSubview(messageTextView)
+        
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
         messageTextView.leadingAnchor.constraint(equalTo: imageButton.trailingAnchor, constant: 10).isActive = true
         messageTextView.topAnchor.constraint(equalTo: imageButton.topAnchor).isActive = true
@@ -161,9 +165,9 @@ extension ChatRoomViewController {
         sendButton.layer.borderColor = UIColor.systemGray6.cgColor
         sendButton.layer.cornerRadius = 10
         sendButton.setImage(UIImage(systemName: "arrowtriangle.right.fill"), for: .normal)
-        sendButton.addTarget(self, action: #selector(sendTextMessage) , for: .touchUpInside)
-        
+        sendButton.addTarget(self, action: #selector(sendTextMessage), for: .touchUpInside)
         view.addSubview(sendButton)
+        
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.leadingAnchor.constraint(equalTo: messageTextView.trailingAnchor, constant: 10).isActive = true
         sendButton.topAnchor.constraint(equalTo: messageTextView.topAnchor).isActive = true
@@ -183,20 +187,15 @@ extension ChatRoomViewController {
         chatRoom.messages.append(message)
         self.chatRoomManager.updateChatRoomMessages(chatRoom: chatRoom, chatRoomId: chatRoomId ?? "") { [weak self] result in
             switch result {
-                
             case .success:
-                
                 DispatchQueue.main.async {
                     self?.messageTextView.text = ""
                     self?.chatRoomTableView.reloadData()
                 }
-                
             case .failure(let error):
-                
                 print("fetchData.failure: \(error)")
             }
         }
-        
     }
     
     @objc private func sendImageMessage() {
@@ -216,10 +215,10 @@ extension ChatRoomViewController: UIImagePickerControllerDelegate, UINavigationC
             self.chatRoomManager.uploadPhoto(image: selectedImage) { [weak self] result in
                 switch result {
                 case .success(let url):
-                    let message = Message(sender: "qbQsVVpVHlf6I4XLfOJ6", createdTime: Date(), content: "\(url)")
+                    let message = Message(sender: "qbQsVVpVHlf6I4XLfOJ6", createdTime: Date(), image: "\(url)")
                     self?.chatRoom.messages.append(message)
                     guard let chatRoom = self?.chatRoom else {return}
-                    self?.chatRoomManager.updateChatRoomMessages(chatRoom: chatRoom , chatRoomId: self?.chatRoomId ?? "") { [weak self] result in
+                    self?.chatRoomManager.updateChatRoomMessages(chatRoom: chatRoom, chatRoomId: self?.chatRoomId ?? "") { [weak self] result in
                         switch result {
                         case .success:
                             DispatchQueue.main.async {
@@ -244,19 +243,34 @@ extension ChatRoomViewController: UIImagePickerControllerDelegate, UINavigationC
 // MARK: Chat Room TableView Delegate
 extension ChatRoomViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        chatRoom.messages.count ?? 0
+        chatRoom.messages.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if chatRoom.messages[indexPath.row].sender == "qbQsVVpVHlf6I4XLfOJ6" {
             let rightChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightChatRoomTableViewCell", for: indexPath)
             guard let cell = rightChatRoomTableViewCell as? RightChatRoomTableViewCell else { return rightChatRoomTableViewCell }
+            let url = URL(string:chatRoom.messages[indexPath.row].image ?? "")
+            cell.messageImage.kf.indicatorType = .activity
+            cell.messageImage.kf.setImage(with: url)
             cell.messageLabel.text = chatRoom.messages[indexPath.row].content
+            
+            if chatRoom.messages[indexPath.row].image == nil {
+                cell.messageImage.isHidden = true
+            } else { cell.messageImage.isHidden = false }
+            
             return cell
         } else {
             let leftChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftChatRoomTableViewCell", for: indexPath)
             guard let cell = leftChatRoomTableViewCell as? LeftChatRoomTableViewCell else { return leftChatRoomTableViewCell }
+            let url = URL(string:chatRoom.messages[indexPath.row].image ?? "")
+            cell.messageImage.kf.indicatorType = .activity
+            cell.messageImage.kf.setImage(with: url)
             cell.messageLabel.text = chatRoom.messages[indexPath.row].content
+            
+            if chatRoom.messages[indexPath.row].image == nil {
+                cell.messageImage.isHidden = true
+            } else { cell.messageImage.isHidden = false }
             
             // querying users' name & avatar
             for user in users where user.userId == chatRoom.messages[indexPath.row].sender {

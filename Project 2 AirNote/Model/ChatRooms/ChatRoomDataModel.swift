@@ -19,5 +19,6 @@ struct ChatRoom: Codable {
 struct Message: Codable {
     var sender: String
     var createdTime: Date
-    var content: String
+    var content: String?
+    var image: String?
 }
