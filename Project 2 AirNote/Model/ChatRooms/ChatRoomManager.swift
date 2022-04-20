@@ -17,6 +17,23 @@ class ChatRoomManager {
     
     lazy var db = Firestore.firestore()
     
+    func checkMessageChange(chatroomId: String, completion: @escaping (Result<ChatRoom, Error>) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("ChatRooms").document(chatroomId).addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else { return }
+            var updatedChatRoom = ChatRoom(chatRoomId: "", groupId: "", messages: [], roomTitle: "", ownerId: "", createdTime: Date())
+            do {
+                if let chatRoom = try document.data(as: ChatRoom.self, decoder: Firestore.Decoder()) {
+                    updatedChatRoom = chatRoom
+                }
+            } catch {
+                completion(.failure(error))
+            }
+            completion(.success(updatedChatRoom))
+        }
+    }
+    
+    
     func checkRoomsChange(completion: @escaping (Result<[ChatRoom], Error>) -> Void) {
         let db = Firestore.firestore()
         db.collection("ChatRooms").addSnapshotListener { snapshot, error in
@@ -53,28 +70,39 @@ class ChatRoomManager {
         catch {
             completion(.failure(error))
         }
-        
     }
-    //
-    //    func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
-    //
-    //        let riversRef = Storage.storage().reference().child(UUID().uuidString + ".jpg")
-    //
-    //        guard let data = image.jpegData(compressionQuality: 0.8) else { return }
-    //
-    //        let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
-    //            guard let metadata = metadata else {
-    //                print("upload failed")
-    //                return
-    //            }
-    //            riversRef.downloadURL { (url, error) in
-    //                guard let downloadURL = url else {
-    //                    print("download url failed")
-    //                    return
-    //                }
-    //                completion(.success(downloadURL))
-    //            }
-    //        }
-    //    }
     
+    func updateChatRoomMessages(chatRoom: ChatRoom, chatRoomId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("ChatRooms").document(chatRoomId)
+        var room = chatRoom
+        do {
+            try msgRef.setData(from: room, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
+
+        let riversRef = Storage.storage().reference().child(UUID().uuidString + ".jpg")
+
+        guard let data = image.jpegData(compressionQuality: 0.8) else { return }
+
+        let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                print("upload failed")
+                return
+            }
+            riversRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    print("download url failed")
+                    return
+                }
+                completion(.success(downloadURL))
+            }
+        }
+    }
+
 }

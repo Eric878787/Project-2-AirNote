@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class ChatRoomViewLobbyController: UIViewController {
     
@@ -142,7 +141,11 @@ extension ChatRoomViewLobbyController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let storyBoard = UIStoryboard(name: "ChatroomLobby", bundle: nil)
+        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "ChatRoomViewController") as? ChatRoomViewController else { return }
+        vc.chatRoom = chatRooms[indexPath.row]
+        vc.chatRoomId = chatRooms[indexPath.row].chatRoomId
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

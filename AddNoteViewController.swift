@@ -133,23 +133,58 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
 extension AddNoteViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 100
-        } else if indexPath.row == 1 {
+//        if indexPath.row == 0 {
+//            return 100
+//        } else if indexPath.row == 1 {
+//            return 300
+//        } else if indexPath.row == 2 {
+//            return 165
+//        } else if indexPath.row == 3{
+//            return 500
+//        } else {
+//            return 600
+//        }
+        
+        if indexPath.row == 1 {
             return 300
-        } else if indexPath.row == 2 {
-            return 165
-        } else if indexPath.row == 3{
-            return 500
         } else {
-            return 600
+            return  UITableView.automaticDimension
         }
+    }
+        
     }
     
 }
 
 // MARK: UIIMagePicker Delegate
 extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.originalImage] as? UIImage {
+            
+            if picker == imagePickerController {
+                
+                coverImage = image
+                
+            } else {
+                
+                if self.contentImages.count < 4 {
+                    self.contentImages.insert(image, at: 0)
+                }  else {
+                    self.contentImages.remove(at: 3)
+                    self.contentImages.insert(image, at: 0)
+                }
+                
+            }
+            
+        }
+        
+        addNoteTableView.reloadData()
+        
+        picker.dismiss(animated: true)
+        
+    }
     
     func buttonDidSelect() {
         
@@ -179,33 +214,6 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
         controller.addAction(cancelAction)
         
         self.present(controller, animated: true, completion: nil)
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let image = info[.originalImage] as? UIImage {
-            
-            if picker == imagePickerController {
-                
-                coverImage = image
-                
-            } else {
-                
-                if self.contentImages.count < 4 {
-                    self.contentImages.insert(image, at: 0)
-                }  else {
-                    self.contentImages.remove(at: 3)
-                    self.contentImages.insert(image, at: 0)
-                }
-                
-            }
-            
-        }
-        
-        addNoteTableView.reloadData()
-        
-        picker.dismiss(animated: true)
         
     }
     

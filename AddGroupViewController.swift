@@ -45,6 +45,9 @@ class AddGroupViewController: UIViewController {
         // Set Up Navigation Item
         navigationItem.title = "新增讀書會"
         
+        // Image Picker
+        imagePickerController.delegate = self
+        
         // Set up Tableview
         configureAddGroupTableView ()
     }
@@ -183,6 +186,20 @@ extension AddGroupViewController: UITableViewDelegate {
 // MARK: UIIMagePicker Delegate
 extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.originalImage] as? UIImage {
+                
+                coverImage = image
+            
+        }
+        
+        addGroupTableView.reloadData()
+        
+        picker.dismiss(animated: true)
+        
+    }
+    
     func buttonDidSelect() {
         
         let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
@@ -211,20 +228,6 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
         controller.addAction(cancelAction)
         
         self.present(controller, animated: true, completion: nil)
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let image = info[.originalImage] as? UIImage {
-                
-                coverImage = image
-            
-        }
-        
-        addGroupTableView.reloadData()
-        
-        picker.dismiss(animated: true)
         
     }
     

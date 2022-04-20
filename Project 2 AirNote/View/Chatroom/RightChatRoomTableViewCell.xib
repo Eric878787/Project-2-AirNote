@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="RightChatRoomTableViewCell" selectionStyle="default" indentationWidth="10" rowHeight="159" id="KGk-i7-Jjw" customClass="RightChatRoomTableViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="690" height="159"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="690" height="159"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TUp-Xf-Xen">
+                        <rect key="frame" x="100" y="10" width="575" height="139"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="測試訊息測試訊息測試訊息測試訊息測試訊息測試訊息測試訊息測試訊息測試訊息測試訊息測試訊息" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsU-c0-ng5">
+                                <rect key="frame" x="5" y="5" width="565" height="129"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="RsU-c0-ng5" secondAttribute="bottom" constant="5" id="G4R-I5-NXh"/>
+                            <constraint firstItem="RsU-c0-ng5" firstAttribute="top" secondItem="TUp-Xf-Xen" secondAttribute="top" constant="5" id="VtZ-Tz-GvO"/>
+                            <constraint firstItem="RsU-c0-ng5" firstAttribute="leading" secondItem="TUp-Xf-Xen" secondAttribute="leading" constant="5" id="eFy-ne-hdq"/>
+                            <constraint firstAttribute="trailing" secondItem="RsU-c0-ng5" secondAttribute="trailing" constant="5" id="kYj-nb-weG"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="TUp-Xf-Xen" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="100" id="4AR-8T-hVQ"/>
+                    <constraint firstAttribute="trailing" secondItem="TUp-Xf-Xen" secondAttribute="trailing" constant="15" id="InN-Mg-Fu0"/>
+                    <constraint firstItem="TUp-Xf-Xen" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="WVv-KR-nHM"/>
+                    <constraint firstAttribute="bottom" secondItem="TUp-Xf-Xen" secondAttribute="bottom" constant="10" id="fWq-YX-iSJ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="messageLabel" destination="RsU-c0-ng5" id="Jk5-Pu-IeX"/>
+                <outlet property="rightBackgroundView" destination="TUp-Xf-Xen" id="AN2-nm-Apo"/>
+            </connections>
+            <point key="canvasLocation" x="243.47826086956525" y="179.79910714285714"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
