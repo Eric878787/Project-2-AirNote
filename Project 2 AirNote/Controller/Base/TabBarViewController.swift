@@ -14,6 +14,8 @@ private enum Tab {
     case discoverStudyGroups
     
     case addContent
+    
+    case chatroomLobby
 
     func controller() -> UIViewController {
 
@@ -26,6 +28,8 @@ private enum Tab {
         case .discoverStudyGroups: controller = UIStoryboard.discoverStudyGroups.instantiateInitialViewController()!
             
         case.addContent: controller = UIStoryboard.addContent.instantiateInitialViewController()!
+            
+        case.chatroomLobby: controller = UIStoryboard.chatroomLobby.instantiateInitialViewController()!
 
         }
 
@@ -36,7 +40,7 @@ private enum Tab {
         return controller
     }
 
-    //MARK: To be changed into enum of UIImage
+    // MARK: To be changed into enum of UIImage
     func tabBarItem() -> UITabBarItem {
 
         switch self {
@@ -44,21 +48,28 @@ private enum Tab {
         case .discoverNotes:
             return UITabBarItem(
                 title: "探索筆記",
-                image: nil,
+                image: UIImage(systemName: "note.text"),
                 selectedImage: nil
             )
             
         case .discoverStudyGroups:
             return UITabBarItem(
                 title: "探索讀書會",
-                image: nil,
+                image: UIImage(systemName: "person.2.fill"),
                 selectedImage: nil
             )
             
         case .addContent:
             return UITabBarItem(
-                title: nil,
+                title: "新增內容",
                 image: UIImage(systemName: "plus"),
+                selectedImage: nil
+            )
+            
+        case.chatroomLobby:
+            return UITabBarItem(
+                title: "聊天室",
+                image: UIImage(systemName: "message.fill"),
                 selectedImage: nil
             )
             
@@ -68,7 +79,7 @@ private enum Tab {
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
-    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .addContent]
+    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .addContent, .chatroomLobby]
     
     override func viewDidLoad() {
         super.viewDidLoad()

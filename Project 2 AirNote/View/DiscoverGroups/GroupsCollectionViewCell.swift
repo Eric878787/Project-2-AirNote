@@ -23,6 +23,15 @@ class GroupsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        contentView.layer.borderColor = UIColor.systemGray6.cgColor
+        contentView.layer.borderWidth = 1
+        contentView.layer.cornerRadius = 10
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        userAvatar.layer.cornerRadius = userAvatar.bounds.height/2
+        userAvatar.clipsToBounds = true
     }
 
 }

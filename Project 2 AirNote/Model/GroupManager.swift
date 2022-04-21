@@ -62,7 +62,7 @@ class GroupManager {
             group.groupId = document.documentID
             
             try  document.setData(from: group, encoder: Firestore.Encoder())
-            completion(.success("上傳成功"))
+            completion(.success(document.documentID))
         }
         catch {
             completion(.failure(error))

@@ -19,10 +19,10 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gNS-Qg-9ug">
                         <rect key="frame" x="0.0" y="1" width="246" height="241.5"/>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="84j-vw-4g3">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="84j-vw-4g3">
                         <rect key="frame" x="0.0" y="255.5" width="41" height="38"/>
                     </imageView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kgf-zW-JsT">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kgf-zW-JsT" userLabel="Label Stack View">
                         <rect key="frame" x="46" y="254" width="39.5" height="41"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOv-WZ-t0m">
@@ -83,6 +83,7 @@
                 <constraint firstItem="84j-vw-4g3" firstAttribute="bottom" secondItem="kgf-zW-JsT" secondAttribute="bottom" id="0fw-bp-zga"/>
                 <constraint firstItem="84j-vw-4g3" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="1mM-7w-OJO"/>
                 <constraint firstAttribute="bottom" secondItem="84j-vw-4g3" secondAttribute="bottom" constant="10" id="3iE-TJ-P4c"/>
+                <constraint firstAttribute="trailing" secondItem="EXD-sr-KYm" secondAttribute="trailing" id="8DH-c2-5Hc"/>
                 <constraint firstItem="gNS-Qg-9ug" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="8Zc-DO-69P"/>
                 <constraint firstItem="84j-vw-4g3" firstAttribute="width" secondItem="84j-vw-4g3" secondAttribute="height" multiplier="1:1" id="AVc-X4-2E1"/>
                 <constraint firstItem="iCo-xb-oUg" firstAttribute="bottom" secondItem="kgf-zW-JsT" secondAttribute="bottom" id="Jho-72-dbm"/>
@@ -91,13 +92,11 @@
                 <constraint firstItem="EXD-sr-KYm" firstAttribute="bottom" secondItem="iCo-xb-oUg" secondAttribute="bottom" id="VQS-Bd-Yvw"/>
                 <constraint firstItem="kgf-zW-JsT" firstAttribute="top" secondItem="84j-vw-4g3" secondAttribute="top" id="YTh-n4-J9e"/>
                 <constraint firstItem="iCo-xb-oUg" firstAttribute="top" secondItem="kgf-zW-JsT" secondAttribute="top" id="aDt-fI-0Qk"/>
-                <constraint firstAttribute="trailing" secondItem="EXD-sr-KYm" secondAttribute="trailing" id="bEX-Jp-QB3"/>
                 <constraint firstItem="EXD-sr-KYm" firstAttribute="leading" secondItem="iCo-xb-oUg" secondAttribute="trailing" id="cxw-Pt-k8t"/>
                 <constraint firstItem="gNS-Qg-9ug" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ec5-kM-BpH"/>
                 <constraint firstItem="84j-vw-4g3" firstAttribute="top" secondItem="gNS-Qg-9ug" secondAttribute="bottom" constant="10" id="kGE-h7-CvN"/>
                 <constraint firstItem="iCo-xb-oUg" firstAttribute="height" secondItem="kgf-zW-JsT" secondAttribute="height" id="kRn-eZ-VgE"/>
                 <constraint firstItem="kgf-zW-JsT" firstAttribute="leading" secondItem="84j-vw-4g3" secondAttribute="trailing" constant="5" id="uG0-aq-vf3"/>
-                <constraint firstItem="EXD-sr-KYm" firstAttribute="top" secondItem="iCo-xb-oUg" secondAttribute="top" id="xkw-Af-bOl"/>
                 <constraint firstAttribute="trailing" secondItem="gNS-Qg-9ug" secondAttribute="trailing" id="xwr-zg-NRa"/>
             </constraints>
             <size key="customSize" width="246" height="305"/>
