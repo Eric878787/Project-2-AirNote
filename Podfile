@@ -14,5 +14,6 @@ target 'Project 2 AirNote' do
   pod 'IQKeyboardManagerSwift'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  pod 'lottie-ios'
 
 end

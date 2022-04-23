@@ -16,7 +16,7 @@ struct ChatRoom: Codable {
     var createdTime: Date
 }
 
-struct Message: Codable {
+struct Message: Codable, Equatable {
     var sender: String
     var createdTime: Date
     var content: String?

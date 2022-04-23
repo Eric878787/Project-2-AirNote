@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import AVFoundation
 
 class DiscoverNotesViewController: UIViewController {
     
@@ -73,6 +74,10 @@ class DiscoverNotesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
+        // Default selection
+        selectedCategoryIndex = 0
+        categoryCollectionView.reloadData()
         
         // Fetch Notes Data
         fetchNotes()
@@ -199,10 +204,10 @@ extension DiscoverNotesViewController: UICollectionViewDataSource {
         } else {
             let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
             guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return notesCollectionViewCell}
-            let url = URL(string: filterNotes[indexPath.item].noteCover)
+            let url = URL(string: filterNotes[indexPath.item].cover)
             cell.coverImage.kf.indicatorType = .activity
             cell.coverImage.kf.setImage(with: url)
-            cell.titleLabel.text = filterNotes[indexPath.item].noteTitle
+            cell.titleLabel.text = filterNotes[indexPath.item].title
             
             // querying users' name & avatar
             for user in users where user.userId == filterNotes[indexPath.item].authorId {
@@ -225,15 +230,27 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
             collectionView.reloadData()
             
             if cell.categoryLabel.text != "所有筆記" {
-                filterNotes = notes.filter { $0.noteCategory == cell.categoryLabel.text }
+                filterNotes = notes.filter { $0.category == cell.categoryLabel.text }
             } else {
                 filterNotes = notes
             }
             notesCollectionView.reloadData()
             
         } else {
-            let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
-            guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return}
+            let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
+            filterNotes[indexPath.item].clicks.append("qbQsVVpVHlf6I4XLfOJ6")
+            noteManager.updateNote(note: filterNotes[indexPath.item], noteId: filterNotes[indexPath.item].noteId) { [weak self] result in
+                switch result {
+                case .success:
+                    vc.note = self?.filterNotes[indexPath.item]
+                    vc.users = self?.users ?? []
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                    
+                case .failure(let error):
+                    print("fetchData.failure: \(error)")
+                }
+            }
         }
     }
 }

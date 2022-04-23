@@ -97,6 +97,9 @@ extension ChatRoomViewController {
                 DispatchQueue.main.async {
                     self?.users = existingUser
                     self?.chatRoomTableView.reloadData()
+                    if self?.chatRoom.messages != [] {
+                    self?.chatRoomTableView.scrollToRow(at: [0, (self?.chatRoom.messages.count ?? 1) - 1] , at: .bottom, animated: false)
+                    }
                 }
                 
             case .failure(let error):

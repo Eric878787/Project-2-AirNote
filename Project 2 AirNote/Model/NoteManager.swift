@@ -61,7 +61,7 @@ class NoteManager {
             note.createdTime = date
             note.noteId = document.documentID
             note.likes = []
-            note.noteClicks = []
+            note.clicks = []
             
             try  document.setData(from: note, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
@@ -71,6 +71,19 @@ class NoteManager {
         }
         
     }
+    
+    func updateNote(note: Note, noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Notes").document(noteId)
+        var note = note
+        do {
+            try msgRef.setData(from: note, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
     
     func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
         

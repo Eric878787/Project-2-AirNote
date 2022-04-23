@@ -1,27 +1,21 @@
 //
-//  AddNoteViewController.swift
+//  EditNoteViewController.swift
 //  Project 2 AirNote
 //
-//  Created by Eric chung on 2022/4/13.
+//  Created by Eric chung on 2022/4/23.
 //
 
 import UIKit
 import PhotosUI
+import Kingfisher
 
-class AddNoteViewController: UIViewController {
+class EditNoteViewController: UIViewController {
     
     // MARK: Table View
     private var addNoteTableView = UITableView(frame: .zero)
     
     // MARK: Properties
-    private var note = Note(authorId: "",
-                            comments: [Comment(content: "", createdTime: Date(), userId: "")],
-                            createdTime: Date(),
-                            likes: [], category: "",
-                            clicks: [], content: "",
-                            cover: "", noteId: "",
-                            images: [], keywords: [],
-                            title: "")
+    var note: Note?
     
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
@@ -43,7 +37,7 @@ class AddNoteViewController: UIViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "新增筆記"
+        navigationItem.title = "修改筆記"
         
         // Init addNoteTableView
         configureAddNoteTableView()
@@ -54,10 +48,30 @@ class AddNoteViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Set Default Images
+        guard let note = note else { return }
+        
+        for image in note.images {
+            let defaultImageView = UIImageView()
+            let url = URL(string: image)
+            defaultImageView.kf.setImage(with: url)
+            contentImages.append(defaultImageView.image ?? UIImage())
+        }
+        
+        let defaultImageView = UIImageView()
+        let url = URL(string: note.cover)
+        defaultImageView.kf.setImage(with: url)
+        coverImage = defaultImageView.image
+
+    }
+    
 }
 
 // MARK: Configure Add Note Tableview
-extension AddNoteViewController {
+extension EditNoteViewController {
     
     func configureAddNoteTableView () {
         
@@ -82,7 +96,7 @@ extension AddNoteViewController {
 }
 
 // MARK: Table View DataSource
-extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectImagesDelegate {
+extension EditNoteViewController: UITableViewDataSource, CoverDelegate, SelectImagesDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         5
@@ -92,23 +106,26 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddTitleTableViewCell.self), for: indexPath)
             guard let addTitleCell = cell as? AddTitleTableViewCell else { return cell }
+            addTitleCell.titleTextField.text = note?.title
             addTitleCell.dataHandler = { [weak self] title in
-                self?.note.title = title
+                self?.note?.title = title
             }
             return addTitleCell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddContentTableViewCell.self), for: indexPath)
             guard let addContentCell = cell as? AddContentTableViewCell else { return cell }
+            addContentCell.contentTextView.text = note?.content
             addContentCell.dataHandler = {  [weak self] content in
-                self?.note.content = content
+                self?.note?.content = content
             }
             return addContentCell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddKeywordsTableViewCell.self), for: indexPath)
             guard let addKeywordsCell = cell as? AddKeywordsTableViewCell else { return cell }
+            addKeywordsCell.categoryTextField.text = note?.category
             addKeywordsCell.dataHandler = { [weak self] selectedTags, selectedCategory in
-                self?.note.category = selectedCategory
-                self?.note.keywords = selectedTags
+                self?.note?.category = selectedCategory
+                self?.note?.keywords = selectedTags
             }
             return addKeywordsCell
         } else if indexPath.row == 3 {
@@ -133,7 +150,7 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
 }
 
 // MARK: Table View Delegate
-extension AddNoteViewController: UITableViewDelegate {
+extension EditNoteViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        if indexPath.row == 0 {
@@ -159,7 +176,7 @@ extension AddNoteViewController: UITableViewDelegate {
 }
 
 // MARK: UIIMagePicker Delegate
-extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -243,7 +260,7 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
-extension AddNoteViewController: PHPickerViewControllerDelegate{
+extension EditNoteViewController: PHPickerViewControllerDelegate{
     
     func selectMultiImages() {
         
@@ -319,7 +336,7 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
     
 }
 
-extension AddNoteViewController {
+extension EditNoteViewController {
     
     func configureAnimation() {
         loadingAnimation.loadingView.translatesAutoresizingMaskIntoConstraints = false
@@ -329,6 +346,8 @@ extension AddNoteViewController {
     }
     
     func uploadNote() {
+        
+        guard let note = self.note else { return }
         
         if note.title != "" && note.content != "" && note.category != "" && note.keywords != [] && coverImage != UIImage(systemName: "magazine") && contentImages != [] {
             
@@ -357,7 +376,7 @@ extension AddNoteViewController {
         noteManager.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
-                self.note.cover = "\(url)"
+                self.note?.cover = "\(url)"
                 print("\(url)")
             case .failure(let error):
                 print("\(error)")
@@ -371,7 +390,7 @@ extension AddNoteViewController {
             noteManager.uploadPhoto(image: image) { result in
                 switch result {
                 case .success(let url):
-                    self.note.images.append("\(url)")
+                    self.note?.images.append("\(url)")
                     print("\(url)")
                 case .failure(let error):
                     print("\(error)")
@@ -381,18 +400,20 @@ extension AddNoteViewController {
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            self.noteManager.createNote(note: self.note) { result in
+            print("123")
+            guard let editedNote = self.note else { return }
+            self.noteManager.updateNote(note: editedNote, noteId: editedNote.noteId) { [weak self] result in
                 switch result {
                 case .success:
                     print(result)
                     let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        self.navigationController?.popViewController(animated: true)
+                        self?.navigationController?.popViewController(animated: true)
                     }
                     DispatchQueue.main.async {
-                        self.loadingAnimation.loadingView.pause()
-                        self.loadingAnimation.loadingView.isHidden = true
+                        self?.loadingAnimation.loadingView.pause()
+                        self?.loadingAnimation.loadingView.isHidden = true
                         controller.addAction(cancelAction)
-                        self.present(controller, animated: true, completion: nil)
+                        self?.present(controller, animated: true, completion: nil)
                     }
                 case.failure:
                     print(result)

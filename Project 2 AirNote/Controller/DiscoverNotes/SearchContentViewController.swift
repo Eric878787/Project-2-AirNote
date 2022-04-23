@@ -53,13 +53,13 @@ extension SearchContentViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, searchText.isEmpty == false  {
             filteredNotes = notes.filter({ note in
-                let keyWord = note.noteKeywords.joined()
+                let keyWord = note.keywords.joined()
                 let isInKeyWords = keyWord.localizedStandardContains(searchText)
                 
-                let category = note.noteCategory
+                let category = note.category
                 let isInCategory = category.localizedStandardContains(searchText)
                 
-                let isInTitle = note.noteTitle.localizedStandardContains(searchText)
+                let isInTitle = note.title.localizedStandardContains(searchText)
                 
                 if isInKeyWords || isInCategory || isInTitle == true {
                     return true
@@ -163,8 +163,8 @@ extension SearchContentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let noteResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NoteResultTableViewCell", for: indexPath)
         guard let cell = noteResultTableViewCell as? NoteResultTableViewCell else { return noteResultTableViewCell }
-        cell.titleLabel.text = filteredNotes[indexPath.row].noteTitle
-        let mainImageUrl = URL(string: filteredNotes[indexPath.row].noteCover)
+        cell.titleLabel.text = filteredNotes[indexPath.row].title
+        let mainImageUrl = URL(string: filteredNotes[indexPath.row].cover)
         cell.mainImageView.kf.indicatorType = .activity
         cell.mainImageView.kf.setImage(with: mainImageUrl)
         
@@ -186,6 +186,24 @@ extension SearchContentViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height * 0.5
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
+        filteredNotes[indexPath.row].clicks.append("qbQsVVpVHlf6I4XLfOJ6")
+        noteManager.updateNote(note: filteredNotes[indexPath.row], noteId: filteredNotes[indexPath.row].noteId) { [weak self] result in
+            switch result {
+            case .success:
+                vc.note = self?.filteredNotes[indexPath.row]
+                vc.users = self?.users ?? []
+                self?.navigationController?.pushViewController(vc, animated: true)
+                
+            case .failure(let error):
+                print("fetchData.failure: \(error)")
+            }
+        }
+
     }
     
 }

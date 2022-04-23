@@ -74,6 +74,10 @@ class DiscoverStudyGroupsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Default selection
+        selectedCategoryIndex = 0
+        categoryCollectionView.reloadData()
+        
         // Fetch Groups Data
         fetchGroups()
         
@@ -238,8 +242,11 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
             groupsCollectionView.reloadData()
             
         } else {
-            let groupsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "GroupsCollectionViewCell", for: indexPath)
-            guard let cell = groupsCollectionViewCell as? GroupsCollectionViewCell else {return}
+            let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+            vc.group = filterGroups[indexPath.item]
+            vc.users = users
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
