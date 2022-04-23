@@ -46,6 +46,10 @@ class EditNoteViewController: UIViewController {
         imagePickerController.delegate = self
         multiImagePickerController.delegate = self
         
+        // Edit Button
+        let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteNote))
+        self.navigationItem.rightBarButtonItem = deleteButton
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +72,31 @@ class EditNoteViewController: UIViewController {
 
     }
     
+}
+
+// MARK: Delete Note
+extension EditNoteViewController {
+    @objc private func deleteNote() {
+        let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        guard let noteToBeDeleted = note?.noteId else { return }
+        noteManager.deleteNote(noteId: noteToBeDeleted) { result in
+            switch result {
+            case .success:
+                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                DispatchQueue.main.async {
+                    self.loadingAnimation.loadingView.pause()
+                    self.loadingAnimation.loadingView.isHidden = true
+                    controller.addAction(cancelAction)
+                    self.present(controller, animated: true, completion: nil)
+                }
+            case.failure:
+                print(result)
+            }
+        }
+    }
 }
 
 // MARK: Configure Add Note Tableview
@@ -385,6 +414,7 @@ extension EditNoteViewController {
         }
         
         let images = contentImages
+        self.note?.images = []
         for image in images {
             group.enter()
             noteManager.uploadPhoto(image: image) { result in
@@ -405,9 +435,8 @@ extension EditNoteViewController {
             self.noteManager.updateNote(note: editedNote, noteId: editedNote.noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    print(result)
                     let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        self?.navigationController?.popViewController(animated: true)
+                        self?.navigationController?.popToRootViewController(animated: true)
                     }
                     DispatchQueue.main.async {
                         self?.loadingAnimation.loadingView.pause()

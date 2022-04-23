@@ -84,6 +84,17 @@ class NoteManager {
         }
     }
     
+    func deleteNote(noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Notes").document(noteId)
+        do {
+            try msgRef.delete()
+            completion(.success("刪除成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
     
     func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
         
