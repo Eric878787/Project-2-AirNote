@@ -16,6 +16,8 @@ private enum Tab {
     case addContent
     
     case chatroomLobby
+    
+    case profile
 
     func controller() -> UIViewController {
 
@@ -30,7 +32,8 @@ private enum Tab {
         case.addContent: controller = UIStoryboard.addContent.instantiateInitialViewController()!
             
         case.chatroomLobby: controller = UIStoryboard.chatroomLobby.instantiateInitialViewController()!
-
+            
+        case.profile: controller = UIStoryboard.profile.instantiateInitialViewController()!
         }
 
         controller.tabBarItem = tabBarItem()
@@ -73,13 +76,20 @@ private enum Tab {
                 selectedImage: nil
             )
             
+        case.profile:
+            return UITabBarItem(
+                title: "個人",
+                image: UIImage(systemName: "message.fill"),
+                selectedImage: nil
+            )
+            
         }
     }
 }
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
-    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .addContent, .chatroomLobby]
+    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .addContent, .chatroomLobby, .profile]
     
     override func viewDidLoad() {
         super.viewDidLoad()

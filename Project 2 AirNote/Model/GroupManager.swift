@@ -13,8 +13,6 @@ import UIKit
 
 class GroupManager {
     
-    static let shared = GroupManager()
-    
     lazy var db = Firestore.firestore()
     
     func fetchGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
@@ -68,6 +66,17 @@ class GroupManager {
             completion(.failure(error))
         }
         
+    }
+    
+    func deleteGroup(groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Groups").document(groupId)
+        do {
+            try msgRef.delete()
+            completion(.success("刪除成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
     }
     
     func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {

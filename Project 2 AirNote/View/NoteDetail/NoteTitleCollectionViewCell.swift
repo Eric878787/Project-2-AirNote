@@ -30,7 +30,6 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .systemGray2
         viewsIcon.image = UIImage(systemName: "eye")
         commentCountsIcon.image = UIImage(systemName: "message")
-        likeIcon.image = UIImage(systemName: "heart")
     }
     
 }

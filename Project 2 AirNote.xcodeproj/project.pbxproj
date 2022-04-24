@@ -23,6 +23,10 @@
 		423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A12782813F37F0075B34F /* GroupCalendarCollectionViewCell.swift */; };
 		423A127B2813F37F0075B34F /* GroupCalendarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423A12792813F37F0075B34F /* GroupCalendarCollectionViewCell.xib */; };
 		423A127D2813F3A40075B34F /* GroupContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */; };
+		42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B0C2815A05F00A12777 /* ProfileViewController.swift */; };
+		42405B0F2815A07500A12777 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42405B0E2815A07500A12777 /* Profile.storyboard */; };
+		42405B152815A13800A12777 /* SavedNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */; };
+		42405B162815A13800A12777 /* SavedNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */; };
 		42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD5C632814122000DA7990 /* EditNoteViewController.swift */; };
 		42DD04C2280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */; };
 		42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */; };
@@ -116,6 +120,10 @@
 		423A12782813F37F0075B34F /* GroupCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		423A12792813F37F0075B34F /* GroupCalendarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupCalendarCollectionViewCell.xib; sourceTree = "<group>"; };
 		423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContentCollectionViewCell.swift; sourceTree = "<group>"; };
+		42405B0C2815A05F00A12777 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		42405B0E2815A07500A12777 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNoteTableViewCell.swift; sourceTree = "<group>"; };
+		42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedNoteTableViewCell.xib; sourceTree = "<group>"; };
 		42AD5C632814122000DA7990 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatRoomListTableViewCell.xib; sourceTree = "<group>"; };
 		42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomManager.swift; sourceTree = "<group>"; };
@@ -236,6 +244,23 @@
 			path = GroupDetail;
 			sourceTree = "<group>";
 		};
+		42405B0B2815A04500A12777 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				42405B0C2815A05F00A12777 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		42405B122815A0EF00A12777 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */,
+				42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		42DD04C3280F9E16007C4A9F /* ChatRooms */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +347,7 @@
 				42E2B696280EE97400B51D9F /* Chatroom */,
 				42DD04D228112FDA007C4A9F /* NoteDetail */,
 				423A126C2813F2120075B34F /* GroupDetail */,
+				42405B122815A0EF00A12777 /* Profile */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
 				423A1251281246340075B34F /* NotesDetail.storyboard */,
 				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
@@ -330,6 +356,7 @@
 				42E2B694280ED7D400B51D9F /* ChatroomLobby.storyboard */,
 				42F9363E28058BEB0058EB07 /* AddContent.storyboard */,
 				42E2B659280917B200B51D9F /* DrawingPad.storyboard */,
+				42405B0E2815A07500A12777 /* Profile.storyboard */,
 				42DE585C28005A7200D764F7 /* Main.storyboard */,
 				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
 			);
@@ -358,6 +385,7 @@
 				42E2B66F280D034F00B51D9F /* ChatRoom */,
 				42DD04D328112FF3007C4A9F /* NoteDetail */,
 				423A12672813F1390075B34F /* GroupDetail */,
+				42405B0B2815A04500A12777 /* Profile */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -672,6 +700,7 @@
 				42E2B65A280917B200B51D9F /* DrawingPad.storyboard in Resources */,
 				423A1252281246340075B34F /* NotesDetail.storyboard in Resources */,
 				42DE587A2801808600D764F7 /* DiscoverStudyGroups.storyboard in Resources */,
+				42405B0F2815A07500A12777 /* Profile.storyboard in Resources */,
 				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
 				42DD04DE281178E7007C4A9F /* 27938-upload-files .json in Resources */,
 				423A126B2813F17D0075B34F /* GroupDetail.storyboard in Resources */,
@@ -686,6 +715,7 @@
 				42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */,
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
+				42405B162815A13800A12777 /* SavedNoteTableViewCell.xib in Resources */,
 				423A12742813F32A0075B34F /* GroupTitleCollectionViewCell.xib in Resources */,
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
@@ -780,7 +810,9 @@
 				42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */,
 				423A12732813F32A0075B34F /* GroupTitleCollectionViewCell.swift in Sources */,
 				423A125C281318A10075B34F /* NoteCommentCollectionViewCell.swift in Sources */,
+				42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */,
 				42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */,
+				42405B152815A13800A12777 /* SavedNoteTableViewCell.swift in Sources */,
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,

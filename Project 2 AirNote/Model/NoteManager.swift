@@ -13,8 +13,6 @@ import UIKit
 
 class NoteManager {
     
-    static let shared = NoteManager()
-    
     lazy var db = Firestore.firestore()
     
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {

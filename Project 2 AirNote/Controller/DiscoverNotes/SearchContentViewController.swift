@@ -40,9 +40,6 @@ class SearchContentViewController: UIViewController {
         // Fetch notes
         fetchNotes()
         
-        // Fetch users
-        fetchUsers()
-        
     }
 }
     
@@ -118,12 +115,10 @@ extension SearchContentViewController {
             switch result {
                 
             case .success(let existingNote):
-                
-                DispatchQueue.main.async {
+    
                     self?.notes = existingNote
                     self?.filteredNotes = self?.notes ?? existingNote
-                    self?.searchNotesTableView.reloadData()
-                }
+                    self?.fetchUsers()
                 
             case .failure(let error):
                 
@@ -140,8 +135,8 @@ extension SearchContentViewController {
                 
             case .success(let existingUser):
                 
+                self?.users = existingUser
                 DispatchQueue.main.async {
-                    self?.users = existingUser
                     self?.searchNotesTableView.reloadData()
                 }
                 
@@ -154,7 +149,91 @@ extension SearchContentViewController {
 }
 
 // MARK: Search result tableview datasource
-extension SearchContentViewController: UITableViewDataSource {
+extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate {
+    
+    func saveNote(_ selectedCell: NoteResultTableViewCell) {
+        
+        var selectedIndexPathItem = searchNotesTableView.indexPath(for: selectedCell)?.row
+        
+        guard let item = selectedIndexPathItem else { return }
+        
+        var selectedNote = Note(authorId: notes[item].noteId,
+                                comments: notes[item].comments,
+                                createdTime: notes[item].createdTime,
+                                likes: notes[item].likes,
+                                category: notes[item].category,
+                                clicks: notes[item].clicks,
+                                content: notes[item].content,
+                                cover: notes[item].cover,
+                                noteId: notes[item].noteId,
+                                images:notes[item].images,
+                                keywords:notes[item].keywords,
+                                title: notes[item].title)
+        
+        if selectedCell.likeButton.imageView?.image == UIImage(systemName: "suit.heart") {
+            
+            selectedNote.likes.append("qbQsVVpVHlf6I4XLfOJ6")
+            
+        } else {
+            
+            selectedNote.likes = selectedNote.likes.filter{ $0 != "qbQsVVpVHlf6I4XLfOJ6" }
+            
+        }
+        
+        noteManager.updateNote(note: selectedNote, noteId: selectedNote.noteId) { result in
+            
+            switch result {
+                
+            case .success:
+                
+                self.fetchNotes()
+                
+                var userToBeUpdated: User?
+                
+                for user in self.users where user.userId == "qbQsVVpVHlf6I4XLfOJ6"{
+                    
+                    userToBeUpdated = user
+                    
+                }
+                
+                if selectedCell.likeButton.imageView?.image == UIImage(systemName: "suit.heart") {
+                    
+                    userToBeUpdated?.savedNotes.append(selectedNote.noteId)
+                    
+                } else {
+                    
+                    let user = userToBeUpdated
+                    
+                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter{ $0 != "\(selectedNote.noteId)" } ?? []
+                    
+                }
+                
+                guard let userToBeUpdated = userToBeUpdated else {
+                    return
+                }
+                
+                self.userManager.updateUser(user: userToBeUpdated, userId: userToBeUpdated.userId) { result in
+                    
+                    switch result {
+                        
+                    case .success:
+                        
+                        print("收藏成功")
+                        
+                    case .failure:
+                        
+                        print("收藏失敗")
+                        
+                    }
+                }
+                
+            case .failure:
+                
+                print("收藏失敗")
+            }
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filteredNotes.count
@@ -163,10 +242,19 @@ extension SearchContentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let noteResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NoteResultTableViewCell", for: indexPath)
         guard let cell = noteResultTableViewCell as? NoteResultTableViewCell else { return noteResultTableViewCell }
+        cell.delegate = self
         cell.titleLabel.text = filteredNotes[indexPath.row].title
         let mainImageUrl = URL(string: filteredNotes[indexPath.row].cover)
         cell.mainImageView.kf.indicatorType = .activity
         cell.mainImageView.kf.setImage(with: mainImageUrl)
+        
+        // Highlight saved note
+        cell.likeButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
+        for like in filteredNotes[indexPath.row].likes {
+            if like == "qbQsVVpVHlf6I4XLfOJ6" {
+                cell.likeButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
+            }
+        }
         
         // querying users' name & avatar
         for user in users where user.userId == filteredNotes[indexPath.row].authorId {

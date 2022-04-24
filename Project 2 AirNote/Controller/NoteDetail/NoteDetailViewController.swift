@@ -27,8 +27,6 @@ class NoteDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(users)
-        
         // Register Cell
         registerCell()
         
@@ -135,6 +133,13 @@ extension NoteDetailViewController: UICollectionViewDataSource {
                     as? NoteTitleCollectionViewCell else { return UICollectionViewCell()}
             cell.viewsLabel.text = "\(note.clicks.count)"
             cell.commentCountsLabel.text = "\(note.comments.count)"
+            
+            // Highlight saved note
+            for like in note.likes {
+                if like == "qbQsVVpVHlf6I4XLfOJ6" {
+                    cell.likeIcon.image = UIImage(systemName: "heart.fill")
+                } 
+            }
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteContentCollectionViewCell.reuseIdentifer, for: indexPath)

@@ -7,7 +7,6 @@
 
 import UIKit
 import Kingfisher
-import AVFoundation
 
 class DiscoverNotesViewController: UIViewController {
     
@@ -82,9 +81,6 @@ class DiscoverNotesViewController: UIViewController {
         // Fetch Notes Data
         fetchNotes()
         
-        // Fetch Users Data
-        fetchUsers()
-        
     }
 }
 
@@ -98,11 +94,9 @@ extension DiscoverNotesViewController {
                 
             case .success(let existingNote):
                 
-                DispatchQueue.main.async {
                     self?.notes = existingNote
                     self?.filterNotes = self?.notes ?? existingNote
-                    self?.notesCollectionView.reloadData()
-                }
+                    self?.fetchUsers()
                 
             case .failure(let error):
                 
@@ -118,8 +112,9 @@ extension DiscoverNotesViewController {
                 
             case .success(let existingUser):
                 
+                self?.users = existingUser
+                
                 DispatchQueue.main.async {
-                    self?.users = existingUser
                     self?.notesCollectionView.reloadData()
                 }
                 
@@ -180,7 +175,94 @@ extension DiscoverNotesViewController {
 }
 
 // MARK: CollectionView DataSource
-extension DiscoverNotesViewController: UICollectionViewDataSource {
+extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectionDelegate {
+    
+    func saveNote(_ selectedCell: NotesCollectionViewCell) {
+        
+        var selectedIndexPathItem = notesCollectionView.indexPath(for: selectedCell)?.item
+        
+        guard let item = selectedIndexPathItem else { return }
+        
+        var selectedNote = Note(authorId: notes[item].noteId,
+                                comments: notes[item].comments,
+                                createdTime: notes[item].createdTime,
+                                likes: notes[item].likes,
+                                category: notes[item].category,
+                                clicks: notes[item].clicks,
+                                content: notes[item].content,
+                                cover: notes[item].cover,
+                                noteId: notes[item].noteId,
+                                images:notes[item].images,
+                                keywords:notes[item].keywords,
+                                title: notes[item].title)
+        
+        if selectedCell.heartButton.imageView?.image == UIImage(systemName: "suit.heart") {
+            
+            selectedNote.likes.append("qbQsVVpVHlf6I4XLfOJ6")
+            
+            
+        } else {
+            
+            selectedNote.likes = selectedNote.likes.filter{ $0 != "qbQsVVpVHlf6I4XLfOJ6" }
+            
+        }
+        
+        noteManager.updateNote(note: selectedNote, noteId: selectedNote.noteId) { result in
+            
+            switch result {
+                
+            case .success:
+                
+                self.fetchNotes()
+                
+                var userToBeUpdated: User?
+                
+                for user in self.users where user.userId == "qbQsVVpVHlf6I4XLfOJ6"{
+                    
+                    userToBeUpdated = user
+                    
+                }
+                
+                if selectedCell.heartButton.imageView?.image == UIImage(systemName: "suit.heart") {
+                    
+                    userToBeUpdated?.savedNotes.append(selectedNote.noteId)
+                    
+                } else {
+                    
+                    let user = userToBeUpdated
+                    
+                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter{ $0 != "\(selectedNote.noteId)" } ?? []
+                    
+                }
+                
+                guard let userToBeUpdated = userToBeUpdated else {
+                    return
+                }
+                
+                self.userManager.updateUser(user: userToBeUpdated, userId: userToBeUpdated.userId) { result in
+                    
+                    switch result {
+                        
+                    case .success:
+                        
+                        print("收藏成功")
+                        
+                    case .failure:
+                        
+                        print("收藏失敗")
+                        
+                    }
+                }
+                
+            case .failure:
+                
+                print("收藏失敗")
+            }
+            
+        }
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == categoryCollectionView {
             return category.count
@@ -205,9 +287,19 @@ extension DiscoverNotesViewController: UICollectionViewDataSource {
             let notesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotesCollectionViewCell", for: indexPath)
             guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return notesCollectionViewCell}
             let url = URL(string: filterNotes[indexPath.item].cover)
+            cell.delegate = self
             cell.coverImage.kf.indicatorType = .activity
             cell.coverImage.kf.setImage(with: url)
             cell.titleLabel.text = filterNotes[indexPath.item].title
+            
+            // Highlight saved note
+            cell.heartButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
+
+            for like in filterNotes[indexPath.item].likes {
+                if like == "qbQsVVpVHlf6I4XLfOJ6" {
+                    cell.heartButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
+                }
+            }
             
             // querying users' name & avatar
             for user in users where user.userId == filterNotes[indexPath.item].authorId {

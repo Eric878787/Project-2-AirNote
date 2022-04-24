@@ -46,7 +46,7 @@ class EditNoteViewController: UIViewController {
         imagePickerController.delegate = self
         multiImagePickerController.delegate = self
         
-        // Edit Button
+        // Delete Button
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteNote))
         self.navigationItem.rightBarButtonItem = deleteButton
         

@@ -21,6 +21,10 @@ class GroupDetailViewController: UIViewController {
     // Data Manager
     private var groupManager = GroupManager()
     private var userManager = UserManager()
+    private var chatRoomManager = ChatRoomManager()
+    
+    // MARK: Loading Animation
+    private var loadingAnimation = LottieAnimation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +41,53 @@ class GroupDetailViewController: UIViewController {
         // Config Button
         configButton()
         
+        // Delete Button
+        let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteGroup))
+        self.navigationItem.rightBarButtonItem = deleteButton
+        
+    }
+}
+
+// MARK: Delete Note
+extension GroupDetailViewController {
+    @objc private func deleteGroup() {
+        let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        guard let groupToBeDeleted = group?.groupId else { return }
+        groupManager.deleteGroup(groupId: groupToBeDeleted) { result in
+            switch result {
+            case .success:
+                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                // fetch chat room id
+                self.chatRoomManager.fetchRooms { result in
+                    switch result {
+                    case .success(let rooms):
+                        for room in rooms where room.groupId == groupToBeDeleted {
+                            // delete chat room
+                            self.chatRoomManager.deleteChatRoom(chatRoomId: room.chatRoomId) { result in
+                                switch result {
+                                case .success:
+                                    DispatchQueue.main.async {
+                                        self.loadingAnimation.loadingView.pause()
+                                        self.loadingAnimation.loadingView.isHidden = true
+                                        controller.addAction(cancelAction)
+                                        self.present(controller, animated: true, completion: nil)
+                                    }
+                                case.failure:
+                                    print(result)
+                                }
+                            }
+                        }
+                    case .failure(let error):
+                        print("fetchData.failure: \(error)")
+                    }
+                }
+            case.failure:
+                print(result)
+            }
+        }
     }
 }
 
@@ -55,8 +106,8 @@ extension GroupDetailViewController {
         groupDetailCollectionView.registerCellWithNib(identifier: String(describing: GroupCalendarCollectionViewCell.self), bundle: nil)
         groupDetailCollectionView.register(GroupContentCollectionViewCell.self, forCellWithReuseIdentifier: GroupContentCollectionViewCell.reuseIdentifer)
         groupDetailCollectionView.register(TitleSupplementaryView.self,
-                                          forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                          withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
+                                           forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                           withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
     }
 }
 
@@ -111,6 +162,12 @@ extension GroupDetailViewController: UICollectionViewDataSource {
             dateFormatter.dateFormat = "MM/dd"
             cell.dateLabel.text = dateFormatter.string(from: localDate)
             cell.contentLabel.text = group.schedules[indexPath.item].title
+            let date = Date()
+            if localDate < date {
+                cell.durationLabel.text = "過期"
+            } else {
+                cell.durationLabel.text = "進行中"
+            }
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GroupContentCollectionViewCell.self), for: indexPath)
