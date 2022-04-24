@@ -13,9 +13,38 @@ import UIKit
 
 class ChatRoomManager {
     
-    static let shared = GroupManager()
-    
     lazy var db = Firestore.firestore()
+    
+    func fetchRooms(completion: @escaping (Result<[ChatRoom], Error>) -> Void) {
+        
+        db.collection("ChatRooms").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
+            
+            if let error = error {
+                
+                completion(.failure(error))
+            } else {
+                
+                var rooms = [ChatRoom]()
+                
+                for document in querySnapshot!.documents {
+                    
+                    do {
+                        if let room = try document.data(as: ChatRoom.self, decoder: Firestore.Decoder()) {
+                            
+                            rooms.append(room)
+                            
+                        }
+                        
+                    } catch {
+                        
+                        completion(.failure(error))
+                    }
+                }
+                
+                completion(.success(rooms))
+            }
+        }
+    }
     
     func checkMessageChange(chatroomId: String, completion: @escaping (Result<ChatRoom, Error>) -> Void) {
         let db = Firestore.firestore()
@@ -78,6 +107,17 @@ class ChatRoomManager {
         do {
             try msgRef.setData(from: room, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func deleteChatRoom(chatRoomId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("ChatRooms").document(chatRoomId)
+        do {
+            try msgRef.delete()
+            completion(.success("刪除成功"))
         }
         catch {
             completion(.failure(error))

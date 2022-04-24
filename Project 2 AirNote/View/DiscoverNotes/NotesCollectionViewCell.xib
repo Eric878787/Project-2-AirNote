@@ -45,35 +45,40 @@
                             <constraint firstItem="XiO-0G-d8H" firstAttribute="height" secondItem="oGA-Q6-quD" secondAttribute="height" multiplier="1.5" id="bXg-c6-sLf"/>
                         </constraints>
                     </stackView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Soq-dO-hbR">
-                        <rect key="frame" x="244" y="284.5" width="24" height="21.5"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0K-Ea-gIV">
+                        <rect key="frame" x="244" y="283" width="24" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="Soq-dO-hbR" secondAttribute="height" multiplier="1:1" id="lbs-LF-dP1"/>
+                            <constraint firstAttribute="width" secondItem="i0K-Ea-gIV" secondAttribute="height" multiplier="1:1" id="B6V-wz-pF9"/>
                         </constraints>
-                    </imageView>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="suit.heart" catalog="system"/>
+                        <connections>
+                            <action selector="likeAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="2E1-17-YuT"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="Soq-dO-hbR" firstAttribute="top" secondItem="PQQ-Xv-63H" secondAttribute="top" id="2JN-M5-nhu"/>
                 <constraint firstItem="kVW-Ko-cXU" firstAttribute="top" secondItem="PQQ-Xv-63H" secondAttribute="top" id="4B7-zi-d9c"/>
                 <constraint firstItem="PQQ-Xv-63H" firstAttribute="top" secondItem="6g1-PB-wU9" secondAttribute="bottom" constant="10" id="5cf-Zj-ITi"/>
                 <constraint firstItem="6g1-PB-wU9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="GIn-Om-BWn"/>
                 <constraint firstItem="kVW-Ko-cXU" firstAttribute="leading" secondItem="PQQ-Xv-63H" secondAttribute="trailing" constant="5" id="Jj2-kn-VYw"/>
-                <constraint firstItem="Soq-dO-hbR" firstAttribute="height" secondItem="PQQ-Xv-63H" secondAttribute="height" multiplier="0.5" id="LBn-c7-qpm"/>
+                <constraint firstItem="i0K-Ea-gIV" firstAttribute="top" secondItem="PQQ-Xv-63H" secondAttribute="top" id="S2V-qx-zUw"/>
                 <constraint firstItem="6g1-PB-wU9" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.8" id="Ypt-e4-h3y"/>
                 <constraint firstAttribute="trailing" secondItem="6g1-PB-wU9" secondAttribute="trailing" id="ZcA-tv-PPu"/>
                 <constraint firstItem="6g1-PB-wU9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="aEZ-6j-qUq"/>
                 <constraint firstItem="PQQ-Xv-63H" firstAttribute="bottom" secondItem="kVW-Ko-cXU" secondAttribute="bottom" id="eN7-1F-h4s"/>
-                <constraint firstAttribute="trailing" secondItem="Soq-dO-hbR" secondAttribute="trailing" id="iyv-rL-dB2"/>
+                <constraint firstItem="i0K-Ea-gIV" firstAttribute="height" secondItem="PQQ-Xv-63H" secondAttribute="height" multiplier="0.5" id="jjD-qB-U5z"/>
                 <constraint firstItem="PQQ-Xv-63H" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="kZu-IC-kOV"/>
+                <constraint firstAttribute="trailing" secondItem="i0K-Ea-gIV" secondAttribute="trailing" id="kjs-jx-Y5r"/>
                 <constraint firstAttribute="bottom" secondItem="PQQ-Xv-63H" secondAttribute="bottom" constant="10" id="tav-uw-gIj"/>
             </constraints>
             <size key="customSize" width="268" height="341"/>
             <connections>
                 <outlet property="authorNameLabel" destination="oGA-Q6-quD" id="383-Rj-OPW"/>
                 <outlet property="coverImage" destination="6g1-PB-wU9" id="c6Z-62-npa"/>
-                <outlet property="likeLabel" destination="Soq-dO-hbR" id="wJP-Py-FgR"/>
+                <outlet property="heartButton" destination="i0K-Ea-gIV" id="qkl-TG-R5a"/>
                 <outlet property="titleLabel" destination="XiO-0G-d8H" id="Ck8-Ot-7M3"/>
                 <outlet property="userAvatarImage" destination="PQQ-Xv-63H" id="Bjb-0a-b14"/>
             </connections>
@@ -82,7 +87,7 @@
     </objects>
     <resources>
         <image name="book.fill" catalog="system" width="128" height="95"/>
-        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="suit.heart" catalog="system" width="128" height="109"/>
     </resources>
 </document>

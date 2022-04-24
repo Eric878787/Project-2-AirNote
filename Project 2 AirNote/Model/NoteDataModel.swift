@@ -13,17 +13,17 @@ struct Note: Codable {
     var comments: [Comment]
     var createdTime: Date
     var likes: [String]
-    var noteCategory: String
-    var noteClicks: [String]
-    var noteContent: String
-    var noteCover: String
+    var category: String
+    var clicks: [String]
+    var content: String
+    var cover: String
     var noteId: String
-    var noteImages: [String]
-    var noteKeywords: [String]
-    var noteTitle: String
+    var images: [String]
+    var keywords: [String]
+    var title: String
 }
 
-struct Comment: Codable {
+struct Comment: Codable, Equatable {
     
     var content: String
     var createdTime: Date

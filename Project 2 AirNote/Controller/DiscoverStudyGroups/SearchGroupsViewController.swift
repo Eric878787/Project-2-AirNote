@@ -183,4 +183,12 @@ extension SearchGroupsViewController: UITableViewDelegate {
         return UIScreen.main.bounds.height * 0.5
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+        vc.group = filteredgroups[indexPath.row]
+        vc.users = users
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

@@ -7,8 +7,14 @@
 
 import UIKit
 
-class NotesCollectionViewCell: UICollectionViewCell {
+protocol NoteCollectionDelegate {
+    
+    func saveNote(_ selectedCell: NotesCollectionViewCell)
+    
+}
 
+class NotesCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var coverImage: UIImageView!
     
     @IBOutlet weak var userAvatarImage: UIImageView!
@@ -17,7 +23,9 @@ class NotesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     
-    @IBOutlet weak var likeLabel: UIImageView!
+    @IBOutlet weak var heartButton: UIButton!
+    
+    var delegate: NoteCollectionDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,5 +39,10 @@ class NotesCollectionViewCell: UICollectionViewCell {
         userAvatarImage.layer.cornerRadius = userAvatarImage.bounds.height/2
         userAvatarImage.clipsToBounds = true
     }
-
+    
+    @IBAction func likeAction(_ sender: Any) {
+        
+        delegate?.saveNote(self)
+        
+    }
 }

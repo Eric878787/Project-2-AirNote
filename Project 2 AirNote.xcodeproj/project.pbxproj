@@ -7,6 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		423A1252281246340075B34F /* NotesDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A1251281246340075B34F /* NotesDetail.storyboard */; };
+		423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125328125B6F0075B34F /* TitleHeaderView.swift */; };
+		423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */; };
+		423A12582812AAC20075B34F /* NoteTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A12572812AAC20075B34F /* NoteTitleCollectionViewCell.swift */; };
+		423A125A2812AB130075B34F /* NoteContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A12592812AB130075B34F /* NoteContentCollectionViewCell.swift */; };
+		423A125C281318A10075B34F /* NoteCommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125B281318A10075B34F /* NoteCommentCollectionViewCell.swift */; };
+		423A126028131EF20075B34F /* NoteCommentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423A125F28131EF20075B34F /* NoteCommentCollectionViewCell.xib */; };
+		423A126428132CEA0075B34F /* NoteTitleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423A126328132CEA0075B34F /* NoteTitleCollectionViewCell.xib */; };
+		423A12692813F1620075B34F /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A12682813F1620075B34F /* GroupDetailViewController.swift */; };
+		423A126B2813F17D0075B34F /* GroupDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A126A2813F17D0075B34F /* GroupDetail.storyboard */; };
+		423A12702813F30F0075B34F /* GroupCoverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A126F2813F30F0075B34F /* GroupCoverCollectionViewCell.swift */; };
+		423A12732813F32A0075B34F /* GroupTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A12712813F32A0075B34F /* GroupTitleCollectionViewCell.swift */; };
+		423A12742813F32A0075B34F /* GroupTitleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423A12722813F32A0075B34F /* GroupTitleCollectionViewCell.xib */; };
+		423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A12782813F37F0075B34F /* GroupCalendarCollectionViewCell.swift */; };
+		423A127B2813F37F0075B34F /* GroupCalendarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423A12792813F37F0075B34F /* GroupCalendarCollectionViewCell.xib */; };
+		423A127D2813F3A40075B34F /* GroupContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */; };
+		42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B0C2815A05F00A12777 /* ProfileViewController.swift */; };
+		42405B0F2815A07500A12777 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42405B0E2815A07500A12777 /* Profile.storyboard */; };
+		42405B152815A13800A12777 /* SavedNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */; };
+		42405B162815A13800A12777 /* SavedNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */; };
+		42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD5C632814122000DA7990 /* EditNoteViewController.swift */; };
 		42DD04C2280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */; };
 		42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */; };
 		42DD04C7280FA5DA007C4A9F /* ChatRoomDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04C6280FA5DA007C4A9F /* ChatRoomDataModel.swift */; };
@@ -15,6 +36,11 @@
 		42DD04CD280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04CB280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib */; };
 		42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04CE280FF498007C4A9F /* RightChatRoomTableViewCell.swift */; };
 		42DD04D1280FF498007C4A9F /* LeftChatRoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04CF280FF498007C4A9F /* LeftChatRoomTableViewCell.xib */; };
+		42DD04D5281130A1007C4A9F /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04D4281130A1007C4A9F /* NoteDetailViewController.swift */; };
+		42DD04D728116F17007C4A9F /* 98431-loading-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04D628116F17007C4A9F /* 98431-loading-animation.json */; };
+		42DD04D928116FED007C4A9F /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04D828116FED007C4A9F /* Animation.swift */; };
+		42DD04DC281175FC007C4A9F /* 97127-loading-icon.json in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04DB281175FC007C4A9F /* 97127-loading-icon.json */; };
+		42DD04DE281178E7007C4A9F /* 27938-upload-files .json in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04DD281178E7007C4A9F /* 27938-upload-files .json */; };
 		42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585628005A7200D764F7 /* AppDelegate.swift */; };
 		42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585828005A7200D764F7 /* SceneDelegate.swift */; };
 		42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE585A28005A7200D764F7 /* TabBarViewController.swift */; };
@@ -78,6 +104,27 @@
 
 /* Begin PBXFileReference section */
 		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
+		423A1251281246340075B34F /* NotesDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotesDetail.storyboard; sourceTree = "<group>"; };
+		423A125328125B6F0075B34F /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
+		423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
+		423A12572812AAC20075B34F /* NoteTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		423A12592812AB130075B34F /* NoteContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteContentCollectionViewCell.swift; sourceTree = "<group>"; };
+		423A125B281318A10075B34F /* NoteCommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCommentCollectionViewCell.swift; sourceTree = "<group>"; };
+		423A125F28131EF20075B34F /* NoteCommentCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteCommentCollectionViewCell.xib; sourceTree = "<group>"; };
+		423A126328132CEA0075B34F /* NoteTitleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTitleCollectionViewCell.xib; sourceTree = "<group>"; };
+		423A12682813F1620075B34F /* GroupDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailViewController.swift; sourceTree = "<group>"; };
+		423A126A2813F17D0075B34F /* GroupDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupDetail.storyboard; sourceTree = "<group>"; };
+		423A126F2813F30F0075B34F /* GroupCoverCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCoverCollectionViewCell.swift; sourceTree = "<group>"; };
+		423A12712813F32A0075B34F /* GroupTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		423A12722813F32A0075B34F /* GroupTitleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupTitleCollectionViewCell.xib; sourceTree = "<group>"; };
+		423A12782813F37F0075B34F /* GroupCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		423A12792813F37F0075B34F /* GroupCalendarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupCalendarCollectionViewCell.xib; sourceTree = "<group>"; };
+		423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContentCollectionViewCell.swift; sourceTree = "<group>"; };
+		42405B0C2815A05F00A12777 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		42405B0E2815A07500A12777 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNoteTableViewCell.swift; sourceTree = "<group>"; };
+		42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedNoteTableViewCell.xib; sourceTree = "<group>"; };
+		42AD5C632814122000DA7990 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatRoomListTableViewCell.xib; sourceTree = "<group>"; };
 		42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomManager.swift; sourceTree = "<group>"; };
 		42DD04C6280FA5DA007C4A9F /* ChatRoomDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDataModel.swift; sourceTree = "<group>"; };
@@ -86,6 +133,11 @@
 		42DD04CB280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightChatRoomTableViewCell.xib; sourceTree = "<group>"; };
 		42DD04CE280FF498007C4A9F /* RightChatRoomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightChatRoomTableViewCell.swift; sourceTree = "<group>"; };
 		42DD04CF280FF498007C4A9F /* LeftChatRoomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftChatRoomTableViewCell.xib; sourceTree = "<group>"; };
+		42DD04D4281130A1007C4A9F /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
+		42DD04D628116F17007C4A9F /* 98431-loading-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "98431-loading-animation.json"; sourceTree = "<group>"; };
+		42DD04D828116FED007C4A9F /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		42DD04DB281175FC007C4A9F /* 97127-loading-icon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "97127-loading-icon.json"; sourceTree = "<group>"; };
+		42DD04DD281178E7007C4A9F /* 27938-upload-files .json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "27938-upload-files .json"; sourceTree = "<group>"; };
 		42DE585328005A7200D764F7 /* Project 2 AirNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project 2 AirNote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DE585628005A7200D764F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42DE585828005A7200D764F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -171,6 +223,44 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		423A12672813F1390075B34F /* GroupDetail */ = {
+			isa = PBXGroup;
+			children = (
+				423A12682813F1620075B34F /* GroupDetailViewController.swift */,
+			);
+			path = GroupDetail;
+			sourceTree = "<group>";
+		};
+		423A126C2813F2120075B34F /* GroupDetail */ = {
+			isa = PBXGroup;
+			children = (
+				423A126F2813F30F0075B34F /* GroupCoverCollectionViewCell.swift */,
+				423A12712813F32A0075B34F /* GroupTitleCollectionViewCell.swift */,
+				423A12722813F32A0075B34F /* GroupTitleCollectionViewCell.xib */,
+				423A12782813F37F0075B34F /* GroupCalendarCollectionViewCell.swift */,
+				423A12792813F37F0075B34F /* GroupCalendarCollectionViewCell.xib */,
+				423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */,
+			);
+			path = GroupDetail;
+			sourceTree = "<group>";
+		};
+		42405B0B2815A04500A12777 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				42405B0C2815A05F00A12777 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		42405B122815A0EF00A12777 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */,
+				42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		42DD04C3280F9E16007C4A9F /* ChatRooms */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +268,39 @@
 				42DD04C6280FA5DA007C4A9F /* ChatRoomDataModel.swift */,
 			);
 			path = ChatRooms;
+			sourceTree = "<group>";
+		};
+		42DD04D228112FDA007C4A9F /* NoteDetail */ = {
+			isa = PBXGroup;
+			children = (
+				423A125328125B6F0075B34F /* TitleHeaderView.swift */,
+				423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */,
+				423A12572812AAC20075B34F /* NoteTitleCollectionViewCell.swift */,
+				423A126328132CEA0075B34F /* NoteTitleCollectionViewCell.xib */,
+				423A12592812AB130075B34F /* NoteContentCollectionViewCell.swift */,
+				423A125B281318A10075B34F /* NoteCommentCollectionViewCell.swift */,
+				423A125F28131EF20075B34F /* NoteCommentCollectionViewCell.xib */,
+			);
+			path = NoteDetail;
+			sourceTree = "<group>";
+		};
+		42DD04D328112FF3007C4A9F /* NoteDetail */ = {
+			isa = PBXGroup;
+			children = (
+				42DD04D4281130A1007C4A9F /* NoteDetailViewController.swift */,
+				42AD5C632814122000DA7990 /* EditNoteViewController.swift */,
+			);
+			path = NoteDetail;
+			sourceTree = "<group>";
+		};
+		42DD04DA281175E9007C4A9F /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				42DD04D628116F17007C4A9F /* 98431-loading-animation.json */,
+				42DD04DB281175FC007C4A9F /* 97127-loading-icon.json */,
+				42DD04DD281178E7007C4A9F /* 27938-upload-files .json */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		42DE584A28005A7200D764F7 = {
@@ -222,12 +345,18 @@
 				42E2B66C280C03A600B51D9F /* SearchContent */,
 				42F936402805AFB60058EB07 /* AddContent */,
 				42E2B696280EE97400B51D9F /* Chatroom */,
+				42DD04D228112FDA007C4A9F /* NoteDetail */,
+				423A126C2813F2120075B34F /* GroupDetail */,
+				42405B122815A0EF00A12777 /* Profile */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
+				423A1251281246340075B34F /* NotesDetail.storyboard */,
 				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
+				423A126A2813F17D0075B34F /* GroupDetail.storyboard */,
 				42E2B666280AD37C00B51D9F /* SearchContent.storyboard */,
 				42E2B694280ED7D400B51D9F /* ChatroomLobby.storyboard */,
 				42F9363E28058BEB0058EB07 /* AddContent.storyboard */,
 				42E2B659280917B200B51D9F /* DrawingPad.storyboard */,
+				42405B0E2815A07500A12777 /* Profile.storyboard */,
 				42DE585C28005A7200D764F7 /* Main.storyboard */,
 				42DE586128005A7600D764F7 /* LaunchScreen.storyboard */,
 			);
@@ -254,6 +383,9 @@
 				42DE587B2801809100D764F7 /* DiscoverStudyGroups */,
 				42F9363B28058B6E0058EB07 /* Add Content */,
 				42E2B66F280D034F00B51D9F /* ChatRoom */,
+				42DD04D328112FF3007C4A9F /* NoteDetail */,
+				423A12672813F1390075B34F /* GroupDetail */,
+				42405B0B2815A04500A12777 /* Profile */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -261,6 +393,7 @@
 		42DE586F280164B000D764F7 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				42DD04DA281175E9007C4A9F /* Animation */,
 				42DE585F28005A7600D764F7 /* Assets.xcassets */,
 			);
 			name = Resource;
@@ -398,6 +531,7 @@
 			children = (
 				42E2B6532807E6AC00B51D9F /* AddPhotosTableViewCell.swift */,
 				42E2B6542807E6AC00B51D9F /* AddPhotosTableViewCell.xib */,
+				42DD04D828116FED007C4A9F /* Animation.swift */,
 			);
 			path = AddNote;
 			sourceTree = "<group>";
@@ -554,7 +688,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423A127B2813F37F0075B34F /* GroupCalendarCollectionViewCell.xib in Resources */,
 				42E2B685280DA4BE00B51D9F /* AddCalendarTableViewCell.xib in Resources */,
+				42DD04DC281175FC007C4A9F /* 97127-loading-icon.json in Resources */,
 				42DD04C2280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib in Resources */,
 				42E2B667280AD37C00B51D9F /* SearchContent.storyboard in Resources */,
 				42F9362C2802BBB70058EB07 /* NotesCollectionViewCell.xib in Resources */,
@@ -562,8 +698,12 @@
 				42F9364C28066F430058EB07 /* AddContentTableViewCell.xib in Resources */,
 				42E2B675280D666500B51D9F /* GroupsCollectionViewCell.xib in Resources */,
 				42E2B65A280917B200B51D9F /* DrawingPad.storyboard in Resources */,
+				423A1252281246340075B34F /* NotesDetail.storyboard in Resources */,
 				42DE587A2801808600D764F7 /* DiscoverStudyGroups.storyboard in Resources */,
+				42405B0F2815A07500A12777 /* Profile.storyboard in Resources */,
 				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
+				42DD04DE281178E7007C4A9F /* 27938-upload-files .json in Resources */,
+				423A126B2813F17D0075B34F /* GroupDetail.storyboard in Resources */,
 				42DD04CD280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib in Resources */,
 				42DD04D1280FF498007C4A9F /* LeftChatRoomTableViewCell.xib in Resources */,
 				42F9363F28058BEB0058EB07 /* AddContent.storyboard in Resources */,
@@ -575,10 +715,15 @@
 				42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */,
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
+				42405B162815A13800A12777 /* SavedNoteTableViewCell.xib in Resources */,
+				423A12742813F32A0075B34F /* GroupTitleCollectionViewCell.xib in Resources */,
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
+				42DD04D728116F17007C4A9F /* 98431-loading-animation.json in Resources */,
 				42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */,
+				423A126028131EF20075B34F /* NoteCommentCollectionViewCell.xib in Resources */,
 				42E2B690280EBFA300B51D9F /* GroupResultTableViewCell.xib in Resources */,
+				423A126428132CEA0075B34F /* NoteTitleCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,20 +797,28 @@
 				42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */,
 				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
 				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
+				42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */,
 				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,
 				42DD04C9280FE414007C4A9F /* ChatRoomViewController.swift in Sources */,
 				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
 				42E2B66A280C039E00B51D9F /* NoteResultTableViewCell.swift in Sources */,
 				42F936462805B2AA0058EB07 /* UICollectionView+Extension.swift in Sources */,
 				42F9364B28066F430058EB07 /* AddContentTableViewCell.swift in Sources */,
+				42DD04D928116FED007C4A9F /* Animation.swift in Sources */,
 				42E2B678280D7F9600B51D9F /* GroupManager.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
 				42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */,
+				423A12732813F32A0075B34F /* GroupTitleCollectionViewCell.swift in Sources */,
+				423A125C281318A10075B34F /* NoteCommentCollectionViewCell.swift in Sources */,
+				42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */,
 				42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */,
+				42405B152815A13800A12777 /* SavedNoteTableViewCell.swift in Sources */,
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
 				42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */,
+				423A12702813F30F0075B34F /* GroupCoverCollectionViewCell.swift in Sources */,
+				423A12582812AAC20075B34F /* NoteTitleCollectionViewCell.swift in Sources */,
 				42E2B68C280EBBF700B51D9F /* SearchGroupsViewController.swift in Sources */,
 				42F9363A280573E40058EB07 /* UserDataModel.swift in Sources */,
 				42F93634280554AA0058EB07 /* NoteDataModel.swift in Sources */,
@@ -674,16 +827,23 @@
 				42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */,
 				42E2B688280DA4E500B51D9F /* AddAddressTableViewCell.swift in Sources */,
 				42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */,
+				423A12692813F1620075B34F /* GroupDetailViewController.swift in Sources */,
 				42DD04C7280FA5DA007C4A9F /* ChatRoomDataModel.swift in Sources */,
 				42E2B693280ED7C700B51D9F /* ChatRoomViewLobbyController.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
+				423A125A2812AB130075B34F /* NoteContentCollectionViewCell.swift in Sources */,
+				42DD04D5281130A1007C4A9F /* NoteDetailViewController.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
+				423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */,
 				42E2B699280EEA6700B51D9F /* ChatRoomListTableViewCell.swift in Sources */,
+				423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */,
 				42E2B67A280D7FA700B51D9F /* GroupDataModel.swift in Sources */,
 				42E2B6582809179F00B51D9F /* DrawingViewController.swift in Sources */,
 				42E2B674280D666500B51D9F /* GroupsCollectionViewCell.swift in Sources */,
+				423A127D2813F3A40075B34F /* GroupContentCollectionViewCell.swift in Sources */,
 				42E2B6552807E6AC00B51D9F /* AddPhotosTableViewCell.swift in Sources */,
 				42E2B65E28096BD200B51D9F /* SetUpPadViewController.swift in Sources */,
+				423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */,
 				42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */,
 				42F936482805B44E0058EB07 /* UITableView+Extension.swift in Sources */,
 				42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */,

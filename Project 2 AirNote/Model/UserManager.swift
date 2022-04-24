@@ -46,4 +46,16 @@ class UserManager {
         }
     }
     
+    func updateUser(user: User, userId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Users").document(userId)
+        var user = user
+        do {
+            try msgRef.setData(from: user, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
 }

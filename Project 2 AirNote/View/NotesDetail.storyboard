@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Note Detail View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="NoteDetailViewController" id="Y6W-OH-hqX" customClass="NoteDetailViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NS7-gs-yWa">
+                                <rect key="frame" x="0.0" y="44" width="414" height="779"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewLayout key="collectionViewLayout" id="Jq7-B6-Ozt"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="IPA-Ah-4bR">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="haA-pJ-InB">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hfi-oL-REo">
+                                <rect key="frame" x="5" y="828" width="352.5" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-Ml-2Uh">
+                                <rect key="frame" x="362.5" y="828" width="46.5" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="sendComment:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="d4a-zF-lfE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="hfi-oL-REo" secondAttribute="bottom" id="1Fm-Uh-INO"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="aD8-Ml-2Uh" secondAttribute="trailing" constant="5" id="6iD-KB-3LB"/>
+                            <constraint firstItem="aD8-Ml-2Uh" firstAttribute="leading" secondItem="hfi-oL-REo" secondAttribute="trailing" constant="5" id="Cfr-ol-C3X"/>
+                            <constraint firstItem="NS7-gs-yWa" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ET9-4d-ZXH"/>
+                            <constraint firstItem="hfi-oL-REo" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="5" id="JhD-hJ-DAu"/>
+                            <constraint firstItem="hfi-oL-REo" firstAttribute="top" secondItem="NS7-gs-yWa" secondAttribute="bottom" constant="5" id="T6z-ad-6hK"/>
+                            <constraint firstItem="NS7-gs-yWa" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="aVa-eD-InE"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="NS7-gs-yWa" secondAttribute="trailing" id="vAk-gv-cdF"/>
+                            <constraint firstItem="aD8-Ml-2Uh" firstAttribute="top" secondItem="NS7-gs-yWa" secondAttribute="bottom" constant="5" id="y6i-1v-HRH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="commentTextFiled" destination="hfi-oL-REo" id="u1P-Wx-laM"/>
+                        <outlet property="noteDetailCollectionView" destination="NS7-gs-yWa" id="1O9-SZ-H0G"/>
+                        <outlet property="sendButton" destination="aD8-Ml-2Uh" id="pVz-bf-cLl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="99" y="79"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="paperplane.fill" catalog="system" width="128" height="118"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

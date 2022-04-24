@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol NoteResultDelegate {
+    
+    func saveNote(_ selectedCell: NoteResultTableViewCell)
+    
+}
+
 class NoteResultTableViewCell: UITableViewCell {
     
     
@@ -19,6 +25,8 @@ class NoteResultTableViewCell: UITableViewCell {
     @IBOutlet weak var aurthorNameLabel: UILabel!
     
     @IBOutlet weak var likeButton: UIButton!
+    
+    var delegate: NoteResultDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,6 +43,13 @@ class NoteResultTableViewCell: UITableViewCell {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
         avatarImageView.clipsToBounds = true
+    }
+    
+    
+    @IBAction func likeAction(_ sender: Any) {
+        
+        delegate?.saveNote(self)
+        
     }
     
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qg5-wD-2AZ" customClass="GroupCalendarCollectionViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="294" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Xua-ax-bD4">
+                <rect key="frame" x="0.0" y="0.0" width="294" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MPH-DI-NFw">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="MPH-DI-NFw" secondAttribute="height" multiplier="1:1" id="390-7C-QYy"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwp-jq-gvq">
+                        <rect key="frame" x="55" y="14.5" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4z-ys-gvB">
+                        <rect key="frame" x="107" y="14.5" width="135" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Csm-Nd-Wle">
+                        <rect key="frame" x="252" y="14.5" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="MPH-DI-NFw" firstAttribute="leading" secondItem="Xua-ax-bD4" secondAttribute="leading" id="0hc-o4-LJW"/>
+                    <constraint firstItem="h4z-ys-gvB" firstAttribute="centerY" secondItem="Xua-ax-bD4" secondAttribute="centerY" id="Oms-yz-afy"/>
+                    <constraint firstItem="Csm-Nd-Wle" firstAttribute="centerY" secondItem="Xua-ax-bD4" secondAttribute="centerY" id="YBO-4f-Mod"/>
+                    <constraint firstItem="h4z-ys-gvB" firstAttribute="leading" secondItem="wwp-jq-gvq" secondAttribute="trailing" constant="10" id="lnM-du-0u7"/>
+                    <constraint firstItem="MPH-DI-NFw" firstAttribute="centerY" secondItem="Xua-ax-bD4" secondAttribute="centerY" id="oHy-vn-D4J"/>
+                    <constraint firstItem="MPH-DI-NFw" firstAttribute="top" secondItem="Xua-ax-bD4" secondAttribute="top" id="rB9-gz-WDX"/>
+                    <constraint firstItem="wwp-jq-gvq" firstAttribute="leading" secondItem="MPH-DI-NFw" secondAttribute="trailing" constant="5" id="rzU-7w-8hF"/>
+                    <constraint firstItem="wwp-jq-gvq" firstAttribute="centerY" secondItem="Xua-ax-bD4" secondAttribute="centerY" id="x80-gI-oKl"/>
+                    <constraint firstAttribute="trailing" secondItem="Csm-Nd-Wle" secondAttribute="trailing" id="xYI-X0-eNg"/>
+                    <constraint firstItem="Csm-Nd-Wle" firstAttribute="leading" secondItem="h4z-ys-gvB" secondAttribute="trailing" constant="10" id="ysn-gK-kYU"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="294" height="50"/>
+            <connections>
+                <outlet property="contentLabel" destination="h4z-ys-gvB" id="DEU-U9-pz6"/>
+                <outlet property="dateIcon" destination="MPH-DI-NFw" id="rqC-va-UBZ"/>
+                <outlet property="dateLabel" destination="wwp-jq-gvq" id="rLl-od-XZx"/>
+                <outlet property="durationLabel" destination="Csm-Nd-Wle" id="hh2-DQ-SnC"/>
+            </connections>
+            <point key="canvasLocation" x="100.00000000000001" y="87.723214285714278"/>
+        </collectionViewCell>
+    </objects>
+</document>
