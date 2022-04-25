@@ -10,6 +10,6 @@ import UIKit
 import Lottie
 
 class LottieAnimation {
-    var loadingView = AnimationView(name: "27938-upload-files")
+    var loadingView = AnimationView(name: "97127-loading-icon")
     
 }
