@@ -257,6 +257,15 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
 
 extension AddGroupViewController: UploadDelegate {
     
+    func searchCafe() {
+        
+        let storyBoard = UIStoryboard(name: "AddContent", bundle: nil)
+        guard let vc = storyBoard.instantiateViewController(withIdentifier: "CafeMapViewController") as? CafeMapViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    
     func selectButton() {
         
         if group.groupCategory != "" && group.groupContent != ""

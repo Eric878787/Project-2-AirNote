@@ -381,7 +381,7 @@ extension AddNoteViewController {
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            self.noteManager.createNote(note: self.note) { result in
+            self.noteManager.createNote(note: &self.note) { result in
                 switch result {
                 case .success:
                     print(result)

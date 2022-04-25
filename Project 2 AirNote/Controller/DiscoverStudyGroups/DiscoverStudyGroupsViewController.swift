@@ -69,6 +69,10 @@ class DiscoverStudyGroupsViewController: UIViewController {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
         
+        // Map Button
+        let mapButton = UIBarButtonItem(image: UIImage(systemName: "map"), style: .plain, target: self, action: #selector(toMapPage))
+        self.navigationItem.leftBarButtonItem =  mapButton
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,8 +91,21 @@ class DiscoverStudyGroupsViewController: UIViewController {
     
 }
 
-// MARK: To Search Page
 
+// MARK: To Map Page
+extension DiscoverStudyGroupsViewController {
+    
+    @objc private func toMapPage() {
+        let storyBoard = UIStoryboard(name: "DiscoverStudyGroups", bundle: nil)
+        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupMapViewController") as? GroupMapViewController else { return }
+        vc.groups = self.groups
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+
+// MARK: To Search Page
 extension DiscoverStudyGroupsViewController {
     
     @objc private func toSearchPage() {

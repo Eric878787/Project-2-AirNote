@@ -72,6 +72,35 @@
             </objects>
             <point key="canvasLocation" x="1822" y="788"/>
         </scene>
+        <!--Cafe Map View Controller-->
+        <scene sceneID="yUf-XT-CKA">
+            <objects>
+                <viewController storyboardIdentifier="CafeMapViewController" id="E9I-17-OKU" customClass="CafeMapViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jgg-Hc-0sW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N02-mE-p55">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cQR-Tl-wUj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="N02-mE-p55" firstAttribute="leading" secondItem="cQR-Tl-wUj" secondAttribute="leading" id="9cL-63-LxQ"/>
+                            <constraint firstItem="cQR-Tl-wUj" firstAttribute="bottom" secondItem="N02-mE-p55" secondAttribute="bottom" id="GQS-kP-NOk"/>
+                            <constraint firstItem="N02-mE-p55" firstAttribute="top" secondItem="cQR-Tl-wUj" secondAttribute="top" id="L47-5B-ILN"/>
+                            <constraint firstItem="cQR-Tl-wUj" firstAttribute="trailing" secondItem="N02-mE-p55" secondAttribute="trailing" id="che-ZG-HbV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cafeMapView" destination="N02-mE-p55" id="MDQ-Jj-pRg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1WN-Nj-HXO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2583" y="796"/>
+        </scene>
         <!--Add Group View Controller-->
         <scene sceneID="xUN-Rk-VdR">
             <objects>
