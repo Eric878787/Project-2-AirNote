@@ -26,7 +26,7 @@ private enum Category: String {
 }
 
 class AddKeywordsTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var categoryTitleLabel: UILabel!
     @IBOutlet weak var categoryTextField: UITextField! {
         
@@ -51,8 +51,6 @@ class AddKeywordsTableViewCell: UITableViewCell {
             categoryTextField.rightView = button
             
             categoryTextField.rightViewMode = .always
-            
-            categoryTextField.delegate = self
             
             categoryTextField.text = "請選擇類別"
             
@@ -118,8 +116,6 @@ extension AddKeywordsTableViewCell: UIPickerViewDataSource, UIPickerViewDelegate
         
         tagButtonStackView.subviews.forEach({ $0.removeFromSuperview() })
         
-        print("\(selectedCategory)")
-        
         for tag in tags {
             
             let button = UIButton()
@@ -136,7 +132,7 @@ extension AddKeywordsTableViewCell: UIPickerViewDataSource, UIPickerViewDelegate
     
 }
 
-extension AddKeywordsTableViewCell: UITextFieldDelegate {
+extension AddKeywordsTableViewCell {
     
     @objc func didSelectButton(_ sender: UIButton) {
         sender.isSelected = true
@@ -144,6 +140,5 @@ extension AddKeywordsTableViewCell: UITextFieldDelegate {
         selectedTags.append(tag)
         guard let selectedCategory = selectedCategory else {return}
         dataHandler?(selectedTags, selectedCategory)
-        
     }
 }

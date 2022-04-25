@@ -13,8 +13,6 @@ import UIKit
 
 class NoteManager {
     
-    static let shared = NoteManager()
-    
     lazy var db = Firestore.firestore()
     
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
@@ -55,16 +53,13 @@ class NoteManager {
         var note = note
         
         do {
-            note.authorId = "eric"
+            note.authorId = "qbQsVVpVHlf6I4XLfOJ6"
             note.comments = []
             let date = Date()
-            let calendar = Calendar.current
-            let hour = calendar.component(.hour, from: date)
-            let minutes = calendar.component(.minute, from: date)
             note.createdTime = date
             note.noteId = document.documentID
             note.likes = []
-            note.noteClicks = []
+            note.clicks = []
             
             try  document.setData(from: note, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
@@ -74,6 +69,30 @@ class NoteManager {
         }
         
     }
+    
+    func updateNote(note: Note, noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Notes").document(noteId)
+        var note = note
+        do {
+            try msgRef.setData(from: note, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func deleteNote(noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Notes").document(noteId)
+        do {
+            try msgRef.delete()
+            completion(.success("刪除成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
     
     func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
         

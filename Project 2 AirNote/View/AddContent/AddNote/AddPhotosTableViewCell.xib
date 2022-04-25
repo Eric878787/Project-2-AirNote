@@ -17,9 +17,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="396" height="558"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Dr-1v-N6E">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Dr-1v-N6E">
                         <rect key="frame" x="15" y="15" width="366" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -105,6 +105,7 @@
             <connections>
                 <outlet property="addButton" destination="9U0-4x-VSe" id="a3e-3R-c2J"/>
                 <outlet property="titleLabel" destination="6Dr-1v-N6E" id="Gxh-0j-7rO"/>
+                <outlet property="uploadButton" destination="79m-Nd-Rp8" id="rzw-Y9-3PM"/>
                 <outletCollection property="bookImageViews" destination="jxG-dt-s95" collectionClass="NSMutableArray" id="eka-yS-UKg"/>
                 <outletCollection property="bookImageViews" destination="Kuz-n3-ySj" collectionClass="NSMutableArray" id="usx-3i-KL2"/>
                 <outletCollection property="bookImageViews" destination="b5G-zZ-krc" collectionClass="NSMutableArray" id="72b-X9-3e5"/>

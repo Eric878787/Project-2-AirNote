@@ -74,7 +74,8 @@ extension  AddContentViewController {
             guard let vc = storyboard?.instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController else { return }
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

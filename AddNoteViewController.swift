@@ -17,38 +17,27 @@ class AddNoteViewController: UIViewController {
     private var note = Note(authorId: "",
                             comments: [Comment(content: "", createdTime: Date(), userId: "")],
                             createdTime: Date(),
-                            likes: [], noteCategory: "",
-                            noteClicks: [], noteContent: "",
-                            noteCover: "", noteId: "",
-                            noteImages: [], noteKeywords: [],
-                            noteTitle: "")
-    
-    private var noteTitle: String?
-    
-    private var noteContent: String?
-    
-    private var noteCategory: String?
-    
-    private var noteKeywords: [String] = []
+                            likes: [], category: "",
+                            clicks: [], content: "",
+                            cover: "", noteId: "",
+                            images: [], keywords: [],
+                            title: "")
     
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
     
     private var coverImage = UIImage(systemName: "magazine")
     
-    private var coverImageToDB: String?
-    
     // MARK: Content Images
-    
     private let multiImagePickerController = UIImagePickerController()
     
     private var contentImages: [UIImage] = []
     
-    private var contentImageToDB: [String] = []
-    
     // MARK: Data Manager
-    
     private var noteManager = NoteManager()
+    
+    // MARK: Loading Animation
+    private var loadingAnimation = LottieAnimation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,22 +93,22 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddTitleTableViewCell.self), for: indexPath)
             guard let addTitleCell = cell as? AddTitleTableViewCell else { return cell }
             addTitleCell.dataHandler = { [weak self] title in
-                self?.note.noteTitle = title
+                self?.note.title = title
             }
             return addTitleCell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddContentTableViewCell.self), for: indexPath)
             guard let addContentCell = cell as? AddContentTableViewCell else { return cell }
             addContentCell.dataHandler = {  [weak self] content in
-                self?.note.noteContent = content
+                self?.note.content = content
             }
             return addContentCell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddKeywordsTableViewCell.self), for: indexPath)
             guard let addKeywordsCell = cell as? AddKeywordsTableViewCell else { return cell }
             addKeywordsCell.dataHandler = { [weak self] selectedTags, selectedCategory in
-                self?.note.noteCategory = selectedCategory
-                self?.note.noteKeywords = selectedTags
+                self?.note.category = selectedCategory
+                self?.note.keywords = selectedTags
             }
             return addKeywordsCell
         } else if indexPath.row == 3 {
@@ -147,23 +136,57 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
 extension AddNoteViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 100
-        } else if indexPath.row == 1 {
+//        if indexPath.row == 0 {
+//            return 100
+//        } else if indexPath.row == 1 {
+//            return 300
+//        } else if indexPath.row == 2 {
+//            return 165
+//        } else if indexPath.row == 3{
+//            return 500
+//        } else {
+//            return 600
+//        }
+        
+        if indexPath.row == 1 {
             return 300
-        } else if indexPath.row == 2 {
-            return 165
-        } else if indexPath.row == 3{
-            return 500
-        } else {
+        } else if indexPath.row == 4 {
             return 600
+        } else {
+            return  UITableView.automaticDimension
         }
     }
-    
 }
 
 // MARK: UIIMagePicker Delegate
 extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.originalImage] as? UIImage {
+            
+            if picker == imagePickerController {
+                
+                coverImage = image
+                
+            } else {
+                
+                if self.contentImages.count < 4 {
+                    self.contentImages.insert(image, at: 0)
+                }  else {
+                    self.contentImages.remove(at: 3)
+                    self.contentImages.insert(image, at: 0)
+                }
+                
+            }
+            
+        }
+        
+        addNoteTableView.reloadData()
+        
+        picker.dismiss(animated: true)
+        
+    }
     
     func buttonDidSelect() {
         
@@ -193,33 +216,6 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
         controller.addAction(cancelAction)
         
         self.present(controller, animated: true, completion: nil)
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let image = info[.originalImage] as? UIImage {
-            
-            if picker == imagePickerController {
-                
-                coverImage = image
-                
-            } else {
-                
-                if self.contentImages.count < 4 {
-                    self.contentImages.insert(image, at: 0)
-                }  else {
-                    self.contentImages.remove(at: 3)
-                    self.contentImages.insert(image, at: 0)
-                }
-                
-            }
-            
-        }
-        
-        addNoteTableView.reloadData()
-        
-        picker.dismiss(animated: true)
         
     }
     
@@ -325,9 +321,16 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
 
 extension AddNoteViewController {
     
+    func configureAnimation() {
+        loadingAnimation.loadingView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loadingAnimation.loadingView)
+        loadingAnimation.loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingAnimation.loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
     func uploadNote() {
         
-        if note.noteTitle != "" && note.noteContent != "" && note.noteCategory != "" && note.noteKeywords != [] && coverImage != UIImage(systemName: "magazine") && contentImages != [] {
+        if note.title != "" && note.content != "" && note.category != "" && note.keywords != [] && coverImage != UIImage(systemName: "magazine") && contentImages != [] {
             
             upload()
             
@@ -347,11 +350,14 @@ extension AddNoteViewController {
         controller.view.tintColor = UIColor.gray
         
         group.enter()
+        // Loading Animation
+        configureAnimation()
+        loadingAnimation.loadingView.play()
         guard let image = coverImage else { return }
         noteManager.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
-                self.note.noteCover = "\(url)"
+                self.note.cover = "\(url)"
                 print("\(url)")
             case .failure(let error):
                 print("\(error)")
@@ -365,13 +371,13 @@ extension AddNoteViewController {
             noteManager.uploadPhoto(image: image) { result in
                 switch result {
                 case .success(let url):
-                    self.note.noteImages.append("\(url)")
+                    self.note.images.append("\(url)")
                     print("\(url)")
                 case .failure(let error):
                     print("\(error)")
                 }
+                group.leave()
             }
-            group.leave()
         }
         
         group.notify(queue: DispatchQueue.global()) {
@@ -383,6 +389,8 @@ extension AddNoteViewController {
                         self.navigationController?.popViewController(animated: true)
                     }
                     DispatchQueue.main.async {
+                        self.loadingAnimation.loadingView.pause()
+                        self.loadingAnimation.loadingView.isHidden = true
                         controller.addAction(cancelAction)
                         self.present(controller, animated: true, completion: nil)
                     }

@@ -17,6 +17,9 @@ class AddPhotosTableViewCell: UITableViewCell {
     var delegate: SelectImagesDelegate?
 
     override func awakeFromNib() {
+        titleLabel.text = "內頁"
+        addButton.setTitle("新增圖片", for: .normal)
+        uploadButton.setTitle("上傳", for: .normal)
         super.awakeFromNib()
         
     }
@@ -26,6 +29,8 @@ class AddPhotosTableViewCell: UITableViewCell {
     @IBOutlet weak var addButton: UIButton!
     
     @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var uploadButton: UIButton!
     
     @IBAction func uploadNote(_ sender: Any) {
         delegate?.uploadNote()
@@ -39,7 +44,5 @@ class AddPhotosTableViewCell: UITableViewCell {
     
     @IBAction func selectImages(_ sender: Any) {
         delegate?.selectMultiImages()
-        titleLabel.text = "內頁"
-        addButton.setTitle("上傳", for: .normal)
     }
 }

@@ -61,7 +61,7 @@
                 <outlet property="keyWordsTitleLabel" destination="zfN-jg-O42" id="hyf-rM-bbn"/>
                 <outlet property="tagButtonStackView" destination="fle-Il-LDc" id="hLs-2t-emB"/>
             </connections>
-            <point key="canvasLocation" x="-132.60869565217394" y="208.92857142857142"/>
+            <point key="canvasLocation" x="108" y="159"/>
         </tableViewCell>
     </objects>
 </document>
