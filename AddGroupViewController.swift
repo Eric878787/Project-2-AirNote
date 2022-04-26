@@ -139,6 +139,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
             guard let addAddressCell = cell as? AddAddressTableViewCell else { return cell }
             addAddressCell.delegate = self
             let geoCoder = CLGeocoder()
+            addAddressCell.textField.text = group.location.address
             addAddressCell.dataHandler = { [weak self] address in
                 self?.group.location.address = address
                 geoCoder.geocodeAddressString(address) { (placemarks, error) in
@@ -255,12 +256,22 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
     }
 }
 
-extension AddGroupViewController: UploadDelegate {
+extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
+    func passAddress(_ cafe: Cafe) {
+       
+        group.location.address = cafe.address
+        group.location.latitude = Double(cafe.latitude) ?? 0
+        group.location.longitude = Double(cafe.longitude) ?? 0
+        addGroupTableView.reloadData()
+        
+    }
+    
     
     func searchCafe() {
         
         let storyBoard = UIStoryboard(name: "AddContent", bundle: nil)
         guard let vc = storyBoard.instantiateViewController(withIdentifier: "CafeMapViewController") as? CafeMapViewController else { return }
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

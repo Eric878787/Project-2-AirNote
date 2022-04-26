@@ -11,7 +11,7 @@ import CoreLocation
 
 protocol CafeAddressDelegate {
     
-    func passAddress(_ address: String)
+    func passAddress(_ cafe: Cafe)
     
 }
 
@@ -116,7 +116,7 @@ extension CafeMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as? Annotation
         let cafe = cafes.filter { $0.name == annotation?.title}
-        delegate?.passAddress()
+        delegate?.passAddress(cafe[0])
         self.navigationController?.popViewController(animated: true)
     }
     
