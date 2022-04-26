@@ -8,7 +8,7 @@
 import UIKit
 
 private enum Tab {
-
+    
     case discoverNotes
     
     case discoverStudyGroups
@@ -18,13 +18,13 @@ private enum Tab {
     case chatroomLobby
     
     case profile
-
+    
     func controller() -> UIViewController {
-
+        
         var controller: UIViewController
-
+        
         switch self {
-
+            
         case .discoverNotes: controller = UIStoryboard.discoverNotes.instantiateInitialViewController()!
             
         case .discoverStudyGroups: controller = UIStoryboard.discoverStudyGroups.instantiateInitialViewController()!
@@ -35,19 +35,19 @@ private enum Tab {
             
         case.profile: controller = UIStoryboard.profile.instantiateInitialViewController()!
         }
-
+        
         controller.tabBarItem = tabBarItem()
-
+        
         controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
-
+        
         return controller
     }
-
+    
     // MARK: To be changed into enum of UIImage
     func tabBarItem() -> UITabBarItem {
-
+        
         switch self {
-
+            
         case .discoverNotes:
             return UITabBarItem(
                 title: "探索筆記",
@@ -97,6 +97,6 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         viewControllers = tabs.map({ $0.controller() })
         
         delegate = self
-        
+            
     }
 }

@@ -20,6 +20,8 @@ private struct StoryboardCategory {
     static let chatroomLobby = "ChatroomLobby"
     
     static let profile = "Profile"
+    
+    static let auth = "Auth"
 }
 
 extension UIStoryboard {
@@ -35,6 +37,8 @@ extension UIStoryboard {
     static var chatroomLobby: UIStoryboard { return storyboard(name: StoryboardCategory.chatroomLobby) }
     
     static var profile: UIStoryboard { return storyboard(name: StoryboardCategory.profile) }
+    
+    static var auth: UIStoryboard { return storyboard(name: StoryboardCategory.auth) }
     
     private static func storyboard(name: String) -> UIStoryboard {
 

@@ -58,7 +58,7 @@ class UserManager {
         }
     }
     
-    func createUser(_ uid: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func createUser(_ user: inout User, completion: @escaping (Result<String, Error>) -> Void) {
         
         let document = db.collection("Users").document()
         
