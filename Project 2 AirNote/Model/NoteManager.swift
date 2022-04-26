@@ -46,11 +46,9 @@ class NoteManager {
         }
     }
     
-    func createNote(note: Note, completion: @escaping (Result<String, Error>) -> Void) {
+    func createNote(note: inout Note, completion: @escaping (Result<String, Error>) -> Void) {
         
         let document = db.collection("Notes").document()
-        
-        var note = note
         
         do {
             note.authorId = "qbQsVVpVHlf6I4XLfOJ6"
