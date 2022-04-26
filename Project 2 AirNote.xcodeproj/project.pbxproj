@@ -32,6 +32,7 @@
 		42405B1F2816D53200A12777 /* CafeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B1E2816D53200A12777 /* CafeManager.swift */; };
 		42405B212816D57E00A12777 /* CafeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B202816D57E00A12777 /* CafeDataModel.swift */; };
 		42405B232816DCEA00A12777 /* CafeMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B222816DCEA00A12777 /* CafeMapViewController.swift */; };
+		42405B252817873D00A12777 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B242817873D00A12777 /* LoginViewController.swift */; };
 		42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD5C632814122000DA7990 /* EditNoteViewController.swift */; };
 		42DD04C2280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */; };
 		42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */; };
@@ -134,6 +135,8 @@
 		42405B1E2816D53200A12777 /* CafeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeManager.swift; sourceTree = "<group>"; };
 		42405B202816D57E00A12777 /* CafeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDataModel.swift; sourceTree = "<group>"; };
 		42405B222816DCEA00A12777 /* CafeMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeMapViewController.swift; sourceTree = "<group>"; };
+		42405B242817873D00A12777 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		42405B2628178BBB00A12777 /* Project 2 AirNote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Project 2 AirNote.entitlements"; sourceTree = "<group>"; };
 		42AD5C632814122000DA7990 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatRoomListTableViewCell.xib; sourceTree = "<group>"; };
 		42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomManager.swift; sourceTree = "<group>"; };
@@ -343,6 +346,7 @@
 		42DE585528005A7200D764F7 /* Project 2 AirNote */ = {
 			isa = PBXGroup;
 			children = (
+				42405B2628178BBB00A12777 /* Project 2 AirNote.entitlements */,
 				42DE586F280164B000D764F7 /* Resource */,
 				42DE58732801781700D764F7 /* Extension */,
 				42DE586D2801642F00D764F7 /* Model */,
@@ -423,6 +427,7 @@
 		42DE58722801772C00D764F7 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				42405B242817873D00A12777 /* LoginViewController.swift */,
 				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
 			);
 			path = Base;
@@ -860,6 +865,7 @@
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
 				423A125A2812AB130075B34F /* NoteContentCollectionViewCell.swift in Sources */,
 				42DD04D5281130A1007C4A9F /* NoteDetailViewController.swift in Sources */,
+				42405B252817873D00A12777 /* LoginViewController.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
 				423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */,
 				42E2B699280EEA6700B51D9F /* ChatRoomListTableViewCell.swift in Sources */,
@@ -1022,6 +1028,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Project 2 AirNote/Project 2 AirNote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6S28UJ4A7B;
@@ -1054,6 +1061,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Project 2 AirNote/Project 2 AirNote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6S28UJ4A7B;

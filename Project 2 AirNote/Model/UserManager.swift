@@ -58,4 +58,29 @@ class UserManager {
         }
     }
     
+    func createUser(_ uid: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        let document = db.collection("Users").document()
+        
+        do {
+            user.chatRooms = []
+            user.followers = []
+            user.followings = []
+            user.joinedGroups = []
+            user.savedNotes = []
+            user.userAvatar = ""
+            user.userGroups = []
+            user.userId = document.documentID
+            user.userName = ""
+            user.userNotes = []
+            
+            try  document.setData(from: user, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+        
+    }
+    
 }

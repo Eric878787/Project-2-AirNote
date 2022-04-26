@@ -18,4 +18,6 @@ struct User: Codable {
     var userId: String
     var userName: String
     var userNotes: [String]
+    var email: String?
+    var uid: String?
 }
