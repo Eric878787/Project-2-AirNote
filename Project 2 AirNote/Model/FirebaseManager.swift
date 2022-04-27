@@ -10,32 +10,81 @@ import Firebase
 import FirebaseAuth
 import CryptoKit
 
-class FirebaseSignInManager {
+class FirebaseManager {
     
-    static let shared = FirebaseSignInManager()
+    static let shared = FirebaseManager()
     
     // Unhashed nonce.
     fileprivate var currentNonce: String?
     
     var currentUser = Auth.auth().currentUser
     
-    var loginSucess: (() -> Void)?
+    var authenticator = Auth.auth()
+    
+    var loginSuccess: (() -> Void)?
+    
+    var signUpSuccess: (() -> Void)?
+    
+    var logInFailure: (() -> Void)?
+    
+    var signUpFailure: (() -> Void)?
+    
+    var deleteAccountSuccess: (() -> Void)?
     
 }
 
-extension FirebaseSignInManager {
+
+// MARK: Native Sign In & Out
+extension FirebaseManager {
     
+    func nativeSignUp(_ email: String, _ password: String) {
+        authenticator.createUser(withEmail: email, password: password) { result, error in
+            guard let user = result?.user,
+                  error == nil else {
+                print("======\(error?.localizedDescription)")
+                self.signUpFailure?()
+                return
+            }
+            self.signUpSuccess?()
+        }
+    }
+    
+    func nativeLogIn(_ email: String, _ password: String) {
+        authenticator.signIn(withEmail: email, password: password) { result, error in
+            guard let user = result?.user,
+                  error == nil else {
+                print(error?.localizedDescription)
+                self.logInFailure?()
+                return
+            }
+            self.loginSuccess?()
+        }
+    }
     
     func signout() {
-        let firebaseAuth = Auth.auth()
         do {
-            try firebaseAuth.signOut()
+            try authenticator.signOut()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
     }
     
-    func performSignIn() -> ASAuthorizationAppleIDRequest  {
+    func delete() {
+        currentUser?.delete { error in
+          if let error = error {
+              print(error.localizedDescription)
+          } else {
+              self.deleteAccountSuccess?()
+          }
+        }
+    }
+    
+}
+
+// MARK: Sign in With Apple
+extension FirebaseManager {
+    
+    func signInWithApple() -> ASAuthorizationAppleIDRequest  {
         
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -68,9 +117,10 @@ extension FirebaseSignInManager {
             // Sign in with Apple.
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if let user = authResult?.user {
-                    self.loginSucess?()
+                    self.loginSuccess?()
                     return
                 }
+                self.logInFailure?()
                 return
             }
         }
@@ -79,12 +129,13 @@ extension FirebaseSignInManager {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         // Handle error.
         print("Sign in with Apple errored: \(error)")
+        
     }
     
 }
 
-// Nonce & sha256 generating function
-extension FirebaseSignInManager {
+// MARK: Nonce & sha256 generating function
+extension FirebaseManager {
     
     // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
     private func randomNonceString(length: Int = 32) -> String {

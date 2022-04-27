@@ -62,17 +62,9 @@ class UserManager {
         
         let document = db.collection("Users").document()
         
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        
         do {
-            user.chatRooms = []
-            user.followers = []
-            user.followings = []
-            user.joinedGroups = []
-            user.savedNotes = []
-            user.userAvatar = ""
-            user.userGroups = []
-            user.userId = document.documentID
-            user.userName = ""
-            user.userNotes = []
             
             try  document.setData(from: user, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
@@ -80,7 +72,17 @@ class UserManager {
         catch {
             completion(.failure(error))
         }
-        
+    }
+    
+    func deleteUser(uid: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Notes").document(uid)
+        do {
+            try msgRef.delete()
+            completion(.success("刪除成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
     }
     
 }

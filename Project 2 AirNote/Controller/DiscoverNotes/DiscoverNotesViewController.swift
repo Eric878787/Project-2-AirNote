@@ -68,6 +68,8 @@ class DiscoverNotesViewController: UIViewController {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
         
+        print("======\(FirebaseManager.shared.currentUser?.uid)")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

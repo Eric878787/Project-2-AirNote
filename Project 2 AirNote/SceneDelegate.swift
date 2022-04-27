@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScence = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScence)
         
-        if FirebaseSignInManager.currentUser == nil {
+        if FirebaseManager.shared.currentUser == nil {
             self.window?.rootViewController = UIStoryboard.auth.instantiateInitialViewController()
         } else {
             self.window?.rootViewController = UIStoryboard.main.instantiateInitialViewController()
