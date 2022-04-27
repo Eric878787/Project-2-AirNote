@@ -68,6 +68,8 @@ class DiscoverNotesViewController: UIViewController {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
         
+        print("======\(FirebaseManager.shared.currentUser?.uid)")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -178,6 +180,18 @@ extension DiscoverNotesViewController {
 extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectionDelegate {
     
     func saveNote(_ selectedCell: NotesCollectionViewCell) {
+        
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
         
         var selectedIndexPathItem = notesCollectionView.indexPath(for: selectedCell)?.item
         
@@ -316,6 +330,19 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
 // MARK: CollectionView Delegate
 extension DiscoverNotesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         if collectionView == categoryCollectionView {
             guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {return}
             selectedCategoryIndex = indexPath.item

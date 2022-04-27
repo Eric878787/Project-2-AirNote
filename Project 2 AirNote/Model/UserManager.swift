@@ -58,4 +58,31 @@ class UserManager {
         }
     }
     
+    func createUser(_ user: inout User, _ documentId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        let document = db.collection("Users").document(documentId)
+        
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        
+        do {
+            
+            try  document.setData(from: user, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func deleteUser(uid: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Users").document(uid)
+        do {
+            try msgRef.delete()
+            completion(.success("刪除成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
 }

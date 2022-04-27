@@ -15,5 +15,7 @@ target 'Project 2 AirNote' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'lottie-ios'
+  pod 'Firebase/Auth'
+  pod 'Firebase'
 
 end

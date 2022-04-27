@@ -16,6 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
+        
+        FirebaseManager.shared.authenticator.addStateDidChangeListener { auth, user in
+            if let user = user {
+                print("\(user.uid) login")
+                FirebaseManager.shared.currentUser = user
+            } else {
+                print("not login")
+                FirebaseManager.shared.currentUser = user
+            }
+        }
+        
         return true
     }
 

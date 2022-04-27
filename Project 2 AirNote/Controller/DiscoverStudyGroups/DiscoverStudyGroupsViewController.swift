@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import FirebaseAuth
 
 class DiscoverStudyGroupsViewController: UIViewController {
     
@@ -52,9 +53,12 @@ class DiscoverStudyGroupsViewController: UIViewController {
     // MARK: Users Data
     var users: [User] = []
     
+    var currentUser = Auth.auth().currentUser
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("========\(currentUser?.uid)")
         
         // Set Up Navigation Item
         navigationItem.title = "探索讀書會"

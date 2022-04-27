@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="703-0h-bWj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -17,26 +17,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BcP-7g-TkG">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="743"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIZ-1Q-FD8">
+                                <rect key="frame" x="0.0" y="831" width="414" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="deleteAccount:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="7ZJ-if-m3l"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="BcP-7g-TkG" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="6rd-vR-9n5"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="BcP-7g-TkG" secondAttribute="trailing" id="Efm-77-dzg"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="BcP-7g-TkG" secondAttribute="bottom" id="IOm-gN-2VO"/>
-                            <constraint firstItem="BcP-7g-TkG" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="fgC-cL-MCc"/>
+                            <constraint firstItem="vIZ-1Q-FD8" firstAttribute="top" secondItem="BcP-7g-TkG" secondAttribute="bottom" id="Ck5-oJ-cHK"/>
+                            <constraint firstItem="BcP-7g-TkG" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="DxI-5W-E1z"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="vIZ-1Q-FD8" secondAttribute="trailing" id="Oj6-8H-yX2"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="vIZ-1Q-FD8" secondAttribute="bottom" id="V1D-ND-5PH"/>
+                            <constraint firstItem="BcP-7g-TkG" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="oFD-yL-02r"/>
+                            <constraint firstItem="BcP-7g-TkG" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="vGX-pT-FeL"/>
+                            <constraint firstItem="vIZ-1Q-FD8" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="zDX-Gy-Qt0"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="mR0-KG-LYi"/>
                     <connections>
+                        <outlet property="deleteAccountButton" destination="vIZ-1Q-FD8" id="tx7-dd-OoS"/>
                         <outlet property="savedNoteTableView" destination="BcP-7g-TkG" id="tyc-xU-y5O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="102"/>
+            <point key="canvasLocation" x="1044.9275362318842" y="101.78571428571428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="I45-ak-kUQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="703-0h-bWj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1sT-tL-ams">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="El7-o1-E9A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aL5-AD-UY1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="101.78571428571428"/>
         </scene>
     </scenes>
     <resources>
