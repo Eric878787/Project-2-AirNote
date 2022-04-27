@@ -97,6 +97,33 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         viewControllers = tabs.map({ $0.controller() })
         
         delegate = self
-            
+        
     }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        if FirebaseManager.shared.currentUser == nil  {
+            
+            if let viewControllers = tabBarController.viewControllers {
+                if viewController == viewControllers[2] || viewController == viewControllers[3] || viewController == viewControllers[4] {
+                    
+                    guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return false }
+                    
+                    vc.modalPresentationStyle = .overCurrentContext
+
+                    present(vc, animated: false, completion: nil)
+                    
+                    return false
+                }
+            }
+            
+            return true
+            
+        } else {
+            
+            return true
+            
+        }
+    }
+    
 }

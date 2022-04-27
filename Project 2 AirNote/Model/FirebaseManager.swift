@@ -39,8 +39,8 @@ extension FirebaseManager {
     
     func nativeSignUp(_ email: String, _ password: String) {
         authenticator.createUser(withEmail: email, password: password) { result, error in
-            guard let user = result?.user,
-                  error == nil else {
+            guard let user = result?.user, error == nil
+            else {
                 print("======\(error?.localizedDescription)")
                 self.signUpFailure?()
                 return

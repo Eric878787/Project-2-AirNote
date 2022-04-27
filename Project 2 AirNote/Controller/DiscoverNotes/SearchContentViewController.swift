@@ -153,6 +153,18 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
     
     func saveNote(_ selectedCell: NoteResultTableViewCell) {
         
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         var selectedIndexPathItem = searchNotesTableView.indexPath(for: selectedCell)?.row
         
         guard let item = selectedIndexPathItem else { return }
@@ -277,6 +289,19 @@ extension SearchContentViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
         filteredNotes[indexPath.row].clicks.append("qbQsVVpVHlf6I4XLfOJ6")

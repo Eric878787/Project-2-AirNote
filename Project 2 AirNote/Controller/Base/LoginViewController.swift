@@ -68,6 +68,8 @@ class LoginViewController: UIViewController {
         
         FirebaseManager.shared.signUpSuccess = {
             self.checkIfItsNew()
+            self.emailTextField.text = ""
+            self.passwordTextField.text = ""
             let controller = UIAlertController(title: "註冊成功", message: "請重新登入", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
@@ -77,7 +79,7 @@ class LoginViewController: UIViewController {
         
         FirebaseManager.shared.signUpFailure = {
             self.checkIfItsNew()
-            let controller = UIAlertController(title: "註冊失敗", message: "", preferredStyle: .alert)
+            let controller = UIAlertController(title: "註冊失敗", message: "請重新輸入帳號密碼", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
             controller.addAction(action)
@@ -110,12 +112,12 @@ class LoginViewController: UIViewController {
         }
         
         FirebaseManager.shared.loginSuccess = {
+            self.emailTextField.text = ""
+            self.passwordTextField.text = ""
             let controller = UIAlertController(title: "登入成功", message: "", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive) { _ in
-                guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+                self.presentOrDismissVC()
             }
             controller.addAction(action)
             self.present(controller, animated: true)
@@ -129,12 +131,9 @@ class LoginViewController: UIViewController {
             self.present(controller, animated: true)
         }
         
-        
-        
     }
     
 }
-
 
 // MARK: Configure Layouts
 extension LoginViewController {
@@ -249,11 +248,7 @@ extension LoginViewController {
     
     @objc private func accessAsVisitor() {
         
-        guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
-        
-        vc.modalPresentationStyle = .fullScreen
-        
-        self.present(vc, animated: true)
+        presentOrDismissVC ()
         
     }
     
@@ -268,7 +263,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
         return view.window!
         
     }
-
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         
         // To trigger the function defined in class FirebaseManager
@@ -290,12 +285,33 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             let controller = UIAlertController(title: "登入成功", message: "", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive) { _ in
-                guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+                self.presentOrDismissVC ()
             }
             controller.addAction(action)
             self.present(controller, animated: true)
+        }
+        
+    }
+    
+}
+
+// MARK: Presenting or dismissing vc
+extension LoginViewController {
+    
+    func presentOrDismissVC () {
+        
+        if self.presentingViewController == nil {
+            
+            guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
+            
+            vc.modalPresentationStyle = .fullScreen
+            
+            self.present(vc, animated: true)
+            
+        } else {
+            
+            self.dismiss(animated: true)
+            
         }
         
     }

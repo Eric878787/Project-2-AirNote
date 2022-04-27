@@ -48,9 +48,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
                     let controller = UIAlertController(title: "刪除帳號成功", message: "請重新註冊", preferredStyle: .alert)
                     controller.view.tintColor = UIColor.gray
                     let action = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
+//                        guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+//                        vc.modalPresentationStyle = .fullScreen
+//                        self.present(vc, animated: true)
+                        self.dismiss(animated: true)
                     }
                     controller.addAction(action)
                     self.present(controller, animated: true)
@@ -75,11 +76,13 @@ extension ProfileViewController {
         
         FirebaseManager.shared.signout()
         
-        guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+//        guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+//
+//        vc.modalPresentationStyle = .fullScreen
+//
+//        self.present(vc, animated: true)
         
-        vc.modalPresentationStyle = .fullScreen
-        
-        self.present(vc, animated: true)
+        self.dismiss(animated: true)
         
     }
     
