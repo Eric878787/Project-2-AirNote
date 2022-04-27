@@ -222,7 +222,7 @@ extension LoginViewController {
                                     email: FirebaseManager.shared.currentUser?.email,
                                     uid: uid)
                     
-                    UserManager.shared.createUser( &user) { result in
+                    UserManager.shared.createUser( &user, uid) { result in
                         switch result {
                         case .success(let success):
                             print(success)
