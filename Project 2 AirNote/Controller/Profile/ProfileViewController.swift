@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDataSource {
     
-    @IBOutlet weak var savedNoteTableView: UITableView!
+    @IBOutlet weak var profilePageTableView: UITableView!
     
     @IBOutlet weak var deleteAccountButton: UIButton!
     
@@ -24,8 +24,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"), style: .plain, target: self, action: #selector(signOut))
         self.navigationItem.rightBarButtonItem = deleteButton
         
-        savedNoteTableView.dataSource = self
-        savedNoteTableView.registerCellWithNib(identifier: String(describing: SavedNoteTableViewCell.self), bundle: nil)
+        profilePageTableView.dataSource = self
+        profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
         
         // Configure Delete Account
         deleteAccountButton.setTitle("刪除帳號", for: .normal)
@@ -48,11 +48,22 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
                     let controller = UIAlertController(title: "刪除帳號成功", message: "請重新註冊", preferredStyle: .alert)
                     controller.view.tintColor = UIColor.gray
                     let action = UIAlertAction(title: "確認", style: .destructive) { _ in
-//                        guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
-//                        vc.modalPresentationStyle = .fullScreen
-//                        self.present(vc, animated: true)
-                        self.dismiss(animated: true)
+                        
+                        if self.presentingViewController == nil {
+                            
+                            guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+                            
+                            vc.modalPresentationStyle = .fullScreen
+                            
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            self.dismiss(animated: true)
+                            
+                        }
                     }
+                    
                     controller.addAction(action)
                     self.present(controller, animated: true)
                     
@@ -76,13 +87,19 @@ extension ProfileViewController {
         
         FirebaseManager.shared.signout()
         
-//        guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
-//
-//        vc.modalPresentationStyle = .fullScreen
-//
-//        self.present(vc, animated: true)
-        
-        self.dismiss(animated: true)
+        if self.presentingViewController == nil {
+            
+            guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+            
+            vc.modalPresentationStyle = .fullScreen
+            
+            self.present(vc, animated: true)
+            
+        } else {
+            
+            self.dismiss(animated: true)
+            
+        }
         
     }
     
@@ -101,7 +118,7 @@ extension ProfileViewController {
                 
                 DispatchQueue.main.async {
                     
-                    self.savedNoteTableView.reloadData()
+                    self.profilePageTableView.reloadData()
                     
                 }
                 
@@ -120,8 +137,8 @@ extension ProfileViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let savedNoteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SavedNoteTableViewCell", for: indexPath)
-        guard let cell = savedNoteTableViewCell as? SavedNoteTableViewCell else { return savedNoteTableViewCell }
+        let personalNoteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalNoteTableViewCell", for: indexPath)
+        guard let cell = personalNoteTableViewCell as? PersonalNoteTableViewCell else { return personalNoteTableViewCell }
         cell.savedNoteLabel.text = user?.savedNotes[indexPath.row]
         return cell
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SavedNoteTableViewCell: UITableViewCell {
+class PersonalNoteTableViewCell: UITableViewCell {
     
     @IBOutlet weak var savedNoteLabel: UILabel!
     

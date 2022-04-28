@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BcP-7g-TkG">
-                                <rect key="frame" x="0.0" y="88" width="414" height="743"/>
+                                <rect key="frame" x="0.0" y="286" width="414" height="545"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIZ-1Q-FD8">
@@ -28,23 +28,66 @@
                                     <action selector="deleteAccount:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="7ZJ-if-m3l"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4hZ-Yg-YDg">
+                                <rect key="frame" x="147" y="40" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="4hZ-Yg-YDg" secondAttribute="height" multiplier="1:1" id="J8x-c4-pda"/>
+                                    <constraint firstAttribute="height" constant="120" id="Wad-us-XEG"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiY-gY-KMn">
+                                <rect key="frame" x="168.5" y="190" width="77" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="wTA-Cb-YyZ">
+                                <rect key="frame" x="64.5" y="256" width="285" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers: 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4f-vz-oWZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="117.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followings: 100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sn0-k4-TsD">
+                                        <rect key="frame" x="167.5" y="0.0" width="117.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xic-nt-JQV">
+                                <rect key="frame" x="308.5" y="84.5" width="65.5" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Follow"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="4hZ-Yg-YDg" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="2N6-Xx-AqW"/>
                             <constraint firstItem="vIZ-1Q-FD8" firstAttribute="top" secondItem="BcP-7g-TkG" secondAttribute="bottom" id="Ck5-oJ-cHK"/>
                             <constraint firstItem="BcP-7g-TkG" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="DxI-5W-E1z"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="vIZ-1Q-FD8" secondAttribute="trailing" id="Oj6-8H-yX2"/>
+                            <constraint firstItem="wTA-Cb-YyZ" firstAttribute="centerX" secondItem="TiY-gY-KMn" secondAttribute="centerX" id="Qcm-s5-B1o"/>
+                            <constraint firstItem="xic-nt-JQV" firstAttribute="centerY" secondItem="4hZ-Yg-YDg" secondAttribute="centerY" id="RSE-JW-qgw"/>
+                            <constraint firstItem="TiY-gY-KMn" firstAttribute="centerX" secondItem="4hZ-Yg-YDg" secondAttribute="centerX" id="SkI-Kb-G9K"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="vIZ-1Q-FD8" secondAttribute="bottom" id="V1D-ND-5PH"/>
+                            <constraint firstItem="wTA-Cb-YyZ" firstAttribute="top" secondItem="TiY-gY-KMn" secondAttribute="bottom" constant="30" id="c11-mH-dUi"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="xic-nt-JQV" secondAttribute="trailing" constant="40" id="jx8-Ve-c39"/>
                             <constraint firstItem="BcP-7g-TkG" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="oFD-yL-02r"/>
-                            <constraint firstItem="BcP-7g-TkG" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="vGX-pT-FeL"/>
+                            <constraint firstItem="4hZ-Yg-YDg" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="40" id="qea-Pf-UpL"/>
+                            <constraint firstItem="BcP-7g-TkG" firstAttribute="top" secondItem="wTA-Cb-YyZ" secondAttribute="top" constant="30" id="vGX-pT-FeL"/>
+                            <constraint firstItem="TiY-gY-KMn" firstAttribute="top" secondItem="4hZ-Yg-YDg" secondAttribute="bottom" constant="30" id="vnJ-j3-SrB"/>
                             <constraint firstItem="vIZ-1Q-FD8" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="zDX-Gy-Qt0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mR0-KG-LYi"/>
                     <connections>
                         <outlet property="deleteAccountButton" destination="vIZ-1Q-FD8" id="tx7-dd-OoS"/>
-                        <outlet property="savedNoteTableView" destination="BcP-7g-TkG" id="tyc-xU-y5O"/>
+                        <outlet property="profilePageTableView" destination="BcP-7g-TkG" id="tyc-xU-y5O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

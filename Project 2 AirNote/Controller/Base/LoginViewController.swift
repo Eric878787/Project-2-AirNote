@@ -300,19 +300,11 @@ extension LoginViewController {
     
     func presentOrDismissVC () {
         
-        if self.presentingViewController == nil {
-            
-            guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
-            
-            vc.modalPresentationStyle = .fullScreen
-            
-            self.present(vc, animated: true)
-            
-        } else {
-            
-            self.dismiss(animated: true)
-            
-        }
+        guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
+        
+        vc.modalPresentationStyle = .fullScreen
+        
+        self.present(vc, animated: true)
         
     }
     

@@ -25,8 +25,8 @@
 		423A127D2813F3A40075B34F /* GroupContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */; };
 		42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B0C2815A05F00A12777 /* ProfileViewController.swift */; };
 		42405B0F2815A07500A12777 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42405B0E2815A07500A12777 /* Profile.storyboard */; };
-		42405B152815A13800A12777 /* SavedNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */; };
-		42405B162815A13800A12777 /* SavedNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */; };
+		42405B152815A13800A12777 /* PersonalNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B132815A13800A12777 /* PersonalNoteTableViewCell.swift */; };
+		42405B162815A13800A12777 /* PersonalNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42405B142815A13800A12777 /* PersonalNoteTableViewCell.xib */; };
 		42405B1828166F0B00A12777 /* GroupMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B1728166F0B00A12777 /* GroupMapViewController.swift */; };
 		42405B1A2816BA5C00A12777 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B192816BA5B00A12777 /* Annotation.swift */; };
 		42405B1F2816D53200A12777 /* CafeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B1E2816D53200A12777 /* CafeManager.swift */; };
@@ -131,8 +131,8 @@
 		423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContentCollectionViewCell.swift; sourceTree = "<group>"; };
 		42405B0C2815A05F00A12777 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		42405B0E2815A07500A12777 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
-		42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNoteTableViewCell.swift; sourceTree = "<group>"; };
-		42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedNoteTableViewCell.xib; sourceTree = "<group>"; };
+		42405B132815A13800A12777 /* PersonalNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNoteTableViewCell.swift; sourceTree = "<group>"; };
+		42405B142815A13800A12777 /* PersonalNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonalNoteTableViewCell.xib; sourceTree = "<group>"; };
 		42405B1728166F0B00A12777 /* GroupMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMapViewController.swift; sourceTree = "<group>"; };
 		42405B192816BA5B00A12777 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		42405B1E2816D53200A12777 /* CafeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeManager.swift; sourceTree = "<group>"; };
@@ -274,8 +274,8 @@
 		42405B122815A0EF00A12777 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				42405B132815A13800A12777 /* SavedNoteTableViewCell.swift */,
-				42405B142815A13800A12777 /* SavedNoteTableViewCell.xib */,
+				42405B132815A13800A12777 /* PersonalNoteTableViewCell.swift */,
+				42405B142815A13800A12777 /* PersonalNoteTableViewCell.xib */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -753,7 +753,7 @@
 				42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */,
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
-				42405B162815A13800A12777 /* SavedNoteTableViewCell.xib in Resources */,
+				42405B162815A13800A12777 /* PersonalNoteTableViewCell.xib in Resources */,
 				423A12742813F32A0075B34F /* GroupTitleCollectionViewCell.xib in Resources */,
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
@@ -852,7 +852,7 @@
 				423A125C281318A10075B34F /* NoteCommentCollectionViewCell.swift in Sources */,
 				42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */,
 				42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */,
-				42405B152815A13800A12777 /* SavedNoteTableViewCell.swift in Sources */,
+				42405B152815A13800A12777 /* PersonalNoteTableViewCell.swift in Sources */,
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
