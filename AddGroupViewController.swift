@@ -25,9 +25,7 @@ class AddGroupViewController: UIViewController {
                               groupMembers: [],
                               groupOwner: "",
                               groupTitle: "",
-                              location: Location(address: "", latitude: 0, longitude: 0))
-    
-    private var room = ChatRoom (chatRoomId: "", groupId: "", messages: [], roomTitle: "", ownerId: "", createdTime: Date())
+                              location: Location(address: "", latitude: 0, longitude: 0), messages: [])
     
     private var user: User?
     
@@ -35,11 +33,6 @@ class AddGroupViewController: UIViewController {
     private let imagePickerController = UIImagePickerController()
 
     private var coverImage = UIImage(systemName: "magazine")
-    
-    // MARK: Data Manager
-    private var groupManager = GroupManager()
-    private var chatRoomManager = ChatRoomManager()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +87,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
             guard let addTitleCell = cell as? AddTitleTableViewCell else { return cell }
             addTitleCell.dataHandler = { [weak self] title in
                 self?.group.groupTitle = title
-                self?.room.roomTitle = title
+//                self?.room.roomTitle = title
             }
             return addTitleCell
         } else if indexPath.row == 1 {
@@ -305,7 +298,7 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
         
         group.enter()
         guard let image = coverImage else { return }
-        self.groupManager.uploadPhoto(image: image) { result in
+        GroupManager.shared.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
                 self.group.groupCover = "\(url)"
@@ -317,18 +310,10 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            self.groupManager.createGroup(group: self.group) { result in
+            GroupManager.shared.createGroup(group: self.group) { result in
                 switch result {
                 case .success(let groupId):
-                    self.room.groupId = groupId
-                    self.chatRoomManager.createChatRoom(chatRoom: self.room) { result in
-                        switch result {
-                        case .success(let roomId):
-                            self.fetchAndUpdateUser(groupId: groupId, roomId: roomId)
-                        case.failure:
-                            print(result)
-                        }
-                    }
+                            self.fetchAndUpdateUser(groupId: groupId)
                 case.failure:
                     print(result)
                 }
@@ -340,7 +325,7 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
 // MARK: Fetch and Update User
 extension AddGroupViewController {
     
-    func fetchAndUpdateUser(groupId: String, roomId: String) {
+    func fetchAndUpdateUser(groupId: String) {
         let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
@@ -350,7 +335,7 @@ extension AddGroupViewController {
             case .success(let user):
                 self.user = user
                 self.user?.userGroups.append(groupId)
-                self.user?.chatRooms.append(roomId)
+                self.user?.joinedGroups.append(groupId)
                 guard let userToBeUpdated = self.user else { return }
                 UserManager.shared.updateUser(user: userToBeUpdated, uid: uid) { result in
                     switch result {

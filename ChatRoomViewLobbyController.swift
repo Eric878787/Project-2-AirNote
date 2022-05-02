@@ -13,9 +13,6 @@ class ChatRoomViewLobbyController: UIViewController {
     private var chatRoomListTableView = UITableView(frame: .zero)
     
     // Chat Rooms
-    private var chatRoomManager = ChatRoomManager()
-    private var chatRooms: [ChatRoom] = []
-    private var groupManager = GroupManager()
     private var groups: [Group] = []
     
     // User
@@ -52,7 +49,7 @@ extension ChatRoomViewLobbyController {
             switch result {
             case .success(let user):
                 self.user = user
-                self.fetchRooms()
+                self.fetchGroups()
                 
             case .failure(let error):
                 print (error)
@@ -60,23 +57,23 @@ extension ChatRoomViewLobbyController {
         }
     }
     
-    private func fetchRooms() {
+    private func fetchGroups() {
         
-        guard let roomIds = self.user?.chatRooms else { return }
+        guard let groupIds = self.user?.joinedGroups else { return }
         
-        ChatRoomManager.shared.fetchRoomsWithUid(roomIds: roomIds){ [weak self] result in
+        GroupManager.shared.fetchSpecificGroups(groupIds: groupIds){ [weak self] result in
             
             switch result {
                 
-            case .success(let rooms):
+            case .success(let groups):
                 
-                self?.chatRooms = rooms
+                self?.groups = groups
                 
-                self?.chatRooms.sort{
+                self?.groups.sort{
                     ( $0.createdTime ) > ( $1.createdTime )
                 }
                 
-                self?.fetchGroups()
+                self?.chatRoomListTableView.reloadData()
                 
             case .failure(let error):
                 
@@ -84,40 +81,6 @@ extension ChatRoomViewLobbyController {
             }
         }
     }
-    
-    private func fetchGroups() {
-        self.groupManager.fetchGroups { [weak self] result in
-            
-            switch result {
-                
-            case .success(let existingGroup):
-                
-                DispatchQueue.main.async {
-                    
-                    self?.groups = existingGroup
-                    
-                    var groups = self?.user?.joinedGroups ?? []
-                    
-                    groups += self?.user?.userGroups ?? []
-                    
-                    for group in groups {
-                        
-                        self?.groups = self?.groups.filter{ $0.groupId == group } ?? []
-                        
-                    }
-                    
-                    
-                    self?.chatRoomListTableView.reloadData()
-                    
-                }
-                
-            case .failure(let error):
-                
-                print("fetchData.failure: \(error)")
-            }
-        }
-    }
-    
 }
 
 // MARK: Configure Chat Room List TableView
@@ -144,20 +107,17 @@ extension ChatRoomViewLobbyController {
 // MARK: Chat Room List TableView Delegate
 extension ChatRoomViewLobbyController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        chatRooms.count
+        groups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let chatRoomListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ChatRoomListTableViewCell", for: indexPath)
         guard let cell = chatRoomListTableViewCell as? ChatRoomListTableViewCell else { return chatRoomListTableViewCell }
-        cell.titleLabel.text = chatRooms[indexPath.row].roomTitle
+        cell.titleLabel.text = groups[indexPath.row].groupTitle
         
-        // querying groups title
-        for group in groups where group.groupId == chatRooms[indexPath.row].groupId {
-            let url = URL(string: group.groupCover)
-            cell.avatarImageView.kf.indicatorType = .activity
-            cell.avatarImageView.kf.setImage(with: url)
-        }
+        let url = URL(string: groups[indexPath.row].groupCover)
+        cell.avatarImageView.kf.indicatorType = .activity
+        cell.avatarImageView.kf.setImage(with: url)
         return cell
     }
 }
@@ -172,8 +132,7 @@ extension ChatRoomViewLobbyController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "ChatroomLobby", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "ChatRoomViewController") as? ChatRoomViewController else { return }
-        vc.chatRoom = chatRooms[indexPath.row]
-        vc.chatRoomId = chatRooms[indexPath.row].chatRoomId
+        vc.group = groups[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

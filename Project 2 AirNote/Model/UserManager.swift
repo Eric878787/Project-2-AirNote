@@ -107,19 +107,31 @@ class UserManager {
         }
     }
     
-    func deleteGroupsAndRooms(uids: [String], roomId: String, groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func deleteGroup(uids: [String], groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
         
         for uid in uids {
             do {
                 let ref = db.collection("Users").document(uid)
                 ref.updateData([
-                    "chatRooms": FieldValue.arrayRemove([roomId]),
-                    "userGroups": FieldValue.arrayRemove([groupId])
+                    "joinedGroups": FieldValue.arrayRemove([groupId])
                 ])
             }
             catch {
                 completion(.failure(error))
             }
+        }
+    }
+    
+    func deleteOwnGroup(uid: String, groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        do {
+            let ref = db.collection("Users").document(uid)
+            ref.updateData([
+                "userGroups": FieldValue.arrayRemove([groupId])
+            ])
+        }
+        catch {
+            completion(.failure(error))
         }
     }
     

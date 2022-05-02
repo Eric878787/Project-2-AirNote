@@ -21,6 +21,7 @@ class SearchContentViewController: UIViewController {
     private var notes: [Note] = []
     private lazy var filteredNotes: [Note] = []
     private var users: [User] = []
+    private var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +138,13 @@ extension SearchContentViewController {
             case .success(let existingUser):
                 
                 self?.users = existingUser
+                
+                for user in existingUser where user.uid == FirebaseManager.shared.currentUser?.uid {
+                    
+                    self?.currentUser = user
+                    
+                }
+                
                 DispatchQueue.main.async {
                     self?.searchNotesTableView.reloadData()
                 }
@@ -201,13 +209,7 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
                 
                 self.fetchNotes()
                 
-                var userToBeUpdated: User?
-                
-                for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid{
-                    
-                    userToBeUpdated = user
-                    
-                }
+                var userToBeUpdated = self.currentUser
                 
                 if selectedCell.likeButton.imageView?.image == UIImage(systemName: "suit.heart") {
                     
@@ -326,6 +328,7 @@ extension SearchContentViewController: UITableViewDelegate {
                 guard let noteToPass = self?.filteredNotes[indexPath.row] else { return }
                 vc.note = noteToPass
                 vc.users = self?.users ?? []
+                vc.currentUser = self?.currentUser
                 self?.navigationController?.pushViewController(vc, animated: true)
                 
             case .failure(let error):

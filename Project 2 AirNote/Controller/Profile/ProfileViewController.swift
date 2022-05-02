@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftUI
 
 class ProfileViewController: UIViewController {
     
@@ -54,7 +55,9 @@ class ProfileViewController: UIViewController {
     
     var ownedGroups: [Group] = []
     
-    var groupOnTableView: [Group] = []
+    var groupsOnTableView: [Group] = []
+    
+    var selectedGroupIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,7 +127,7 @@ class ProfileViewController: UIViewController {
         
         let controller = UIAlertController(title: "暱稱", message: "請輸入你的暱稱", preferredStyle: .alert)
         controller.addTextField { textField in
-           textField.placeholder = "暱稱"
+            textField.placeholder = "暱稱"
         }
         
         let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in
@@ -140,7 +143,7 @@ class ProfileViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
         
     }
-
+    
 }
 
 // AvatarImage Selection
@@ -219,7 +222,10 @@ extension ProfileViewController {
         profilePageTableView.dataSource = self
         profilePageTableView.delegate = self
         profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
-        profilePageTableView.register(Header.self, forHeaderFooterViewReuseIdentifier: Header.reuseIdentifier)
+        profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalGroupTableViewCell.self), bundle: nil)
+        profilePageTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
+        profilePageTableView.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: GroupHeader.reuseIdentifier)
+        
         
     }
     
@@ -321,7 +327,8 @@ extension ProfileViewController {
                     
                     self.layoutLabel()
                     self.layoutButton()
-                    self.fetchNotes(self.user?.savedNotes ?? [], self.user?.userNotes ?? [])
+                    self.fetchNotes()
+                    self.fetchGroups()
                     
                 }
                 
@@ -398,7 +405,7 @@ extension ProfileViewController {
         
     }
     
-    private func fetchNotes(_ savedNoteIds: [String], _ userNoteIds: [String]) {
+    private func fetchNotes() {
         
         NoteManager.shared.fetchNotes { result in
             switch result {
@@ -434,6 +441,42 @@ extension ProfileViewController {
         
     }
     
+    private func fetchGroups() {
+        
+        GroupManager.shared.fetchGroups { result in
+            switch result {
+                
+            case .success(let groups):
+                
+                self.savedGroups = []
+                
+                for joinedGroup in self.user?.joinedGroups ?? [] {
+                    
+                    self.savedGroups += groups.filter{ $0.groupId == joinedGroup }
+                    
+                }
+                
+                self.ownedGroups = []
+                
+                for userGroup in self.user?.userGroups ?? [] {
+                    
+                    self.ownedGroups += groups.filter{ $0.groupId == userGroup }
+                    
+                }
+                
+                // Default datasource of notesOnTableView
+                self.wrappingGroups(self.selectedGroupIndex)
+                
+                self.profilePageTableView.reloadData()
+                
+            case .failure(let error):
+                
+                print("fetchData.failure: \(error)")
+            }
+        }
+        
+    }
+    
 }
 
 // Wrapped Data
@@ -454,54 +497,146 @@ extension ProfileViewController {
         
     }
     
+    func wrappingGroups(_ selectedIndex: Int ) {
+        
+        if selectedIndex == 0 {
+            
+            groupsOnTableView = ownedGroups
+            
+        } else {
+            
+            groupsOnTableView = savedGroups
+            
+        }
+        
+    }
+    
 }
 
 // Set Up Table View delegate & datasource
 extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        notesOnTableView.count
+        if section == 0 {
+            return notesOnTableView.count
+        } else {
+            return groupsOnTableView.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let personalNoteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalNoteTableViewCell", for: indexPath)
-        guard let cell = personalNoteTableViewCell as? PersonalNoteTableViewCell else { return personalNoteTableViewCell }
-        let url = URL(string: notesOnTableView[indexPath.row].cover)
-        cell.mainImageView.kf.indicatorType = .activity
-        cell.mainImageView.kf.setImage(with: url)
-        
-        // querying users' name & avatar
-        for user in users where user.uid == notesOnTableView[indexPath.row].authorId {
-            cell.nameLabel.text = user.userName
-            let url = URL(string: user.userAvatar)
-            cell.avatarImageView.kf.indicatorType = .activity
-            cell.avatarImageView.kf.setImage(with: url)
+        if indexPath.section == 0 {
+            
+            let personalNoteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalNoteTableViewCell", for: indexPath)
+            guard let cell = personalNoteTableViewCell as? PersonalNoteTableViewCell else { return personalNoteTableViewCell }
+            let url = URL(string: notesOnTableView[indexPath.row].cover)
+            cell.mainImageView.kf.indicatorType = .activity
+            cell.mainImageView.kf.setImage(with: url)
+            
+            // querying users' name & avatar
+            for user in users where user.uid == notesOnTableView[indexPath.row].authorId {
+                cell.nameLabel.text = user.userName
+                let url = URL(string: user.userAvatar)
+                cell.avatarImageView.kf.indicatorType = .activity
+                cell.avatarImageView.kf.setImage(with: url)
+            }
+            
+            cell.titleLabel.text = notesOnTableView[indexPath.row].title
+            return cell
+            
+        } else {
+            
+            let personalGroupTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalGroupTableViewCell", for: indexPath)
+            guard let cell = personalGroupTableViewCell as? PersonalGroupTableViewCell else { return personalGroupTableViewCell }
+            let url = URL(string: groupsOnTableView[indexPath.row].groupCover)
+            cell.coverImage.kf.indicatorType = .activity
+            cell.coverImage.kf.setImage(with: url)
+            
+            // querying users' name & avatar
+            for user in users where user.uid == groupsOnTableView[indexPath.row].groupOwner {
+                cell.nameLabel.text = user.userName
+                let url = URL(string: user.userAvatar)
+                cell.avatarImage.kf.indicatorType = .activity
+                cell.avatarImage.kf.setImage(with: url)
+            }
+            let date = groupsOnTableView[indexPath.row].createdTime
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM/dd"
+            cell.dateLabel.text = formatter.string(from: date)
+            cell.titleLabel.text = groupsOnTableView[indexPath.row].groupTitle
+            cell.memberCountsLabel.text = "\(groupsOnTableView[indexPath.row].groupMembers.count)"
+            return cell
         }
         
-        cell.titleLabel.text = notesOnTableView[indexPath.row].title
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: Header.reuseIdentifier) as? Header else { return nil }
-        header.segmentController.setTitle("我的筆記", forSegmentAt: 0)
-        header.segmentController.setTitle("收藏筆記", forSegmentAt: 1)
-        header.segmentHandler = { [weak self] index in
-            self?.selectedNoteIndex = index
-            self?.wrappingNotes(self?.selectedNoteIndex ?? 0)
-            self?.profilePageTableView.reloadData()
+        
+        if section == 0 {
+            
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NoteHeader.reuseIdentifier) as? NoteHeader else { return nil }
+            header.firstSegmentController.setTitle("我的筆記", forSegmentAt: 0)
+            header.firstSegmentController.setTitle("收藏筆記", forSegmentAt: 1)
+            header.firstSegmentHandler = { [weak self] index in
+                self?.selectedNoteIndex = index
+                self?.wrappingNotes(self?.selectedNoteIndex ?? 0)
+                self?.profilePageTableView.reloadData()
+            }
+            return header
+        } else {
+            
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier) as? GroupHeader else { return nil }
+            header.firstSegmentController.setTitle("我的讀書會", forSegmentAt: 0)
+            header.firstSegmentController.setTitle("加入的讀書會", forSegmentAt: 1)
+            header.firstSegmentHandler = { [weak self] index in
+                self?.selectedGroupIndex = index
+                self?.wrappingGroups(self?.selectedGroupIndex ?? 0)
+                self?.profilePageTableView.reloadData()
+            }
+            return header
         }
-        return header
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         200
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 {
+            
+            let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
+            notesOnTableView[indexPath.row].clicks.append(FirebaseManager.shared.currentUser?.uid ?? "")
+            NoteManager.shared.updateNote(note: notesOnTableView[indexPath.row], noteId: notesOnTableView[indexPath.row].noteId) { [weak self] result in
+                switch result {
+                case .success:
+                    guard let noteToPass = self?.notesOnTableView[indexPath.row] else { return }
+                    vc.note = noteToPass
+                    vc.users = self?.users ?? []
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                    
+                case .failure(let error):
+                    print("fetchData.failure: \(error)")
+                }
+            }
+            
+        } else {
+            
+            let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+            vc.group = groupsOnTableView[indexPath.row]
+            vc.users = users
+            vc.user = user
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }
+        
     }
     
 }

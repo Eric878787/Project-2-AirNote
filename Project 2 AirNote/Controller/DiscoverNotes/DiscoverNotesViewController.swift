@@ -81,7 +81,6 @@ class DiscoverNotesViewController: UIViewController {
         
         // Fetch Notes Data
         fetchNotes()
-        categoryCollectionView.reloadData()
         
     }
 }
@@ -194,7 +193,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
     
     func saveNote(_ selectedCell: NotesCollectionViewCell) {
         
-        guard let currentUser = FirebaseManager.shared.currentUser else {
+        guard let currentUser = self.currentUser else {
             
             guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
@@ -242,13 +241,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                 
                 self.fetchNotes()
                 
-                var userToBeUpdated: User?
-                
-                for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid{
-                    
-                    userToBeUpdated = user
-                    
-                }
+                var userToBeUpdated = self.currentUser
                 
                 if selectedCell.heartButton.imageView?.image == UIImage(systemName: "suit.heart") {
                     
@@ -346,7 +339,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
 extension DiscoverNotesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let currentUser = FirebaseManager.shared.currentUser else {
+        guard let currentUser = self.currentUser else {
             
             guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
@@ -372,7 +365,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
             
         } else {
             
-            guard let currentUser = FirebaseManager.shared.currentUser else {
+            guard let currentUser = self.currentUser else {
                 
                 guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
                 
@@ -394,6 +387,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
                     guard let noteToPass = self?.filterNotes[indexPath.item] else { return }
                     vc.note = noteToPass
                     vc.users = self?.users ?? []
+                    vc.currentUser = self?.currentUser
                     self?.navigationController?.pushViewController(vc, animated: true)
                     
                 case .failure(let error):

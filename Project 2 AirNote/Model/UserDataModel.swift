@@ -8,7 +8,6 @@
 import Foundation
 
 struct User: Codable {
-    var chatRooms: [String]
     var followers: [String]
     var followings: [String]
     var joinedGroups: [String]

@@ -52,6 +52,7 @@ class DiscoverStudyGroupsViewController: UIViewController {
     
     // MARK: Users Data
     var users: [User] = []
+    var user: User?
     
     var currentUser = Auth.auth().currentUser
     
@@ -167,8 +168,13 @@ extension DiscoverStudyGroupsViewController {
                 
             case .success(let existingUser):
                 
+                self?.users = existingUser
+                guard let users = self?.users else { return }
+                for user in users where user.uid == self?.currentUser?.uid {
+                    self?.user = user
+                }
+                
                 DispatchQueue.main.async {
-                    self?.users = existingUser
                     self?.groupsCollectionView.reloadData()
                 }
                 
@@ -267,6 +273,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
             guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
             vc.group = filterGroups[indexPath.item]
             vc.users = users
+            vc.user = user
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -20,7 +20,9 @@ class SearchGroupsViewController: UIViewController {
     private var userManager = UserManager()
     private var groups: [Group] = []
     private lazy var filteredgroups: [Group] = []
-    private var users: [User] = []
+    var users: [User] = []
+    var user: User?
+    var currentUserId = FirebaseManager.shared.currentUser?.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,6 +134,9 @@ extension SearchGroupsViewController {
                 
                 DispatchQueue.main.async {
                     self?.users = existingUser
+                    for user in existingUser where user.uid == self?.currentUserId {
+                        self?.user = user
+                    }
                     self?.searchGroupsTableView.reloadData()
                 }
                 
@@ -188,6 +193,7 @@ extension SearchGroupsViewController: UITableViewDelegate {
         guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
         vc.group = filteredgroups[indexPath.row]
         vc.users = users
+        vc.user = user
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

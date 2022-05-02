@@ -32,6 +32,8 @@ class NoteDetailViewController: UIViewController {
     
     var users: [User] = []
     
+    var currentUser: User?
+    
     // Data Manager
     private var noteManager = NoteManager()
     private var userManager = UserManager()

@@ -19,9 +19,7 @@ class GroupResultTableViewCell: UITableViewCell {
     
     @IBOutlet weak var dateLabel: UILabel!
     
-    
     @IBOutlet weak var membersLabel: UILabel!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

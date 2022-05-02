@@ -26,8 +26,8 @@ class ChatRoomViewController: UIViewController {
     private let imagePickerController = UIImagePickerController()
     
     // Chat Room DataSource
-    var chatRoom = ChatRoom(chatRoomId: "", groupId: "", messages: [], roomTitle: "", ownerId: "", createdTime: Date())
-    var chatRoomId: String?
+    var group: Group?
+    
     private var chatRoomManager = ChatRoomManager()
     
     // Selected Image
@@ -37,7 +37,6 @@ class ChatRoomViewController: UIViewController {
     private var imageToShow = UIImageView()
     
     // Users DataSource
-    private var userManager = UserManager()
     private var users: [User] = []
     
     override func viewDidLoad() {
@@ -64,15 +63,15 @@ class ChatRoomViewController: UIViewController {
 extension ChatRoomViewController {
     
     private func checkMessagesChange() {
-        self.chatRoomManager.checkMessageChange(chatroomId: chatRoomId ?? "") { [weak self] result in
+        GroupManager.shared.checkMessageChange(groupId: self.group?.groupId ?? "") { [weak self] result in
             switch result {
                 
-            case .success(let room):
+            case .success(let group):
                 
                 DispatchQueue.main.async {
                     
-                    self?.chatRoom = room
-                    self?.chatRoom.messages.sort{
+                    self?.group = group
+                    self?.group?.messages.sort{
                         ( $0.createdTime ) < ( $1.createdTime )
                     }
                     
@@ -88,7 +87,7 @@ extension ChatRoomViewController {
     }
     
     private func fetchUsers() {
-        self.userManager.fetchUsers { [weak self] result in
+        UserManager.shared.fetchUsers { [weak self] result in
             
             switch result {
                 
@@ -97,8 +96,8 @@ extension ChatRoomViewController {
                 DispatchQueue.main.async {
                     self?.users = existingUser
                     self?.chatRoomTableView.reloadData()
-                    if self?.chatRoom.messages != [] {
-                    self?.chatRoomTableView.scrollToRow(at: [0, (self?.chatRoom.messages.count ?? 1) - 1] , at: .bottom, animated: false)
+                    if self?.group?.messages != [] {
+                        self?.chatRoomTableView.scrollToRow(at: [0, (self?.group?.messages.count ?? 1) - 1] , at: .bottom, animated: false)
                     }
                 }
                 
@@ -188,8 +187,9 @@ extension ChatRoomViewController {
     @objc private func sendTextMessage() {
         guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
         let message = Message(sender: uid, createdTime: Date(), content: messageTextView.text)
-        chatRoom.messages.append(message)
-        self.chatRoomManager.updateChatRoomMessages(chatRoom: chatRoom, chatRoomId: chatRoomId ?? "") { [weak self] result in
+        self.group?.messages.append(message)
+        guard let group = self.group else { return }
+        GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { [weak self] result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
@@ -216,14 +216,14 @@ extension ChatRoomViewController: UIImagePickerControllerDelegate, UINavigationC
         
         if let image = info[.originalImage] as? UIImage {
             selectedImage = image
-            self.chatRoomManager.uploadPhoto(image: selectedImage) { [weak self] result in
+            GroupManager.shared.uploadPhoto(image: selectedImage) { [weak self] result in
                 switch result {
                 case .success(let url):
                     guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
                     let message = Message(sender: uid, createdTime: Date(), image: "\(url)")
-                    self?.chatRoom.messages.append(message)
-                    guard let chatRoom = self?.chatRoom else {return}
-                    self?.chatRoomManager.updateChatRoomMessages(chatRoom: chatRoom, chatRoomId: self?.chatRoomId ?? "") { [weak self] result in
+                    self?.group?.messages.append(message)
+                    guard let group = self?.group else { return }
+                    GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { [weak self] result in
                         switch result {
                         case .success:
                             DispatchQueue.main.async {
@@ -237,31 +237,30 @@ extension ChatRoomViewController: UIImagePickerControllerDelegate, UINavigationC
                     print("\(error)")
                 }
             }
+            
         }
-        
         picker.dismiss(animated: true)
-        
     }
-    
 }
 
 // MARK: Chat Room TableView Delegate
 extension ChatRoomViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        chatRoom.messages.count 
+        group?.messages.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let uid = FirebaseManager.shared.currentUser?.uid else { return UITableViewCell() }
-        if chatRoom.messages[indexPath.row].sender == uid {
+        guard let group = self.group else { return UITableViewCell() }
+        if group.messages[indexPath.row].sender == uid {
             let rightChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightChatRoomTableViewCell", for: indexPath)
             guard let cell = rightChatRoomTableViewCell as? RightChatRoomTableViewCell else { return rightChatRoomTableViewCell }
-            let url = URL(string:chatRoom.messages[indexPath.row].image ?? "")
+            let url = URL(string:group.messages[indexPath.row].image ?? "")
             cell.messageImage.kf.indicatorType = .activity
             cell.messageImage.kf.setImage(with: url)
-            cell.messageLabel.text = chatRoom.messages[indexPath.row].content
+            cell.messageLabel.text = group.messages[indexPath.row].content
             
-            if chatRoom.messages[indexPath.row].image == nil {
+            if group.messages[indexPath.row].image == nil {
                 cell.messageImage.isHidden = true
             } else { cell.messageImage.isHidden = false }
             
@@ -269,17 +268,17 @@ extension ChatRoomViewController: UITableViewDataSource {
         } else {
             let leftChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftChatRoomTableViewCell", for: indexPath)
             guard let cell = leftChatRoomTableViewCell as? LeftChatRoomTableViewCell else { return leftChatRoomTableViewCell }
-            let url = URL(string:chatRoom.messages[indexPath.row].image ?? "")
+            let url = URL(string:group.messages[indexPath.row].image ?? "")
             cell.messageImage.kf.indicatorType = .activity
             cell.messageImage.kf.setImage(with: url)
-            cell.messageLabel.text = chatRoom.messages[indexPath.row].content
+            cell.messageLabel.text = group.messages[indexPath.row].content
             
-            if chatRoom.messages[indexPath.row].image == nil {
+            if group.messages[indexPath.row].image == nil {
                 cell.messageImage.isHidden = true
             } else { cell.messageImage.isHidden = false }
             
             // querying users' name & avatar
-            for user in users where user.uid == chatRoom.messages[indexPath.row].sender {
+            for user in users where user.uid == group.messages[indexPath.row].sender {
                 cell.nameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.avatarImageView.kf.indicatorType = .activity

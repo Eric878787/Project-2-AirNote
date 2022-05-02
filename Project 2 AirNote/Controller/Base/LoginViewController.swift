@@ -15,17 +15,19 @@ class LoginViewController: UIViewController {
     
     private var asVisitorButton = UIButton()
     
-    @IBOutlet weak var emailLabel: UILabel!
     
     @IBOutlet weak var emailTextField: UITextField!
-    
-    @IBOutlet weak var passwordLabel: UILabel!
     
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBOutlet weak var signUpButton: UIButton!
     
     @IBOutlet weak var logInButton: UIButton!
+    
+    @IBOutlet weak var backgroundView: UIView!
+    
+    @IBOutlet weak var mainTitle: UILabel!
+    
     
     // User Manager
     private var existingUsers: [User] = []
@@ -35,10 +37,22 @@ class LoginViewController: UIViewController {
         configureSignInWithAppleButton()
         configureAsVisitorButton()
         configureNativeSignIn()
+        layoutingSubviews ()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // refresh textfield border
+        emailTextField.layer.borderColor = UIColor.clear.cgColor
+        emailTextField.layer.borderWidth = 1
+        passwordTextField.layer.borderColor = UIColor.clear.cgColor
+        passwordTextField.layer.borderWidth = 1
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
     }
     
     // MARK: Native Sign up
@@ -138,6 +152,32 @@ class LoginViewController: UIViewController {
 // MARK: Configure Layouts
 extension LoginViewController {
     
+    private func layoutingSubviews () {
+        
+        // BackGround View
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = backgroundView.bounds
+        gradientLayer.colors = [UIColor.myDarkGreen.cgColor, UIColor.myBeige.cgColor]
+        backgroundView.layer.addSublayer(gradientLayer)
+        
+        // Sign In Button
+        signUpButton.setTitle("註冊", for: .normal)
+        signUpButton.setTitleColor(.black, for: .normal)
+        signUpButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
+        signUpButton.backgroundColor = .white
+        signUpButton.layer.cornerRadius = 30
+        signUpButton.clipsToBounds = true
+        
+        // Log In Button
+        logInButton.setTitle("登入", for: .normal)
+        logInButton.setTitleColor(.black, for: .normal)
+        logInButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
+        logInButton.backgroundColor = .white
+        logInButton.layer.cornerRadius = 30
+        logInButton.clipsToBounds = true
+        
+    }
+    
     func showAlert(_ textfiled: UITextField) {
         
         textfiled.layer.borderColor = UIColor.red.cgColor
@@ -146,9 +186,6 @@ extension LoginViewController {
     }
     
     func configureNativeSignIn() {
-        
-        emailLabel.text = "帳號"
-        passwordLabel.text = "密碼"
         signUpButton.setTitle("註冊", for: .normal)
         logInButton.setTitle("登入", for: .normal)
 
@@ -159,8 +196,10 @@ extension LoginViewController {
         asVisitorButton.translatesAutoresizingMaskIntoConstraints = false
         asVisitorButton.layer.cornerRadius = 5
         asVisitorButton.clipsToBounds = true
-        asVisitorButton.backgroundColor = .systemGray6
+        asVisitorButton.backgroundColor = .white
         asVisitorButton.setTitle("以訪客身份進入", for: .normal)
+        asVisitorButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 14)
+        asVisitorButton.setTitleColor(.black, for: .normal)
         asVisitorButton.addTarget(self, action: #selector(accessAsVisitor), for: .touchUpInside)
         view.addSubview(asVisitorButton)
         
@@ -207,8 +246,7 @@ extension LoginViewController {
                 
                 if isNew == true {
                     
-                    var user = User(chatRooms: [],
-                                    followers: [],
+                    var user = User(followers: [],
                                     followings: [],
                                     joinedGroups: [],
                                     savedNotes: [],
