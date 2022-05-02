@@ -73,6 +73,9 @@ class ProfileViewController: UIViewController {
         // Configure Table View
         configureTableView()
         
+        // Layout Buttons
+        layoutButton()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,7 +115,7 @@ class ProfileViewController: UIViewController {
                     self.present(controller, animated: true)
                     
                 case .failure:
-                    let controller = UIAlertController(title: "刪除帳號失敗", message: "請重新註冊", preferredStyle: .alert)
+                    let controller = UIAlertController(title: "刪除帳號失敗", message: "請再次嘗試", preferredStyle: .alert)
                     controller.view.tintColor = UIColor.gray
                     let action = UIAlertAction(title: "確認", style: .destructive)
                     controller.addAction(action)
@@ -261,12 +264,6 @@ extension ProfileViewController {
             
         }
         
-        // Setting Name Button
-        settingNameButton.backgroundColor = .systemGray2
-        settingNameButton.clipsToBounds = true
-        settingNameButton.layer.cornerRadius = 10
-        settingNameButton.titleLabel?.textColor = .black
-        
         // User Followers
         userFollowersLabel.text = "Followers:\(user?.followers.count ?? 0)"
         
@@ -276,11 +273,22 @@ extension ProfileViewController {
     
     func layoutButton() {
         
+        // Setting Name Button
+        settingNameButton.setTitleColor(.white, for: .normal)
+        settingNameButton.backgroundColor = .myPurple
+        settingNameButton.clipsToBounds = true
+        settingNameButton.layer.cornerRadius = 10
+        
+        
         // Follow Button
         followButton.isHidden = true
         
         // Configure Delete Account
         deleteAccountButton.setTitle("刪除帳號", for: .normal)
+        deleteAccountButton.setTitleColor(.myPurple, for: .normal)
+        deleteAccountButton.layer.cornerRadius = 10
+        deleteAccountButton.layer.borderWidth = 1
+        deleteAccountButton.layer.borderColor = UIColor.myPurple.cgColor
         
     }
     
@@ -326,7 +334,6 @@ extension ProfileViewController {
                 DispatchQueue.main.async {
                     
                     self.layoutLabel()
-                    self.layoutButton()
                     self.fetchNotes()
                     self.fetchGroups()
                     
@@ -369,6 +376,7 @@ extension ProfileViewController {
                     }
                     
                     DispatchQueue.main.async {
+                        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                         controller.addAction(cancelAction)
                         self.present(controller, animated: true, completion: nil)
                     }
@@ -394,6 +402,7 @@ extension ProfileViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                     controller.addAction(cancelAction)
                     self.present(controller, animated: true, completion: nil)
                 }
@@ -603,7 +612,7 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        200
+        300
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

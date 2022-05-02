@@ -31,11 +31,19 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.selectionStyle = .none
+        
         titleLabel.text = "地點"
+        
+        cafeListButton.tintColor = .myDarkGreen
+        
+        cafeListButton.setTitleColor(.myDarkGreen, for: .normal)
         
         cafeListButton.setTitle("尋找推薦咖啡廳", for: .normal)
         
         uploadButton.setTitle("上傳", for: .normal)
+        
+        uploadButton.setTitleColor(.myDarkGreen, for: .normal)
         
         textField.delegate = self
     }

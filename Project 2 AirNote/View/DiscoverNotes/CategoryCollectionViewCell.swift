@@ -15,11 +15,11 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         categoryView.layer.cornerRadius = 10
-        categoryView.layer.borderColor = UIColor.clear.cgColor
+        categoryView.backgroundColor = .white
+        categoryView.layer.borderColor = UIColor.myDarkGreen.cgColor
         categoryView.layer.borderWidth = 1
-        categoryView.backgroundColor = .systemGray6
-        categoryLabel.textColor = .systemGray2
-        categoryLabel.font = UIFont(name: "PingFangTC-Regular", size: 11)
+        categoryLabel.textColor = .white
+        categoryLabel.font = UIFont(name: "PingFangTC-Semibold", size: 14)
     }
     
 }

@@ -30,7 +30,11 @@ class NoteResultTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        contentView.layer.borderColor = UIColor.systemGray6.cgColor
+        contentView.layer.borderWidth = 1
+        contentView.layer.cornerRadius = 10
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        likeButton.tintColor = .myDarkGreen
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

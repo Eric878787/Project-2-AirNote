@@ -21,6 +21,8 @@ class DiscoverNotesViewController: UIViewController {
         categoryCollecitonView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         categoryCollecitonView.registerCellWithNib(identifier: String(describing: CategoryCollectionViewCell.self), bundle: nil)
         categoryCollecitonView.backgroundColor = .clear
+        categoryCollecitonView.showsVerticalScrollIndicator = false
+        categoryCollecitonView.showsHorizontalScrollIndicator = false
         return categoryCollecitonView
     }()
     
@@ -164,7 +166,7 @@ extension DiscoverNotesViewController {
         categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
         categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/10).isActive = true
+        categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/8).isActive = true
         categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
@@ -299,9 +301,11 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             guard let cell = categoryCollectionViewCell as? CategoryCollectionViewCell else {return categoryCollectionViewCell}
             cell.categoryLabel.text = category[indexPath.item]
             if selectedCategoryIndex == indexPath.item {
-                cell.categoryLabel.textColor = .black
+                cell.categoryLabel.textColor = .white
+                cell.categoryView.backgroundColor = .myDarkGreen
             } else {
-                cell.categoryLabel.textColor = .systemGray2
+                cell.categoryLabel.textColor = .myDarkGreen
+                cell.categoryView.backgroundColor = .white
             }
             cell.isMultipleTouchEnabled = false
             return cell
@@ -403,7 +407,12 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
 extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == categoryCollectionView {
-            return CGSize(width: 100, height: 30)
+            let maxWidth = UIScreen.main.bounds.width - 10
+            let numberOfItemsPerRow = CGFloat(4)
+            let interItemSpacing = CGFloat(10)
+            let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
+            let itemHeight = itemWidth * 0.4
+            return CGSize(width: itemWidth, height: itemHeight)
         } else {
             let maxWidth = UIScreen.main.bounds.width - 10
             let numberOfItemsPerRow = CGFloat(2)
@@ -425,7 +434,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
             if collectionView == categoryCollectionView {
-                return 0
+                return 10
             } else {
                 return 10
             }

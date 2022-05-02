@@ -85,6 +85,8 @@ extension SearchGroupsViewController {
     
     private func configureSearchGroupsTableView() {
         
+        self.searchGroupsTableView.separatorColor = .clear
+        
         searchGroupsTableView.registerCellWithNib(identifier: String(describing: GroupResultTableViewCell.self), bundle: nil)
         searchGroupsTableView.dataSource = self
         searchGroupsTableView.delegate = self

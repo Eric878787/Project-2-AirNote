@@ -42,29 +42,18 @@
                             <constraint firstItem="BaD-hI-o20" firstAttribute="height" secondItem="Lxg-yQ-dKS" secondAttribute="height" multiplier="1.5" id="QaX-dL-2xf"/>
                         </constraints>
                     </stackView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bc-o8-VoJ">
-                        <rect key="frame" x="325.5" y="344" width="45.5" height="30.5"/>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" image="suit.heart" catalog="system"/>
-                        <connections>
-                            <action selector="saveNote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Bfc-eQ-3mt"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5c6-BL-G1H" firstAttribute="top" secondItem="kBe-TU-OkX" secondAttribute="top" id="0oc-uI-qiA"/>
                     <constraint firstItem="QVX-gA-ncQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5Gu-A8-t9B"/>
                     <constraint firstItem="5c6-BL-G1H" firstAttribute="height" secondItem="kBe-TU-OkX" secondAttribute="height" id="ALi-WC-ajB"/>
                     <constraint firstItem="QVX-gA-ncQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="AhK-HZ-UJA"/>
-                    <constraint firstItem="9Bc-o8-VoJ" firstAttribute="top" secondItem="QVX-gA-ncQ" secondAttribute="bottom" constant="15" id="Byh-Dk-Ubp"/>
-                    <constraint firstItem="9Bc-o8-VoJ" firstAttribute="height" secondItem="kBe-TU-OkX" secondAttribute="height" multiplier="0.5" id="DtD-59-R5i"/>
                     <constraint firstItem="5c6-BL-G1H" firstAttribute="leading" secondItem="kBe-TU-OkX" secondAttribute="trailing" constant="5" id="FWN-bp-vQW"/>
                     <constraint firstItem="kBe-TU-OkX" firstAttribute="width" secondItem="kBe-TU-OkX" secondAttribute="height" multiplier="1:1" id="I6E-Nf-xiV"/>
                     <constraint firstAttribute="trailing" secondItem="QVX-gA-ncQ" secondAttribute="trailing" id="UEA-f8-QYD"/>
                     <constraint firstItem="QVX-gA-ncQ" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.8" id="XPG-4J-9Jj"/>
                     <constraint firstItem="kBe-TU-OkX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="d2h-A0-5bC"/>
                     <constraint firstItem="kBe-TU-OkX" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.15" id="fGB-Wf-A5g"/>
-                    <constraint firstAttribute="trailing" secondItem="9Bc-o8-VoJ" secondAttribute="trailing" id="qja-ai-KyX"/>
                     <constraint firstItem="kBe-TU-OkX" firstAttribute="top" secondItem="QVX-gA-ncQ" secondAttribute="bottom" constant="15" id="tBa-Ky-HcZ"/>
                 </constraints>
             </tableViewCellContentView>
@@ -73,7 +62,6 @@
                 <outlet property="avatarImageView" destination="kBe-TU-OkX" id="TJI-cJ-fyO"/>
                 <outlet property="mainImageView" destination="QVX-gA-ncQ" id="Mt7-KR-zUk"/>
                 <outlet property="nameLabel" destination="Lxg-yQ-dKS" id="JdZ-s8-c4K"/>
-                <outlet property="saveButton" destination="9Bc-o8-VoJ" id="wkd-uv-TYl"/>
                 <outlet property="titleLabel" destination="BaD-hI-o20" id="iyV-hB-Bgn"/>
             </connections>
             <point key="canvasLocation" x="174.63768115942031" y="31.808035714285712"/>
@@ -82,6 +70,5 @@
     <resources>
         <image name="book" catalog="system" width="128" height="99"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="suit.heart" catalog="system" width="128" height="109"/>
     </resources>
 </document>

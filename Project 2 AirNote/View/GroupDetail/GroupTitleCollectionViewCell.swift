@@ -29,8 +29,10 @@ class GroupTitleCollectionViewCell: UICollectionViewCell {
     
     var delegate: GroupTitleDelegate?
     
-    override class func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
+        locationIcon.tintColor = .myDarkGreen
+        dateIcon.tintColor = .myDarkGreen
     }
     
     override func layoutSubviews() {

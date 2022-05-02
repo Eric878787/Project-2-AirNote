@@ -30,10 +30,10 @@ class GroupHeader: UITableViewHeaderFooterView {
     
     private func configureGroupHeader() {
         firstSegmentController.selectedSegmentIndex = 0
-        firstSegmentController.selectedSegmentTintColor = .black
-        firstSegmentController.tintColor = .white
+        firstSegmentController.selectedSegmentTintColor = .myDarkGreen
+        firstSegmentController.backgroundColor = .white
         firstSegmentController.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        firstSegmentController.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
+        firstSegmentController.setTitleTextAttributes([.foregroundColor: UIColor.myDarkGreen], for: .normal)
         firstSegmentController.layer.cornerRadius = 10
         firstSegmentController.clipsToBounds = true
         firstSegmentController.addTarget(self, action: #selector(changeGroups), for: .valueChanged)

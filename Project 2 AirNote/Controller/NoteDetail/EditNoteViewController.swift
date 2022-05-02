@@ -89,6 +89,7 @@ extension EditNoteViewController {
                 DispatchQueue.main.async {
                     self.loadingAnimation.loadingView.pause()
                     self.loadingAnimation.loadingView.isHidden = true
+                    cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                     controller.addAction(cancelAction)
                     self.present(controller, animated: true, completion: nil)
                 }
@@ -196,6 +197,8 @@ extension EditNoteViewController: UITableViewDelegate {
         
         if indexPath.row == 1 {
             return 300
+        } else if indexPath.row == 2 {
+            return 165
         } else if indexPath.row == 4 {
             return 600
         } else {
@@ -441,6 +444,7 @@ extension EditNoteViewController {
                     DispatchQueue.main.async {
                         self?.loadingAnimation.loadingView.pause()
                         self?.loadingAnimation.loadingView.isHidden = true
+                        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                         controller.addAction(cancelAction)
                         self?.present(controller, animated: true, completion: nil)
                     }

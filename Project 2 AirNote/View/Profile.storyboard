@@ -21,7 +21,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIZ-1Q-FD8">
-                                <rect key="frame" x="0.0" y="831" width="414" height="31"/>
+                                <rect key="frame" x="10" y="831" width="394" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
@@ -65,6 +65,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VoF-Nr-DHl">
                                 <rect key="frame" x="243" y="250.5" width="81.5" height="31"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="設定暱稱"/>
                                 <connections>
@@ -80,7 +81,7 @@
                             <constraint firstItem="VoF-Nr-DHl" firstAttribute="leading" secondItem="TiY-gY-KMn" secondAttribute="trailing" constant="10" id="4Fo-5L-4w0"/>
                             <constraint firstItem="vIZ-1Q-FD8" firstAttribute="top" secondItem="BcP-7g-TkG" secondAttribute="bottom" id="Ck5-oJ-cHK"/>
                             <constraint firstItem="BcP-7g-TkG" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="DxI-5W-E1z"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="vIZ-1Q-FD8" secondAttribute="trailing" id="Oj6-8H-yX2"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="vIZ-1Q-FD8" secondAttribute="trailing" constant="10" id="Oj6-8H-yX2"/>
                             <constraint firstItem="wTA-Cb-YyZ" firstAttribute="centerX" secondItem="TiY-gY-KMn" secondAttribute="centerX" id="Qcm-s5-B1o"/>
                             <constraint firstItem="xic-nt-JQV" firstAttribute="centerY" secondItem="4hZ-Yg-YDg" secondAttribute="centerY" id="RSE-JW-qgw"/>
                             <constraint firstItem="TiY-gY-KMn" firstAttribute="centerX" secondItem="4hZ-Yg-YDg" secondAttribute="centerX" id="SkI-Kb-G9K"/>
@@ -92,7 +93,7 @@
                             <constraint firstItem="4hZ-Yg-YDg" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="10" id="qea-Pf-UpL"/>
                             <constraint firstItem="BcP-7g-TkG" firstAttribute="top" secondItem="wTA-Cb-YyZ" secondAttribute="top" constant="30" id="vGX-pT-FeL"/>
                             <constraint firstItem="TiY-gY-KMn" firstAttribute="top" secondItem="4hZ-Yg-YDg" secondAttribute="bottom" constant="30" id="vnJ-j3-SrB"/>
-                            <constraint firstItem="vIZ-1Q-FD8" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="zDX-Gy-Qt0"/>
+                            <constraint firstItem="vIZ-1Q-FD8" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="zDX-Gy-Qt0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mR0-KG-LYi"/>

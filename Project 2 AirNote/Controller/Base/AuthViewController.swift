@@ -13,7 +13,7 @@ class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
     
     }
     

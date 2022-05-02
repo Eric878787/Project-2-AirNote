@@ -135,6 +135,7 @@ extension ChatRoomViewController {
         imageButton.layer.borderColor = UIColor.systemGray6.cgColor
         imageButton.layer.cornerRadius = 10
         imageButton.setImage(UIImage(systemName: "photo.fill"), for: .normal)
+        imageButton.tintColor = .myDarkGreen
         imageButton.addTarget(self, action: #selector(sendImageMessage), for: .touchUpInside)
         view.addSubview(imageButton)
         
@@ -167,6 +168,7 @@ extension ChatRoomViewController {
         sendButton.layer.borderColor = UIColor.systemGray6.cgColor
         sendButton.layer.cornerRadius = 10
         sendButton.setImage(UIImage(systemName: "arrowtriangle.right.fill"), for: .normal)
+        sendButton.tintColor = .myDarkGreen
         sendButton.addTarget(self, action: #selector(sendTextMessage), for: .touchUpInside)
         view.addSubview(sendButton)
         

@@ -92,6 +92,8 @@ extension SearchContentViewController {
     
     private func configureSearchNoteTableview() {
         
+        self.searchNotesTableView.separatorColor = .clear
+        
         searchNotesTableView.registerCellWithNib(identifier: String(describing: NoteResultTableViewCell.self), bundle: nil)
         searchNotesTableView.dataSource = self
         searchNotesTableView.delegate = self

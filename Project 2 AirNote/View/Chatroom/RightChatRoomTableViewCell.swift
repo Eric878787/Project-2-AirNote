@@ -17,11 +17,13 @@ class RightChatRoomTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        rightBackgroundView.backgroundColor = .systemBlue
+        rightBackgroundView.backgroundColor = .myDarkGreen
+        messageLabel.textColor = .white
         rightBackgroundView.clipsToBounds = true
         rightBackgroundView.layer.cornerRadius = 10
         

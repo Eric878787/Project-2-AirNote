@@ -54,6 +54,8 @@ extension AddGroupViewController {
     
     func configureAddGroupTableView () {
         
+        self.addGroupTableView.separatorColor = .clear
+        
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddTitleTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddContentTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddKeywordsTableViewCell.self), bundle: nil)
@@ -172,6 +174,8 @@ extension AddGroupViewController: UITableViewDelegate {
     
         if indexPath.row == 1 {
             return 300
+        } else if indexPath.row == 2 {
+            return 165
         } else {
             return  UITableView.automaticDimension
         }
@@ -344,6 +348,7 @@ extension AddGroupViewController {
                             self.navigationController?.popViewController(animated: true)
                         }
                         DispatchQueue.main.async {
+                            cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                             controller.addAction(cancelAction)
                             self.present(controller, animated: true, completion: nil)
                         }

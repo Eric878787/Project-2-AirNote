@@ -21,11 +21,17 @@ class GroupsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var memberCountsLabel: UILabel!
     
+    @IBOutlet weak var dateIcon: UIImageView!
+    
+    @IBOutlet weak var membersIcon: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.layer.borderColor = UIColor.systemGray6.cgColor
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 10
+        dateIcon.tintColor = .myDarkGreen
+        membersIcon.tintColor = .myDarkGreen
     }
     
     override func layoutSubviews() {

@@ -29,8 +29,11 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
     
     var delegate: NoteTitleDelegate?
     
-    override class func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
+        viewsIcon.tintColor = .myDarkGreen
+        commentCountsIcon.tintColor = .myDarkGreen
+        saveButton.tintColor = .myDarkGreen
     }
     
     override func layoutSubviews() {

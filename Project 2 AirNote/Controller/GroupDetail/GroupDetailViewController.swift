@@ -98,6 +98,7 @@ extension GroupDetailViewController {
                             self?.navigationController?.popViewController(animated: true)
                         }
                         DispatchQueue.main.async {
+                            cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                             controller.addAction(cancelAction)
                             self?.present(controller, animated: true, completion: nil)
                         }
@@ -177,6 +178,7 @@ extension GroupDetailViewController: GroupTitleDelegate {
                     self?.navigationController?.popViewController(animated: true)
                 }
                 DispatchQueue.main.async {
+                    cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                     controller.addAction(cancelAction)
                     self?.present(controller, animated: true, completion: nil)
                 }

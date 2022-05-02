@@ -63,6 +63,8 @@ extension AddNoteViewController {
     
     func configureAddNoteTableView () {
         
+        self.addNoteTableView.separatorColor = .clear
+        
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddTitleTableViewCell.self), bundle: nil)
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddContentTableViewCell.self), bundle: nil)
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddKeywordsTableViewCell.self), bundle: nil)
@@ -152,6 +154,8 @@ extension AddNoteViewController: UITableViewDelegate {
         
         if indexPath.row == 1 {
             return 300
+        } else if indexPath.row == 2 {
+            return 165
         } else if indexPath.row == 4 {
             return 600
         } else {
@@ -340,6 +344,7 @@ extension AddNoteViewController {
             let controller = UIAlertController(title: "請上傳完整資料", message: "", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
+            cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(cancelAction)
             self.present(controller, animated: true, completion: nil)
         }
@@ -403,6 +408,7 @@ extension AddNoteViewController {
                                     DispatchQueue.main.async {
                                         self.loadingAnimation.loadingView.pause()
                                         self.loadingAnimation.loadingView.isHidden = true
+                                        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                                         controller.addAction(cancelAction)
                                         self.present(controller, animated: true, completion: nil)
                                     }

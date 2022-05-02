@@ -26,7 +26,7 @@ private enum Category: String {
 }
 
 class AddKeywordsTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var categoryTitleLabel: UILabel!
     @IBOutlet weak var categoryTextField: UITextField! {
         
@@ -46,6 +46,8 @@ class AddKeywordsTableViewCell: UITableViewCell {
             
             button.setBackgroundImage(UIImage(systemName: "arrow.down"), for: .normal)
             
+            button.tintColor = .myDarkGreen
+            
             button.isUserInteractionEnabled = false
             
             categoryTextField.rightView = button
@@ -64,13 +66,13 @@ class AddKeywordsTableViewCell: UITableViewCell {
     
     private var selectedCategory: String?
     
-    private var tagCategoryPair: [String: [String]] = ["投資理財": ["基金", "虛擬貨幣", "股市", "stock", "台股"],
+    private var tagCategoryPair: [String: [String]] = ["投資理財": ["基金", "虛擬貨幣", "股市", "Stock", "台股"],
                                                        "運動健身": ["有氧", "無氧", "減脂", "增肌", "營養"],
                                                        "語言學習": ["英文", "日文", "韓文", "中文", "法文"],
-                                                       "人際溝通": ["1", "2", "3", "4", "5"],
-                                                       "廣告行銷": ["a", "b", "c", "d", "e"],
-                                                       "生活風格": ["1", "2"],
-                                                       "藝文娛樂": ["a", "b"]]
+                                                       "人際溝通": ["職場", "說話藝術", "語言", "交流", "關係"],
+                                                       "廣告行銷": ["企劃", "消費者", "洞察", "媒體", "數位"],
+                                                       "生活風格": ["日常", "植物", "休閒", "Life", "Style"],
+                                                       "藝文娛樂": ["音樂", "繪畫", "舞蹈","展覽","收藏"]]
     private var tags: [String] = []
     
     private var selectedTags: [String] = []
@@ -79,6 +81,7 @@ class AddKeywordsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         categoryTitleLabel.text = "類別"
         keyWordsTitleLabel.text = "關鍵字"
     }
@@ -120,8 +123,12 @@ extension AddKeywordsTableViewCell: UIPickerViewDataSource, UIPickerViewDelegate
             
             let button = UIButton()
             button.setTitle("\(tag)", for: .normal)
-            button.setTitleColor( .black, for: .selected)
-            button.backgroundColor = .systemGray2
+            button.setTitleColor( .myDarkGreen , for: .normal)
+            button.setTitleColor( .white, for: .selected)
+            button.backgroundColor = .white
+            button.layer.cornerRadius = 10
+            button.layer.borderColor = UIColor.myDarkGreen.cgColor
+            button.layer.borderWidth = 1
             button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
             
             tagButtonStackView.addArrangedSubview(button)
@@ -135,9 +142,17 @@ extension AddKeywordsTableViewCell: UIPickerViewDataSource, UIPickerViewDelegate
 extension AddKeywordsTableViewCell {
     
     @objc func didSelectButton(_ sender: UIButton) {
-        sender.isSelected = true
-        guard let tag = sender.titleLabel?.text else { return }
-        selectedTags.append(tag)
+        if sender.isSelected == false {
+            sender.isSelected = true
+            sender.backgroundColor = .myDarkGreen
+            guard let tag = sender.titleLabel?.text else { return }
+            selectedTags.append(tag)
+        } else {
+            sender.isSelected = false
+            sender.backgroundColor = .white
+            guard let tag = sender.titleLabel?.text else { return }
+            selectedTags = selectedTags.filter { $0 != tag }
+        }
         guard let selectedCategory = selectedCategory else {return}
         dataHandler?(selectedTags, selectedCategory)
     }

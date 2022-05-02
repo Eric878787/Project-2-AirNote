@@ -44,6 +44,8 @@ class CafeMapViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 20.0
         
         // Set up group annotation
         cafeMapView.delegate = self
@@ -63,7 +65,6 @@ extension CafeMapViewController {
         print(cafeMapView.userLocation.coordinate)
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         cafeMapView.setRegion(region, animated: true)
-        locationManager.stopUpdatingLocation()
     }
     
 }

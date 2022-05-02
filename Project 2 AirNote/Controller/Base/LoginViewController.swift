@@ -87,6 +87,7 @@ class LoginViewController: UIViewController {
             let controller = UIAlertController(title: "註冊成功", message: "請重新登入", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
+            action.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(action)
             self.present(controller, animated: true)
         }
@@ -96,6 +97,7 @@ class LoginViewController: UIViewController {
             let controller = UIAlertController(title: "註冊失敗", message: "請重新輸入帳號密碼", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
+            action.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(action)
             self.present(controller, animated: true)
         }
@@ -133,6 +135,7 @@ class LoginViewController: UIViewController {
             let action = UIAlertAction(title: "確認", style: .destructive) { _ in
                 self.presentOrDismissVC()
             }
+            action.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(action)
             self.present(controller, animated: true)
         }
@@ -141,6 +144,7 @@ class LoginViewController: UIViewController {
             let controller = UIAlertController(title: "登入失敗", message: "", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
+            action.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(action)
             self.present(controller, animated: true)
         }
@@ -323,6 +327,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             let action = UIAlertAction(title: "確認", style: .destructive) { _ in
                 self.presentOrDismissVC ()
             }
+            action.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(action)
             self.present(controller, animated: true)
         }

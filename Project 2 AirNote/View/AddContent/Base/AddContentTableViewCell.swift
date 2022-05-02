@@ -15,8 +15,12 @@ class AddContentTableViewCell: UITableViewCell, UITextViewDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         titleLabel.text = "內容"
         contentTextView.delegate = self
+        contentTextView.layer.borderWidth = 1
+        contentTextView.layer.borderColor = UIColor.systemGray6.cgColor
+        contentTextView.layer.cornerRadius = 10
         
     }
     
