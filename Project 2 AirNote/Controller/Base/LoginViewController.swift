@@ -151,8 +151,7 @@ extension LoginViewController {
         passwordLabel.text = "密碼"
         signUpButton.setTitle("註冊", for: .normal)
         logInButton.setTitle("登入", for: .normal)
-        
-        
+
     }
     
     func configureAsVisitorButton() {
@@ -215,7 +214,6 @@ extension LoginViewController {
                                     savedNotes: [],
                                     userAvatar: "",
                                     userGroups: [],
-                                    userId: "",
                                     userName: "",
                                     userNotes: [],
                                     email: FirebaseManager.shared.currentUser?.email,

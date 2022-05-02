@@ -6,29 +6,70 @@
 //
 
 import UIKit
+import Kingfisher
 
-class ProfileViewController: UIViewController, UITableViewDataSource {
+class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profilePageTableView: UITableView!
     
     @IBOutlet weak var deleteAccountButton: UIButton!
     
+    @IBOutlet weak var profileAvatar: UIImageView!
+    
+    @IBOutlet weak var userNameLabel: UILabel!
+    
+    @IBOutlet weak var settingNameButton: UIButton!
+    
+    @IBOutlet weak var userFollowersLabel: UILabel!
+    
+    @IBOutlet weak var userFollowingsLabel: UILabel!
+    
+    @IBOutlet weak var followButton: UIButton!
+    
+    // Select Image
+    private let imagePickerController = UIImagePickerController()
+    
+    private var avatarImage: UIImage?
+    
+    // User Data
     var users: [User] = []
     
     var user: User?
     
+    // Note Data
+    var notes: [Note] = []
+    
+    var savedNotes: [Note] = []
+    
+    var ownedNotes: [Note] = []
+    
+    var notesOnTableView: [Note] = []
+    
+    var selectedNoteIndex = 0
+    
+    // Group Data
+    var groups: [Group] = []
+    
+    var savedGroups: [Group] = []
+    
+    var ownedGroups: [Group] = []
+    
+    var groupOnTableView: [Group] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Avatar Image Picker
+        addTapGesture()
+        imagePickerController.delegate = self
         
         // Log out Button
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"), style: .plain, target: self, action: #selector(signOut))
         self.navigationItem.rightBarButtonItem = deleteButton
         
-        profilePageTableView.dataSource = self
-        profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
+        // Configure Table View
+        configureTableView()
         
-        // Configure Delete Account
-        deleteAccountButton.setTitle("刪除帳號", for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,8 +120,168 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
         
     }
     
+    @IBAction func settingName(_ sender: Any) {
+        
+        let controller = UIAlertController(title: "暱稱", message: "請輸入你的暱稱", preferredStyle: .alert)
+        controller.addTextField { textField in
+           textField.placeholder = "暱稱"
+        }
+        
+        let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in
+            
+            self.user?.userName = controller.textFields?[0].text ?? ""
+            self.updateUserName()
+            self.layoutLabel()
+            
+        }
+        
+        action.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(action)
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+
 }
 
+// AvatarImage Selection
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    private func addTapGesture() {
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        profileAvatar.isUserInteractionEnabled = true
+        profileAvatar.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    
+    @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        
+        guard let tappedImage = tapGestureRecognizer.view as? UIImageView else { return }
+        
+        let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        // 相機
+        let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
+            self.takePicture()
+        }
+        controller.addAction(cameraAction)
+        
+        // 相薄
+        let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
+            self.openPhotosAlbum()
+        }
+        controller.addAction(savedPhotosAlbumAction)
+        
+        // 取消
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
+        controller.addAction(cancelAction)
+        
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+    
+    /// 開啟相機
+    func takePicture() {
+        imagePickerController.sourceType = .camera
+        self.present(imagePickerController, animated: true)
+    }
+    
+    /// 開啟相簿
+    func openPhotosAlbum() {
+        imagePickerController.sourceType = .savedPhotosAlbum
+        self.present(imagePickerController, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.originalImage] as? UIImage {
+            
+            avatarImage = image
+            
+            profileAvatar.image = avatarImage
+            
+            updateUserAvatar()
+            
+        }
+        
+        picker.dismiss(animated: true)
+        
+    }
+    
+}
+
+// Configure Tableview
+extension ProfileViewController {
+    
+    func configureTableView() {
+        
+        profilePageTableView.dataSource = self
+        profilePageTableView.delegate = self
+        profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
+        profilePageTableView.register(Header.self, forHeaderFooterViewReuseIdentifier: Header.reuseIdentifier)
+        
+    }
+    
+}
+
+// Layouting Label & Button
+extension ProfileViewController {
+    
+    func layoutLabel() {
+        
+        // Profile Avatar
+        if user?.userAvatar != "" {
+            let url = URL(string: user?.userAvatar ?? "")
+            profileAvatar.kf.indicatorType = .activity
+            profileAvatar.kf.setImage(with: url)
+            
+        } else {
+            
+            profileAvatar.image = UIImage(systemName: "person.circle")
+            
+        }
+        profileAvatar.layer.cornerRadius = profileAvatar.frame.height / 2
+        profileAvatar.clipsToBounds = true
+        
+        // User Name
+        if user?.userName != "" {
+            
+            userNameLabel.text = user?.userName
+            
+        } else {
+            
+            userNameLabel.text = user?.email
+            
+        }
+        
+        // Setting Name Button
+        settingNameButton.backgroundColor = .systemGray2
+        settingNameButton.clipsToBounds = true
+        settingNameButton.layer.cornerRadius = 10
+        settingNameButton.titleLabel?.textColor = .black
+        
+        // User Followers
+        userFollowersLabel.text = "Followers:\(user?.followers.count ?? 0)"
+        
+        // User Followings
+        userFollowingsLabel.text = "Followings:\(user?.followings.count ?? 0)"
+    }
+    
+    func layoutButton() {
+        
+        // Follow Button
+        followButton.isHidden = true
+        
+        // Configure Delete Account
+        deleteAccountButton.setTitle("刪除帳號", for: .normal)
+        
+    }
+    
+}
+
+
+// Fetch Data
 extension ProfileViewController {
     
     @objc func signOut() {
@@ -112,13 +313,15 @@ extension ProfileViewController {
                 
                 self.users = existingUser
                 
-                for user in self.users where user.userId == "qbQsVVpVHlf6I4XLfOJ6" {
+                for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid {
                     self.user = user
                 }
                 
                 DispatchQueue.main.async {
                     
-                    self.profilePageTableView.reloadData()
+                    self.layoutLabel()
+                    self.layoutButton()
+                    self.fetchNotes(self.user?.savedNotes ?? [], self.user?.userNotes ?? [])
                     
                 }
                 
@@ -130,18 +333,175 @@ extension ProfileViewController {
         
     }
     
+    private func updateUserAvatar() {
+        
+        let group = DispatchGroup()
+        let controller = UIAlertController(title: "上傳頭貼成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        group.enter()
+        guard let image =  avatarImage else { return }
+        UserManager.shared.uploadPhoto(image: image) { result in
+            switch result {
+            case .success(let url):
+                self.user?.userAvatar = "\(url)"
+                print("\(url)")
+            case .failure(let error):
+                print("\(error)")
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: DispatchQueue.global()) {
+            guard let user = self.user else { return }
+            UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
+                switch result {
+                case .success:
+                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        controller.addAction(cancelAction)
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                    
+                case .failure:
+                    print(result)
+                }
+            }
+        }
+        
+    }
+    
+    private func updateUserName () {
+        let controller = UIAlertController(title: "更新暱稱成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        guard let user = self.user else { return }
+        UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
+            switch result {
+            case .success:
+                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                DispatchQueue.main.async {
+                    controller.addAction(cancelAction)
+                    self.present(controller, animated: true, completion: nil)
+                }
+                
+            case .failure:
+                print(result)
+            }
+        }
+        
+    }
+    
+    private func fetchNotes(_ savedNoteIds: [String], _ userNoteIds: [String]) {
+        
+        NoteManager.shared.fetchNotes { result in
+            switch result {
+                
+            case .success(let notes):
+                
+                self.savedNotes = []
+                
+                for savedNote in self.user?.savedNotes ?? [] {
+                    
+                    self.savedNotes += notes.filter{ $0.noteId == savedNote }
+                    
+                }
+                
+                self.ownedNotes = []
+                
+                for userNote in self.user?.userNotes ?? [] {
+                    
+                    self.ownedNotes += notes.filter{ $0.noteId == userNote }
+                    
+                }
+                
+                // Default datasource of notesOnTableView
+                self.wrappingNotes(self.selectedNoteIndex)
+                
+                self.profilePageTableView.reloadData()
+                
+            case .failure(let error):
+                
+                print("fetchData.failure: \(error)")
+            }
+        }
+        
+    }
+    
+}
+
+// Wrapped Data
+
+extension ProfileViewController {
+    
+    func wrappingNotes(_ selectedIndex: Int ) {
+        
+        if selectedIndex == 0 {
+            
+            notesOnTableView = ownedNotes
+            
+        } else {
+            
+            notesOnTableView = savedNotes
+            
+        }
+        
+    }
+    
+}
+
+// Set Up Table View delegate & datasource
+extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        user?.savedNotes.count ?? 0
+        notesOnTableView.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let personalNoteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalNoteTableViewCell", for: indexPath)
         guard let cell = personalNoteTableViewCell as? PersonalNoteTableViewCell else { return personalNoteTableViewCell }
-        cell.savedNoteLabel.text = user?.savedNotes[indexPath.row]
+        let url = URL(string: notesOnTableView[indexPath.row].cover)
+        cell.mainImageView.kf.indicatorType = .activity
+        cell.mainImageView.kf.setImage(with: url)
+        
+        // querying users' name & avatar
+        for user in users where user.uid == notesOnTableView[indexPath.row].authorId {
+            cell.nameLabel.text = user.userName
+            let url = URL(string: user.userAvatar)
+            cell.avatarImageView.kf.indicatorType = .activity
+            cell.avatarImageView.kf.setImage(with: url)
+        }
+        
+        cell.titleLabel.text = notesOnTableView[indexPath.row].title
+        
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: Header.reuseIdentifier) as? Header else { return nil }
+        header.segmentController.setTitle("我的筆記", forSegmentAt: 0)
+        header.segmentController.setTitle("收藏筆記", forSegmentAt: 1)
+        header.segmentHandler = { [weak self] index in
+            self?.selectedNoteIndex = index
+            self?.wrappingNotes(self?.selectedNoteIndex ?? 0)
+            self?.profilePageTableView.reloadData()
+        }
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        200
+    }
     
 }

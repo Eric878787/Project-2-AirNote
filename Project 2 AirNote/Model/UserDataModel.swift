@@ -15,9 +15,8 @@ struct User: Codable {
     var savedNotes: [String]
     var userAvatar: String
     var userGroups: [String]
-    var userId: String
     var userName: String
     var userNotes: [String]
     var email: String?
-    var uid: String?
+    var uid: String
 }

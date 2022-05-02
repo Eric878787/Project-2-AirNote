@@ -164,7 +164,7 @@ extension SearchGroupsViewController: UITableViewDataSource {
         cell.membersLabel.text = "\(filteredgroups[indexPath.row].groupMembers.count)"
         
         // querying users' name & avatar
-        for user in users where user.userId == filteredgroups[indexPath.row].groupOwner {
+        for user in users where user.uid == filteredgroups[indexPath.row].groupOwner {
             cell.aurthorNameLabel.text = user.userName
             let avatarUrl = URL(string: user.userAvatar)
             cell.avatarImageView.kf.indicatorType = .activity

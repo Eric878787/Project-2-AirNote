@@ -51,6 +51,7 @@ class DiscoverNotesViewController: UIViewController {
     
     // MARK: Users Data
     var users: [User] = []
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,8 +69,6 @@ class DiscoverNotesViewController: UIViewController {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
         
-        print("======\(FirebaseManager.shared.currentUser?.uid)")
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +81,7 @@ class DiscoverNotesViewController: UIViewController {
         
         // Fetch Notes Data
         fetchNotes()
+        categoryCollectionView.reloadData()
         
     }
 }
@@ -116,6 +116,9 @@ extension DiscoverNotesViewController {
                 
                 self?.users = existingUser
                 
+                // Store Current User
+                self?.storeCurrentUser()
+                
                 DispatchQueue.main.async {
                     self?.notesCollectionView.reloadData()
                 }
@@ -125,6 +128,16 @@ extension DiscoverNotesViewController {
                 print("fetchData.failure: \(error)")
             }
         }
+    }
+    
+    private func storeCurrentUser() {
+        
+        for user in users where user.uid == FirebaseManager.shared.currentUser?.uid {
+            
+            currentUser = user
+            
+        }
+        
     }
     
 }
@@ -197,7 +210,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
         
         guard let item = selectedIndexPathItem else { return }
         
-        var selectedNote = Note(authorId: notes[item].noteId,
+        var selectedNote = Note(authorId: notes[item].authorId,
                                 comments: notes[item].comments,
                                 createdTime: notes[item].createdTime,
                                 likes: notes[item].likes,
@@ -212,12 +225,12 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
         
         if selectedCell.heartButton.imageView?.image == UIImage(systemName: "suit.heart") {
             
-            selectedNote.likes.append("qbQsVVpVHlf6I4XLfOJ6")
+            selectedNote.likes.append(currentUser.uid)
             
             
         } else {
             
-            selectedNote.likes = selectedNote.likes.filter{ $0 != "qbQsVVpVHlf6I4XLfOJ6" }
+            selectedNote.likes = selectedNote.likes.filter{ $0 != currentUser.uid }
             
         }
         
@@ -231,7 +244,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                 
                 var userToBeUpdated: User?
                 
-                for user in self.users where user.userId == "qbQsVVpVHlf6I4XLfOJ6"{
+                for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid{
                     
                     userToBeUpdated = user
                     
@@ -253,11 +266,13 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                     return
                 }
                 
-                self.userManager.updateUser(user: userToBeUpdated, userId: userToBeUpdated.userId) { result in
+                self.userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
                     
                     switch result {
                         
                     case .success:
+                        
+                        self.notesCollectionView.reloadData()
                         
                         print("收藏成功")
                         
@@ -310,13 +325,13 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             cell.heartButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
 
             for like in filterNotes[indexPath.item].likes {
-                if like == "qbQsVVpVHlf6I4XLfOJ6" {
+                if like == FirebaseManager.shared.currentUser?.uid {
                     cell.heartButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
                 }
             }
             
             // querying users' name & avatar
-            for user in users where user.userId == filterNotes[indexPath.item].authorId {
+            for user in users where user.uid == filterNotes[indexPath.item].authorId {
                 cell.authorNameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.userAvatarImage.kf.indicatorType = .activity
@@ -356,13 +371,28 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
             notesCollectionView.reloadData()
             
         } else {
+            
+            guard let currentUser = FirebaseManager.shared.currentUser else {
+                
+                guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+                
+                vc.modalPresentationStyle = .overCurrentContext
+
+                self.tabBarController?.present(vc, animated: false, completion: nil)
+                
+                return
+                
+            }
+            
             let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
             guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
-            filterNotes[indexPath.item].clicks.append("qbQsVVpVHlf6I4XLfOJ6")
+            guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+            filterNotes[indexPath.item].clicks.append(uid)
             noteManager.updateNote(note: filterNotes[indexPath.item], noteId: filterNotes[indexPath.item].noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    vc.note = self?.filterNotes[indexPath.item]
+                    guard let noteToPass = self?.filterNotes[indexPath.item] else { return }
+                    vc.note = noteToPass
                     vc.users = self?.users ?? []
                     self?.navigationController?.pushViewController(vc, animated: true)
                     

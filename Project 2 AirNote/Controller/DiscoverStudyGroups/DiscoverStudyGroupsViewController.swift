@@ -236,7 +236,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDataSource {
             cell.memberCountsLabel.text = "\(filterGroups[indexPath.item].groupMembers.count)"
             
             // querying users' name & avatar
-            for user in users where user.userId == filterGroups[indexPath.item].groupOwner {
+            for user in users where user.uid == filterGroups[indexPath.item].groupOwner {
                 cell.authorNameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.userAvatar.kf.indicatorType = .activity

@@ -52,9 +52,11 @@ class GroupManager {
         
         var group = group
         
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        
         do {
-            group.groupOwner = "qbQsVVpVHlf6I4XLfOJ6"
-            group.groupMembers.append("qbQsVVpVHlf6I4XLfOJ6")
+            group.groupOwner = uid
+            group.groupMembers.append(uid)
             let date = Date()
             group.createdTime = date
             group.groupId = document.documentID

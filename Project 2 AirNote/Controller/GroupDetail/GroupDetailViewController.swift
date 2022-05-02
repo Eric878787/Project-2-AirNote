@@ -16,7 +16,9 @@ class GroupDetailViewController: UIViewController {
     
     // Data
     var group: Group?
+    var room: ChatRoom?
     var users: [User] = []
+    var user: User?
     
     // Data Manager
     private var groupManager = GroupManager()
@@ -48,7 +50,7 @@ class GroupDetailViewController: UIViewController {
     }
 }
 
-// MARK: Delete Note
+// MARK: Delete Group
 extension GroupDetailViewController {
     @objc private func deleteGroup() {
         let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
@@ -66,15 +68,11 @@ extension GroupDetailViewController {
                     case .success(let rooms):
                         for room in rooms where room.groupId == groupToBeDeleted {
                             // delete chat room
-                            self.chatRoomManager.deleteChatRoom(chatRoomId: room.chatRoomId) { result in
+                            self.room = room
+                            self.chatRoomManager.deleteChatRoom(chatRoomId: self.room?.chatRoomId ?? "") { result in
                                 switch result {
                                 case .success:
-                                    DispatchQueue.main.async {
-                                        self.loadingAnimation.loadingView.pause()
-                                        self.loadingAnimation.loadingView.isHidden = true
-                                        controller.addAction(cancelAction)
-                                        self.present(controller, animated: true, completion: nil)
-                                    }
+                                    self.fetchAndUpdateUser(groupId: groupToBeDeleted, roomId:self.room?.chatRoomId ?? "")
                                 case.failure:
                                     print(result)
                                 }
@@ -89,6 +87,58 @@ extension GroupDetailViewController {
             }
         }
     }
+    
+    func fetchAndUpdateUser(groupId: String, roomId: String) {
+        let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+    
+        UserManager.shared.fetchUser(uid) { result in
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.user?.userGroups = self.user?.userGroups.filter{ $0 != self.group?.groupId } ?? []
+                
+                var uids: [String] = []
+                
+                for user in self.users {
+                    
+                    uids.append(user.uid)
+                    
+                }
+                
+                UserManager.shared.deleteGroupsAndRooms(uids: uids, roomId: roomId, groupId: groupId) { [weak self] result in
+                    
+                    switch result {
+                    case .success:
+                        guard let userToBeUpdated = self?.user else { return }
+                        UserManager.shared.updateUser(user: userToBeUpdated, uid: uid) { result in
+                            switch result {
+                            case .success:
+                                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                                    self?.navigationController?.popViewController(animated: true)
+                                }
+                                DispatchQueue.main.async {
+                                    controller.addAction(cancelAction)
+                                    self?.present(controller, animated: true, completion: nil)
+                                }
+                            case .failure(let error):
+                                print(error)
+                            }
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
+                    
+                }
+            case .failure(let error):
+                print (error)
+            }
+        }
+        
+    }
+    
 }
 
 // MARK: Configure Button

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4235C5C0281BD2A600DEF3E6 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5BF281BD2A600DEF3E6 /* Header.swift */; };
+		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
+		4235C5C4281D388C00DEF3E6 /* PersonalGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4235C5C2281D388C00DEF3E6 /* PersonalGroupTableViewCell.xib */; };
 		423A1252281246340075B34F /* NotesDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A1251281246340075B34F /* NotesDetail.storyboard */; };
 		423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125328125B6F0075B34F /* TitleHeaderView.swift */; };
 		423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */; };
@@ -113,6 +116,9 @@
 
 /* Begin PBXFileReference section */
 		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
+		4235C5BF281BD2A600DEF3E6 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
+		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
+		4235C5C2281D388C00DEF3E6 /* PersonalGroupTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonalGroupTableViewCell.xib; sourceTree = "<group>"; };
 		423A1251281246340075B34F /* NotesDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotesDetail.storyboard; sourceTree = "<group>"; };
 		423A125328125B6F0075B34F /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
 		423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -274,8 +280,11 @@
 		42405B122815A0EF00A12777 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				4235C5BF281BD2A600DEF3E6 /* Header.swift */,
 				42405B132815A13800A12777 /* PersonalNoteTableViewCell.swift */,
 				42405B142815A13800A12777 /* PersonalNoteTableViewCell.xib */,
+				4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */,
+				4235C5C2281D388C00DEF3E6 /* PersonalGroupTableViewCell.xib */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -740,6 +749,7 @@
 				42405B0F2815A07500A12777 /* Profile.storyboard in Resources */,
 				42DE586B28006CF400D764F7 /* GoogleService-Info.plist in Resources */,
 				42DD04DE281178E7007C4A9F /* 27938-upload-files .json in Resources */,
+				4235C5C4281D388C00DEF3E6 /* PersonalGroupTableViewCell.xib in Resources */,
 				423A126B2813F17D0075B34F /* GroupDetail.storyboard in Resources */,
 				42DD04CD280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib in Resources */,
 				42DD04D1280FF498007C4A9F /* LeftChatRoomTableViewCell.xib in Resources */,
@@ -871,11 +881,13 @@
 				42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */,
 				423A12692813F1620075B34F /* GroupDetailViewController.swift in Sources */,
 				42405B1F2816D53200A12777 /* CafeManager.swift in Sources */,
+				4235C5C0281BD2A600DEF3E6 /* Header.swift in Sources */,
 				42DD04C7280FA5DA007C4A9F /* ChatRoomDataModel.swift in Sources */,
 				42E2B693280ED7C700B51D9F /* ChatRoomViewLobbyController.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
 				423A125A2812AB130075B34F /* NoteContentCollectionViewCell.swift in Sources */,
 				42DD04D5281130A1007C4A9F /* NoteDetailViewController.swift in Sources */,
+				4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */,
 				42405B252817873D00A12777 /* LoginViewController.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
 				423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */,

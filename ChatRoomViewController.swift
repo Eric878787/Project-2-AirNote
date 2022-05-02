@@ -186,7 +186,8 @@ extension ChatRoomViewController {
 extension ChatRoomViewController {
     
     @objc private func sendTextMessage() {
-        let message = Message(sender: "qbQsVVpVHlf6I4XLfOJ6", createdTime: Date(), content: messageTextView.text)
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        let message = Message(sender: uid, createdTime: Date(), content: messageTextView.text)
         chatRoom.messages.append(message)
         self.chatRoomManager.updateChatRoomMessages(chatRoom: chatRoom, chatRoomId: chatRoomId ?? "") { [weak self] result in
             switch result {
@@ -218,7 +219,8 @@ extension ChatRoomViewController: UIImagePickerControllerDelegate, UINavigationC
             self.chatRoomManager.uploadPhoto(image: selectedImage) { [weak self] result in
                 switch result {
                 case .success(let url):
-                    let message = Message(sender: "qbQsVVpVHlf6I4XLfOJ6", createdTime: Date(), image: "\(url)")
+                    guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+                    let message = Message(sender: uid, createdTime: Date(), image: "\(url)")
                     self?.chatRoom.messages.append(message)
                     guard let chatRoom = self?.chatRoom else {return}
                     self?.chatRoomManager.updateChatRoomMessages(chatRoom: chatRoom, chatRoomId: self?.chatRoomId ?? "") { [weak self] result in
@@ -250,7 +252,8 @@ extension ChatRoomViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if chatRoom.messages[indexPath.row].sender == "qbQsVVpVHlf6I4XLfOJ6" {
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return UITableViewCell() }
+        if chatRoom.messages[indexPath.row].sender == uid {
             let rightChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightChatRoomTableViewCell", for: indexPath)
             guard let cell = rightChatRoomTableViewCell as? RightChatRoomTableViewCell else { return rightChatRoomTableViewCell }
             let url = URL(string:chatRoom.messages[indexPath.row].image ?? "")
@@ -276,7 +279,7 @@ extension ChatRoomViewController: UITableViewDataSource {
             } else { cell.messageImage.isHidden = false }
             
             // querying users' name & avatar
-            for user in users where user.userId == chatRoom.messages[indexPath.row].sender {
+            for user in users where user.uid == chatRoom.messages[indexPath.row].sender {
                 cell.nameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.avatarImageView.kf.indicatorType = .activity

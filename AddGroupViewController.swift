@@ -29,6 +29,8 @@ class AddGroupViewController: UIViewController {
     
     private var room = ChatRoom (chatRoomId: "", groupId: "", messages: [], roomTitle: "", ownerId: "", createdTime: Date())
     
+    private var user: User?
+    
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
 
@@ -49,7 +51,7 @@ class AddGroupViewController: UIViewController {
         imagePickerController.delegate = self
         
         // Set up Tableview
-        configureAddGroupTableView ()
+        configureAddGroupTableView()
     }
     
 }
@@ -300,8 +302,6 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
     func upload() {
         
         let group = DispatchGroup()
-        let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
-        controller.view.tintColor = UIColor.gray
         
         group.enter()
         guard let image = coverImage else { return }
@@ -323,14 +323,8 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
                     self.room.groupId = groupId
                     self.chatRoomManager.createChatRoom(chatRoom: self.room) { result in
                         switch result {
-                        case .success:
-                            let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                            DispatchQueue.main.async {
-                                controller.addAction(cancelAction)
-                                self.present(controller, animated: true, completion: nil)
-                            }
+                        case .success(let roomId):
+                            self.fetchAndUpdateUser(groupId: groupId, roomId: roomId)
                         case.failure:
                             print(result)
                         }
@@ -341,4 +335,42 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
             }
         }
     }
+}
+
+// MARK: Fetch and Update User
+extension AddGroupViewController {
+    
+    func fetchAndUpdateUser(groupId: String, roomId: String) {
+        let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        UserManager.shared.fetchUser(uid) { result in
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.user?.userGroups.append(groupId)
+                self.user?.chatRooms.append(roomId)
+                guard let userToBeUpdated = self.user else { return }
+                UserManager.shared.updateUser(user: userToBeUpdated, uid: uid) { result in
+                    switch result {
+                    case .success:
+                        let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        DispatchQueue.main.async {
+                            controller.addAction(cancelAction)
+                            self.present(controller, animated: true, completion: nil)
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            case .failure(let error):
+                print (error)
+            }
+        }
+        
+    }
+    
 }

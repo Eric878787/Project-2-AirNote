@@ -15,13 +15,15 @@ class AddNoteViewController: UIViewController {
     
     // MARK: Properties
     private var note = Note(authorId: "",
-                            comments: [Comment(content: "", createdTime: Date(), userId: "")],
+                            comments: [Comment(content: "", createdTime: Date(), uid: "")],
                             createdTime: Date(),
                             likes: [], category: "",
                             clicks: [], content: "",
                             cover: "", noteId: "",
                             images: [], keywords: [],
                             title: "")
+    
+    private var user: User?
     
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
@@ -383,16 +385,34 @@ extension AddNoteViewController {
         group.notify(queue: DispatchQueue.global()) {
             self.noteManager.createNote(note: &self.note) { result in
                 switch result {
-                case .success:
-                    print(result)
+                case .success(let noteId):
                     let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
                         self.navigationController?.popViewController(animated: true)
                     }
-                    DispatchQueue.main.async {
-                        self.loadingAnimation.loadingView.pause()
-                        self.loadingAnimation.loadingView.isHidden = true
-                        controller.addAction(cancelAction)
-                        self.present(controller, animated: true, completion: nil)
+                    
+                    guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+                    UserManager.shared.fetchUser(uid) { result in
+                        switch result {
+                        case .success(let user):
+                            self.user = user
+                            self.user?.userNotes.append(noteId)
+                            guard let userToBeUpdated = self.user else { return }
+                            UserManager.shared.updateUser(user: userToBeUpdated, uid: uid) { result in
+                                switch result {
+                                case .success:
+                                    DispatchQueue.main.async {
+                                        self.loadingAnimation.loadingView.pause()
+                                        self.loadingAnimation.loadingView.isHidden = true
+                                        controller.addAction(cancelAction)
+                                        self.present(controller, animated: true, completion: nil)
+                                    }
+                                case .failure(let error):
+                                    print(error)
+                                }
+                            }
+                        case .failure(let error):
+                            print (error)
+                        }
                     }
                 case.failure:
                     print(result)

@@ -18,6 +18,9 @@ class ChatRoomViewLobbyController: UIViewController {
     private var groupManager = GroupManager()
     private var groups: [Group] = []
     
+    // User
+    private var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,14 +29,14 @@ class ChatRoomViewLobbyController: UIViewController {
         
         // Confirure Chat Room List TableView
         configureChatRoomListTableView()
-    
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         // fetch Data
-        checkRoomsChange()
+        fetchuser()
         
     }
     
@@ -41,24 +44,39 @@ class ChatRoomViewLobbyController: UIViewController {
 
 // MARK: Fetch data
 extension ChatRoomViewLobbyController {
-    private func checkRoomsChange() {
-        self.chatRoomManager.checkRoomsChange { [weak self] result in
+    
+    private func fetchuser() {
+        
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        UserManager.shared.fetchUser(uid) { result in
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.fetchRooms()
+                
+            case .failure(let error):
+                print (error)
+            }
+        }
+    }
+    
+    private func fetchRooms() {
+        
+        guard let roomIds = self.user?.chatRooms else { return }
+        
+        ChatRoomManager.shared.fetchRoomsWithUid(roomIds: roomIds){ [weak self] result in
             
             switch result {
                 
             case .success(let rooms):
                 
-                DispatchQueue.main.async {
-                    
-                    self?.chatRooms = rooms
-                    
-                    self?.chatRooms.sort{
-                        ( $0.createdTime ) > ( $1.createdTime )
-                    }
-                    
-                    self?.fetchGroups()
-                    
+                self?.chatRooms = rooms
+                
+                self?.chatRooms.sort{
+                    ( $0.createdTime ) > ( $1.createdTime )
                 }
+                
+                self?.fetchGroups()
                 
             case .failure(let error):
                 
@@ -77,6 +95,17 @@ extension ChatRoomViewLobbyController {
                 DispatchQueue.main.async {
                     
                     self?.groups = existingGroup
+                    
+                    var groups = self?.user?.joinedGroups ?? []
+                    
+                    groups += self?.user?.userGroups ?? []
+                    
+                    for group in groups {
+                        
+                        self?.groups = self?.groups.filter{ $0.groupId == group } ?? []
+                        
+                    }
+                    
                     
                     self?.chatRoomListTableView.reloadData()
                     
@@ -135,7 +164,7 @@ extension ChatRoomViewLobbyController: UITableViewDataSource {
 
 // MARK: Chatroom List TableView Datasource
 extension ChatRoomViewLobbyController: UITableViewDelegate {
-   
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height * 0.08
     }

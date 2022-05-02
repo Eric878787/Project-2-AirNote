@@ -27,6 +27,6 @@ struct Comment: Codable, Equatable {
     
     var content: String
     var createdTime: Date
-    var userId: String
+    var uid: String
     
 }
