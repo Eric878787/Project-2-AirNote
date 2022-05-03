@@ -28,7 +28,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bjc-qI-WCf">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bjc-qI-WCf">
                                 <rect key="frame" x="0.0" y="75.5" width="39.5" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
@@ -104,8 +104,10 @@
             <connections>
                 <outlet property="aurthorNameLabel" destination="Bjc-qI-WCf" id="Y36-ix-BzL"/>
                 <outlet property="avatarImageView" destination="PHj-9W-ZSh" id="wYt-ji-BM8"/>
+                <outlet property="dateIcon" destination="yaG-dN-XNj" id="4Oq-s8-eoY"/>
                 <outlet property="dateLabel" destination="sr7-D8-e80" id="5gw-be-Wsq"/>
                 <outlet property="mainImageView" destination="1a9-Fa-Lay" id="oaI-Vl-oCE"/>
+                <outlet property="membersIcon" destination="uCD-w9-RyR" id="t4T-Pq-OWl"/>
                 <outlet property="membersLabel" destination="Nje-EH-VP9" id="Kqh-Az-gV5"/>
                 <outlet property="titleLabel" destination="tP6-dH-RO5" id="Jpu-0C-2B6"/>
             </connections>

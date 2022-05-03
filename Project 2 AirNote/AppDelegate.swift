@@ -27,6 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        // Navigatiob Bar Item Color
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.tintColor = UIColor.myDarkGreen
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor :  UIColor.myDarkGreen]
+        
+        // Tab Bar color
+        UITabBar.appearance().tintColor = UIColor.myDarkGreen
+        
         return true
     }
 

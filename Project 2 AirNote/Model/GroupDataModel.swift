@@ -19,7 +19,7 @@ struct Group: Codable {
     var groupOwner: String
     var groupTitle: String
     var location: Location
-    
+    var messages: [Message]
 }
 
 struct Schedule: Codable {
@@ -33,3 +33,9 @@ struct Location: Codable {
     var longitude: Double
 }
 
+struct Message: Codable, Equatable {
+    var sender: String
+    var createdTime: Date
+    var content: String?
+    var image: String?
+}

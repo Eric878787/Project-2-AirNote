@@ -15,6 +15,8 @@ class GroupManager {
     
     lazy var db = Firestore.firestore()
     
+    static let shared = GroupManager()
+    
     func fetchGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
         
         db.collection("Groups").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
@@ -46,15 +48,80 @@ class GroupManager {
         }
     }
     
+    func fetchSpecificGroups(groupIds: [String], completion: @escaping (Result<[Group], Error>) -> Void) {
+        
+        var fetchedGroups: [Group] = []
+        
+        for groupId in groupIds {
+            
+            db.collection("Groups").document(groupId).getDocument { (document, error) in
+                
+                if let error = error {
+                    
+                    completion(.failure(error))
+                    
+                } else {
+                    
+                    do {
+                        
+                        if let group = try document?.data(as: Group.self, decoder: Firestore.Decoder()) {
+                            
+                            fetchedGroups.append(group)
+                            
+                        }
+                        
+                    } catch {
+                        
+                        completion(.failure(error))
+                    }
+                    
+                }
+                
+                completion(.success(fetchedGroups))
+                
+            }
+        }
+        
+    }
+    
+    func checkMessageChange(groupId: String, completion: @escaping (Result<Group?, Error>) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("Groups").document(groupId).addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else { return }
+            var updatedGroup: Group?
+            do {
+                if let group = try document.data(as: Group.self, decoder: Firestore.Decoder()) {
+                    updatedGroup = group
+                }
+            } catch {
+                completion(.failure(error))
+            }
+            completion(.success(updatedGroup))
+        }
+    }
+    
+    func updateGroup(group: Group, groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let msgRef = db.collection("Groups").document(groupId)
+        do {
+            try msgRef.setData(from: group, encoder: Firestore.Encoder())
+            completion(.success("上傳成功"))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
     func createGroup(group: Group, completion: @escaping (Result<String, Error>) -> Void) {
         
         let document = db.collection("Groups").document()
         
         var group = group
         
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        
         do {
-            group.groupOwner = "qbQsVVpVHlf6I4XLfOJ6"
-            group.groupMembers.append("qbQsVVpVHlf6I4XLfOJ6")
+            group.groupOwner = uid
+            group.groupMembers.append(uid)
             let date = Date()
             group.createdTime = date
             group.groupId = document.documentID

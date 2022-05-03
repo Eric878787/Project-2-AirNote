@@ -27,13 +27,13 @@ extension NoteCarouselCollectionViewCell {
     func configure() {
         contentView.backgroundColor = .systemGray2
         contentContainer.translatesAutoresizingMaskIntoConstraints = false
+        contentContainer.layer.cornerRadius = 10
+        contentContainer.clipsToBounds = true
         
         contentView.addSubview(photoView)
         contentView.addSubview(contentContainer)
         
         photoView.translatesAutoresizingMaskIntoConstraints = false
-        photoView.layer.cornerRadius = 4
-        photoView.clipsToBounds = true
         contentContainer.addSubview(photoView)
         
         NSLayoutConstraint.activate([

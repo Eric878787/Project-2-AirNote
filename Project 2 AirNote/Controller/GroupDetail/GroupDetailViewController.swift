@@ -16,12 +16,17 @@ class GroupDetailViewController: UIViewController {
     
     // Data
     var group: Group?
+    var room: ChatRoom?
     var users: [User] = []
+    var user: User?
     
     // Data Manager
     private var groupManager = GroupManager()
     private var userManager = UserManager()
     private var chatRoomManager = ChatRoomManager()
+    
+    // DeleteButton
+    private var deleteButton = UIBarButtonItem()
     
     // MARK: Loading Animation
     private var loadingAnimation = LottieAnimation()
@@ -42,53 +47,155 @@ class GroupDetailViewController: UIViewController {
         configButton()
         
         // Delete Button
-        let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteGroup))
+        deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteGroup))
         self.navigationItem.rightBarButtonItem = deleteButton
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //  Delete Button Enable
+        if group?.groupOwner == user?.uid {
+            self.navigationItem.rightBarButtonItem = deleteButton
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
 }
 
-// MARK: Delete Note
+// MARK: Delete Group
 extension GroupDetailViewController {
     @objc private func deleteGroup() {
-        let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
-        controller.view.tintColor = UIColor.gray
+        
         guard let groupToBeDeleted = group?.groupId else { return }
         groupManager.deleteGroup(groupId: groupToBeDeleted) { result in
             switch result {
             case .success:
-                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
-                // fetch chat room id
-                self.chatRoomManager.fetchRooms { result in
-                    switch result {
-                    case .success(let rooms):
-                        for room in rooms where room.groupId == groupToBeDeleted {
-                            // delete chat room
-                            self.chatRoomManager.deleteChatRoom(chatRoomId: room.chatRoomId) { result in
-                                switch result {
-                                case .success:
-                                    DispatchQueue.main.async {
-                                        self.loadingAnimation.loadingView.pause()
-                                        self.loadingAnimation.loadingView.isHidden = true
-                                        controller.addAction(cancelAction)
-                                        self.present(controller, animated: true, completion: nil)
-                                    }
-                                case.failure:
-                                    print(result)
-                                }
-                            }
-                        }
-                    case .failure(let error):
-                        print("fetchData.failure: \(error)")
-                    }
-                }
+                self.updateUser(groupId: groupToBeDeleted)
             case.failure:
                 print(result)
             }
         }
     }
+    
+    func updateUser(groupId: String) {
+        let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        var uids : [String] = []
+        for user in users {
+            uids.append(user.uid)
+        }
+        UserManager.shared.deleteGroup(uids: uids, groupId: groupId) { [weak self] result in
+            switch result {
+            case .success:
+                guard let userToBeUpdated = self?.user else { return }
+                UserManager.shared.deleteOwnGroup(uid: userToBeUpdated.uid, groupId: groupId) { [weak self] result in
+                    switch result {
+                    case .success:
+                        let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                            self?.navigationController?.popViewController(animated: true)
+                        }
+                        DispatchQueue.main.async {
+                            cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+                            controller.addAction(cancelAction)
+                            self?.present(controller, animated: true, completion: nil)
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+}
+
+// MARK: Join Group
+extension GroupDetailViewController: GroupTitleDelegate {
+    
+    func joinOrQuit(_ selectedCell: GroupTitleCollectionViewCell) {
+        
+        if isMember() == true {
+            quitGroup()
+        } else {
+            joinGroup()
+        }
+        
+    }
+    
+    // update group & user
+    private func joinGroup() {
+        let controller = UIAlertController(title: "加入成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        self.user?.joinedGroups.append(self.group?.groupId ?? "")
+        
+        guard let userToBeUpdated = self.user else { return }
+        
+        userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { [weak self] result in
+            switch result {
+            case .success:
+                self?.group?.groupMembers.append(self?.user?.uid ?? "")
+                self?.updateGroup(controller)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+    }
+    
+    // update group & user
+    private func quitGroup() {
+        let controller = UIAlertController(title: "退出成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+
+        self.user?.joinedGroups =  self.user?.joinedGroups.filter { $0 != self.group?.groupId } ?? []
+        
+        guard let userToBeUpdated = self.user else { return }
+        
+        userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { [weak self] result in
+            switch result {
+            case .success:
+                self?.group?.groupMembers = self?.group?.groupMembers.filter { $0 != self?.user?.uid } ?? []
+                self?.updateGroup(controller)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+    }
+    
+    private func updateGroup(_ controller: UIAlertController) {
+        
+        guard let groupToBeUpdated = self.group else { return }
+        GroupManager.shared.updateGroup(group: groupToBeUpdated, groupId:groupToBeUpdated.groupId) { [weak self] result in
+            switch result {
+            case .success:
+                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                DispatchQueue.main.async {
+                    cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+                    controller.addAction(cancelAction)
+                    self?.present(controller, animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func isMember() -> Bool {
+        guard let groupMembers = group?.groupMembers else { return false }
+        for memberId in groupMembers where memberId == self.user?.uid  {
+            return true
+        }
+        return false
+    }
+    
 }
 
 // MARK: Configure Button
@@ -148,11 +255,33 @@ extension GroupDetailViewController: UICollectionViewDataSource {
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GroupTitleCollectionViewCell.self), for: indexPath)
                     as? GroupTitleCollectionViewCell else { return UICollectionViewCell()}
+            cell.delegate = self
             cell.locationLabel.text = group.location.address
             let localDate = group.createdTime
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd"
             cell.dateLabel.text = dateFormatter.string(from: localDate)
+            
+            // Define the user is owner or not
+            if user?.uid == group.groupOwner {
+                cell.applyButton.setTitle("我的讀書會", for: .normal)
+                cell.applyButton.isEnabled = false
+                cell.applyButton.titleLabel?.textColor = .white
+                cell.applyButton.backgroundColor = .systemGray6
+            } else {
+                if isMember() == true {
+                    cell.applyButton.setTitle("退出", for: .normal)
+                    cell.applyButton.isEnabled = true
+                    cell.applyButton.titleLabel?.textColor = .black
+                    cell.applyButton.backgroundColor = .white
+                } else {
+                    cell.applyButton.setTitle("加入", for: .normal)
+                    cell.applyButton.isEnabled = true
+                    cell.applyButton.titleLabel?.textColor = .white
+                    cell.applyButton.backgroundColor = .black
+                }
+            }
+            
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCalendarCollectionViewCell.reuseIdentifer, for: indexPath)

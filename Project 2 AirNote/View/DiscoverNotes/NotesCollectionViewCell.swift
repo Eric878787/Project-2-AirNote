@@ -32,6 +32,8 @@ class NotesCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor.systemGray6.cgColor
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 10
+        contentView.backgroundColor = .myBeige
+        heartButton.tintColor = .myDarkGreen
     }
     
     override func layoutSubviews() {

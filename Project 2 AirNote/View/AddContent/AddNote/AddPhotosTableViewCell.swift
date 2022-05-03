@@ -17,10 +17,16 @@ class AddPhotosTableViewCell: UITableViewCell {
     var delegate: SelectImagesDelegate?
 
     override func awakeFromNib() {
+        self.selectionStyle = .none
+        super.awakeFromNib()
         titleLabel.text = "內頁"
         addButton.setTitle("新增圖片", for: .normal)
+        addButton.setTitleColor(.myDarkGreen, for: .normal)
         uploadButton.setTitle("上傳", for: .normal)
-        super.awakeFromNib()
+        uploadButton.setTitleColor(.myDarkGreen, for: .normal)
+        for imageView in bookImageViews {
+            imageView.tintColor = .myDarkGreen
+        }
         
     }
 

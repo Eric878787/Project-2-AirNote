@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol GroupTitleDelegate {
+    
+    func joinOrQuit(_ selectedCell: GroupTitleCollectionViewCell)
+    
+}
+
 class GroupTitleCollectionViewCell: UICollectionViewCell {
 
     static let reuseIdentifer = "GroupTitleCollectionViewCell"
@@ -21,8 +27,12 @@ class GroupTitleCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var applyButton: UIButton!
     
-    override class func awakeFromNib() {
+    var delegate: GroupTitleDelegate?
+    
+    override func awakeFromNib() {
         super.awakeFromNib()
+        locationIcon.tintColor = .myDarkGreen
+        dateIcon.tintColor = .myDarkGreen
     }
     
     override func layoutSubviews() {
@@ -30,11 +40,13 @@ class GroupTitleCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .systemGray2
         locationIcon.image = UIImage(systemName: "mappin.and.ellipse")
         dateIcon.image = UIImage(systemName: "calendar")
-        applyButton.setTitle("加入", for: .normal)
-        applyButton.setTitleColor( .black, for: .selected)
-        applyButton.backgroundColor = .systemGray2
         applyButton.layer.cornerRadius = 10
         applyButton.clipsToBounds = true
     }
     
+    @IBAction func joinGroup(_ sender: Any) {
+        
+        delegate?.joinOrQuit(self)
+        
+    }
 }

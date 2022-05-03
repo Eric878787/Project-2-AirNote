@@ -25,19 +25,14 @@ class AddGroupViewController: UIViewController {
                               groupMembers: [],
                               groupOwner: "",
                               groupTitle: "",
-                              location: Location(address: "", latitude: 0, longitude: 0))
+                              location: Location(address: "", latitude: 0, longitude: 0), messages: [])
     
-    private var room = ChatRoom (chatRoomId: "", groupId: "", messages: [], roomTitle: "", ownerId: "", createdTime: Date())
+    private var user: User?
     
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
 
     private var coverImage = UIImage(systemName: "magazine")
-    
-    // MARK: Data Manager
-    private var groupManager = GroupManager()
-    private var chatRoomManager = ChatRoomManager()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +44,7 @@ class AddGroupViewController: UIViewController {
         imagePickerController.delegate = self
         
         // Set up Tableview
-        configureAddGroupTableView ()
+        configureAddGroupTableView()
     }
     
 }
@@ -58,6 +53,8 @@ class AddGroupViewController: UIViewController {
 extension AddGroupViewController {
     
     func configureAddGroupTableView () {
+        
+        self.addGroupTableView.separatorColor = .clear
         
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddTitleTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddContentTableViewCell.self), bundle: nil)
@@ -92,7 +89,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
             guard let addTitleCell = cell as? AddTitleTableViewCell else { return cell }
             addTitleCell.dataHandler = { [weak self] title in
                 self?.group.groupTitle = title
-                self?.room.roomTitle = title
+//                self?.room.roomTitle = title
             }
             return addTitleCell
         } else if indexPath.row == 1 {
@@ -177,6 +174,8 @@ extension AddGroupViewController: UITableViewDelegate {
     
         if indexPath.row == 1 {
             return 300
+        } else if indexPath.row == 2 {
+            return 165
         } else {
             return  UITableView.automaticDimension
         }
@@ -189,7 +188,7 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
                 
                 coverImage = image
             
@@ -235,12 +234,14 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
     /// 開啟相機
     func takePicture() {
         imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
     /// 開啟相簿
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
@@ -300,12 +301,10 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
     func upload() {
         
         let group = DispatchGroup()
-        let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
-        controller.view.tintColor = UIColor.gray
         
         group.enter()
         guard let image = coverImage else { return }
-        self.groupManager.uploadPhoto(image: image) { result in
+        GroupManager.shared.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
                 self.group.groupCover = "\(url)"
@@ -317,28 +316,53 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            self.groupManager.createGroup(group: self.group) { result in
+            GroupManager.shared.createGroup(group: self.group) { result in
                 switch result {
                 case .success(let groupId):
-                    self.room.groupId = groupId
-                    self.chatRoomManager.createChatRoom(chatRoom: self.room) { result in
-                        switch result {
-                        case .success:
-                            let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                            DispatchQueue.main.async {
-                                controller.addAction(cancelAction)
-                                self.present(controller, animated: true, completion: nil)
-                            }
-                        case.failure:
-                            print(result)
-                        }
-                    }
+                            self.fetchAndUpdateUser(groupId: groupId)
                 case.failure:
                     print(result)
                 }
             }
         }
     }
+}
+
+// MARK: Fetch and Update User
+extension AddGroupViewController {
+    
+    func fetchAndUpdateUser(groupId: String) {
+        let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        UserManager.shared.fetchUser(uid) { result in
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.user?.userGroups.append(groupId)
+                self.user?.joinedGroups.append(groupId)
+                guard let userToBeUpdated = self.user else { return }
+                UserManager.shared.updateUser(user: userToBeUpdated, uid: uid) { result in
+                    switch result {
+                    case .success:
+                        let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        DispatchQueue.main.async {
+                            cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+                            controller.addAction(cancelAction)
+                            self.present(controller, animated: true, completion: nil)
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            case .failure(let error):
+                print (error)
+            }
+        }
+        
+    }
+    
 }

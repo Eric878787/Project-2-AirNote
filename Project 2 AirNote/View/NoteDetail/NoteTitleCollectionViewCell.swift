@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol NoteTitleDelegate {
+    
+    func saveNote(_ selectedCell: NoteTitleCollectionViewCell)
+    
+}
+
 class NoteTitleCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifer = "NoteTitleCollectionViewCell"
@@ -19,10 +25,15 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var commentCountsLabel: UILabel!
     
-    @IBOutlet weak var likeIcon: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
     
-    override class func awakeFromNib() {
+    var delegate: NoteTitleDelegate?
+    
+    override func awakeFromNib() {
         super.awakeFromNib()
+        viewsIcon.tintColor = .myDarkGreen
+        commentCountsIcon.tintColor = .myDarkGreen
+        saveButton.tintColor = .myDarkGreen
     }
     
     override func layoutSubviews() {
@@ -30,6 +41,12 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .systemGray2
         viewsIcon.image = UIImage(systemName: "eye")
         commentCountsIcon.image = UIImage(systemName: "message")
+    }
+    
+    @IBAction func didTouchSaveBitton(_ sender: Any) {
+        
+        delegate?.saveNote(self)
+        
     }
     
 }

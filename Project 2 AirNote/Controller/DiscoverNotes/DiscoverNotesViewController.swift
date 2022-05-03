@@ -21,6 +21,8 @@ class DiscoverNotesViewController: UIViewController {
         categoryCollecitonView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         categoryCollecitonView.registerCellWithNib(identifier: String(describing: CategoryCollectionViewCell.self), bundle: nil)
         categoryCollecitonView.backgroundColor = .clear
+        categoryCollecitonView.showsVerticalScrollIndicator = false
+        categoryCollecitonView.showsHorizontalScrollIndicator = false
         return categoryCollecitonView
     }()
     
@@ -51,6 +53,7 @@ class DiscoverNotesViewController: UIViewController {
     
     // MARK: Users Data
     var users: [User] = []
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +70,6 @@ class DiscoverNotesViewController: UIViewController {
         // Search Button
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
-        
-        print("======\(FirebaseManager.shared.currentUser?.uid)")
         
     }
     
@@ -116,6 +117,9 @@ extension DiscoverNotesViewController {
                 
                 self?.users = existingUser
                 
+                // Store Current User
+                self?.storeCurrentUser()
+                
                 DispatchQueue.main.async {
                     self?.notesCollectionView.reloadData()
                 }
@@ -125,6 +129,16 @@ extension DiscoverNotesViewController {
                 print("fetchData.failure: \(error)")
             }
         }
+    }
+    
+    private func storeCurrentUser() {
+        
+        for user in users where user.uid == FirebaseManager.shared.currentUser?.uid {
+            
+            currentUser = user
+            
+        }
+        
     }
     
 }
@@ -152,7 +166,7 @@ extension DiscoverNotesViewController {
         categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
         categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/10).isActive = true
+        categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/8).isActive = true
         categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
@@ -181,7 +195,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
     
     func saveNote(_ selectedCell: NotesCollectionViewCell) {
         
-        guard let currentUser = FirebaseManager.shared.currentUser else {
+        guard let currentUser = self.currentUser else {
             
             guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
@@ -197,7 +211,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
         
         guard let item = selectedIndexPathItem else { return }
         
-        var selectedNote = Note(authorId: notes[item].noteId,
+        var selectedNote = Note(authorId: notes[item].authorId,
                                 comments: notes[item].comments,
                                 createdTime: notes[item].createdTime,
                                 likes: notes[item].likes,
@@ -212,12 +226,12 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
         
         if selectedCell.heartButton.imageView?.image == UIImage(systemName: "suit.heart") {
             
-            selectedNote.likes.append("qbQsVVpVHlf6I4XLfOJ6")
+            selectedNote.likes.append(currentUser.uid)
             
             
         } else {
             
-            selectedNote.likes = selectedNote.likes.filter{ $0 != "qbQsVVpVHlf6I4XLfOJ6" }
+            selectedNote.likes = selectedNote.likes.filter{ $0 != currentUser.uid }
             
         }
         
@@ -229,13 +243,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                 
                 self.fetchNotes()
                 
-                var userToBeUpdated: User?
-                
-                for user in self.users where user.userId == "qbQsVVpVHlf6I4XLfOJ6"{
-                    
-                    userToBeUpdated = user
-                    
-                }
+                var userToBeUpdated = self.currentUser
                 
                 if selectedCell.heartButton.imageView?.image == UIImage(systemName: "suit.heart") {
                     
@@ -253,11 +261,13 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                     return
                 }
                 
-                self.userManager.updateUser(user: userToBeUpdated, userId: userToBeUpdated.userId) { result in
+                self.userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
                     
                     switch result {
                         
                     case .success:
+                        
+                        self.notesCollectionView.reloadData()
                         
                         print("收藏成功")
                         
@@ -291,9 +301,11 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             guard let cell = categoryCollectionViewCell as? CategoryCollectionViewCell else {return categoryCollectionViewCell}
             cell.categoryLabel.text = category[indexPath.item]
             if selectedCategoryIndex == indexPath.item {
-                cell.categoryLabel.textColor = .black
+                cell.categoryLabel.textColor = .white
+                cell.categoryView.backgroundColor = .myDarkGreen
             } else {
-                cell.categoryLabel.textColor = .systemGray2
+                cell.categoryLabel.textColor = .myDarkGreen
+                cell.categoryView.backgroundColor = .white
             }
             cell.isMultipleTouchEnabled = false
             return cell
@@ -310,13 +322,13 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             cell.heartButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
 
             for like in filterNotes[indexPath.item].likes {
-                if like == "qbQsVVpVHlf6I4XLfOJ6" {
+                if like == FirebaseManager.shared.currentUser?.uid {
                     cell.heartButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
                 }
             }
             
             // querying users' name & avatar
-            for user in users where user.userId == filterNotes[indexPath.item].authorId {
+            for user in users where user.uid == filterNotes[indexPath.item].authorId {
                 cell.authorNameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.userAvatarImage.kf.indicatorType = .activity
@@ -331,7 +343,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
 extension DiscoverNotesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let currentUser = FirebaseManager.shared.currentUser else {
+        guard let currentUser = self.currentUser else {
             
             guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
@@ -356,14 +368,30 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
             notesCollectionView.reloadData()
             
         } else {
+            
+            guard let currentUser = self.currentUser else {
+                
+                guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+                
+                vc.modalPresentationStyle = .overCurrentContext
+
+                self.tabBarController?.present(vc, animated: false, completion: nil)
+                
+                return
+                
+            }
+            
             let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
             guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
-            filterNotes[indexPath.item].clicks.append("qbQsVVpVHlf6I4XLfOJ6")
+            guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+            filterNotes[indexPath.item].clicks.append(uid)
             noteManager.updateNote(note: filterNotes[indexPath.item], noteId: filterNotes[indexPath.item].noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    vc.note = self?.filterNotes[indexPath.item]
+                    guard let noteToPass = self?.filterNotes[indexPath.item] else { return }
+                    vc.note = noteToPass
                     vc.users = self?.users ?? []
+                    vc.currentUser = self?.currentUser
                     self?.navigationController?.pushViewController(vc, animated: true)
                     
                 case .failure(let error):
@@ -379,7 +407,12 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
 extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == categoryCollectionView {
-            return CGSize(width: 100, height: 30)
+            let maxWidth = UIScreen.main.bounds.width - 10
+            let numberOfItemsPerRow = CGFloat(4)
+            let interItemSpacing = CGFloat(10)
+            let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
+            let itemHeight = itemWidth * 0.4
+            return CGSize(width: itemWidth, height: itemHeight)
         } else {
             let maxWidth = UIScreen.main.bounds.width - 10
             let numberOfItemsPerRow = CGFloat(2)
@@ -401,7 +434,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
             if collectionView == categoryCollectionView {
-                return 0
+                return 10
             } else {
                 return 10
             }

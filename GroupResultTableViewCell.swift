@@ -19,13 +19,21 @@ class GroupResultTableViewCell: UITableViewCell {
     
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var dateIcon: UIImageView!
+    
+    @IBOutlet weak var membersIcon: UIImageView!
     
     @IBOutlet weak var membersLabel: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        contentView.layer.borderColor = UIColor.systemGray6.cgColor
+        contentView.layer.borderWidth = 1
+        contentView.layer.cornerRadius = 10
+        contentView.backgroundColor = .myBeige
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        dateIcon.tintColor = .myDarkGreen
+        membersIcon.tintColor = .myDarkGreen
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

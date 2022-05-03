@@ -22,7 +22,10 @@ class AddCoverTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         titleLabel.text = "封面"
+        self.selectionStyle = .none
+        coverImageView.tintColor = .myDarkGreen
         selectButton.setTitle("新增封面", for: .normal)
+        selectButton.setTitleColor( .myDarkGreen, for: .normal)
         super.awakeFromNib()
     }
     

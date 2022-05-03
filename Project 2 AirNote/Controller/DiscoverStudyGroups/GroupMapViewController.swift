@@ -28,6 +28,8 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 20.0
         
         // Set up group annotation
         groupMapView.delegate = self
@@ -46,7 +48,6 @@ extension GroupMapViewController {
         let location = groupMapView.userLocation
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         groupMapView.setRegion(region, animated: true)
-        locationManager.stopUpdatingLocation()
     }
     
 }
