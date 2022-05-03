@@ -15,6 +15,9 @@ class ChatRoomManager {
     
     lazy var db = Firestore.firestore()
     
+    static let shared = ChatRoomManager()
+    
+    
     func fetchRooms(completion: @escaping (Result<[ChatRoom], Error>) -> Void) {
         
         db.collection("ChatRooms").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
@@ -32,6 +35,43 @@ class ChatRoomManager {
                         if let room = try document.data(as: ChatRoom.self, decoder: Firestore.Decoder()) {
                             
                             rooms.append(room)
+                                
+                            
+                        }
+                        
+                    } catch {
+                        
+                        completion(.failure(error))
+                    }
+                }
+                
+                completion(.success(rooms))
+            }
+        }
+    }
+    
+    
+    func fetchRoomsWithUid(roomIds: [String], completion: @escaping (Result<[ChatRoom], Error>) -> Void) {
+        
+        db.collection("ChatRooms").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
+            
+            if let error = error {
+                
+                completion(.failure(error))
+            } else {
+                
+                var rooms = [ChatRoom]()
+                
+                for document in querySnapshot!.documents {
+                    
+                    do {
+                        if let room = try document.data(as: ChatRoom.self, decoder: Firestore.Decoder()) {
+                            
+                            for roomId in roomIds where roomId == room.chatRoomId {
+                            
+                            rooms.append(room)
+                                
+                            }
                             
                         }
                         
@@ -87,14 +127,16 @@ class ChatRoomManager {
         
         var room = chatRoom
         
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+        
         do {
-            room.ownerId = "qbQsVVpVHlf6I4XLfOJ6"
+            room.ownerId = uid
             let date = Date()
             room.createdTime = date
             room.chatRoomId = document.documentID
             
             try  document.setData(from: room, encoder: Firestore.Encoder())
-            completion(.success("上傳成功"))
+            completion(.success(document.documentID))
         }
         catch {
             completion(.failure(error))

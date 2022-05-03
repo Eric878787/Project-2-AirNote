@@ -33,10 +33,11 @@ extension AddContentViewController {
         
         addNoteButton.translatesAutoresizingMaskIntoConstraints = false
         addNoteButton.setTitle("新增筆記", for: .normal)
-        addNoteButton.setTitleColor(.systemGray2, for: .normal)
-        addNoteButton.backgroundColor = .systemGray6
-        addNoteButton.layer.borderColor = UIColor.clear.cgColor
-        addNoteButton.layer.borderWidth = 1
+        addNoteButton.titleLabel?.font =  UIFont(name: "PingFangTC-Semibold", size: 16)
+        addNoteButton.setTitleColor(.myDarkGreen, for: .normal)
+        addNoteButton.backgroundColor = .white
+        addNoteButton.layer.borderColor = UIColor.myDarkGreen.cgColor
+        addNoteButton.layer.borderWidth = 2
         addNoteButton.layer.cornerRadius = 10
         addNoteButton.addTarget(self, action: #selector(pushToNextPage), for: .touchUpInside)
         view.addSubview(addNoteButton)
@@ -51,10 +52,11 @@ extension AddContentViewController {
         
         addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         addGroupButton.setTitle("新增讀書會", for: .normal)
-        addGroupButton.setTitleColor(.systemGray2, for: .normal)
-        addGroupButton.backgroundColor = .systemGray6
-        addGroupButton.layer.borderColor = UIColor.clear.cgColor
-        addGroupButton.layer.borderWidth = 1
+        addGroupButton.titleLabel?.font =  UIFont(name: "PingFangTC-Semibold", size: 16)
+        addGroupButton.setTitleColor(.myDarkGreen, for: .normal)
+        addGroupButton.backgroundColor = .white
+        addGroupButton.layer.borderColor = UIColor.myDarkGreen.cgColor
+        addGroupButton.layer.borderWidth = 2
         addGroupButton.layer.cornerRadius = 10
         addGroupButton.addTarget(self, action: #selector(pushToNextPage), for: .touchUpInside)
         view.addSubview(addGroupButton)

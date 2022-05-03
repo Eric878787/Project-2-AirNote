@@ -7,9 +7,15 @@
 
 import UIKit
 
-class SavedNoteTableViewCell: UITableViewCell {
+class PersonalNoteTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var savedNoteLabel: UILabel!
+    @IBOutlet weak var mainImageView: UIImageView!
+    
+    @IBOutlet weak var avatarImageView: UIImageView!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var nameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,4 +28,6 @@ class SavedNoteTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func saveNote(_ sender: Any) {
+    }
 }

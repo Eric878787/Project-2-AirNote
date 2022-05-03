@@ -23,17 +23,17 @@
                         <rect key="frame" x="0.0" y="255.5" width="41" height="38"/>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kgf-zW-JsT" userLabel="Label Stack View">
-                        <rect key="frame" x="46" y="254" width="39.5" height="41"/>
+                        <rect key="frame" x="46" y="254" width="31.5" height="41"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOv-WZ-t0m">
-                                <rect key="frame" x="0.0" y="0.0" width="39.5" height="24.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOv-WZ-t0m">
+                                <rect key="frame" x="0.0" y="0.0" width="31.5" height="24.5"/>
+                                <fontDescription key="fontDescription" name="PingFangTC-Semibold" family="PingFang TC" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eoD-1S-plA">
-                                <rect key="frame" x="0.0" y="24.5" width="39.5" height="16.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eoD-1S-plA">
+                                <rect key="frame" x="0.0" y="24.5" width="31.5" height="16.5"/>
+                                <fontDescription key="fontDescription" name="PingFangTC-Semibold" family="PingFang TC" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -42,15 +42,15 @@
                             <constraint firstItem="OOv-WZ-t0m" firstAttribute="height" secondItem="eoD-1S-plA" secondAttribute="height" multiplier="1.5" id="CZL-Qu-CKX"/>
                         </constraints>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iCo-xb-oUg">
-                        <rect key="frame" x="185.5" y="254" width="25" height="41"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iCo-xb-oUg" userLabel="Date Stack View">
+                        <rect key="frame" x="188" y="254" width="22.5" height="41"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="y80-VW-PRV">
-                                <rect key="frame" x="0.0" y="1" width="25" height="22"/>
+                                <rect key="frame" x="0.0" y="1" width="22.5" height="22"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70f-xV-ftW">
-                                <rect key="frame" x="0.0" y="24.5" width="25" height="16.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <rect key="frame" x="0.0" y="24.5" width="22.5" height="16.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -59,7 +59,7 @@
                             <constraint firstItem="y80-VW-PRV" firstAttribute="height" secondItem="70f-xV-ftW" secondAttribute="height" multiplier="1.5" id="ggn-Pv-xfP"/>
                         </constraints>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EXD-sr-KYm">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EXD-sr-KYm" userLabel="Member Stack View">
                         <rect key="frame" x="210.5" y="254" width="35.5" height="41"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.3.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1q2-JJ-spn">
@@ -67,7 +67,7 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Cg-pS-00w">
                                 <rect key="frame" x="0.0" y="24.5" width="35.5" height="16.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -101,11 +101,13 @@
             </constraints>
             <size key="customSize" width="246" height="305"/>
             <connections>
-                <outlet property="authorNameLabel" destination="OOv-WZ-t0m" id="btN-d9-Zjv"/>
+                <outlet property="authorNameLabel" destination="eoD-1S-plA" id="nBX-Nb-R1w"/>
                 <outlet property="coverImage" destination="gNS-Qg-9ug" id="PZB-gq-uVE"/>
+                <outlet property="dateIcon" destination="y80-VW-PRV" id="MS4-vU-Khe"/>
                 <outlet property="dateLabel" destination="70f-xV-ftW" id="OWb-EU-r7b"/>
                 <outlet property="memberCountsLabel" destination="8Cg-pS-00w" id="CxA-3b-8rj"/>
-                <outlet property="titleLabel" destination="eoD-1S-plA" id="5qe-zH-hVZ"/>
+                <outlet property="membersIcon" destination="1q2-JJ-spn" id="E96-lH-aa7"/>
+                <outlet property="titleLabel" destination="OOv-WZ-t0m" id="Ela-JY-iGZ"/>
                 <outlet property="userAvatar" destination="84j-vw-4g3" id="MYm-Uq-ZPx"/>
             </connections>
             <point key="canvasLocation" x="200.00000000000003" y="98.102678571428569"/>

@@ -8,7 +8,10 @@
 import UIKit
 
 protocol UploadDelegate {
+
+    func searchCafe()
     func selectButton()
+    
 }
 
 class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -16,6 +19,8 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var titleLabel: UILabel!
 
     @IBOutlet weak var textField: UITextField!
+    
+    @IBOutlet weak var cafeListButton: UIButton!
     
     @IBOutlet weak var uploadButton: UIButton!
     
@@ -26,9 +31,19 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.selectionStyle = .none
+        
         titleLabel.text = "地點"
         
+        cafeListButton.tintColor = .myDarkGreen
+        
+        cafeListButton.setTitleColor(.myDarkGreen, for: .normal)
+        
+        cafeListButton.setTitle("尋找推薦咖啡廳", for: .normal)
+        
         uploadButton.setTitle("上傳", for: .normal)
+        
+        uploadButton.setTitleColor(.myDarkGreen, for: .normal)
         
         textField.delegate = self
     }
@@ -46,6 +61,12 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func uploadGroup(_ sender: Any) {
         
         delegate?.selectButton()
+        
+    }
+    
+    @IBAction func findCafe(_ sender: Any) {
+     
+        delegate?.searchCafe()
         
     }
     

@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import FirebaseAuth
 
 class DiscoverStudyGroupsViewController: UIViewController {
     
@@ -51,7 +52,9 @@ class DiscoverStudyGroupsViewController: UIViewController {
     
     // MARK: Users Data
     var users: [User] = []
+    var user: User?
     
+    var currentUser = Auth.auth().currentUser
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +71,10 @@ class DiscoverStudyGroupsViewController: UIViewController {
         // Search Button
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
+        
+        // Map Button
+        let mapButton = UIBarButtonItem(image: UIImage(systemName: "map"), style: .plain, target: self, action: #selector(toMapPage))
+        self.navigationItem.leftBarButtonItem =  mapButton
         
     }
     
@@ -87,8 +94,21 @@ class DiscoverStudyGroupsViewController: UIViewController {
     
 }
 
-// MARK: To Search Page
 
+// MARK: To Map Page
+extension DiscoverStudyGroupsViewController {
+    
+    @objc private func toMapPage() {
+        let storyBoard = UIStoryboard(name: "DiscoverStudyGroups", bundle: nil)
+        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupMapViewController") as? GroupMapViewController else { return }
+        vc.groups = self.groups
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+
+// MARK: To Search Page
 extension DiscoverStudyGroupsViewController {
     
     @objc private func toSearchPage() {
@@ -111,7 +131,7 @@ extension DiscoverStudyGroupsViewController {
         categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
         categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/10).isActive = true
+        categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/8).isActive = true
         categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 }
@@ -146,8 +166,13 @@ extension DiscoverStudyGroupsViewController {
                 
             case .success(let existingUser):
                 
+                self?.users = existingUser
+                guard let users = self?.users else { return }
+                for user in users where user.uid == self?.currentUser?.uid {
+                    self?.user = user
+                }
+                
                 DispatchQueue.main.async {
-                    self?.users = existingUser
                     self?.groupsCollectionView.reloadData()
                 }
                 
@@ -195,9 +220,11 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDataSource {
             guard let cell = categoryCollectionViewCell as? CategoryCollectionViewCell else {return categoryCollectionViewCell}
             cell.categoryLabel.text = category[indexPath.item]
             if selectedCategoryIndex == indexPath.item {
-                cell.categoryLabel.textColor = .black
+                cell.categoryLabel.textColor = .white
+                cell.categoryView.backgroundColor = .myDarkGreen
             } else {
-                cell.categoryLabel.textColor = .systemGray2
+                cell.categoryLabel.textColor = .myDarkGreen
+                cell.categoryView.backgroundColor = .white
             }
             cell.isMultipleTouchEnabled = false
             return cell
@@ -215,7 +242,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDataSource {
             cell.memberCountsLabel.text = "\(filterGroups[indexPath.item].groupMembers.count)"
             
             // querying users' name & avatar
-            for user in users where user.userId == filterGroups[indexPath.item].groupOwner {
+            for user in users where user.uid == filterGroups[indexPath.item].groupOwner {
                 cell.authorNameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.userAvatar.kf.indicatorType = .activity
@@ -246,6 +273,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
             guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
             vc.group = filterGroups[indexPath.item]
             vc.users = users
+            vc.user = user
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -255,7 +283,12 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
 extension DiscoverStudyGroupsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == categoryCollectionView {
-            return CGSize(width: 100, height: 30)
+            let maxWidth = UIScreen.main.bounds.width - 10
+            let numberOfItemsPerRow = CGFloat(4)
+            let interItemSpacing = CGFloat(10)
+            let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
+            let itemHeight = itemWidth * 0.4
+            return CGSize(width: itemWidth, height: itemHeight)
         } else {
             let maxWidth = UIScreen.main.bounds.width - 10
             let numberOfItemsPerRow = CGFloat(2)
@@ -277,7 +310,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegateFlowLayout 
     func collectionView(
         _ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
             if collectionView == categoryCollectionView {
-                return 0
+                return 10
             } else {
                 return 10
             }

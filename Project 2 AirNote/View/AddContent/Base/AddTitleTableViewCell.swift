@@ -16,6 +16,7 @@ class AddTitleTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         titleLabel.text = "標題"
         titleTextField.delegate = self
     }

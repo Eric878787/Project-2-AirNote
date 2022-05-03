@@ -17,8 +17,24 @@ class NoteDetailViewController: UIViewController {
     @IBOutlet weak var sendButton: UIButton!
     
     // Data
-    var note: Note?
+    var note = Note(authorId: "",
+                    comments: [],
+                    createdTime: Date(),
+                    likes: [],
+                    category: "",
+                    clicks: [],
+                    content: "",
+                    cover: "",
+                    noteId: "",
+                    images: [],
+                    keywords: [],
+                    title: "")
+    
     var users: [User] = []
+    
+    var currentUser: User?
+    
+    var editButton = UIBarButtonItem()
     
     // Data Manager
     private var noteManager = NoteManager()
@@ -37,8 +53,17 @@ class NoteDetailViewController: UIViewController {
         noteDetailCollectionView.collectionViewLayout = configureLayout()
         
         // Edit Button
-        let searchButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(toEditPage))
-        self.navigationItem.rightBarButtonItem = searchButton
+        editButton  = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(toEditPage))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //  Edit Button Enable
+        if note.authorId == currentUser?.uid {
+            self.navigationItem.rightBarButtonItem = editButton
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
     
     @IBAction func sendComment(_ sender: Any) {
@@ -48,20 +73,19 @@ class NoteDetailViewController: UIViewController {
             return
         }
         
-        let newComment = Comment(content: content, createdTime: Date(), userId: "qbQsVVpVHlf6I4XLfOJ6")
-        note?.comments.append(newComment)
-        note?.comments.sort{
+        let newComment = Comment(content: content, createdTime: Date(), uid: FirebaseManager.shared.currentUser?.uid ?? "")
+        note.comments.append(newComment)
+        note.comments.sort{
             ( $0.createdTime ) < ( $1.createdTime )
         }
         
-        guard let newNote = self.note else { return }
-        noteManager.updateNote(note: newNote, noteId: newNote.noteId) { [weak self] result in
+        noteManager.updateNote(note: self.note, noteId: self.note.noteId) { [weak self] result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
                     self?.noteDetailCollectionView.reloadData()
-                    if self?.note?.comments != [] {
-                        self?.noteDetailCollectionView.scrollToItem(at: [3, (self?.note?.comments.count ?? 1) - 1], at: .right, animated: true)
+                    if self?.note.comments != [] {
+                        self?.noteDetailCollectionView.scrollToItem(at: [3, (self?.note.comments.count ?? 1) - 1], at: .right, animated: true)
                     }
                 }
             case .failure(let error):
@@ -94,6 +118,117 @@ extension NoteDetailViewController {
     }
 }
 
+// MARK: Save Note
+extension NoteDetailViewController: NoteTitleDelegate {
+    
+    func saveNote(_ selectedCell: NoteTitleCollectionViewCell) {
+        
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
+        if selectedCell.saveButton.imageView?.image == UIImage(systemName: "suit.heart") {
+            
+            self.note.likes.append(currentUser.uid)
+            
+        } else {
+            
+            self.note.likes = self.note.likes.filter{ $0 != currentUser.uid }
+            
+        }
+        
+        NoteManager.shared.updateNote(note: note, noteId: note.noteId) { result in
+            
+            switch result {
+                
+            case .success:
+                
+                self.fetchNote()
+                
+                var userToBeUpdated: User?
+                
+                for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid{
+                    
+                    userToBeUpdated = user
+                    
+                }
+                
+                if selectedCell.saveButton.imageView?.image == UIImage(systemName: "suit.heart") {
+                    
+                    let user = userToBeUpdated
+                    
+                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter{ $0 != "\(self.note.noteId)" } ?? []
+                    
+                    userToBeUpdated?.savedNotes.append(self.note.noteId)
+                    
+                } else {
+                    
+                    let user = userToBeUpdated
+                    
+                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter{ $0 != "\(self.note.noteId)" } ?? []
+                    
+                }
+                
+                guard let userToBeUpdated = userToBeUpdated else {
+                    return
+                }
+                
+                self.userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
+                    
+                    switch result {
+                        
+                    case .success:
+                        
+                        self.noteDetailCollectionView.reloadData()
+                        
+                        print("收藏成功")
+                        
+                    case .failure:
+                        
+                        print("收藏失敗")
+                        
+                    }
+                }
+                
+            case .failure:
+                
+                print("收藏失敗")
+            }
+            
+        }
+        
+    }
+    
+    func fetchNote() {
+        
+        NoteManager.shared.fetchNote(self.note.noteId) { result in
+            
+            switch result {
+                
+            case .success(let note):
+                
+                self.note = note
+                
+            case .failure(let error):
+                
+                print("fetchData.failure: \(error)")
+            }
+            
+        }
+        
+    }
+    
+}
+
+
 // MARK: CollectionView DataSource
 extension NoteDetailViewController: UICollectionViewDataSource {
     
@@ -104,21 +239,19 @@ extension NoteDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return note?.images.count ?? 0
+            return note.images.count ?? 0
         case 1:
             return 1
         case 2:
             return 1
         case 3:
-            return note?.comments.count ?? 0
+            return note.comments.count ?? 0
         default:
             return 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let note = note else { return UICollectionViewCell()}
         
         switch indexPath.section {
         case 0:
@@ -131,15 +264,18 @@ extension NoteDetailViewController: UICollectionViewDataSource {
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteTitleCollectionViewCell.self), for: indexPath)
                     as? NoteTitleCollectionViewCell else { return UICollectionViewCell()}
+            cell.delegate = self
             cell.viewsLabel.text = "\(note.clicks.count)"
             cell.commentCountsLabel.text = "\(note.comments.count)"
             
             // Highlight saved note
+            cell.saveButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
             for like in note.likes {
-                if like == "qbQsVVpVHlf6I4XLfOJ6" {
-                    cell.likeIcon.image = UIImage(systemName: "heart.fill")
-                } 
+                if like == FirebaseManager.shared.currentUser?.uid {
+                    cell.saveButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
+                }
             }
+            
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteContentCollectionViewCell.reuseIdentifer, for: indexPath)
@@ -152,7 +288,7 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             cell.commentLabel.text = note.comments[indexPath.item].content
             
             // querying users' name & avatar
-            for user in users where user.userId == note.comments[indexPath.item].userId {
+            for user in users where user.uid == note.comments[indexPath.item].uid {
                 cell.nameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.avatarImageView.kf.indicatorType = .activity
@@ -165,7 +301,7 @@ extension NoteDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let note = note else { return UICollectionReusableView()}
+        
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath)
                 as? TitleSupplementaryView else { return UICollectionReusableView() }
         
@@ -215,7 +351,7 @@ extension NoteDetailViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .fractionalHeight(0.3))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .fractionalHeight(0.5))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)

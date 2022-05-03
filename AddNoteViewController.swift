@@ -15,13 +15,15 @@ class AddNoteViewController: UIViewController {
     
     // MARK: Properties
     private var note = Note(authorId: "",
-                            comments: [Comment(content: "", createdTime: Date(), userId: "")],
+                            comments: [Comment(content: "", createdTime: Date(), uid: "")],
                             createdTime: Date(),
                             likes: [], category: "",
                             clicks: [], content: "",
                             cover: "", noteId: "",
                             images: [], keywords: [],
                             title: "")
+    
+    private var user: User?
     
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
@@ -60,6 +62,8 @@ class AddNoteViewController: UIViewController {
 extension AddNoteViewController {
     
     func configureAddNoteTableView () {
+        
+        self.addNoteTableView.separatorColor = .clear
         
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddTitleTableViewCell.self), bundle: nil)
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddContentTableViewCell.self), bundle: nil)
@@ -150,6 +154,8 @@ extension AddNoteViewController: UITableViewDelegate {
         
         if indexPath.row == 1 {
             return 300
+        } else if indexPath.row == 2 {
+            return 165
         } else if indexPath.row == 4 {
             return 600
         } else {
@@ -163,7 +169,7 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
             
             if picker == imagePickerController {
                 
@@ -222,12 +228,14 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     /// 開啟相機
     func takePicture() {
         imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
     /// 開啟相簿
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
@@ -314,6 +322,7 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
     // 開啟相機（content photo）
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
+        multiImagePickerController.allowsEditing = true
         self.present(multiImagePickerController, animated: true)
     }
     
@@ -338,6 +347,7 @@ extension AddNoteViewController {
             let controller = UIAlertController(title: "請上傳完整資料", message: "", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
+            cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(cancelAction)
             self.present(controller, animated: true, completion: nil)
         }
@@ -381,18 +391,37 @@ extension AddNoteViewController {
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            self.noteManager.createNote(note: self.note) { result in
+            self.noteManager.createNote(note: &self.note) { result in
                 switch result {
-                case .success:
-                    print(result)
+                case .success(let noteId):
                     let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
                         self.navigationController?.popViewController(animated: true)
                     }
-                    DispatchQueue.main.async {
-                        self.loadingAnimation.loadingView.pause()
-                        self.loadingAnimation.loadingView.isHidden = true
-                        controller.addAction(cancelAction)
-                        self.present(controller, animated: true, completion: nil)
+                    
+                    guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+                    UserManager.shared.fetchUser(uid) { result in
+                        switch result {
+                        case .success(let user):
+                            self.user = user
+                            self.user?.userNotes.append(noteId)
+                            guard let userToBeUpdated = self.user else { return }
+                            UserManager.shared.updateUser(user: userToBeUpdated, uid: uid) { result in
+                                switch result {
+                                case .success:
+                                    DispatchQueue.main.async {
+                                        self.loadingAnimation.loadingView.pause()
+                                        self.loadingAnimation.loadingView.isHidden = true
+                                        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+                                        controller.addAction(cancelAction)
+                                        self.present(controller, animated: true, completion: nil)
+                                    }
+                                case .failure(let error):
+                                    print(error)
+                                }
+                            }
+                        case .failure(let error):
+                            print (error)
+                        }
                     }
                 case.failure:
                     print(result)

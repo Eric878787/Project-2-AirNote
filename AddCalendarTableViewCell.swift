@@ -37,7 +37,13 @@ class AddCalendarTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         
+        self.selectionStyle = .none
+        
         titleLabel.text = "行事曆"
+        
+        addButton.setTitleColor( .myDarkGreen, for: .normal)
+        
+        addButton.tintColor = .myDarkGreen
         
         confirmButton.setTitle("確認", for: .normal)
         

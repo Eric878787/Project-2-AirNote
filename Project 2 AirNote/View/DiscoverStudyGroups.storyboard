@@ -24,6 +24,35 @@
             </objects>
             <point key="canvasLocation" x="942.02898550724649" y="75"/>
         </scene>
+        <!--Group Map View Controller-->
+        <scene sceneID="0On-aB-jQj">
+            <objects>
+                <viewController storyboardIdentifier="GroupMapViewController" id="y0m-QT-SUn" customClass="GroupMapViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Aet-Nu-z2R">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Do8-SA-GWe">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="C7e-QL-GDK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="C7e-QL-GDK" firstAttribute="trailing" secondItem="Do8-SA-GWe" secondAttribute="trailing" id="MCa-8m-ftY"/>
+                            <constraint firstItem="C7e-QL-GDK" firstAttribute="bottom" secondItem="Do8-SA-GWe" secondAttribute="bottom" id="WCp-Nj-Lzg"/>
+                            <constraint firstItem="Do8-SA-GWe" firstAttribute="top" secondItem="C7e-QL-GDK" secondAttribute="top" id="XYU-gZ-vnu"/>
+                            <constraint firstItem="Do8-SA-GWe" firstAttribute="leading" secondItem="C7e-QL-GDK" secondAttribute="leading" id="kV3-7w-0y7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="groupMapView" destination="Do8-SA-GWe" id="rcy-wO-JRu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GSR-c0-8LP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1809" y="75"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="KNI-CQ-aKn">
             <objects>

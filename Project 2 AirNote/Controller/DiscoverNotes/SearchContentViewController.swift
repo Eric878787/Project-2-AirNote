@@ -21,6 +21,7 @@ class SearchContentViewController: UIViewController {
     private var notes: [Note] = []
     private lazy var filteredNotes: [Note] = []
     private var users: [User] = []
+    private var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,7 @@ class SearchContentViewController: UIViewController {
         
         // Fetch notes
         fetchNotes()
+        searchNotesTableView.reloadData()
         
     }
 }
@@ -90,6 +92,8 @@ extension SearchContentViewController {
     
     private func configureSearchNoteTableview() {
         
+        self.searchNotesTableView.separatorColor = .clear
+        
         searchNotesTableView.registerCellWithNib(identifier: String(describing: NoteResultTableViewCell.self), bundle: nil)
         searchNotesTableView.dataSource = self
         searchNotesTableView.delegate = self
@@ -136,6 +140,13 @@ extension SearchContentViewController {
             case .success(let existingUser):
                 
                 self?.users = existingUser
+                
+                for user in existingUser where user.uid == FirebaseManager.shared.currentUser?.uid {
+                    
+                    self?.currentUser = user
+                    
+                }
+                
                 DispatchQueue.main.async {
                     self?.searchNotesTableView.reloadData()
                 }
@@ -153,11 +164,23 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
     
     func saveNote(_ selectedCell: NoteResultTableViewCell) {
         
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         var selectedIndexPathItem = searchNotesTableView.indexPath(for: selectedCell)?.row
         
         guard let item = selectedIndexPathItem else { return }
         
-        var selectedNote = Note(authorId: notes[item].noteId,
+        var selectedNote = Note(authorId: notes[item].authorId,
                                 comments: notes[item].comments,
                                 createdTime: notes[item].createdTime,
                                 likes: notes[item].likes,
@@ -172,11 +195,11 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
         
         if selectedCell.likeButton.imageView?.image == UIImage(systemName: "suit.heart") {
             
-            selectedNote.likes.append("qbQsVVpVHlf6I4XLfOJ6")
+            selectedNote.likes.append(currentUser.uid)
             
         } else {
             
-            selectedNote.likes = selectedNote.likes.filter{ $0 != "qbQsVVpVHlf6I4XLfOJ6" }
+            selectedNote.likes = selectedNote.likes.filter{ $0 != currentUser.uid }
             
         }
         
@@ -188,13 +211,7 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
                 
                 self.fetchNotes()
                 
-                var userToBeUpdated: User?
-                
-                for user in self.users where user.userId == "qbQsVVpVHlf6I4XLfOJ6"{
-                    
-                    userToBeUpdated = user
-                    
-                }
+                var userToBeUpdated = self.currentUser
                 
                 if selectedCell.likeButton.imageView?.image == UIImage(systemName: "suit.heart") {
                     
@@ -212,11 +229,13 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
                     return
                 }
                 
-                self.userManager.updateUser(user: userToBeUpdated, userId: userToBeUpdated.userId) { result in
+                self.userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
                     
                     switch result {
                         
                     case .success:
+                        
+                        self.searchNotesTableView.reloadData()
                         
                         print("收藏成功")
                         
@@ -251,13 +270,13 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
         // Highlight saved note
         cell.likeButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
         for like in filteredNotes[indexPath.row].likes {
-            if like == "qbQsVVpVHlf6I4XLfOJ6" {
+            if like == FirebaseManager.shared.currentUser?.uid {
                 cell.likeButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
             }
         }
         
         // querying users' name & avatar
-        for user in users where user.userId == filteredNotes[indexPath.row].authorId {
+        for user in users where user.uid == filteredNotes[indexPath.row].authorId {
             cell.aurthorNameLabel.text = user.userName
             let avatarUrl = URL(string: user.userAvatar)
             cell.avatarImageView.kf.indicatorType = .activity
@@ -277,14 +296,41 @@ extension SearchContentViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
+        guard let currentUser = FirebaseManager.shared.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
-        filteredNotes[indexPath.row].clicks.append("qbQsVVpVHlf6I4XLfOJ6")
+        filteredNotes[indexPath.row].clicks.append(currentUser.uid)
         noteManager.updateNote(note: filteredNotes[indexPath.row], noteId: filteredNotes[indexPath.row].noteId) { [weak self] result in
             switch result {
             case .success:
-                vc.note = self?.filteredNotes[indexPath.row]
+                guard let noteToPass = self?.filteredNotes[indexPath.row] else { return }
+                vc.note = noteToPass
                 vc.users = self?.users ?? []
+                vc.currentUser = self?.currentUser
                 self?.navigationController?.pushViewController(vc, animated: true)
                 
             case .failure(let error):

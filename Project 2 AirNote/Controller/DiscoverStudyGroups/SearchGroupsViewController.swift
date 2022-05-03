@@ -20,7 +20,9 @@ class SearchGroupsViewController: UIViewController {
     private var userManager = UserManager()
     private var groups: [Group] = []
     private lazy var filteredgroups: [Group] = []
-    private var users: [User] = []
+    var users: [User] = []
+    var user: User?
+    var currentUserId = FirebaseManager.shared.currentUser?.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +85,8 @@ extension SearchGroupsViewController {
     
     private func configureSearchGroupsTableView() {
         
+        self.searchGroupsTableView.separatorColor = .clear
+        
         searchGroupsTableView.registerCellWithNib(identifier: String(describing: GroupResultTableViewCell.self), bundle: nil)
         searchGroupsTableView.dataSource = self
         searchGroupsTableView.delegate = self
@@ -132,6 +136,9 @@ extension SearchGroupsViewController {
                 
                 DispatchQueue.main.async {
                     self?.users = existingUser
+                    for user in existingUser where user.uid == self?.currentUserId {
+                        self?.user = user
+                    }
                     self?.searchGroupsTableView.reloadData()
                 }
                 
@@ -164,7 +171,7 @@ extension SearchGroupsViewController: UITableViewDataSource {
         cell.membersLabel.text = "\(filteredgroups[indexPath.row].groupMembers.count)"
         
         // querying users' name & avatar
-        for user in users where user.userId == filteredgroups[indexPath.row].groupOwner {
+        for user in users where user.uid == filteredgroups[indexPath.row].groupOwner {
             cell.aurthorNameLabel.text = user.userName
             let avatarUrl = URL(string: user.userAvatar)
             cell.avatarImageView.kf.indicatorType = .activity
@@ -188,6 +195,7 @@ extension SearchGroupsViewController: UITableViewDelegate {
         guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
         vc.group = filteredgroups[indexPath.row]
         vc.users = users
+        vc.user = user
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -13,6 +13,8 @@ import UIKit
 
 class NoteManager {
     
+    static let shared = NoteManager()
+    
     lazy var db = Firestore.firestore()
     
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
@@ -46,14 +48,49 @@ class NoteManager {
         }
     }
     
-    func createNote(note: Note, completion: @escaping (Result<String, Error>) -> Void) {
+    func fetchNote(_ noteId: String, completion: @escaping (Result<Note, Error>) -> Void) {
+        
+        db.collection("Note").document(noteId).getDocument { (document, error) in
+            
+            if let error = error {
+                
+                completion(.failure(error))
+                
+            } else {
+                
+                var fetchedNote: Note?
+                
+                do {
+                    
+                    if let note = try document?.data(as: Note.self, decoder: Firestore.Decoder()) {
+                        
+                        fetchedNote = note
+                        
+                    }
+                    
+                } catch {
+                    
+                    completion(.failure(error))
+                }
+                
+                guard let note = fetchedNote else { return }
+                
+                completion(.success(note))
+                
+            }
+            
+        }
+        
+    }
+    
+    func createNote(note: inout Note, completion: @escaping (Result<String, Error>) -> Void) {
         
         let document = db.collection("Notes").document()
         
-        var note = note
+        guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
         
         do {
-            note.authorId = "qbQsVVpVHlf6I4XLfOJ6"
+            note.authorId = uid
             note.comments = []
             let date = Date()
             note.createdTime = date
@@ -62,7 +99,7 @@ class NoteManager {
             note.clicks = []
             
             try  document.setData(from: note, encoder: Firestore.Encoder())
-            completion(.success("上傳成功"))
+            completion(.success(document.documentID))
         }
         catch {
             completion(.failure(error))

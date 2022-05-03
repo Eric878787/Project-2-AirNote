@@ -12,11 +12,29 @@ import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
+        
+        FirebaseManager.shared.authenticator.addStateDidChangeListener { auth, user in
+            if let user = user {
+                print("\(user.uid) login")
+                FirebaseManager.shared.currentUser = user
+            } else {
+                print("not login")
+                FirebaseManager.shared.currentUser = user
+            }
+        }
+        
+        // Navigatiob Bar Item Color
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.tintColor = UIColor.myDarkGreen
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor :  UIColor.myDarkGreen]
+        
+        // Tab Bar color
+        UITabBar.appearance().tintColor = UIColor.myDarkGreen
+        
         return true
     }
 

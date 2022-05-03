@@ -15,10 +15,3 @@ struct ChatRoom: Codable {
     var ownerId: String
     var createdTime: Date
 }
-
-struct Message: Codable, Equatable {
-    var sender: String
-    var createdTime: Date
-    var content: String?
-    var image: String?
-}
