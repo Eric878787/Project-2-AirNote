@@ -169,7 +169,7 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
             
             if picker == imagePickerController {
                 
@@ -228,12 +228,14 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     /// 開啟相機
     func takePicture() {
         imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
     /// 開啟相簿
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
@@ -320,6 +322,7 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
     // 開啟相機（content photo）
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
+        multiImagePickerController.allowsEditing = true
         self.present(multiImagePickerController, animated: true)
     }
     

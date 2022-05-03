@@ -34,6 +34,8 @@ class NoteDetailViewController: UIViewController {
     
     var currentUser: User?
     
+    var editButton = UIBarButtonItem()
+    
     // Data Manager
     private var noteManager = NoteManager()
     private var userManager = UserManager()
@@ -51,8 +53,17 @@ class NoteDetailViewController: UIViewController {
         noteDetailCollectionView.collectionViewLayout = configureLayout()
         
         // Edit Button
-        let searchButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(toEditPage))
-        self.navigationItem.rightBarButtonItem = searchButton
+        editButton  = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(toEditPage))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //  Edit Button Enable
+        if note.authorId == currentUser?.uid {
+            self.navigationItem.rightBarButtonItem = editButton
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
     
     @IBAction func sendComment(_ sender: Any) {
@@ -340,7 +351,7 @@ extension NoteDetailViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .fractionalHeight(0.3))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .fractionalHeight(0.5))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)

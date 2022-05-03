@@ -50,12 +50,24 @@ class EditNoteViewController: UIViewController {
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteNote))
         self.navigationItem.rightBarButtonItem = deleteButton
         
+        // Set Default Message
+        setDefaultImage()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Set Default Images
+    }
+    
+}
+
+// MARK: Default Image
+extension EditNoteViewController {
+    
+    // Set Default Images
+    
+    private func setDefaultImage() {
         guard let note = note else { return }
         
         for image in note.images {
@@ -69,9 +81,7 @@ class EditNoteViewController: UIViewController {
         let url = URL(string: note.cover)
         defaultImageView.kf.setImage(with: url)
         coverImage = defaultImageView.image
-
     }
-    
 }
 
 // MARK: Delete Note
@@ -183,17 +193,17 @@ extension EditNoteViewController: UITableViewDataSource, CoverDelegate, SelectIm
 extension EditNoteViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.row == 0 {
-//            return 100
-//        } else if indexPath.row == 1 {
-//            return 300
-//        } else if indexPath.row == 2 {
-//            return 165
-//        } else if indexPath.row == 3{
-//            return 500
-//        } else {
-//            return 600
-//        }
+        //        if indexPath.row == 0 {
+        //            return 100
+        //        } else if indexPath.row == 1 {
+        //            return 300
+        //        } else if indexPath.row == 2 {
+        //            return 165
+        //        } else if indexPath.row == 3{
+        //            return 500
+        //        } else {
+        //            return 600
+        //        }
         
         if indexPath.row == 1 {
             return 300
@@ -212,7 +222,7 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
             
             if picker == imagePickerController {
                 
@@ -271,12 +281,14 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
     /// 開啟相機
     func takePicture() {
         imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
     /// 開啟相簿
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
@@ -363,6 +375,7 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
     // 開啟相機（content photo）
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
+        multiImagePickerController.allowsEditing = true
         self.present(multiImagePickerController, animated: true)
     }
     

@@ -244,13 +244,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="1" maxValue="80" translatesAutoresizingMaskIntoConstraints="NO" id="5cd-mp-WdH">
-                                        <rect key="frame" x="-2" y="0.0" width="370" height="31"/>
+                                        <rect key="frame" x="-2" y="0.0" width="374" height="31"/>
                                         <connections>
                                             <action selector="brushChanged:" destination="Jf5-Kh-u53" eventType="valueChanged" id="lxP-RR-53n"/>
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hSs-ZT-eP7">
-                                        <rect key="frame" x="366" y="0.0" width="18" height="30"/>
+                                        <rect key="frame" x="370" y="0.0" width="14" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>

@@ -188,7 +188,7 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
                 
                 coverImage = image
             
@@ -234,12 +234,14 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
     /// 開啟相機
     func takePicture() {
         imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
     /// 開啟相簿
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
+        imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
