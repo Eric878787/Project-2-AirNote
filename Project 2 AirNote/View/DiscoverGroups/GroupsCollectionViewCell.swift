@@ -30,6 +30,7 @@ class GroupsCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor.systemGray6.cgColor
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 10
+        contentView.backgroundColor = .myBeige
         dateIcon.tintColor = .myDarkGreen
         membersIcon.tintColor = .myDarkGreen
     }

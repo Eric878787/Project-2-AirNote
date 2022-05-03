@@ -30,6 +30,7 @@ class GroupResultTableViewCell: UITableViewCell {
         contentView.layer.borderColor = UIColor.systemGray6.cgColor
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 10
+        contentView.backgroundColor = .myBeige
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         dateIcon.tintColor = .myDarkGreen
         membersIcon.tintColor = .myDarkGreen
