@@ -171,7 +171,7 @@ extension GroupDetailViewController: GroupTitleDelegate {
     private func updateGroup(_ controller: UIAlertController) {
         
         guard let groupToBeUpdated = self.group else { return }
-        GroupManager.shared.updateGroup(group: groupToBeUpdated, groupId:groupToBeUpdated.groupId) { [weak self] result in
+        GroupManager.shared.updateGroup(group: groupToBeUpdated, groupId: groupToBeUpdated.groupId) { [weak self] result in
             switch result {
             case .success:
                 let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
@@ -190,7 +190,7 @@ extension GroupDetailViewController: GroupTitleDelegate {
     
     func isMember() -> Bool {
         guard let groupMembers = group?.groupMembers else { return false }
-        for memberId in groupMembers where memberId == self.user?.uid  {
+        for memberId in groupMembers where memberId == self.user?.uid {
             return true
         }
         return false
@@ -360,7 +360,8 @@ extension GroupDetailViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .fractionalHeight(1))
+        let groupHeight = NSCollectionLayoutDimension.fractionalWidth(0.5)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: groupHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)

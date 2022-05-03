@@ -23,7 +23,10 @@ class PersonalGroupTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        contentView.layer.borderColor = UIColor.systemGray6.cgColor
+        contentView.layer.borderWidth = 1
+        contentView.layer.cornerRadius = 10
+        contentView.backgroundColor = .myBeige
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,11 +34,12 @@ class PersonalGroupTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         avatarImage.layer.cornerRadius = avatarImage.bounds.height/2
         avatarImage.clipsToBounds = true
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
     
 }
