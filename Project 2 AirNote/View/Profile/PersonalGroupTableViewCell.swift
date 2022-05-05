@@ -39,7 +39,7 @@ class PersonalGroupTableViewCell: UITableViewCell {
         super.layoutSubviews()
         avatarImage.layer.cornerRadius = avatarImage.bounds.height/2
         avatarImage.clipsToBounds = true
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
     }
     
 }

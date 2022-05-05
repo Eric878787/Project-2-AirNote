@@ -37,6 +37,8 @@ class ProfileViewController: UIViewController {
     
     var user: User?
     
+    var blockedUsers: [User] = []
+    
     // Note Data
     var notes: [Note] = []
     
@@ -68,7 +70,11 @@ class ProfileViewController: UIViewController {
         
         // Log out Button
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"), style: .plain, target: self, action: #selector(signOut))
-        self.navigationItem.rightBarButtonItem = deleteButton
+        self.navigationItem.leftBarButtonItem = deleteButton
+        
+        // Block List
+        let blockListButton = UIBarButtonItem(image: UIImage(systemName: "person.fill.badge.minus"), style: .plain, target: self, action: #selector(toBlockList))
+        self.navigationItem.rightBarButtonItem =  blockListButton
         
         // Configure Table View
         configureTableView()
@@ -279,7 +285,6 @@ extension ProfileViewController {
         settingNameButton.clipsToBounds = true
         settingNameButton.layer.cornerRadius = 10
         
-        
         // Follow Button
         followButton.isHidden = true
         
@@ -318,6 +323,17 @@ extension ProfileViewController {
         
     }
     
+    
+    @objc func toBlockList() {
+        
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController") as? BlockListViewController else { return }
+        vc.user = self.user
+        vc.blockList = self.blockedUsers
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+        
+    }
+    
     private func fetchUsers() {
         
         UserManager.shared.fetchUsers { result in
@@ -329,6 +345,19 @@ extension ProfileViewController {
                 
                 for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid {
                     self.user = user
+                }
+                
+                // Filter Blocked Users
+                guard let blockedUids = self.user?.blockUsers else { return }
+                
+                let allUsers = self.users
+                
+                self.blockedUsers = []
+                
+                for blockedUid in blockedUids {
+                    
+                    self.blockedUsers += allUsers.filter{$0.uid == blockedUid}
+                    
                 }
                 
                 DispatchQueue.main.async {
@@ -437,6 +466,23 @@ extension ProfileViewController {
                     
                 }
                 
+                // Filter Blocked Users
+                guard let blockedUids = self.user?.blockUsers else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self.users = self.users.filter{$0.uid != blockedUid}
+                    
+                }
+                
+                // Filter Blocked Users Content
+                
+                for blockedUid in blockedUids {
+                    
+                    self.savedNotes = self.savedNotes.filter{$0.authorId != blockedUid}
+                    
+                }
+                
                 // Default datasource of notesOnTableView
                 self.wrappingNotes(self.selectedNoteIndex)
                 
@@ -470,6 +516,15 @@ extension ProfileViewController {
                 for userGroup in self.user?.userGroups ?? [] {
                     
                     self.ownedGroups += groups.filter{ $0.groupId == userGroup }
+                    
+                }
+                
+                
+                // Filter Blocked Users Content
+                guard let blockedUids = self.user?.blockUsers else { return }
+                for blockedUid in blockedUids {
+                    
+                    self.savedGroups = self.savedGroups.filter{ $0.groupOwner != blockedUid} ?? []
                     
                 }
                 

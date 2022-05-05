@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BlockListTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="49" id="ivb-kK-atH" customClass="BlockListTableViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ivb-kK-atH" id="tha-lc-BhK">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aO1-9r-mjr">
+                        <rect key="frame" x="15" y="0.0" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="aO1-9r-mjr" secondAttribute="height" multiplier="1:1" id="Phf-xx-0OR"/>
+                            <constraint firstAttribute="width" constant="50" id="W6n-6X-HXY"/>
+                            <constraint firstAttribute="height" constant="50" id="viL-aU-JxS"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsq-yb-arL">
+                        <rect key="frame" x="80" y="14.5" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9S-dV-sfz">
+                        <rect key="frame" x="332" y="9.5" width="67" height="31"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <connections>
+                            <action selector="unblockUser:" destination="ivb-kK-atH" eventType="touchUpInside" id="kgV-4r-Zz4"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="S9S-dV-sfz" firstAttribute="centerY" secondItem="dsq-yb-arL" secondAttribute="centerY" id="6pV-gb-si6"/>
+                    <constraint firstItem="dsq-yb-arL" firstAttribute="centerY" secondItem="aO1-9r-mjr" secondAttribute="centerY" id="9Or-0Q-qfp"/>
+                    <constraint firstItem="aO1-9r-mjr" firstAttribute="centerY" secondItem="tha-lc-BhK" secondAttribute="centerY" id="EEQ-Rr-7h2"/>
+                    <constraint firstItem="aO1-9r-mjr" firstAttribute="leading" secondItem="tha-lc-BhK" secondAttribute="leading" constant="15" id="PmC-5O-r1p"/>
+                    <constraint firstAttribute="trailing" secondItem="S9S-dV-sfz" secondAttribute="trailing" constant="15" id="gVq-5u-3Ve"/>
+                    <constraint firstAttribute="bottom" secondItem="aO1-9r-mjr" secondAttribute="bottom" id="kEU-hj-RyK"/>
+                    <constraint firstItem="dsq-yb-arL" firstAttribute="leading" secondItem="aO1-9r-mjr" secondAttribute="trailing" constant="15" id="pEG-Od-xqK"/>
+                    <constraint firstItem="aO1-9r-mjr" firstAttribute="top" secondItem="tha-lc-BhK" secondAttribute="top" id="x7W-Qr-yju"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="unblockButton" destination="S9S-dV-sfz" id="VXy-mv-yO1"/>
+                <outlet property="userAvatar" destination="aO1-9r-mjr" id="qlc-QU-VfK"/>
+                <outlet property="userName" destination="dsq-yb-arL" id="oC2-SH-ph1"/>
+            </connections>
+            <point key="canvasLocation" x="150.72463768115944" y="72.65625"/>
+        </tableViewCell>
+    </objects>
+</document>

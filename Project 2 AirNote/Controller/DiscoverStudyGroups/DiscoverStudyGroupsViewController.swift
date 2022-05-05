@@ -88,8 +88,6 @@ class DiscoverStudyGroupsViewController: UIViewController {
         // Fetch Groups Data
         fetchGroups()
         
-        // Fetch Users Data
-        fetchUsers()
     }
     
 }
@@ -146,9 +144,13 @@ extension DiscoverStudyGroupsViewController {
                 
             case .success(let existingGroup):
                 
+                self?.groups = existingGroup
+                self?.filterGroups = self?.groups ?? existingGroup
+                
+                // Fetch Users Data
+                self?.fetchUsers()
+                
                 DispatchQueue.main.async {
-                    self?.groups = existingGroup
-                    self?.filterGroups = self?.groups ?? existingGroup
                     self?.groupsCollectionView.reloadData()
                 }
                 
@@ -170,6 +172,25 @@ extension DiscoverStudyGroupsViewController {
                 guard let users = self?.users else { return }
                 for user in users where user.uid == self?.currentUser?.uid {
                     self?.user = user
+                }
+                
+                // Filter Blocked Users
+                guard let blockedUids = self?.user?.blockUsers else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    
+                }
+                
+                // Filter Blocked Users Content
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.filterGroups = self?.filterGroups.filter{ $0.groupOwner != blockedUid} ?? []
+                    
+                    self?.groups = self?.groups.filter{ $0.groupOwner != blockedUid} ?? []
+                    
                 }
                 
                 DispatchQueue.main.async {

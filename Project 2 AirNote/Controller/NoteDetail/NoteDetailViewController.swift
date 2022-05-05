@@ -34,6 +34,8 @@ class NoteDetailViewController: UIViewController {
     
     var currentUser: User?
     
+    var aurthor: User?
+    
     var editButton = UIBarButtonItem()
     
     // Data Manager
@@ -58,12 +60,19 @@ class NoteDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         //  Edit Button Enable
         if note.authorId == currentUser?.uid {
             self.navigationItem.rightBarButtonItem = editButton
         } else {
             self.navigationItem.rightBarButtonItem = nil
         }
+        
+        // Filter Author
+        for user in users where user.uid == note.authorId {
+            aurthor = user
+        }
+        
     }
     
     @IBAction func sendComment(_ sender: Any) {
@@ -82,10 +91,21 @@ class NoteDetailViewController: UIViewController {
         noteManager.updateNote(note: self.note, noteId: self.note.noteId) { [weak self] result in
             switch result {
             case .success:
+                
+                let controller = UIAlertController(title: "評論成功", message: nil, preferredStyle: .alert)
+                controller.view.tintColor = UIColor.gray
+                let action = UIAlertAction(title: "確認", style: .destructive)
+                action.setValue(UIColor.black, forKey: "titleTextColor")
+                controller.addAction(action)
+                self?.present(controller, animated: true)
+                
                 DispatchQueue.main.async {
+                    
+                    self?.commentTextFiled.text = ""
+                    
                     self?.noteDetailCollectionView.reloadData()
                     if self?.note.comments != [] {
-                        self?.noteDetailCollectionView.scrollToItem(at: [3, (self?.note.comments.count ?? 1) - 1], at: .right, animated: true)
+                        self?.noteDetailCollectionView.scrollToItem(at: [3, (self?.note.comments.count ?? 1) - 1], at: .bottom, animated: true)
                     }
                 }
             case .failure(let error):
@@ -116,6 +136,23 @@ extension NoteDetailViewController {
                                           forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                           withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
     }
+}
+
+// MARK: To Profile Page
+extension NoteDetailViewController {
+    
+    func toProfilePage() {
+        
+        if aurthor?.uid != currentUser?.uid {
+            let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
+            guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+            vc.userInThisPage = self.aurthor
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            self.tabBarController?.selectedIndex = 4
+        }
+    }
+    
 }
 
 // MARK: Save Note
@@ -265,6 +302,16 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteTitleCollectionViewCell.self), for: indexPath)
                     as? NoteTitleCollectionViewCell else { return UICollectionViewCell()}
             cell.delegate = self
+            
+            if aurthor?.userAvatar != nil {
+                let url = URL(string: aurthor?.userAvatar ?? "")
+                cell.userAvatar.kf.indicatorType = .activity
+                cell.userAvatar.kf.setImage(with: url)
+            } else {
+                cell.userAvatar.image = UIImage(systemName: "person.circle.fill")
+                cell.userAvatar.tintColor = .myDarkGreen
+            }
+            cell.userName.text = aurthor?.userName
             cell.viewsLabel.text = "\(note.clicks.count)"
             cell.commentCountsLabel.text = "\(note.comments.count)"
             
@@ -373,7 +420,7 @@ extension NoteDetailViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .absolute(40))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension:.fractionalHeight(0.2))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -396,7 +443,7 @@ extension NoteDetailViewController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
+//        section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))

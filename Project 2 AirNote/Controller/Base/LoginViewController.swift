@@ -52,7 +52,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
     }
     
     // MARK: Native Sign up
@@ -192,7 +192,7 @@ extension LoginViewController {
     func configureNativeSignIn() {
         signUpButton.setTitle("註冊", for: .normal)
         logInButton.setTitle("登入", for: .normal)
-
+        
     }
     
     func configureAsVisitorButton() {
@@ -259,7 +259,8 @@ extension LoginViewController {
                                     userName: "",
                                     userNotes: [],
                                     email: FirebaseManager.shared.currentUser?.email,
-                                    uid: uid)
+                                    uid: uid,
+                                    blockUsers: [])
                     
                     UserManager.shared.createUser( &user, uid) { result in
                         switch result {

@@ -120,6 +120,26 @@ extension DiscoverNotesViewController {
                 // Store Current User
                 self?.storeCurrentUser()
                 
+                // Filter Blocked Users
+                guard let blockedUids = self?.currentUser?.blockUsers else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    
+                }
+                
+                // Filter Blocked Users Content
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.filterNotes = self?.filterNotes.filter{ $0.authorId != blockedUid} ?? []
+                    
+                    self?.notes = self?.notes.filter{ $0.authorId != blockedUid} ?? []
+                    
+                }
+                
+                
                 DispatchQueue.main.async {
                     self?.notesCollectionView.reloadData()
                 }

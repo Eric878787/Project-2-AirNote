@@ -147,6 +147,25 @@ extension SearchContentViewController {
                     
                 }
                 
+                // Filter Blocked Users
+                guard let blockedUids = self?.currentUser?.blockUsers else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.users = self?.users.filter{$0.uid != blockedUid} ?? []
+                    
+                }
+                
+                // Filter Blocked Users Content
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.filteredNotes = self?.filteredNotes.filter{$0.authorId != blockedUid} ?? []
+                    
+                    self?.notes = self?.notes.filter{$0.authorId != blockedUid} ?? []
+                    
+                }
+                
                 DispatchQueue.main.async {
                     self?.searchNotesTableView.reloadData()
                 }

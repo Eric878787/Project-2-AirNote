@@ -77,7 +77,10 @@ extension GroupMapViewController: MKMapViewDelegate {
                 reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            button.setImage(UIImage(systemName:"plus.magnifyingglass"), for: .normal)
+            button.tintColor = .myDarkGreen
+            view.rightCalloutAccessoryView = button
         }
         return view
     }

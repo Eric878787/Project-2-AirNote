@@ -25,8 +25,7 @@ class UserManager {
             
             try  document.setData(from: user, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
-        }
-        catch {
+        } catch {
             completion(.failure(error))
         }
     }

@@ -35,7 +35,7 @@ class PersonalNoteTableViewCell: UITableViewCell {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
         avatarImageView.clipsToBounds = true
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
     }
     
     @IBAction func saveNote(_ sender: Any) {

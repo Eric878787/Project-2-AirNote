@@ -152,14 +152,16 @@ extension GroupDetailViewController: GroupTitleDelegate {
         let controller = UIAlertController(title: "退出成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
 
-        self.user?.joinedGroups =  self.user?.joinedGroups.filter { $0 != self.group?.groupId } ?? []
+        guard let joinedGroups = self.user?.joinedGroups else { return }
+        self.user?.joinedGroups =  joinedGroups.filter { $0 != self.group?.groupId } ?? []
         
         guard let userToBeUpdated = self.user else { return }
         
         userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { [weak self] result in
             switch result {
             case .success:
-                self?.group?.groupMembers = self?.group?.groupMembers.filter { $0 != self?.user?.uid } ?? []
+                guard let groupMembers = self?.group?.groupMembers else { return }
+                self?.group?.groupMembers = groupMembers.filter { $0 != self?.user?.uid } ?? []
                 self?.updateGroup(controller)
             case .failure(let error):
                 print(error)
