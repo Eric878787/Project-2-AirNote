@@ -153,7 +153,7 @@ extension GroupDetailViewController: GroupTitleDelegate {
         controller.view.tintColor = UIColor.gray
 
         guard let joinedGroups = self.user?.joinedGroups else { return }
-        self.user?.joinedGroups =  joinedGroups.filter { $0 != self.group?.groupId } ?? []
+        self.user?.joinedGroups = joinedGroups.filter { $0 != self.group?.groupId } ?? []
         
         guard let userToBeUpdated = self.user else { return }
         

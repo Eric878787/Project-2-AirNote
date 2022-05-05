@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4235C5C0281BD2A600DEF3E6 /* NoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */; };
 		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
+		42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */; };
+		42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0228237474005CF4B4 /* ImageViewerViewController.swift */; };
 		423A1252281246340075B34F /* NotesDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A1251281246340075B34F /* NotesDetail.storyboard */; };
 		423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125328125B6F0075B34F /* TitleHeaderView.swift */; };
 		423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */; };
@@ -125,6 +127,8 @@
 		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
 		4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeader.swift; sourceTree = "<group>"; };
 		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
+		42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageViewer.storyboard; sourceTree = "<group>"; };
+		42383E0228237474005CF4B4 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		423A1251281246340075B34F /* NotesDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotesDetail.storyboard; sourceTree = "<group>"; };
 		423A125328125B6F0075B34F /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
 		423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 				42DD04D228112FDA007C4A9F /* NoteDetail */,
 				423A126C2813F2120075B34F /* GroupDetail */,
 				42405B122815A0EF00A12777 /* Profile */,
+				42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
 				423A1251281246340075B34F /* NotesDetail.storyboard */,
 				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
@@ -465,6 +470,7 @@
 				42405B242817873D00A12777 /* LoginViewController.swift */,
 				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
 				42B7FAA02819664500E68DE6 /* AuthViewController.swift */,
+				42383E0228237474005CF4B4 /* ImageViewerViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -781,6 +787,7 @@
 				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
 				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
 				42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */,
+				42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */,
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
 				42405B162815A13800A12777 /* PersonalNoteTableViewCell.xib in Resources */,
@@ -887,6 +894,7 @@
 				42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */,
 				42405B152815A13800A12777 /* PersonalNoteTableViewCell.swift in Sources */,
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
+				42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
 				42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */,

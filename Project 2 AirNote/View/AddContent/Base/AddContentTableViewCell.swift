@@ -33,4 +33,10 @@ class AddContentTableViewCell: UITableViewCell, UITextViewDelegate {
         guard let text = textView.text else { return }
         dataHandler?(text)
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 100
+    }
 }

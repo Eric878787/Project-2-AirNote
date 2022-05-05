@@ -18,6 +18,8 @@ class BlockListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        blockListTableView.separatorStyle = .none
 
         blockListTableView.dataSource = self
         

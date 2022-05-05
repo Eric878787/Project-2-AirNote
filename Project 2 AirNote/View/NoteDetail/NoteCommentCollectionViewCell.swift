@@ -24,6 +24,9 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = .systemGray2
+//        contentView.backgroundColor = .systemGray2
+        avatarImageView.clipsToBounds = true
+        avatarImageView.contentMode = .scaleAspectFill
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
     }
 }

@@ -18,10 +18,6 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifer = "NoteTitleCollectionViewCell"
     
-    @IBOutlet weak var userAvatar: UIImageView!
-    
-    @IBOutlet weak var userName: UILabel!
-    
     @IBOutlet weak var viewsIcon: UIImageView!
     
     @IBOutlet weak var viewsLabel: UILabel!
@@ -42,14 +38,12 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
         saveButton.tintColor = .myDarkGreen
         
         // Tap Avatar
-        addTapGesture()
+//        addTapGesture()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = .systemGray2
-        userAvatar.layer.cornerRadius = userAvatar.frame.height / 2
-        userAvatar.clipsToBounds = true
+//        contentView.backgroundColor = .systemGray2
         viewsIcon.image = UIImage(systemName: "eye")
         commentCountsIcon.image = UIImage(systemName: "message")
     }
@@ -60,18 +54,18 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
         
     }
     
-    private func addTapGesture() {
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        userAvatar.isUserInteractionEnabled = true
-        userAvatar.addGestureRecognizer(tapGestureRecognizer)
-        
-    }
-    
-    @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        
-        delegate?.toProfilePage()
-        
-    }
+//    private func addTapGesture() {
+//
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+//        userAvatar.isUserInteractionEnabled = true
+//        userAvatar.addGestureRecognizer(tapGestureRecognizer)
+//
+//    }
+//
+//    @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+//
+//        delegate?.toProfilePage()
+//
+//    }
     
 }

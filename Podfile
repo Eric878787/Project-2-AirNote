@@ -17,5 +17,7 @@ target 'Project 2 AirNote' do
   pod 'lottie-ios'
   pod 'Firebase/Auth'
   pod 'Firebase'
+  pod 'AXPhotoViewer'
+  pod 'SKPhotoBrowser'
 
 end

@@ -140,17 +140,17 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
 extension AddNoteViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.row == 0 {
-//            return 100
-//        } else if indexPath.row == 1 {
-//            return 300
-//        } else if indexPath.row == 2 {
-//            return 165
-//        } else if indexPath.row == 3{
-//            return 500
-//        } else {
-//            return 600
-//        }
+        //        if indexPath.row == 0 {
+        //            return 100
+        //        } else if indexPath.row == 1 {
+        //            return 300
+        //        } else if indexPath.row == 2 {
+        //            return 165
+        //        } else if indexPath.row == 3{
+        //            return 500
+        //        } else {
+        //            return 600
+        //        }
         
         if indexPath.row == 1 {
             return 300
@@ -167,21 +167,21 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.editedImage] as? UIImage {
+        if  picker == imagePickerController {
             
-            if picker == imagePickerController {
-                
+            if let image = info[.editedImage] as? UIImage {
                 coverImage = image
-                
-            } else {
-                
+            }
+            
+        } else {
+            
+            if let image = info[.originalImage] as? UIImage {
                 if self.contentImages.count < 4 {
                     self.contentImages.insert(image, at: 0)
                 }  else {
                     self.contentImages.remove(at: 3)
                     self.contentImages.insert(image, at: 0)
                 }
-                
             }
             
         }
@@ -320,7 +320,6 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
     // 開啟相機（content photo）
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
-        multiImagePickerController.allowsEditing = true
         self.present(multiImagePickerController, animated: true)
     }
     

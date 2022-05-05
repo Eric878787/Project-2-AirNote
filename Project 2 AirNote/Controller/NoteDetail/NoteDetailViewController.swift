@@ -8,13 +8,14 @@
 import UIKit
 import Kingfisher
 
-class NoteDetailViewController: UIViewController {
+class NoteDetailViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var noteDetailCollectionView: UICollectionView!
     
     @IBOutlet weak var commentTextFiled: UITextField!
     
     @IBOutlet weak var sendButton: UIButton!
+    
     
     // Data
     var note = Note(authorId: "",
@@ -48,8 +49,15 @@ class NoteDetailViewController: UIViewController {
         // Register Cell
         registerCell()
         
-        // CollectionView DataSource
+        // CollectionView DataSource & Delegate
         noteDetailCollectionView.dataSource = self
+        noteDetailCollectionView.delegate = self
+        
+        // Textfield Delegate
+        commentTextFiled.delegate = self
+        
+        // Send Button Color
+        sendButton.tintColor = .myDarkGreen
         
         // CollectionView Layout
         noteDetailCollectionView.collectionViewLayout = configureLayout()
@@ -82,37 +90,63 @@ class NoteDetailViewController: UIViewController {
             return
         }
         
-        let newComment = Comment(content: content, createdTime: Date(), uid: FirebaseManager.shared.currentUser?.uid ?? "")
-        note.comments.append(newComment)
-        note.comments.sort{
-            ( $0.createdTime ) < ( $1.createdTime )
-        }
-        
-        noteManager.updateNote(note: self.note, noteId: self.note.noteId) { [weak self] result in
-            switch result {
-            case .success:
-                
-                let controller = UIAlertController(title: "評論成功", message: nil, preferredStyle: .alert)
-                controller.view.tintColor = UIColor.gray
-                let action = UIAlertAction(title: "確認", style: .destructive)
-                action.setValue(UIColor.black, forKey: "titleTextColor")
-                controller.addAction(action)
-                self?.present(controller, animated: true)
-                
-                DispatchQueue.main.async {
-                    
-                    self?.commentTextFiled.text = ""
-                    
-                    self?.noteDetailCollectionView.reloadData()
-                    if self?.note.comments != [] {
-                        self?.noteDetailCollectionView.scrollToItem(at: [3, (self?.note.comments.count ?? 1) - 1], at: .bottom, animated: true)
-                    }
-                }
-            case .failure(let error):
-                print("fetchData.failure: \(error)")
+        if content.count <= 20 && content.count >= 1 {
+            
+            let newComment = Comment(content: content, createdTime: Date(), uid: FirebaseManager.shared.currentUser?.uid ?? "")
+            note.comments.append(newComment)
+            note.comments.sort{
+                ( $0.createdTime ) < ( $1.createdTime )
             }
+            
+            noteManager.updateNote(note: self.note, noteId: self.note.noteId) { [weak self] result in
+                switch result {
+                case .success:
+                    
+                    let controller = UIAlertController(title: "評論成功", message: nil, preferredStyle: .alert)
+                    controller.view.tintColor = UIColor.gray
+                    let action = UIAlertAction(title: "確認", style: .destructive)
+                    action.setValue(UIColor.black, forKey: "titleTextColor")
+                    controller.addAction(action)
+                    self?.present(controller, animated: true)
+                    
+                    DispatchQueue.main.async {
+                        
+                        self?.commentTextFiled.text = ""
+                        
+                        self?.noteDetailCollectionView.reloadData()
+                        if self?.note.comments != [] {
+                            self?.noteDetailCollectionView.scrollToItem(at: [3, (self?.note.comments.count ?? 1) - 1], at: .bottom, animated: true)
+                        }
+                    }
+                case .failure(let error):
+                    print("fetchData.failure: \(error)")
+                }
+            }
+        } else {
+            let controller = UIAlertController(title: "評論失敗", message: "評論字數應介於1-20", preferredStyle: .alert)
+            controller.view.tintColor = UIColor.gray
+            let action = UIAlertAction(title: "確認", style: .destructive)
+            action.setValue(UIColor.black, forKey: "titleTextColor")
+            controller.addAction(action)
+            self.present(controller, animated: true)
         }
     }
+}
+
+// MARK: Textfield Delegate
+extension NoteDetailViewController {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 20
+    }
+    
+    
 }
 
 // MARK: To edit page
@@ -303,15 +337,15 @@ extension NoteDetailViewController: UICollectionViewDataSource {
                     as? NoteTitleCollectionViewCell else { return UICollectionViewCell()}
             cell.delegate = self
             
-            if aurthor?.userAvatar != nil {
-                let url = URL(string: aurthor?.userAvatar ?? "")
-                cell.userAvatar.kf.indicatorType = .activity
-                cell.userAvatar.kf.setImage(with: url)
-            } else {
-                cell.userAvatar.image = UIImage(systemName: "person.circle.fill")
-                cell.userAvatar.tintColor = .myDarkGreen
-            }
-            cell.userName.text = aurthor?.userName
+            //            if aurthor?.userAvatar != nil {
+            //                let url = URL(string: aurthor?.userAvatar ?? "")
+            //                cell.userAvatar.kf.indicatorType = .activity
+            //                cell.userAvatar.kf.setImage(with: url)
+            //            } else {
+            //                cell.userAvatar.image = UIImage(systemName: "person.circle.fill")
+            //                cell.userAvatar.tintColor = .myDarkGreen
+            //            }
+            //            cell.userName.text = aurthor?.userName
             cell.viewsLabel.text = "\(note.clicks.count)"
             cell.commentCountsLabel.text = "\(note.comments.count)"
             
@@ -351,24 +385,60 @@ extension NoteDetailViewController: UICollectionViewDataSource {
         
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath)
                 as? TitleSupplementaryView else { return UICollectionReusableView() }
+        header.delegate = self
         
         switch indexPath.section {
         case 0:
-            header.textLabel.text = ""
+            header.avatar.isHidden = false
+            header.name.isHidden = false
+            header.textLabel.isHidden = true
+            if aurthor?.userAvatar != nil {
+                let url = URL(string: aurthor?.userAvatar ?? "")
+                header.avatar.kf.indicatorType = .activity
+                header.avatar.kf.setImage(with: url)
+            } else {
+                header.avatar.image = UIImage(systemName: "person.circle.fill")
+                header.avatar.tintColor = .myDarkGreen
+            }
+            header.name.text = aurthor?.userName
+            
             return header
         case 1:
             header.textLabel.text = note.title
+            header.textLabel.isHidden = false
+            header.avatar.isHidden = true
+            header.name.isHidden = true
             return header
         case 2:
-            header.textLabel.text = "內容"
+            header.textLabel.isHidden = true
+            header.avatar.isHidden = true
+            header.name.isHidden = true
             return header
         case 3:
             header.textLabel.text = "評論"
+            header.textLabel.isHidden = false
+            header.avatar.isHidden = true
+            header.name.isHidden = true
             return header
         default:
             return UICollectionReusableView()
         }
     }
+}
+
+// MARK: CollectionView Delegate
+extension NoteDetailViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 {
+            let vc = ImageViewerViewController()
+            vc.images = self.note.images
+            vc.currentPage = indexPath.item
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
 }
 
 // MARK: CollectionView Compositional Layout
@@ -379,75 +449,94 @@ extension NoteDetailViewController {
             
             switch sectionIndex {
             case 0:
-                return self.configLargeSection()
-            case 1, 2 :
-                return self.configMidiumSection()
+                return self.configSection0()
+            case 1:
+                return self.configSection1()
+            case 2:
+                return self.configSection2()
             case 3:
-                return self.configCommentSection()
+                return self.configSection3()
                 
             default:
-                return self.configLargeSection()
+                return self.configSection0()
             }
         }
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
     
-    private func configLargeSection() -> NSCollectionLayoutSection {
+    private func configSection0() -> NSCollectionLayoutSection {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupHeight = NSCollectionLayoutDimension.fractionalWidth(0.5)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: groupHeight)
+        let groupHeight = NSCollectionLayoutDimension.fractionalWidth(0.8)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: groupHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        section.interGroupSpacing = 10
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
+        sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }
     
-    private func configMidiumSection() -> NSCollectionLayoutSection {
+    private func configSection1() -> NSCollectionLayoutSection {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension:.fractionalHeight(0.2))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(30))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
+        sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }
     
-    private func configCommentSection() -> NSCollectionLayoutSection {
+    private func configSection2() -> NSCollectionLayoutSection {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
+        
+        return section
+    }
+    
+    private func configSection3() -> NSCollectionLayoutSection {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .absolute(80))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(40))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-//        section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
+        sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section

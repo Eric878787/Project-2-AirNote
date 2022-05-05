@@ -17,24 +17,25 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6TN-pC-kj9">
-                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="6TN-pC-kj9" secondAttribute="height" multiplier="1:1" id="8Ql-2o-Dcr"/>
-                            <constraint firstAttribute="height" constant="80" id="OTq-kp-cSw"/>
+                            <constraint firstAttribute="height" constant="30" id="OTq-kp-cSw"/>
+                            <constraint firstAttribute="width" constant="30" id="hgJ-XK-daT"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Mfa-23-pFP">
-                        <rect key="frame" x="85" y="11.5" width="41.5" height="57"/>
+                        <rect key="frame" x="40" y="0.0" width="35.5" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ef-fr-G0y">
-                                <rect key="frame" x="0.0" y="0.0" width="41.5" height="28.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="15"/>
+                                <fontDescription key="fontDescription" name="PingFangTC-Semibold" family="PingFang TC" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sby-dz-0ls">
-                                <rect key="frame" x="0.0" y="28.5" width="41.5" height="28.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="15" width="35.5" height="15"/>
+                                <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -42,13 +43,13 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Mfa-23-pFP" firstAttribute="height" secondItem="6TN-pC-kj9" secondAttribute="height" multiplier="0.716216" id="1Lg-JC-jID"/>
+                    <constraint firstItem="Mfa-23-pFP" firstAttribute="height" secondItem="6TN-pC-kj9" secondAttribute="height" id="1Lg-JC-jID"/>
                     <constraint firstItem="6TN-pC-kj9" firstAttribute="leading" secondItem="gER-ig-puG" secondAttribute="leading" id="3V8-ic-YJW"/>
-                    <constraint firstItem="Mfa-23-pFP" firstAttribute="leading" secondItem="6TN-pC-kj9" secondAttribute="trailing" constant="5" id="f5X-Nz-VVg"/>
+                    <constraint firstItem="6TN-pC-kj9" firstAttribute="centerY" secondItem="gER-ig-puG" secondAttribute="centerY" id="BVe-sR-fCT"/>
+                    <constraint firstItem="Mfa-23-pFP" firstAttribute="leading" secondItem="6TN-pC-kj9" secondAttribute="trailing" constant="10" id="f5X-Nz-VVg"/>
                     <constraint firstItem="6TN-pC-kj9" firstAttribute="top" secondItem="gER-ig-puG" secondAttribute="top" id="fuq-wl-YT4"/>
                     <constraint firstAttribute="bottom" secondItem="6TN-pC-kj9" secondAttribute="bottom" id="hZw-k5-jcT"/>
-                    <constraint firstItem="Mfa-23-pFP" firstAttribute="centerY" secondItem="gER-ig-puG" secondAttribute="centerY" id="j0B-j2-UhJ"/>
-                    <constraint firstItem="6TN-pC-kj9" firstAttribute="centerY" secondItem="gER-ig-puG" secondAttribute="centerY" id="kyb-wJ-3tt"/>
+                    <constraint firstItem="Mfa-23-pFP" firstAttribute="centerY" secondItem="6TN-pC-kj9" secondAttribute="centerY" id="vKH-b4-zsd"/>
                 </constraints>
             </collectionViewCellContentView>
             <size key="customSize" width="269" height="74"/>
