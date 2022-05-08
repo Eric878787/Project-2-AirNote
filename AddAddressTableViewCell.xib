@@ -36,7 +36,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dA1-K0-zxS">
-                        <rect key="frame" x="126.5" y="135" width="67" height="40"/>
+                        <rect key="frame" x="116" y="135" width="88" height="40"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
                         <connections>
@@ -57,6 +57,7 @@
                     <constraint firstItem="Na5-pL-DBs" firstAttribute="top" secondItem="uCV-Dw-VF8" secondAttribute="bottom" constant="5" id="rUF-HR-r4a"/>
                     <constraint firstItem="uCV-Dw-VF8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="tGO-4G-bFd"/>
                     <constraint firstItem="dA1-K0-zxS" firstAttribute="height" secondItem="G4C-2P-zaV" secondAttribute="height" id="tJa-TN-abx"/>
+                    <constraint firstItem="dA1-K0-zxS" firstAttribute="width" secondItem="G4C-2P-zaV" secondAttribute="width" id="x7F-xq-Y8m"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

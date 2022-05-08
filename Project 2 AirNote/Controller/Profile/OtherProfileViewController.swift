@@ -172,7 +172,7 @@ extension OtherProfileViewController {
     func configureTableView() {
         
         contentTableView.dataSource = self
-        contentTableView.delegate = self
+//        contentTableView.delegate = self
         contentTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
         contentTableView.registerCellWithNib(identifier: String(describing: PersonalGroupTableViewCell.self), bundle: nil)
         
@@ -403,14 +403,3 @@ extension OtherProfileViewController: UITableViewDataSource {
     }
     
 }
-
-// Tableview Delegate
-extension OtherProfileViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        300
-    }
-    
-    
-}
-

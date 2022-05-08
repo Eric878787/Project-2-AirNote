@@ -49,7 +49,7 @@ class GroupResultTableViewCell: UITableViewCell {
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
         avatarImageView.clipsToBounds = true
         categoryLabel.layer.borderWidth = 1
-        categoryLabel.layer.shadowColor = UIColor.myBrown.cgColor
+        categoryLabel.layer.borderColor = UIColor.myBrown.cgColor
         categoryLabel.titleLabel?.textColor = .myBrown
         categoryLabel.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 14)
         categoryLabel.layer.cornerRadius = 10

@@ -7,13 +7,10 @@
 
 import UIKit
 import Kingfisher
-import SwiftUI
 
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profilePageTableView: UITableView!
-    
-    @IBOutlet weak var deleteAccountButton: UIButton!
     
     @IBOutlet weak var profileAvatar: UIImageView!
     
@@ -21,11 +18,14 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var settingNameButton: UIButton!
     
+    @IBOutlet weak var userFollowersButton: UIButton!
+    
     @IBOutlet weak var userFollowersLabel: UILabel!
+    
+    @IBOutlet weak var userFollowingsButton: UIButton!
     
     @IBOutlet weak var userFollowingsLabel: UILabel!
     
-    @IBOutlet weak var followButton: UIButton!
     
     // Select Image
     private let imagePickerController = UIImagePickerController()
@@ -69,8 +69,8 @@ class ProfileViewController: UIViewController {
         imagePickerController.delegate = self
         
         // Log out Button
-        let deleteButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"), style: .plain, target: self, action: #selector(signOut))
-        self.navigationItem.leftBarButtonItem = deleteButton
+        let logOutButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"), style: .plain, target: self, action: #selector(signOut))
+        self.navigationItem.leftBarButtonItem = logOutButton
         
         // Block List
         let blockListButton = UIBarButtonItem(image: UIImage(systemName: "person.fill.badge.minus"), style: .plain, target: self, action: #selector(toBlockList))
@@ -87,49 +87,6 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchUsers()
-    }
-    
-    
-    @IBAction func deleteAccount(_ sender: Any) {
-        
-        FirebaseManager.shared.delete()
-        FirebaseManager.shared.deleteAccountSuccess = {
-            guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
-            UserManager.shared.deleteUser(uid: uid) { result in
-                switch result {
-                case .success:
-                    let controller = UIAlertController(title: "刪除帳號成功", message: "請重新註冊", preferredStyle: .alert)
-                    controller.view.tintColor = UIColor.gray
-                    let action = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        
-                        if self.presentingViewController == nil {
-                            
-                            guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            self.dismiss(animated: true)
-                            
-                        }
-                    }
-                    
-                    controller.addAction(action)
-                    self.present(controller, animated: true)
-                    
-                case .failure:
-                    let controller = UIAlertController(title: "刪除帳號失敗", message: "請再次嘗試", preferredStyle: .alert)
-                    controller.view.tintColor = UIColor.gray
-                    let action = UIAlertAction(title: "確認", style: .destructive)
-                    controller.addAction(action)
-                    self.present(controller, animated: true)
-                }
-            }
-        }
-        
     }
     
     @IBAction func settingName(_ sender: Any) {
@@ -232,6 +189,7 @@ extension ProfileViewController {
         profilePageTableView.delegate = self
         profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
         profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalGroupTableViewCell.self), bundle: nil)
+        profilePageTableView.register(DeleteAccountTableViewCell.self, forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
         profilePageTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
         profilePageTableView.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: GroupHeader.reuseIdentifier)
         
@@ -271,55 +229,56 @@ extension ProfileViewController {
         }
         
         // User Followers
-        userFollowersLabel.text = "Followers:\(user?.followers.count ?? 0)"
+        userFollowersButton.setTitle("\(user?.followers.count ?? 0)", for: .normal)
         
         // User Followings
-        userFollowingsLabel.text = "Followings:\(user?.followings.count ?? 0)"
+        userFollowingsButton.setTitle("\(user?.followings.count ?? 0)", for: .normal)
+        
     }
     
     func layoutButton() {
         
         // Setting Name Button
-        settingNameButton.setTitleColor(.white, for: .normal)
-        settingNameButton.backgroundColor = .myPurple
-        settingNameButton.clipsToBounds = true
-        settingNameButton.layer.cornerRadius = 10
-        
-        // Follow Button
-        followButton.isHidden = true
-        
-        // Configure Delete Account
-        deleteAccountButton.setTitle("刪除帳號", for: .normal)
-        deleteAccountButton.setTitleColor(.myPurple, for: .normal)
-        deleteAccountButton.layer.cornerRadius = 10
-        deleteAccountButton.layer.borderWidth = 1
-        deleteAccountButton.layer.borderColor = UIColor.myPurple.cgColor
+        settingNameButton.tintColor = .myDarkGreen
+        userFollowersButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16)
+        userFollowersButton.tintColor = .black
+        userFollowersLabel.font = UIFont(name: "PingFangTC-Regular", size: 16)
+        userFollowingsButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16)
+        userFollowingsButton.tintColor = .black
+        userFollowingsLabel.font = UIFont(name: "PingFangTC-Regular", size: 16)
         
     }
     
 }
 
-
-// Fetch Data
+// Remote Data
 extension ProfileViewController {
     
     @objc func signOut() {
         
-        FirebaseManager.shared.signout()
-        
-        if self.presentingViewController == nil {
+        let controller = UIAlertController(title: "登出成功", message: "將返回登入頁面", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        let action = UIAlertAction(title: "確認", style: .destructive) { _ in
             
-            guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+            FirebaseManager.shared.signout()
             
-            vc.modalPresentationStyle = .fullScreen
-            
-            self.present(vc, animated: true)
-            
-        } else {
-            
-            self.dismiss(animated: true)
-            
+            if self.presentingViewController == nil {
+                
+                guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+                
+                vc.modalPresentationStyle = .fullScreen
+                
+                self.present(vc, animated: true)
+                
+            } else {
+                
+                self.dismiss(animated: true)
+                
+            }
         }
+        
+        controller.addAction(action)
+        self.present(controller, animated: true)
         
     }
     
@@ -541,6 +500,64 @@ extension ProfileViewController {
         
     }
     
+    
+    private func deleteAccount() {
+        
+        var controller = UIAlertController(title: "是否要刪除帳號", message: "刪除後將清除所有帳戶資料", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
+            self.confirmDeletion()
+        }
+        confirmAction.setValue(UIColor.red, forKey: "titleTextColor")
+        controller.addAction(confirmAction)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+    
+    private func confirmDeletion() {
+        
+        FirebaseManager.shared.delete()
+        FirebaseManager.shared.deleteAccountSuccess = {
+            guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
+            UserManager.shared.deleteUser(uid: uid) { result in
+                switch result {
+                case .success:
+                    let controller = UIAlertController(title: "刪除帳號成功", message: "請重新註冊", preferredStyle: .alert)
+                    controller.view.tintColor = UIColor.gray
+                    let action = UIAlertAction(title: "確認", style: .destructive) { _ in
+                        
+                        if self.presentingViewController == nil {
+                            
+                            guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+                            
+                            vc.modalPresentationStyle = .fullScreen
+                            
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            self.dismiss(animated: true)
+                            
+                        }
+                    }
+                    
+                    controller.addAction(action)
+                    self.present(controller, animated: true)
+                    
+                case .failure:
+                    let controller = UIAlertController(title: "刪除帳號失敗", message: "請再次嘗試", preferredStyle: .alert)
+                    controller.view.tintColor = UIColor.gray
+                    let action = UIAlertAction(title: "確認", style: .destructive)
+                    controller.addAction(action)
+                    self.present(controller, animated: true)
+                }
+            }
+        }
+        
+    }
+    
 }
 
 // Wrapped Data
@@ -578,17 +595,24 @@ extension ProfileViewController {
 }
 
 // Set Up Table View delegate & datasource
-extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
+extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, DeleteAccountDelegate {
+    
+    func tapDeleteAccountButton() {
+        deleteAccount()
+    }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return notesOnTableView.count
-        } else {
+        } else if section == 1 {
             return groupsOnTableView.count
+        } else {
+            return 1
         }
     }
     
@@ -611,9 +635,10 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.titleLabel.text = notesOnTableView[indexPath.row].title
+            cell.categoryButton.setTitle("\(notesOnTableView[indexPath.row].category)", for: .normal)
             return cell
             
-        } else {
+        } else if indexPath.section == 1 {
             
             let personalGroupTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalGroupTableViewCell", for: indexPath)
             guard let cell = personalGroupTableViewCell as? PersonalGroupTableViewCell else { return personalGroupTableViewCell }
@@ -633,7 +658,13 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
             formatter.dateFormat = "MM/dd"
             cell.dateLabel.text = formatter.string(from: date)
             cell.titleLabel.text = groupsOnTableView[indexPath.row].groupTitle
+            cell.categoryButton.setTitle("\( groupsOnTableView[indexPath.row].groupCategory)", for: .normal)
             cell.memberCountsLabel.text = "\(groupsOnTableView[indexPath.row].groupMembers.count)"
+            return cell
+        } else {
+            let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier, for: indexPath)
+            guard let cell = deleteAccountTableViewCell as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
+            cell.delegate = self
             return cell
         }
         
@@ -652,7 +683,7 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
                 self?.profilePageTableView.reloadData()
             }
             return header
-        } else {
+        } else if section == 1 {
             
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier) as? GroupHeader else { return nil }
             header.firstSegmentController.setTitle("我的讀書會", forSegmentAt: 0)
@@ -663,11 +694,9 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
                 self?.profilePageTableView.reloadData()
             }
             return header
+        } else {
+            return nil
         }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        300
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -691,7 +720,7 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
                 }
             }
             
-        } else {
+        } else if indexPath.section == 1{
             
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
             guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
@@ -700,6 +729,8 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
             vc.user = user
             self.navigationController?.pushViewController(vc, animated: true)
             
+        } else {
+            return
         }
         
     }

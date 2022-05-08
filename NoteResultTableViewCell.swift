@@ -54,7 +54,7 @@ class NoteResultTableViewCell: UITableViewCell {
         mainImageView.clipsToBounds = true
         mainImageView.layer.cornerRadius = 10
         categoryButton.layer.borderWidth = 1
-        categoryButton.layer.shadowColor = UIColor.myBrown.cgColor
+        categoryButton.layer.borderColor = UIColor.myBrown.cgColor
         categoryButton.titleLabel?.textColor = .myBrown
         categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 14)
         categoryButton.layer.cornerRadius = 10

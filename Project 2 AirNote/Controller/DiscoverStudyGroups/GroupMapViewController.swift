@@ -18,6 +18,10 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
     // MARK: Groups Data
     var groups: [Group] = []
     
+    var users: [User] = []
+    
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -108,6 +112,8 @@ extension GroupMapViewController: MKMapViewDelegate {
         let storyBoard = UIStoryboard(name: "GroupDetail", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
         vc.group = group[0]
+        vc.users = users
+        vc.user = user
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

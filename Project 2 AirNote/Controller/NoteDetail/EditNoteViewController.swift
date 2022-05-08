@@ -48,6 +48,7 @@ class EditNoteViewController: UIViewController {
         
         // Delete Button
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteNote))
+        deleteButton.tintColor = .red
         self.navigationItem.rightBarButtonItem = deleteButton
         
         // Set Default Message

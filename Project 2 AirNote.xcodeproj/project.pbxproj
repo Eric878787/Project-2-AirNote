@@ -12,6 +12,7 @@
 		42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */; };
 		42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0228237474005CF4B4 /* ImageViewerViewController.swift */; };
 		42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */; };
+		42383E0A28280B14005CF4B4 /* DeleteAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */; };
 		423A1252281246340075B34F /* NotesDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A1251281246340075B34F /* NotesDetail.storyboard */; };
 		423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125328125B6F0075B34F /* TitleHeaderView.swift */; };
 		423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */; };
@@ -131,6 +132,7 @@
 		42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageViewer.storyboard; sourceTree = "<group>"; };
 		42383E0228237474005CF4B4 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
+		42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountTableViewCell.swift; sourceTree = "<group>"; };
 		423A1251281246340075B34F /* NotesDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotesDetail.storyboard; sourceTree = "<group>"; };
 		423A125328125B6F0075B34F /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
 		423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				42D2C1FA281FF23E004CD0CC /* PersonalGroupTableViewCell.xib */,
 				4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */,
 				42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */,
+				42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -906,6 +909,7 @@
 				42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */,
 				42405B152815A13800A12777 /* PersonalNoteTableViewCell.swift in Sources */,
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
+				42383E0A28280B14005CF4B4 /* DeleteAccountTableViewCell.swift in Sources */,
 				42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
@@ -1112,8 +1116,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1146,8 +1151,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

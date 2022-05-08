@@ -8,9 +8,13 @@
 import UIKit
 
 class DrawingPadViewController: UIViewController {
-
+    
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var tempImageView: UIImageView!
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var sharedButton: UIButton!
+    @IBOutlet weak var setUpButton: UIButton!
+    @IBOutlet var pencils: [UIButton]!
     
     var lastPoint = CGPoint.zero
     var color = UIColor.black
@@ -23,9 +27,41 @@ class DrawingPadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName:"checkmark"), style: .plain, target: self, action: #selector(backToPreviousPage))
+        // Configure Buttons
+        configButtons()
+        
     }
     
     // MARK: - Actions
+    
+    private func configButtons() {
+        
+        // Reset Button
+        resetButton.setTitle("重畫", for: .normal)
+        resetButton.setTitleColor(.white, for: .normal)
+        resetButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
+        resetButton.backgroundColor = .myDarkGreen
+        resetButton.layer.cornerRadius = 10
+        resetButton.clipsToBounds = true
+        
+        // Set Up Button
+        setUpButton.setTitle("設定", for: .normal)
+        setUpButton.setTitleColor(.white, for: .normal)
+        setUpButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
+        setUpButton.backgroundColor = .myDarkGreen
+        setUpButton.layer.cornerRadius = 10
+        setUpButton.clipsToBounds = true
+        
+        // Shared Button
+        sharedButton.setTitle("分享", for: .normal)
+        sharedButton.setTitleColor(.white, for: .normal)
+        sharedButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
+        sharedButton.backgroundColor = .myDarkGreen
+        sharedButton.layer.cornerRadius = 10
+        sharedButton.clipsToBounds = true
+        
+    }
+    
     @objc func backToPreviousPage() {
         imageProvider?(mainImageView.image ?? UIImage())
         self.navigationController?.popViewController(animated: true)
@@ -49,96 +85,102 @@ class DrawingPadViewController: UIViewController {
     }
     
     @IBAction func resetPressed(_ sender: Any) {
-      mainImageView.image = nil
+        mainImageView.image = nil
     }
     
     @IBAction func sharePressed(_ sender: Any) {
-      guard let image = mainImageView.image else {
-        return
-      }
-      let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-      present(activity, animated: true)
+        guard let image = mainImageView.image else {
+            return
+        }
+        let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        present(activity, animated: true)
     }
     
     @IBAction func pencilPressed(_ sender: UIButton) {
-      guard let pencil = Pencil(tag: sender.tag) else {
-        return
-      }
-      color = pencil.color
-      if pencil == .eraser {
-        opacity = 1.0
-      }
+        guard let pencil = Pencil(tag: sender.tag) else {
+            return
+        }
+        for pencil in pencils {
+            pencil.layer.borderWidth = 0
+        }
+        sender.layer.borderColor = UIColor.black.cgColor
+        sender.layer.borderWidth = 2
+        sender.layer.cornerRadius = 5
+        color = pencil.color
+        if pencil == .eraser {
+            opacity = 1.0
+        }
     }
     
     func drawLine(from fromPoint: CGPoint, to toPoint: CGPoint) {
-      UIGraphicsBeginImageContext(view.frame.size)
-      guard let context = UIGraphicsGetCurrentContext() else {
-        return
-      }
-      tempImageView.image?.draw(in: view.bounds)
-      
-      context.move(to: fromPoint)
-      context.addLine(to: toPoint)
-      
-      context.setLineCap(.round)
-      context.setBlendMode(.normal)
-      context.setLineWidth(brushWidth)
-      context.setStrokeColor(color.cgColor)
-      
-      context.strokePath()
-      
-      tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-      tempImageView.alpha = opacity
-      
-      UIGraphicsEndImageContext()
+        UIGraphicsBeginImageContext(view.frame.size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return
+        }
+        tempImageView.image?.draw(in: view.bounds)
+        
+        context.move(to: fromPoint)
+        context.addLine(to: toPoint)
+        
+        context.setLineCap(.round)
+        context.setBlendMode(.normal)
+        context.setLineWidth(brushWidth)
+        context.setStrokeColor(color.cgColor)
+        
+        context.strokePath()
+        
+        tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        tempImageView.alpha = opacity
+        
+        UIGraphicsEndImageContext()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-      guard let touch = touches.first else {
-        return
-      }
-      swiped = false
-      lastPoint = touch.location(in: view)
+        guard let touch = touches.first else {
+            return
+        }
+        swiped = false
+        lastPoint = touch.location(in: view)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-      guard let touch = touches.first else {
-        return
-      }
-      swiped = true
-      let currentPoint = touch.location(in: view)
-      drawLine(from: lastPoint, to: currentPoint)
-      
-      lastPoint = currentPoint
+        guard let touch = touches.first else {
+            return
+        }
+        swiped = true
+        let currentPoint = touch.location(in: view)
+        drawLine(from: lastPoint, to: currentPoint)
+        
+        lastPoint = currentPoint
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-      if !swiped {
-        // draw a single point
-        drawLine(from: lastPoint, to: lastPoint)
-      }
-      
-      // Merge tempImageView into mainImageView
-      UIGraphicsBeginImageContext(mainImageView.frame.size)
-      mainImageView.image?.draw(in: view.bounds, blendMode: .normal, alpha: 1.0)
-      tempImageView?.image?.draw(in: view.bounds, blendMode: .normal, alpha: opacity)
-      mainImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-      
-      tempImageView.image = nil
+        if !swiped {
+            // draw a single point
+            drawLine(from: lastPoint, to: lastPoint)
+        }
+        
+        // Merge tempImageView into mainImageView
+        UIGraphicsBeginImageContext(mainImageView.frame.size)
+        mainImageView.image?.draw(in: view.bounds, blendMode: .normal, alpha: 1.0)
+        tempImageView?.image?.draw(in: view.bounds, blendMode: .normal, alpha: opacity)
+        mainImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        tempImageView.image = nil
     }
-  }
+}
 
-  // MARK: - SettingsViewControllerDelegate
+// MARK: - SettingsViewControllerDelegate
 
 extension DrawingPadViewController: SetUpPadViewControllerDelegate {
     func settingsViewControllerFinished(_ settingsViewController: SetUpPadViewController) {
-      brushWidth = settingsViewController.brush
-      opacity = settingsViewController.opacity
-      color = UIColor(red: settingsViewController.red,
-                      green: settingsViewController.green,
-                      blue: settingsViewController.blue,
-                      alpha: opacity)
-      dismiss(animated: true)
+        brushWidth = settingsViewController.brush
+        opacity = settingsViewController.opacity
+        color = UIColor(red: settingsViewController.red,
+                        green: settingsViewController.green,
+                        blue: settingsViewController.blue,
+                        alpha: opacity)
+        dismiss(animated: true)
     }
-  }
+}

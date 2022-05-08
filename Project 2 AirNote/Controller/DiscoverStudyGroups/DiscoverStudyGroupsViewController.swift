@@ -113,6 +113,8 @@ extension DiscoverStudyGroupsViewController {
         let storyBoard = UIStoryboard(name: "DiscoverStudyGroups", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupMapViewController") as? GroupMapViewController else { return }
         vc.groups = self.groups
+        vc.user = self.user
+        vc.users = self.users
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

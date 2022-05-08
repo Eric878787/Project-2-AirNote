@@ -49,6 +49,7 @@ class GroupDetailViewController: UIViewController {
         
         // Delete Button
         deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteGroup))
+        deleteButton.tintColor = .red
         self.navigationItem.rightBarButtonItem = deleteButton
         
     }
@@ -129,6 +130,27 @@ extension GroupDetailViewController {
     }
 }
 
+// MARK: To Profile Page
+extension GroupDetailViewController: NoteTitleDelegate {
+    func saveNote(_ selectedCell: NoteTitleCollectionViewCell) {
+        return 
+    }
+    
+    
+    func toProfilePage() {
+        
+        if owner?.uid != FirebaseManager.shared.currentUser?.uid {
+            let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
+            guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+            vc.userInThisPage = self.owner
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            self.tabBarController?.selectedIndex = 4
+        }
+    }
+    
+}
+
 // MARK: Join Group
 extension GroupDetailViewController: GroupTitleDelegate {
     
@@ -193,7 +215,7 @@ extension GroupDetailViewController: GroupTitleDelegate {
             switch result {
             case .success:
                 let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                    self?.navigationController?.popViewController(animated: true)
+                    self?.navigationController?.popToRootViewController(animated: true)
                 }
                 DispatchQueue.main.async {
                     cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
@@ -362,6 +384,7 @@ extension GroupDetailViewController: UICollectionViewDataSource {
         
         switch indexPath.section {
         case 0:
+            header.delegate = self
             header.avatar.isHidden = false
             header.name.isHidden = false
             header.textLabel.isHidden = true

@@ -56,6 +56,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yaG-dN-XNj" secondAttribute="height" multiplier="1:1" id="YQ5-5k-5hC"/>
                                 </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="17"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sr7-D8-e80">
                                 <rect key="frame" x="30" y="0.0" width="25" height="30"/>
@@ -73,6 +74,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uCD-w9-RyR" secondAttribute="height" multiplier="1:1" id="5Tl-NY-T9y"/>
                                 </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="17"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nje-EH-VP9">
                                 <rect key="frame" x="30" y="0.0" width="13.5" height="30"/>
