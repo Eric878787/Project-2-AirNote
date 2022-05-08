@@ -16,7 +16,6 @@ class NoteDetailViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var sendButton: UIButton!
     
-    
     // Data
     var note = Note(authorId: "",
                     comments: [],
@@ -38,6 +37,10 @@ class NoteDetailViewController: UIViewController, UITextFieldDelegate {
     var aurthor: User?
     
     var editButton = UIBarButtonItem()
+    
+    var comments: [Comment] = []
+    
+    var userToBeBlocked = ""
     
     // Data Manager
     private var noteManager = NoteManager()
@@ -81,6 +84,9 @@ class NoteDetailViewController: UIViewController, UITextFieldDelegate {
             aurthor = user
         }
         
+        // Filter Blocked User's Note
+        filterBlockedUsersComment()
+        
     }
     
     @IBAction func sendComment(_ sender: Any) {
@@ -90,11 +96,15 @@ class NoteDetailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        if content.count <= 20 && content.count >= 1 {
+        if content.count <= 15 && content.count >= 1 {
             
             let newComment = Comment(content: content, createdTime: Date(), uid: FirebaseManager.shared.currentUser?.uid ?? "")
             note.comments.append(newComment)
+            comments.append(newComment)
             note.comments.sort{
+                ( $0.createdTime ) < ( $1.createdTime )
+            }
+            comments.sort {
                 ( $0.createdTime ) < ( $1.createdTime )
             }
             
@@ -123,7 +133,7 @@ class NoteDetailViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         } else {
-            let controller = UIAlertController(title: "評論失敗", message: "評論字數應介於1-20", preferredStyle: .alert)
+            let controller = UIAlertController(title: "評論失敗", message: "評論字數應介於1-15", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
             action.setValue(UIColor.black, forKey: "titleTextColor")
@@ -133,19 +143,119 @@ class NoteDetailViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+// MARK: Block User
+extension NoteDetailViewController {
+    
+    private func filterBlockedUsersComment() {
+        
+        // Filter Blocked Users
+        if let blockedUids = self.currentUser?.blockUsers {
+            
+            // Filter Blocked Users Content
+            
+            for blockedUid in blockedUids {
+                
+                self.comments = self.comments.filter{ $0.uid != blockedUid}
+                
+                
+            }
+        }
+        
+        noteDetailCollectionView.reloadData()
+        
+    }
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        
+        if (sender.state == UIGestureRecognizer.State.ended) {
+            
+            let touchPoint = sender.location(in: noteDetailCollectionView)
+            
+            if let indexPath = self.noteDetailCollectionView.indexPathForItem(at: touchPoint) {
+                
+                userToBeBlocked = comments[indexPath.item].uid
+                openActionList()
+                
+            }
+            
+        }
+    }
+    
+    @objc private func openActionList() {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+            self.blockUser()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        self.present(controller, animated: true)
+        
+    }
+    
+    private func blockUser() {
+        
+        currentUser?.blockUsers.append(userToBeBlocked)
+        
+        guard let currentUser = currentUser else { return }
+        
+        UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
+            
+            switch result {
+                
+            case .success:
+                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "確認", style: .default) { action in
+                    self.fetchUser()
+                }
+                controller.addAction(action)
+                self.present(controller, animated: true)
+                
+                print("封鎖成功")
+                
+            case .failure:
+                
+                print("封鎖失敗")
+                
+            }
+        }
+        
+    }
+    
+    func fetchUser() {
+        
+        UserManager.shared.fetchUser(currentUser?.uid ?? "") { [weak self] result in
+            
+            switch result {
+            case .success (let user):
+                
+                self?.currentUser = user
+                
+                self?.filterBlockedUsersComment()
+                
+            case .failure (let error):
+                
+                print(error)
+            }
+            
+        }
+    }
+    
+}
+
 // MARK: Textfield Delegate
 extension NoteDetailViewController {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let textFieldText = textField.text,
-            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
-                return false
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+            return false
         }
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
-        return count <= 20
+        return count <= 15
     }
-    
     
 }
 
@@ -316,7 +426,7 @@ extension NoteDetailViewController: UICollectionViewDataSource {
         case 2:
             return 1
         case 3:
-            return note.comments.count ?? 0
+            return comments.count ?? 0
         default:
             return 0
         }
@@ -336,16 +446,6 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteTitleCollectionViewCell.self), for: indexPath)
                     as? NoteTitleCollectionViewCell else { return UICollectionViewCell()}
             cell.delegate = self
-            
-            //            if aurthor?.userAvatar != nil {
-            //                let url = URL(string: aurthor?.userAvatar ?? "")
-            //                cell.userAvatar.kf.indicatorType = .activity
-            //                cell.userAvatar.kf.setImage(with: url)
-            //            } else {
-            //                cell.userAvatar.image = UIImage(systemName: "person.circle.fill")
-            //                cell.userAvatar.tintColor = .myDarkGreen
-            //            }
-            //            cell.userName.text = aurthor?.userName
             cell.viewsLabel.text = "\(note.clicks.count)"
             cell.commentCountsLabel.text = "\(note.comments.count)"
             
@@ -366,10 +466,17 @@ extension NoteDetailViewController: UICollectionViewDataSource {
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteCommentCollectionViewCell.self), for: indexPath)
                     as? NoteCommentCollectionViewCell else { return UICollectionViewCell()}
-            cell.commentLabel.text = note.comments[indexPath.item].content
+            cell.commentLabel.text = comments[indexPath.item].content
+            let date = comments[indexPath.item].createdTime
+            let locoalDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd"
+            cell.commentTimeLabel.text = date.timeAgoDisplay()
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+            cell.addGestureRecognizer(longPress)
             
             // querying users' name & avatar
-            for user in users where user.uid == note.comments[indexPath.item].uid {
+            for user in users where user.uid == comments[indexPath.item].uid {
                 cell.nameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.avatarImageView.kf.indicatorType = .activity
@@ -392,6 +499,7 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             header.avatar.isHidden = false
             header.name.isHidden = false
             header.textLabel.isHidden = true
+            header.timeLabel.isHidden = true
             if aurthor?.userAvatar != nil {
                 let url = URL(string: aurthor?.userAvatar ?? "")
                 header.avatar.kf.indicatorType = .activity
@@ -405,20 +513,27 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             return header
         case 1:
             header.textLabel.text = note.title
+            let localDate = note.createdTime
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "YYYY/MM/dd"
+            header.timeLabel.text = dateFormatter.string(from: localDate)
             header.textLabel.isHidden = false
             header.avatar.isHidden = true
             header.name.isHidden = true
+            header.timeLabel.isHidden = false
             return header
         case 2:
             header.textLabel.isHidden = true
             header.avatar.isHidden = true
             header.name.isHidden = true
+            header.timeLabel.isHidden = true
             return header
         case 3:
             header.textLabel.text = "評論"
             header.textLabel.isHidden = false
             header.avatar.isHidden = true
             header.name.isHidden = true
+            header.timeLabel.isHidden = true
             return header
         default:
             return UICollectionReusableView()
@@ -528,7 +643,7 @@ extension NoteDetailViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(40))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(45))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -542,4 +657,13 @@ extension NoteDetailViewController {
         return section
     }
     
+}
+
+extension Date {
+    func timeAgoDisplay() -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        
+        return formatter.localizedString(for: self, relativeTo: Date())
+    }
 }

@@ -37,7 +37,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入密碼" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cYQ-rn-SKc">
                                         <rect key="frame" x="38" y="79" width="306" height="63.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWd-fp-SHT">
                                         <rect key="frame" x="38" y="157.5" width="306" height="64"/>
@@ -107,7 +107,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AH4-dB-GKO">
-                                <rect key="frame" x="0.0" y="719.5" width="414" height="176.5"/>
+                                <rect key="frame" x="0.0" y="709.5" width="414" height="196.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請先登入會員" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cq2-C2-uAl">
                                         <rect key="frame" x="16" y="24" width="108" height="26.5"/>
@@ -161,7 +161,7 @@
                                     <constraint firstItem="pHy-DC-dow" firstAttribute="leading" secondItem="AH4-dB-GKO" secondAttribute="leading" constant="16" id="Xfy-1Z-GLl"/>
                                     <constraint firstItem="pHy-DC-dow" firstAttribute="top" secondItem="Cq2-C2-uAl" secondAttribute="bottom" constant="24" id="YJd-vd-Rnc"/>
                                     <constraint firstAttribute="trailing" secondItem="pHy-DC-dow" secondAttribute="trailing" constant="16" id="ay8-vf-nxW"/>
-                                    <constraint firstAttribute="bottom" secondItem="PP9-6y-osJ" secondAttribute="bottom" constant="16" id="bW0-gf-pUC"/>
+                                    <constraint firstAttribute="bottom" secondItem="PP9-6y-osJ" secondAttribute="bottom" constant="36" id="bW0-gf-pUC"/>
                                     <constraint firstItem="PP9-6y-osJ" firstAttribute="leading" secondItem="AH4-dB-GKO" secondAttribute="leading" constant="16" id="jJX-nF-ZU1"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -179,11 +179,12 @@
                             <constraint firstAttribute="bottom" secondItem="ela-av-EPk" secondAttribute="bottom" id="YBn-YX-p8h"/>
                             <constraint firstItem="RhK-E8-kLH" firstAttribute="trailing" secondItem="ela-av-EPk" secondAttribute="trailing" id="j9R-rT-95K"/>
                             <constraint firstItem="ela-av-EPk" firstAttribute="leading" secondItem="RhK-E8-kLH" secondAttribute="leading" id="nXU-vE-w75"/>
-                            <constraint firstAttribute="bottom" secondItem="AH4-dB-GKO" secondAttribute="bottom" id="nnQ-lO-P8D"/>
+                            <constraint firstAttribute="bottom" secondItem="AH4-dB-GKO" secondAttribute="bottom" constant="-10" id="nnQ-lO-P8D"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="ela-av-EPk" id="cWx-ha-aXK"/>
+                        <outlet property="contentView" destination="AH4-dB-GKO" id="G1A-qr-wgg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahO-EN-dRA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

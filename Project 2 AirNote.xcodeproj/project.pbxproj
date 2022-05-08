@@ -11,6 +11,7 @@
 		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
 		42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */; };
 		42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0228237474005CF4B4 /* ImageViewerViewController.swift */; };
+		42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */; };
 		423A1252281246340075B34F /* NotesDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A1251281246340075B34F /* NotesDetail.storyboard */; };
 		423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125328125B6F0075B34F /* TitleHeaderView.swift */; };
 		423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */; };
@@ -129,6 +130,7 @@
 		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
 		42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageViewer.storyboard; sourceTree = "<group>"; };
 		42383E0228237474005CF4B4 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
+		42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
 		423A1251281246340075B34F /* NotesDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotesDetail.storyboard; sourceTree = "<group>"; };
 		423A125328125B6F0075B34F /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
 		423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -266,6 +268,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		42383E0428255CC7005CF4B4 /* Third Party Wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */,
+			);
+			path = "Third Party Wrapper";
+			sourceTree = "<group>";
+		};
 		423A12672813F1390075B34F /* GroupDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,9 +290,9 @@
 				423A126F2813F30F0075B34F /* GroupCoverCollectionViewCell.swift */,
 				423A12712813F32A0075B34F /* GroupTitleCollectionViewCell.swift */,
 				423A12722813F32A0075B34F /* GroupTitleCollectionViewCell.xib */,
+				423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */,
 				423A12782813F37F0075B34F /* GroupCalendarCollectionViewCell.swift */,
 				423A12792813F37F0075B34F /* GroupCalendarCollectionViewCell.xib */,
-				423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */,
 			);
 			path = GroupDetail;
 			sourceTree = "<group>";
@@ -385,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				42405B2628178BBB00A12777 /* Project 2 AirNote.entitlements */,
+				42383E0428255CC7005CF4B4 /* Third Party Wrapper */,
 				42DE586F280164B000D764F7 /* Resource */,
 				42DE58732801781700D764F7 /* Extension */,
 				42DE586D2801642F00D764F7 /* Model */,
@@ -875,6 +886,7 @@
 				42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */,
 				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
 				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
+				42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */,
 				42B7FAA12819664500E68DE6 /* AuthViewController.swift in Sources */,
 				42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */,
 				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,

@@ -39,6 +39,8 @@ class GroupsCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         userAvatar.layer.cornerRadius = userAvatar.bounds.height/2
         userAvatar.clipsToBounds = true
+        coverImage.clipsToBounds = true
+        coverImage.layer.cornerRadius = 10
     }
 
 }

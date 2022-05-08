@@ -16,6 +16,8 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var commentLabel: UILabel!
     
+    @IBOutlet weak var commentTimeLabel: UILabel!
+    
     static let reuseIdentifer = "NoteCommentCollectionViewCell"
     
     override class func awakeFromNib() {

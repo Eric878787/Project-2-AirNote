@@ -16,6 +16,8 @@ class TitleSupplementaryView: UICollectionReusableView {
     
     let name = UILabel()
     
+    let timeLabel = UILabel()
+    
     var delegate: NoteTitleDelegate?
     
     override init(frame: CGRect) {
@@ -45,8 +47,12 @@ class TitleSupplementaryView: UICollectionReusableView {
         addSubview(textLabel)
         addSubview(avatar)
         addSubview(name)
+        addSubview(timeLabel)
         textLabel.font = UIFont(name: "PingFangTC-Semibold", size: 18)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.font = UIFont(name: "PingFangTC-Regular", size: 14)
+        timeLabel.textColor = .gray
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
         avatar.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
         name.font = UIFont(name: "PingFangTC-Semibold", size: 14)
@@ -55,9 +61,11 @@ class TitleSupplementaryView: UICollectionReusableView {
         
         NSLayoutConstraint.activate([
             textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
+//            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
             textLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             textLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
+            timeLabel.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor, constant: -inset),
+            timeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             avatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             avatar.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             avatar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),

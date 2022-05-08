@@ -682,6 +682,7 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate {
                 case .success:
                     guard let noteToPass = self?.notesOnTableView[indexPath.row] else { return }
                     vc.note = noteToPass
+                    vc.comments = noteToPass.comments
                     vc.users = self?.users ?? []
                     self?.navigationController?.pushViewController(vc, animated: true)
                     

@@ -19,5 +19,6 @@ target 'Project 2 AirNote' do
   pod 'Firebase'
   pod 'AXPhotoViewer'
   pod 'SKPhotoBrowser'
+  pod 'JGProgressHUD'
 
 end

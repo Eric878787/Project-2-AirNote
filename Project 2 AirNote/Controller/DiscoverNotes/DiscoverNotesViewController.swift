@@ -46,6 +46,7 @@ class DiscoverNotesViewController: UIViewController {
     // MARK: Data Provider
     private var noteManager = NoteManager()
     var userManager = UserManager()
+    var userToBeBlocked = ""
     
     // MARK: Notes Data
     private var notes: [Note] = []
@@ -97,9 +98,9 @@ extension DiscoverNotesViewController {
                 
             case .success(let existingNote):
                 
-                    self?.notes = existingNote
-                    self?.filterNotes = self?.notes ?? existingNote
-                    self?.fetchUsers()
+                self?.notes = existingNote
+                self?.filterNotes = self?.notes ?? existingNote
+                self?.fetchUsers()
                 
             case .failure(let error):
                 
@@ -121,22 +122,23 @@ extension DiscoverNotesViewController {
                 self?.storeCurrentUser()
                 
                 // Filter Blocked Users
-                guard let blockedUids = self?.currentUser?.blockUsers else { return }
-                
-                for blockedUid in blockedUids {
+                if let blockedUids = self?.currentUser?.blockUsers {
                     
-                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    for blockedUid in blockedUids {
+                        
+                        self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                        
+                    }
                     
-                }
-                
-                // Filter Blocked Users Content
-                
-                for blockedUid in blockedUids {
+                    // Filter Blocked Users Content
                     
-                    self?.filterNotes = self?.filterNotes.filter{ $0.authorId != blockedUid} ?? []
-                    
-                    self?.notes = self?.notes.filter{ $0.authorId != blockedUid} ?? []
-                    
+                    for blockedUid in blockedUids {
+                        
+                        self?.filterNotes = self?.filterNotes.filter{ $0.authorId != blockedUid} ?? []
+                        
+                        self?.notes = self?.notes.filter{ $0.authorId != blockedUid} ?? []
+                        
+                    }
                 }
                 
                 
@@ -167,10 +169,81 @@ extension DiscoverNotesViewController {
 extension DiscoverNotesViewController {
     
     @objc private func toSearchPage() {
+        
+        guard let currentUser = self.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         let storyBoard = UIStoryboard(name: "SearchContent", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchContentViewController") as? SearchContentViewController else { return }
         self.navigationController?.pushViewController(vc, animated: true)
     }
+}
+
+// MARK: Block User
+extension DiscoverNotesViewController {
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: notesCollectionView)
+            if let indexPath = notesCollectionView.indexPathForItem(at: touchPoint) {
+                userToBeBlocked = filterNotes[indexPath.item].authorId
+                openActionList()
+            }
+        }
+    }
+    
+    @objc private func openActionList() {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+            self.blockUser()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        self.present(controller, animated: true)
+        
+    }
+    
+    private func blockUser() {
+        
+        currentUser?.blockUsers.append(userToBeBlocked)
+        
+        guard let currentUser = currentUser else { return }
+        
+        UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
+            
+            switch result {
+                
+            case .success:
+                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "返回首頁", style: .default) { action in
+                    self.navigationController?.popToRootViewController(animated: true)
+                    self.fetchNotes()
+                }
+                controller.addAction(action)
+                self.present(controller, animated: true)
+                
+                print("封鎖成功")
+                
+            case .failure:
+                
+                print("封鎖失敗")
+                
+            }
+        }
+        
+    }
+    
 }
 
 // MARK: Configure Category CollectionView
@@ -184,10 +257,10 @@ extension DiscoverNotesViewController {
         view.addSubview(categoryCollectionView)
         
         categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/8).isActive = true
-        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
     }
     
 }
@@ -198,6 +271,8 @@ extension DiscoverNotesViewController {
     private func configureNotesCollectionView() {
         notesCollectionView.dataSource = self
         notesCollectionView.delegate = self
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        notesCollectionView.addGestureRecognizer(longPress)
         
         view.addSubview(notesCollectionView)
         
@@ -220,7 +295,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
             vc.modalPresentationStyle = .overCurrentContext
-
+            
             self.tabBarController?.present(vc, animated: false, completion: nil)
             
             return
@@ -340,7 +415,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             
             // Highlight saved note
             cell.heartButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
-
+            
             for like in filterNotes[indexPath.item].likes {
                 if like == FirebaseManager.shared.currentUser?.uid {
                     cell.heartButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
@@ -363,18 +438,6 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
 extension DiscoverNotesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let currentUser = self.currentUser else {
-            
-            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
-            
-            vc.modalPresentationStyle = .overCurrentContext
-
-            self.tabBarController?.present(vc, animated: false, completion: nil)
-            
-            return
-            
-        }
-        
         if collectionView == categoryCollectionView {
             guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {return}
             selectedCategoryIndex = indexPath.item
@@ -394,7 +457,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
                 guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
                 
                 vc.modalPresentationStyle = .overCurrentContext
-
+                
                 self.tabBarController?.present(vc, animated: false, completion: nil)
                 
                 return
@@ -410,6 +473,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
                 case .success:
                     guard let noteToPass = self?.filterNotes[indexPath.item] else { return }
                     vc.note = noteToPass
+                    vc.comments = noteToPass.comments
                     vc.users = self?.users ?? []
                     vc.currentUser = self?.currentUser
                     self?.navigationController?.pushViewController(vc, animated: true)
@@ -427,8 +491,8 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
 extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == categoryCollectionView {
-            let maxWidth = UIScreen.main.bounds.width - 10
-            let numberOfItemsPerRow = CGFloat(4)
+            let maxWidth = UIScreen.main.bounds.width - 40
+            let numberOfItemsPerRow = CGFloat(4.2)
             let interItemSpacing = CGFloat(10)
             let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
             let itemHeight = itemWidth * 0.4
@@ -438,7 +502,7 @@ extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
             let numberOfItemsPerRow = CGFloat(2)
             let interItemSpacing = CGFloat(10)
             let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
-            let itemHeight = itemWidth * 1.8
+            let itemHeight = itemWidth * 1.2
             return CGSize(width: itemWidth, height: itemHeight)
         }
     }

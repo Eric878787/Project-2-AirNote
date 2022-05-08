@@ -25,6 +25,8 @@ class NoteResultTableViewCell: UITableViewCell {
     @IBOutlet weak var aurthorNameLabel: UILabel!
     
     @IBOutlet weak var likeButton: UIButton!
+  
+    @IBOutlet weak var categoryButton: UIButton!
     
     var delegate: NoteResultDelegate?
     
@@ -34,8 +36,8 @@ class NoteResultTableViewCell: UITableViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 10
         contentView.backgroundColor = .myBeige
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         likeButton.tintColor = .myDarkGreen
+        categoryButton.isEnabled = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -49,6 +51,13 @@ class NoteResultTableViewCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
         avatarImageView.clipsToBounds = true
+        mainImageView.clipsToBounds = true
+        mainImageView.layer.cornerRadius = 10
+        categoryButton.layer.borderWidth = 1
+        categoryButton.layer.shadowColor = UIColor.myBrown.cgColor
+        categoryButton.titleLabel?.textColor = .myBrown
+        categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 14)
+        categoryButton.layer.cornerRadius = 10
     }
     
     

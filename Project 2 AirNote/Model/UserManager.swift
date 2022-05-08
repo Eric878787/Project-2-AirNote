@@ -119,6 +119,7 @@ class UserManager {
                 completion(.failure(error))
             }
         }
+        completion(.success("刪除成功"))
     }
     
     func deleteOwnGroup(uid: String, groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -128,6 +129,7 @@ class UserManager {
             ref.updateData([
                 "userGroups": FieldValue.arrayRemove([groupId])
             ])
+            completion(.success("刪除成功"))
         }
         catch {
             completion(.failure(error))

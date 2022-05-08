@@ -97,6 +97,19 @@ class DiscoverStudyGroupsViewController: UIViewController {
 extension DiscoverStudyGroupsViewController {
     
     @objc private func toMapPage() {
+        
+        guard let currentUser = self.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         let storyBoard = UIStoryboard(name: "DiscoverStudyGroups", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupMapViewController") as? GroupMapViewController else { return }
         vc.groups = self.groups
@@ -110,6 +123,19 @@ extension DiscoverStudyGroupsViewController {
 extension DiscoverStudyGroupsViewController {
     
     @objc private func toSearchPage() {
+        
+        guard let currentUser = self.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         let storyBoard = UIStoryboard(name: "SearchContent", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchGroupsViewController") as? SearchGroupsViewController else { return }
         self.navigationController?.pushViewController(vc, animated: true)
@@ -127,10 +153,10 @@ extension DiscoverStudyGroupsViewController {
         view.addSubview(categoryCollectionView)
         
         categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         categoryCollectionView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/8).isActive = true
-        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
     }
 }
 
@@ -175,22 +201,23 @@ extension DiscoverStudyGroupsViewController {
                 }
                 
                 // Filter Blocked Users
-                guard let blockedUids = self?.user?.blockUsers else { return }
-                
-                for blockedUid in blockedUids {
+                if let blockedUids = self?.user?.blockUsers {
                     
-                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    for blockedUid in blockedUids {
+                        
+                        self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                        
+                    }
                     
-                }
-                
-                // Filter Blocked Users Content
-                
-                for blockedUid in blockedUids {
+                    // Filter Blocked Users Content
                     
-                    self?.filterGroups = self?.filterGroups.filter{ $0.groupOwner != blockedUid} ?? []
-                    
-                    self?.groups = self?.groups.filter{ $0.groupOwner != blockedUid} ?? []
-                    
+                    for blockedUid in blockedUids {
+                        
+                        self?.filterGroups = self?.filterGroups.filter{ $0.groupOwner != blockedUid} ?? []
+                        
+                        self?.groups = self?.groups.filter{ $0.groupOwner != blockedUid} ?? []
+                        
+                    }
                 }
                 
                 DispatchQueue.main.async {
@@ -290,6 +317,19 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
             groupsCollectionView.reloadData()
             
         } else {
+            
+            guard let currentUser = self.currentUser else {
+                
+                guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+                
+                vc.modalPresentationStyle = .overCurrentContext
+                
+                self.tabBarController?.present(vc, animated: false, completion: nil)
+                
+                return
+                
+            }
+            
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
             guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
             vc.group = filterGroups[indexPath.item]
@@ -304,8 +344,8 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
 extension DiscoverStudyGroupsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == categoryCollectionView {
-            let maxWidth = UIScreen.main.bounds.width - 10
-            let numberOfItemsPerRow = CGFloat(4)
+            let maxWidth = UIScreen.main.bounds.width - 40
+            let numberOfItemsPerRow = CGFloat(4.2)
             let interItemSpacing = CGFloat(10)
             let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
             let itemHeight = itemWidth * 0.4
@@ -315,7 +355,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegateFlowLayout 
             let numberOfItemsPerRow = CGFloat(2)
             let interItemSpacing = CGFloat(10)
             let itemWidth = (maxWidth - interItemSpacing) / numberOfItemsPerRow
-            let itemHeight = itemWidth * 1.8
+            let itemHeight = itemWidth * 1.4
             return CGSize(width: itemWidth, height: itemHeight)
         }
     }
@@ -345,5 +385,3 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegateFlowLayout 
         }
     }
 }
-
-

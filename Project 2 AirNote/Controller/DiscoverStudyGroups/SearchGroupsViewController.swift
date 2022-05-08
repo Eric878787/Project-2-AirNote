@@ -190,6 +190,7 @@ extension SearchGroupsViewController: UITableViewDataSource {
         formatter.dateFormat = "MM/dd"
         cell.dateLabel.text = formatter.string(from: date)
         cell.membersLabel.text = "\(filteredgroups[indexPath.row].groupMembers.count)"
+        cell.categoryLabel.setTitle(filteredgroups[indexPath.row].groupCategory, for: .normal)
         
         // querying users' name & avatar
         for user in users where user.uid == filteredgroups[indexPath.row].groupOwner {
@@ -206,10 +207,6 @@ extension SearchGroupsViewController: UITableViewDataSource {
 
 // MARK: Search result tableview delegate
 extension SearchGroupsViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height * 0.5
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)

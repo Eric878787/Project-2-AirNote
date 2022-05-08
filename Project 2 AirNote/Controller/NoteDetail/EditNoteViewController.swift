@@ -88,8 +88,6 @@ extension EditNoteViewController {
 extension EditNoteViewController {
     @objc private func deleteNote() {
         
-        
-        
         var controller = UIAlertController(title: "是否要刪除筆記", message: "刪除後即無法回復內容", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
             self.confirmDeletion()

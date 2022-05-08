@@ -26,35 +26,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bt9-4u-zeJ">
-                                <rect key="frame" x="5" y="5" width="371.5" height="84"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Bt9-4u-zeJ" secondAttribute="trailing" constant="5" id="1mL-zo-DAN"/>
-                            <constraint firstItem="Bt9-4u-zeJ" firstAttribute="leading" secondItem="MJr-RM-YOG" secondAttribute="leading" constant="5" id="5me-Em-QaV"/>
-                            <constraint firstAttribute="bottom" secondItem="Bt9-4u-zeJ" secondAttribute="bottom" constant="5" id="F4D-tX-4LX"/>
                             <constraint firstAttribute="trailing" secondItem="86Z-EB-IXw" secondAttribute="trailing" constant="5" id="Jvh-dW-Hyn"/>
                             <constraint firstItem="86Z-EB-IXw" firstAttribute="leading" secondItem="MJr-RM-YOG" secondAttribute="leading" constant="5" id="aSY-pl-hYL"/>
-                            <constraint firstItem="Bt9-4u-zeJ" firstAttribute="top" secondItem="MJr-RM-YOG" secondAttribute="top" constant="5" id="gfz-aS-VTQ"/>
                             <constraint firstItem="86Z-EB-IXw" firstAttribute="top" secondItem="MJr-RM-YOG" secondAttribute="top" constant="5" id="nUl-FO-RFe"/>
                             <constraint firstAttribute="bottom" secondItem="86Z-EB-IXw" secondAttribute="bottom" constant="5" id="z2C-VU-EGu"/>
                         </constraints>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qNr-dh-AIx">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bt9-4u-zeJ">
+                        <rect key="frame" x="75" y="10" width="384" height="94"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="350" id="CVv-Ir-wXi"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qNr-dh-AIx">
                         <rect key="frame" x="10" y="10" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="GsH-dz-CdX"/>
                             <constraint firstAttribute="height" constant="50" id="kDf-Rm-VcU"/>
                             <constraint firstAttribute="width" secondItem="qNr-dh-AIx" secondAttribute="height" multiplier="1:1" id="mKe-Jy-uDD"/>
-                        </constraints>
-                    </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eP2-gV-ZtP">
-                        <rect key="frame" x="15" y="10" width="300" height="94"/>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="400" id="M2R-UN-6FH"/>
-                            <constraint firstAttribute="width" constant="300" id="PlS-ys-ATG"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iS5-BP-BYe">
@@ -70,13 +62,14 @@
                     <constraint firstItem="iS5-BP-BYe" firstAttribute="trailing" secondItem="qNr-dh-AIx" secondAttribute="trailing" id="CEp-IP-eOn"/>
                     <constraint firstItem="iS5-BP-BYe" firstAttribute="top" secondItem="qNr-dh-AIx" secondAttribute="bottom" constant="5" id="Em2-HH-zbt"/>
                     <constraint firstItem="iS5-BP-BYe" firstAttribute="leading" secondItem="qNr-dh-AIx" secondAttribute="leading" id="FL4-mA-Yd9"/>
+                    <constraint firstItem="Bt9-4u-zeJ" firstAttribute="leading" secondItem="qNr-dh-AIx" secondAttribute="trailing" constant="15" id="Ixm-eo-34d"/>
+                    <constraint firstAttribute="bottom" secondItem="Bt9-4u-zeJ" secondAttribute="bottom" constant="10" id="Oa2-5B-lNd"/>
                     <constraint firstAttribute="bottom" secondItem="MJr-RM-YOG" secondAttribute="bottom" constant="10" id="Oft-KP-qQl"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MJr-RM-YOG" secondAttribute="trailing" constant="100" id="V3H-4C-xPX"/>
-                    <constraint firstItem="eP2-gV-ZtP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="WdZ-9M-E2A"/>
                     <constraint firstItem="qNr-dh-AIx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ZF1-gg-zuK"/>
-                    <constraint firstAttribute="bottom" secondItem="eP2-gV-ZtP" secondAttribute="bottom" constant="10" id="cxh-Ji-uBO"/>
-                    <constraint firstItem="eP2-gV-ZtP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="gkS-N9-QAk"/>
+                    <constraint firstItem="Bt9-4u-zeJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="fKp-js-IvF"/>
                     <constraint firstItem="MJr-RM-YOG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="rfA-8B-7Cc"/>
+                    <constraint firstAttribute="trailing" secondItem="Bt9-4u-zeJ" secondAttribute="trailing" constant="100" id="sZr-DM-1xr"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

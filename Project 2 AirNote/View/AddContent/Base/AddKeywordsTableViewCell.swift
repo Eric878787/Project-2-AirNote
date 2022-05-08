@@ -66,10 +66,10 @@ class AddKeywordsTableViewCell: UITableViewCell {
     
     private var selectedCategory: String?
     
-    private var tagCategoryPair: [String: [String]] = ["投資理財": ["基金", "虛擬貨幣", "股市", "Stock", "台股"],
+    private var tagCategoryPair: [String: [String]] = ["投資理財": ["基金", "貨幣", "股市", "Stock", "台股"],
                                                        "運動健身": ["有氧", "無氧", "減脂", "增肌", "營養"],
                                                        "語言學習": ["英文", "日文", "韓文", "中文", "法文"],
-                                                       "人際溝通": ["職場", "說話藝術", "語言", "交流", "關係"],
+                                                       "人際溝通": ["職場", "說話", "語言", "交流", "關係"],
                                                        "廣告行銷": ["企劃", "消費者", "洞察", "媒體", "數位"],
                                                        "生活風格": ["日常", "植物", "休閒", "Life", "Style"],
                                                        "藝文娛樂": ["音樂", "繪畫", "舞蹈","展覽","收藏"]]

@@ -24,6 +24,7 @@ class ImageViewerViewController: UIViewController {
         scView.delegate = self
         view.backgroundColor = .white
         layoutScrollView()
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -32,6 +33,11 @@ class ImageViewerViewController: UIViewController {
         let offset = CGPoint(x: (scView.frame.width) * CGFloat(currentPage), y: 0)
         scView.setContentOffset(offset, animated: false)
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
 }
@@ -65,15 +71,24 @@ extension ImageViewerViewController: UIScrollViewDelegate {
         for image in images {
             let url = URL(string: image)
             let imageView = UIImageView()
+            imageView.clipsToBounds = true
             imageView.contentMode = .scaleAspectFit
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+//            imageView.frame = CGRect(x: theOffset,
+//                                     y: CGFloat(thePadding),
+//                                     width: (view.safeAreaLayoutGuide.layoutFrame.size.width),
+//                                     height: (view.safeAreaLayoutGuide.layoutFrame.size.height))
             imageView.kf.indicatorType = .activity
             imageView.kf.setImage(with: url)
             scView.addSubview(imageView)
-            imageView.frame = CGRect(x: theOffset,
-                                     y: CGFloat(thePadding),
-                                     width: (view.safeAreaLayoutGuide.layoutFrame.size.width),
-                                     height: (view.safeAreaLayoutGuide.layoutFrame.size.height))
-            theOffset = (theOffset + imageView.frame.size.width)
+            NSLayoutConstraint.activate([
+                imageView.topAnchor.constraint(equalTo: scView.topAnchor),
+                imageView.leadingAnchor.constraint(equalTo: scView.leadingAnchor, constant: theOffset),
+                imageView.widthAnchor.constraint(equalTo: scView.widthAnchor),
+                imageView.heightAnchor.constraint(equalTo: scView.heightAnchor)
+            ])
+            
+            theOffset = (theOffset + view.safeAreaLayoutGuide.layoutFrame.size.width)
         }
         
         configurePageControl()
