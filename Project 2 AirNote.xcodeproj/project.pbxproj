@@ -185,7 +185,7 @@
 		42DD04D828116FED007C4A9F /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		42DD04DB281175FC007C4A9F /* 97127-loading-icon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "97127-loading-icon.json"; sourceTree = "<group>"; };
 		42DD04DD281178E7007C4A9F /* 27938-upload-files .json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "27938-upload-files .json"; sourceTree = "<group>"; };
-		42DE585328005A7200D764F7 /* Project 2 AirNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project 2 AirNote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42DE585328005A7200D764F7 /* AirNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DE585628005A7200D764F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42DE585828005A7200D764F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		42DE585A28005A7200D764F7 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -389,7 +389,7 @@
 		42DE585428005A7200D764F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42DE585328005A7200D764F7 /* Project 2 AirNote.app */,
+				42DE585328005A7200D764F7 /* AirNote.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -735,7 +735,7 @@
 			);
 			name = "Project 2 AirNote";
 			productName = "Project 2 AirNote";
-			productReference = 42DE585328005A7200D764F7 /* Project 2 AirNote.app */;
+			productReference = 42DE585328005A7200D764F7 /* AirNote.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1147,7 +1147,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ec.Project-2-AirNote";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AirNote;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1182,7 +1182,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ec.Project-2-AirNote";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AirNote;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
