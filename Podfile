@@ -18,5 +18,6 @@ target 'Project 2 AirNote' do
   pod 'Firebase/Auth'
   pod 'Firebase'
   pod 'JGProgressHUD'
+  pod 'Firebase/Crashlytics'
 
 end
