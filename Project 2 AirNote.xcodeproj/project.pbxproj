@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		421D5C7B2829461800F5747C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421D5C7A2829461800F5747C /* WebViewController.swift */; };
 		4235C5C0281BD2A600DEF3E6 /* NoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */; };
 		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
 		42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */; };
@@ -127,6 +128,7 @@
 
 /* Begin PBXFileReference section */
 		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
+		421D5C7A2829461800F5747C /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeader.swift; sourceTree = "<group>"; };
 		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
 		42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageViewer.storyboard; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 			isa = PBXGroup;
 			children = (
 				42405B242817873D00A12777 /* LoginViewController.swift */,
+				421D5C7A2829461800F5747C /* WebViewController.swift */,
 				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
 				42B7FAA02819664500E68DE6 /* AuthViewController.swift */,
 				42383E0228237474005CF4B4 /* ImageViewerViewController.swift */,
@@ -924,6 +927,7 @@
 				42E2B678280D7F9600B51D9F /* GroupManager.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
 				42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */,
+				421D5C7B2829461800F5747C /* WebViewController.swift in Sources */,
 				423A12732813F32A0075B34F /* GroupTitleCollectionViewCell.swift in Sources */,
 				423A125C281318A10075B34F /* NoteCommentCollectionViewCell.swift in Sources */,
 				42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */,
