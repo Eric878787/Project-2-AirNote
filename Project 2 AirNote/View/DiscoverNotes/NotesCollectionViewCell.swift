@@ -34,12 +34,15 @@ class NotesCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 10
         contentView.backgroundColor = .myBeige
         heartButton.tintColor = .myDarkGreen
+        heartButton.contentMode = .scaleAspectFit
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        userAvatarImage.layer.cornerRadius = userAvatarImage.bounds.height/2
         userAvatarImage.clipsToBounds = true
+        userAvatarImage.layer.cornerRadius = userAvatarImage.bounds.height/2
+        coverImage.clipsToBounds = true
+        coverImage.layer.cornerRadius = 10
     }
     
     @IBAction func likeAction(_ sender: Any) {

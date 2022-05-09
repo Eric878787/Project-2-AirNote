@@ -32,7 +32,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Nd-Rp8">
-                        <rect key="frame" x="15" y="501.5" width="366" height="31"/>
+                        <rect key="frame" x="163" y="501.5" width="70.5" height="31"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="Upload"/>
                         <connections>
@@ -89,15 +89,15 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="6Dr-1v-N6E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="0eI-f6-gPh"/>
+                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="centerX" secondItem="9U0-4x-VSe" secondAttribute="centerX" id="0gP-6r-h3c"/>
                     <constraint firstAttribute="trailing" secondItem="6Dr-1v-N6E" secondAttribute="trailing" constant="15" id="0sm-iJ-nxb"/>
                     <constraint firstItem="jdl-3a-hzW" firstAttribute="top" secondItem="6Dr-1v-N6E" secondAttribute="bottom" constant="5" id="Blb-fT-Q5W"/>
                     <constraint firstItem="jdl-3a-hzW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Ft8-Ff-4hh"/>
-                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="O1J-IK-S68"/>
                     <constraint firstItem="9U0-4x-VSe" firstAttribute="top" secondItem="jdl-3a-hzW" secondAttribute="bottom" constant="15" id="RJf-rf-Hen"/>
                     <constraint firstItem="79m-Nd-Rp8" firstAttribute="top" secondItem="9U0-4x-VSe" secondAttribute="bottom" constant="15" id="bB2-ZK-7xN"/>
+                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="width" secondItem="9U0-4x-VSe" secondAttribute="width" multiplier="1.05224" id="eUV-gc-Pmz"/>
                     <constraint firstItem="6Dr-1v-N6E" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="hez-LD-Qrn"/>
                     <constraint firstAttribute="trailing" secondItem="jdl-3a-hzW" secondAttribute="trailing" constant="15" id="iQH-IP-4wN"/>
-                    <constraint firstAttribute="trailing" secondItem="79m-Nd-Rp8" secondAttribute="trailing" constant="15" id="jpG-TL-8o2"/>
                     <constraint firstItem="9U0-4x-VSe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="xy1-jC-1JA"/>
                 </constraints>
             </tableViewCellContentView>

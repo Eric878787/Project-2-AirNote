@@ -25,6 +25,10 @@ class GroupTitleCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var memberIcon: UIImageView!
+    
+    @IBOutlet weak var memberLabel: UILabel!
+    
     @IBOutlet weak var applyButton: UIButton!
     
     var delegate: GroupTitleDelegate?
@@ -33,13 +37,14 @@ class GroupTitleCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         locationIcon.tintColor = .myDarkGreen
         dateIcon.tintColor = .myDarkGreen
+        memberIcon.tintColor = .myDarkGreen
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = .systemGray2
         locationIcon.image = UIImage(systemName: "mappin.and.ellipse")
         dateIcon.image = UIImage(systemName: "calendar")
+        memberIcon.image = UIImage(systemName: "person.3.fill")
         applyButton.layer.cornerRadius = 10
         applyButton.clipsToBounds = true
     }

@@ -35,9 +35,9 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         titleLabel.text = "地點"
         
-        cafeListButton.tintColor = .myDarkGreen
+        cafeListButton.tintColor = .white
         
-        cafeListButton.setTitleColor(.myDarkGreen, for: .normal)
+        cafeListButton.setTitleColor(.white, for: .normal)
         
         cafeListButton.setTitle("尋找推薦咖啡廳", for: .normal)
         
@@ -46,6 +46,24 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
         uploadButton.setTitleColor(.myDarkGreen, for: .normal)
         
         textField.delegate = self
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        cafeListButton.clipsToBounds = true
+        
+        cafeListButton.backgroundColor = .myDarkGreen
+        
+        cafeListButton.layer.cornerRadius = 10
+        
+        uploadButton.layer.borderColor = UIColor.myDarkGreen.cgColor
+        
+        uploadButton.layer.borderWidth = 1
+        
+        uploadButton.layer.cornerRadius = 10
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

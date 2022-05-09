@@ -10,6 +10,7 @@ import UIKit
 protocol NoteTitleDelegate {
     
     func saveNote(_ selectedCell: NoteTitleCollectionViewCell)
+    func toProfilePage()
     
 }
 
@@ -31,14 +32,18 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         viewsIcon.tintColor = .myDarkGreen
         commentCountsIcon.tintColor = .myDarkGreen
         saveButton.tintColor = .myDarkGreen
+        
+        // Tap Avatar
+//        addTapGesture()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = .systemGray2
+//        contentView.backgroundColor = .systemGray2
         viewsIcon.image = UIImage(systemName: "eye")
         commentCountsIcon.image = UIImage(systemName: "message")
     }
@@ -48,5 +53,19 @@ class NoteTitleCollectionViewCell: UICollectionViewCell {
         delegate?.saveNote(self)
         
     }
+    
+//    private func addTapGesture() {
+//
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+//        userAvatar.isUserInteractionEnabled = true
+//        userAvatar.addGestureRecognizer(tapGestureRecognizer)
+//
+//    }
+//
+//    @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+//
+//        delegate?.toProfilePage()
+//
+//    }
     
 }

@@ -91,6 +91,7 @@ extension ChatRoomViewLobbyController {
         chatRoomListTableView.registerCellWithNib(identifier: String(describing: ChatRoomListTableViewCell.self), bundle: nil)
         chatRoomListTableView.dataSource = self
         chatRoomListTableView.delegate = self
+        chatRoomListTableView.separatorStyle = .none
         
         view.addSubview(chatRoomListTableView)
         

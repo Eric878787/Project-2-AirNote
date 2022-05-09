@@ -16,6 +16,8 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var commentLabel: UILabel!
     
+    @IBOutlet weak var commentTimeLabel: UILabel!
+    
     static let reuseIdentifer = "NoteCommentCollectionViewCell"
     
     override class func awakeFromNib() {
@@ -24,6 +26,9 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = .systemGray2
+//        contentView.backgroundColor = .systemGray2
+        avatarImageView.clipsToBounds = true
+        avatarImageView.contentMode = .scaleAspectFill
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
     }
 }

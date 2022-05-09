@@ -11,10 +11,17 @@ class AuthViewController: UIViewController {
 
     @IBOutlet weak var backgroundView: UIView!
     
+    @IBOutlet weak var contentView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+    }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
     }
     
     @IBAction func dissMiss(_ sender: Any) {

@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
         configureSignInWithAppleButton()
         configureAsVisitorButton()
         configureNativeSignIn()
-        layoutingSubviews ()
+//        layoutingSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,14 +45,17 @@ class LoginViewController: UIViewController {
         
         // refresh textfield border
         emailTextField.layer.borderColor = UIColor.clear.cgColor
+        emailTextField.layer.cornerRadius = 10
         emailTextField.layer.borderWidth = 1
         passwordTextField.layer.borderColor = UIColor.clear.cgColor
         passwordTextField.layer.borderWidth = 1
+        passwordTextField.layer.cornerRadius = 10
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        layoutingSubviews()
+        
     }
     
     // MARK: Native Sign up
@@ -169,7 +172,7 @@ extension LoginViewController {
         signUpButton.setTitleColor(.black, for: .normal)
         signUpButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
         signUpButton.backgroundColor = .white
-        signUpButton.layer.cornerRadius = 30
+        signUpButton.layer.cornerRadius = 10
         signUpButton.clipsToBounds = true
         
         // Log In Button
@@ -177,7 +180,7 @@ extension LoginViewController {
         logInButton.setTitleColor(.black, for: .normal)
         logInButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
         logInButton.backgroundColor = .white
-        logInButton.layer.cornerRadius = 30
+        logInButton.layer.cornerRadius = 10
         logInButton.clipsToBounds = true
         
     }
@@ -192,7 +195,7 @@ extension LoginViewController {
     func configureNativeSignIn() {
         signUpButton.setTitle("註冊", for: .normal)
         logInButton.setTitle("登入", for: .normal)
-
+        
     }
     
     func configureAsVisitorButton() {
@@ -254,12 +257,13 @@ extension LoginViewController {
                                     followings: [],
                                     joinedGroups: [],
                                     savedNotes: [],
-                                    userAvatar: "",
+                                    userAvatar: "https://firebasestorage.googleapis.com/v0/b/project-2-airnote.appspot.com/o/user.png?alt=media&token=b1b20ce5-44f7-4351-93d3-e5c6903efa7f",
                                     userGroups: [],
-                                    userName: "",
+                                    userName: "新用戶",
                                     userNotes: [],
                                     email: FirebaseManager.shared.currentUser?.email,
-                                    uid: uid)
+                                    uid: uid,
+                                    blockUsers: [])
                     
                     UserManager.shared.createUser( &user, uid) { result in
                         switch result {

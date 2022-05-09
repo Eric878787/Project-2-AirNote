@@ -44,7 +44,7 @@ class AddKeywordsTableViewCell: UITableViewCell {
             
             button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
             
-            button.setBackgroundImage(UIImage(systemName: "arrow.down"), for: .normal)
+            button.setBackgroundImage(UIImage(systemName: "chevron.down.circle.fill"), for: .normal)
             
             button.tintColor = .myDarkGreen
             
@@ -66,10 +66,10 @@ class AddKeywordsTableViewCell: UITableViewCell {
     
     private var selectedCategory: String?
     
-    private var tagCategoryPair: [String: [String]] = ["投資理財": ["基金", "虛擬貨幣", "股市", "Stock", "台股"],
+    private var tagCategoryPair: [String: [String]] = ["投資理財": ["基金", "貨幣", "股市", "Stock", "台股"],
                                                        "運動健身": ["有氧", "無氧", "減脂", "增肌", "營養"],
                                                        "語言學習": ["英文", "日文", "韓文", "中文", "法文"],
-                                                       "人際溝通": ["職場", "說話藝術", "語言", "交流", "關係"],
+                                                       "人際溝通": ["職場", "說話", "語言", "交流", "關係"],
                                                        "廣告行銷": ["企劃", "消費者", "洞察", "媒體", "數位"],
                                                        "生活風格": ["日常", "植物", "休閒", "Life", "Style"],
                                                        "藝文娛樂": ["音樂", "繪畫", "舞蹈","展覽","收藏"]]
@@ -84,6 +84,7 @@ class AddKeywordsTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         categoryTitleLabel.text = "類別"
         keyWordsTitleLabel.text = "關鍵字"
+        settingDefaultSelection()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -118,6 +119,34 @@ extension AddKeywordsTableViewCell: UIPickerViewDataSource, UIPickerViewDelegate
         tags = tagCategoryPair["\(unwrappedCategory)"] ?? []
         
         tagButtonStackView.subviews.forEach({ $0.removeFromSuperview() })
+        
+        for tag in tags {
+            
+            let button = UIButton()
+            button.setTitle("\(tag)", for: .normal)
+            button.setTitleColor( .myDarkGreen , for: .normal)
+            button.setTitleColor( .white, for: .selected)
+            button.backgroundColor = .white
+            button.layer.cornerRadius = 10
+            button.layer.borderColor = UIColor.myDarkGreen.cgColor
+            button.layer.borderWidth = 1
+            button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
+            
+            tagButtonStackView.addArrangedSubview(button)
+            
+        }
+        
+    }
+    
+    func settingDefaultSelection() {
+        
+        categoryTextField.text = category[0].rawValue
+        
+        selectedCategory = category[0].rawValue
+        
+        guard let unwrappedCategory = selectedCategory else { return }
+        
+        tags = tagCategoryPair["\(unwrappedCategory)"] ?? []
         
         for tag in tags {
             
