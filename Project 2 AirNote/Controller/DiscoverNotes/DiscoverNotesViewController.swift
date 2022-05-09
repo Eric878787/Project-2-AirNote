@@ -71,7 +71,7 @@ class DiscoverNotesViewController: UIViewController {
         // Search Button
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
-        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,6 +86,7 @@ class DiscoverNotesViewController: UIViewController {
         fetchNotes()
         
     }
+    
 }
 
 // MARK: Fetch Data
@@ -213,9 +214,9 @@ extension DiscoverNotesViewController {
         
         // iPad Situation
         if let popoverController = controller.popoverPresentationController {
-          popoverController.sourceView = self.view
-          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-          popoverController.permittedArrowDirections = []
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
         }
         
         self.present(controller, animated: true)
