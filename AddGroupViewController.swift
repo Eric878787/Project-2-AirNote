@@ -174,8 +174,6 @@ extension AddGroupViewController: UITableViewDelegate {
     
         if indexPath.row == 1 {
             return 300
-        } else if indexPath.row == 2 {
-            return 165
         } else {
             return  UITableView.automaticDimension
         }

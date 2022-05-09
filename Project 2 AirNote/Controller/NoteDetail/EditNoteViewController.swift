@@ -48,6 +48,7 @@ class EditNoteViewController: UIViewController {
         
         // Delete Button
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteNote))
+        deleteButton.tintColor = .red
         self.navigationItem.rightBarButtonItem = deleteButton
         
         // Set Default Message
@@ -87,6 +88,22 @@ extension EditNoteViewController {
 // MARK: Delete Note
 extension EditNoteViewController {
     @objc private func deleteNote() {
+        
+        var controller = UIAlertController(title: "是否要刪除筆記", message: "刪除後即無法回復內容", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
+            self.confirmDeletion()
+        }
+        confirmAction.setValue(UIColor.red, forKey: "titleTextColor")
+        controller.addAction(confirmAction)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+    
+    func confirmDeletion() {
+        
         let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         guard let noteToBeDeleted = note?.noteId else { return }
@@ -107,7 +124,9 @@ extension EditNoteViewController {
                 print(result)
             }
         }
+        
     }
+    
 }
 
 // MARK: Configure Add Note Tableview
@@ -120,8 +139,10 @@ extension EditNoteViewController {
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddKeywordsTableViewCell.self), bundle: nil)
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddCoverTableViewCell.self), bundle: nil)
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddPhotosTableViewCell.self), bundle: nil)
+        addNoteTableView.separatorStyle = .none
         addNoteTableView.dataSource = self
         addNoteTableView.delegate = self
+        addNoteTableView.separatorStyle = .none
         addNoteTableView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(addNoteTableView)
@@ -206,7 +227,7 @@ extension EditNoteViewController: UITableViewDelegate {
         //        }
         
         if indexPath.row == 1 {
-            return 300
+            return 150
         } else if indexPath.row == 2 {
             return 165
         } else if indexPath.row == 4 {
@@ -222,21 +243,21 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.editedImage] as? UIImage {
+        if  picker == imagePickerController {
             
-            if picker == imagePickerController {
-                
+            if let image = info[.editedImage] as? UIImage {
                 coverImage = image
-                
-            } else {
-                
+            }
+            
+        } else {
+            
+            if let image = info[.originalImage] as? UIImage {
                 if self.contentImages.count < 4 {
                     self.contentImages.insert(image, at: 0)
                 }  else {
                     self.contentImages.remove(at: 3)
                     self.contentImages.insert(image, at: 0)
                 }
-                
             }
             
         }
@@ -375,7 +396,6 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
     // 開啟相機（content photo）
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
-        multiImagePickerController.allowsEditing = true
         self.present(multiImagePickerController, animated: true)
     }
     

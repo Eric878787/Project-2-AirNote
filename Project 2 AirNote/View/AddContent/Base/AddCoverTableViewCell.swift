@@ -21,12 +21,19 @@ class AddCoverTableViewCell: UITableViewCell {
     var delegate: CoverDelegate?
     
     override func awakeFromNib() {
+        super.awakeFromNib()
         titleLabel.text = "封面"
         self.selectionStyle = .none
         coverImageView.tintColor = .myDarkGreen
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         selectButton.setTitle("新增封面", for: .normal)
-        selectButton.setTitleColor( .myDarkGreen, for: .normal)
-        super.awakeFromNib()
+        selectButton.setTitleColor( .white, for: .normal)
+        selectButton.backgroundColor = .myDarkGreen
+        selectButton.layer.cornerRadius = 10
+        selectButton.clipsToBounds = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

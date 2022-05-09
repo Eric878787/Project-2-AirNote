@@ -42,9 +42,6 @@ class SearchGroupsViewController: UIViewController {
         // Fetch notes
         fetchGroups()
         
-        // Fetch users
-        fetchUsers()
-        
     }
     
 }
@@ -113,9 +110,13 @@ extension SearchGroupsViewController {
                 
             case .success(let existingNote):
                 
+                self?.groups = existingNote
+                self?.filteredgroups = self?.groups ?? existingNote
+                
+                // Fetch users
+                self?.fetchUsers()
+                
                 DispatchQueue.main.async {
-                    self?.groups = existingNote
-                    self?.filteredgroups = self?.groups ?? existingNote
                     self?.searchGroupsTableView.reloadData()
                 }
                 
@@ -134,11 +135,31 @@ extension SearchGroupsViewController {
                 
             case .success(let existingUser):
                 
+                self?.users = existingUser
+                for user in existingUser where user.uid == self?.currentUserId {
+                    self?.user = user
+                }
+                
+                // Filter Blocked Users
+                guard let blockedUids = self?.user?.blockUsers else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    
+                }
+                
+                // Filter Blocked Users Content
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.filteredgroups = self?.filteredgroups.filter{ $0.groupOwner != blockedUid} ?? []
+                    
+                    self?.groups = self?.groups.filter{ $0.groupOwner != blockedUid} ?? []
+                    
+                }
+                
                 DispatchQueue.main.async {
-                    self?.users = existingUser
-                    for user in existingUser where user.uid == self?.currentUserId {
-                        self?.user = user
-                    }
                     self?.searchGroupsTableView.reloadData()
                 }
                 
@@ -169,6 +190,7 @@ extension SearchGroupsViewController: UITableViewDataSource {
         formatter.dateFormat = "MM/dd"
         cell.dateLabel.text = formatter.string(from: date)
         cell.membersLabel.text = "\(filteredgroups[indexPath.row].groupMembers.count)"
+        cell.categoryLabel.setTitle(filteredgroups[indexPath.row].groupCategory, for: .normal)
         
         // querying users' name & avatar
         for user in users where user.uid == filteredgroups[indexPath.row].groupOwner {
@@ -185,10 +207,6 @@ extension SearchGroupsViewController: UITableViewDataSource {
 
 // MARK: Search result tableview delegate
 extension SearchGroupsViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height * 0.5
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)

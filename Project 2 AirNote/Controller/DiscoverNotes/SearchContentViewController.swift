@@ -22,6 +22,7 @@ class SearchContentViewController: UIViewController {
     private lazy var filteredNotes: [Note] = []
     private var users: [User] = []
     private var currentUser: User?
+    private var userToBeBlocked = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,14 +98,16 @@ extension SearchContentViewController {
         searchNotesTableView.registerCellWithNib(identifier: String(describing: NoteResultTableViewCell.self), bundle: nil)
         searchNotesTableView.dataSource = self
         searchNotesTableView.delegate = self
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        searchNotesTableView.addGestureRecognizer(longPress)
         
         view.addSubview(searchNotesTableView)
         
         searchNotesTableView.translatesAutoresizingMaskIntoConstraints = false
-        searchNotesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10 ).isActive = true
+        searchNotesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         searchNotesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         searchNotesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        searchNotesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        searchNotesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         
     }
     
@@ -147,6 +150,25 @@ extension SearchContentViewController {
                     
                 }
                 
+                // Filter Blocked Users
+                guard let blockedUids = self?.currentUser?.blockUsers else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.users = self?.users.filter{$0.uid != blockedUid} ?? []
+                    
+                }
+                
+                // Filter Blocked Users Content
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.filteredNotes = self?.filteredNotes.filter{$0.authorId != blockedUid} ?? []
+                    
+                    self?.notes = self?.notes.filter{$0.authorId != blockedUid} ?? []
+                    
+                }
+                
                 DispatchQueue.main.async {
                     self?.searchNotesTableView.reloadData()
                 }
@@ -157,6 +179,64 @@ extension SearchContentViewController {
             }
         }
     }
+}
+
+// MARK: Block User
+extension SearchContentViewController {
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: searchNotesTableView)
+            if let indexPath = searchNotesTableView.indexPathForRow(at: touchPoint) {
+                userToBeBlocked = filteredNotes[indexPath.row].authorId
+                openActionList()
+            }
+        }
+    }
+    
+    @objc private func openActionList() {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+            self.blockUser()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        self.present(controller, animated: true)
+        
+    }
+    
+    private func blockUser() {
+        
+        currentUser?.blockUsers.append(userToBeBlocked)
+        
+        guard let currentUser = currentUser else { return }
+        
+        UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
+            
+            switch result {
+                
+            case .success:
+                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "返回首頁", style: .default) { action in
+                    self.navigationController?.popToRootViewController(animated: true)
+                    self.fetchNotes()
+                }
+                controller.addAction(action)
+                self.present(controller, animated: true)
+                
+                print("封鎖成功")
+                
+            case .failure:
+                
+                print("封鎖失敗")
+                
+            }
+        }
+        
+    }
+    
 }
 
 // MARK: Search result tableview datasource
@@ -266,6 +346,7 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
         let mainImageUrl = URL(string: filteredNotes[indexPath.row].cover)
         cell.mainImageView.kf.indicatorType = .activity
         cell.mainImageView.kf.setImage(with: mainImageUrl)
+        cell.categoryButton.setTitle("\(filteredNotes[indexPath.row].category)", for: .normal)
         
         // Highlight saved note
         cell.likeButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
@@ -291,9 +372,9 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
 // MARK: Search result tableview delegate
 extension SearchContentViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height * 0.5
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -329,6 +410,7 @@ extension SearchContentViewController: UITableViewDelegate {
             case .success:
                 guard let noteToPass = self?.filteredNotes[indexPath.row] else { return }
                 vc.note = noteToPass
+                vc.comments = noteToPass.comments
                 vc.users = self?.users ?? []
                 vc.currentUser = self?.currentUser
                 self?.navigationController?.pushViewController(vc, animated: true)

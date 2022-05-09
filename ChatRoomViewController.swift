@@ -38,6 +38,7 @@ class ChatRoomViewController: UIViewController {
     
     // Users DataSource
     private var users: [User] = []
+    private var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +68,6 @@ extension ChatRoomViewController {
             switch result {
                 
             case .success(let group):
-                
-                DispatchQueue.main.async {
                     
                     self?.group = group
                     self?.group?.messages.sort{
@@ -76,8 +75,6 @@ extension ChatRoomViewController {
                     }
                     
                     self?.fetchUsers()
-                    
-                }
                 
             case .failure(let error):
                 
@@ -93,8 +90,33 @@ extension ChatRoomViewController {
                 
             case .success(let existingUser):
                 
+                self?.users = existingUser
+                
+                for user in existingUser where user.uid == FirebaseManager.shared.currentUser?.uid {
+                    self?.user = user
+                }
+                
+                // Filter Blocked Users
+                guard let blockedUids = self?.user?.blockUsers else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    
+                }
+                
+                // Filter Blocked Users Content
+                
+                guard let messages = self?.group?.messages else { return }
+                
+                for blockedUid in blockedUids {
+                    
+                    self?.group?.messages = messages.filter{ $0.sender != blockedUid} ?? []
+                    
+                }
+                
+                
                 DispatchQueue.main.async {
-                    self?.users = existingUser
                     self?.chatRoomTableView.reloadData()
                     if self?.group?.messages != [] {
                         self?.chatRoomTableView.scrollToRow(at: [0, (self?.group?.messages.count ?? 1) - 1] , at: .bottom, animated: false)

@@ -18,6 +18,10 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
     // MARK: Groups Data
     var groups: [Group] = []
     
+    var users: [User] = []
+    
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,7 +81,10 @@ extension GroupMapViewController: MKMapViewDelegate {
                 reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            button.setImage(UIImage(systemName:"plus.magnifyingglass"), for: .normal)
+            button.tintColor = .myDarkGreen
+            view.rightCalloutAccessoryView = button
         }
         return view
     }
@@ -105,6 +112,8 @@ extension GroupMapViewController: MKMapViewDelegate {
         let storyBoard = UIStoryboard(name: "GroupDetail", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
         vc.group = group[0]
+        vc.users = users
+        vc.user = user
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

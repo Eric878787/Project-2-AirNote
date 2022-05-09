@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		4235C5C0281BD2A600DEF3E6 /* NoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */; };
 		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
+		42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */; };
+		42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0228237474005CF4B4 /* ImageViewerViewController.swift */; };
+		42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */; };
+		42383E0A28280B14005CF4B4 /* DeleteAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */; };
 		423A1252281246340075B34F /* NotesDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A1251281246340075B34F /* NotesDetail.storyboard */; };
 		423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125328125B6F0075B34F /* TitleHeaderView.swift */; };
 		423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */; };
@@ -35,7 +39,12 @@
 		42405B212816D57E00A12777 /* CafeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B202816D57E00A12777 /* CafeDataModel.swift */; };
 		42405B232816DCEA00A12777 /* CafeMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B222816DCEA00A12777 /* CafeMapViewController.swift */; };
 		42405B252817873D00A12777 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42405B242817873D00A12777 /* LoginViewController.swift */; };
+		4246EBD728222CF700C5D183 /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBD628222CF700C5D183 /* OtherProfileViewController.swift */; };
+		4246EBD92822835A00C5D183 /* UISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBD82822835A00C5D183 /* UISegmentedControl.swift */; };
+		4246EBDB2822A99100C5D183 /* BlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBDA2822A99100C5D183 /* BlockListViewController.swift */; };
+		4246EBDE2822AA3C00C5D183 /* BlockListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */; };
 		42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD5C632814122000DA7990 /* EditNoteViewController.swift */; };
+		42B432C22822D4D100D158EC /* BlockListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */; };
 		42B7FA9D2817E48100E68DE6 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B7FA9C2817E48100E68DE6 /* Auth.storyboard */; };
 		42B7FA9F2817E6DB00E68DE6 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7FA9E2817E6DB00E68DE6 /* FirebaseManager.swift */; };
 		42B7FAA12819664500E68DE6 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7FAA02819664500E68DE6 /* AuthViewController.swift */; };
@@ -120,6 +129,10 @@
 		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
 		4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeader.swift; sourceTree = "<group>"; };
 		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
+		42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageViewer.storyboard; sourceTree = "<group>"; };
+		42383E0228237474005CF4B4 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
+		42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
+		42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountTableViewCell.swift; sourceTree = "<group>"; };
 		423A1251281246340075B34F /* NotesDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotesDetail.storyboard; sourceTree = "<group>"; };
 		423A125328125B6F0075B34F /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
 		423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -147,7 +160,12 @@
 		42405B222816DCEA00A12777 /* CafeMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeMapViewController.swift; sourceTree = "<group>"; };
 		42405B242817873D00A12777 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		42405B2628178BBB00A12777 /* Project 2 AirNote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Project 2 AirNote.entitlements"; sourceTree = "<group>"; };
+		4246EBD628222CF700C5D183 /* OtherProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
+		4246EBD82822835A00C5D183 /* UISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentedControl.swift; sourceTree = "<group>"; };
+		4246EBDA2822A99100C5D183 /* BlockListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListViewController.swift; sourceTree = "<group>"; };
+		4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListTableViewCell.swift; sourceTree = "<group>"; };
 		42AD5C632814122000DA7990 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
+		42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockListTableViewCell.xib; sourceTree = "<group>"; };
 		42B7FA9C2817E48100E68DE6 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		42B7FA9E2817E6DB00E68DE6 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		42B7FAA02819664500E68DE6 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +270,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		42383E0428255CC7005CF4B4 /* Third Party Wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */,
+			);
+			path = "Third Party Wrapper";
+			sourceTree = "<group>";
+		};
 		423A12672813F1390075B34F /* GroupDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,9 +292,9 @@
 				423A126F2813F30F0075B34F /* GroupCoverCollectionViewCell.swift */,
 				423A12712813F32A0075B34F /* GroupTitleCollectionViewCell.swift */,
 				423A12722813F32A0075B34F /* GroupTitleCollectionViewCell.xib */,
+				423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */,
 				423A12782813F37F0075B34F /* GroupCalendarCollectionViewCell.swift */,
 				423A12792813F37F0075B34F /* GroupCalendarCollectionViewCell.xib */,
-				423A127C2813F3A40075B34F /* GroupContentCollectionViewCell.swift */,
 			);
 			path = GroupDetail;
 			sourceTree = "<group>";
@@ -277,6 +303,8 @@
 			isa = PBXGroup;
 			children = (
 				42405B0C2815A05F00A12777 /* ProfileViewController.swift */,
+				4246EBDA2822A99100C5D183 /* BlockListViewController.swift */,
+				4246EBD628222CF700C5D183 /* OtherProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -290,6 +318,9 @@
 				42405B142815A13800A12777 /* PersonalNoteTableViewCell.xib */,
 				4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */,
 				42D2C1FA281FF23E004CD0CC /* PersonalGroupTableViewCell.xib */,
+				4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */,
+				42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */,
+				42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -367,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				42405B2628178BBB00A12777 /* Project 2 AirNote.entitlements */,
+				42383E0428255CC7005CF4B4 /* Third Party Wrapper */,
 				42DE586F280164B000D764F7 /* Resource */,
 				42DE58732801781700D764F7 /* Extension */,
 				42DE586D2801642F00D764F7 /* Model */,
@@ -391,6 +423,7 @@
 				42DD04D228112FDA007C4A9F /* NoteDetail */,
 				423A126C2813F2120075B34F /* GroupDetail */,
 				42405B122815A0EF00A12777 /* Profile */,
+				42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
 				423A1251281246340075B34F /* NotesDetail.storyboard */,
 				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
@@ -451,6 +484,7 @@
 				42405B242817873D00A12777 /* LoginViewController.swift */,
 				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
 				42B7FAA02819664500E68DE6 /* AuthViewController.swift */,
+				42383E0228237474005CF4B4 /* ImageViewerViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -459,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				42DE58742801783B00D764F7 /* UIStoryboard+Extension.swift */,
+				4246EBD82822835A00C5D183 /* UISegmentedControl.swift */,
 				42F936452805B2AA0058EB07 /* UICollectionView+Extension.swift */,
 				42F936472805B44E0058EB07 /* UITableView+Extension.swift */,
 				42D2C1FE2820197F004CD0CC /* UIColor+Extension.swift */,
@@ -766,10 +801,12 @@
 				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
 				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
 				42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */,
+				42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */,
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
 				42405B162815A13800A12777 /* PersonalNoteTableViewCell.xib in Resources */,
 				423A12742813F32A0075B34F /* GroupTitleCollectionViewCell.xib in Resources */,
+				42B432C22822D4D100D158EC /* BlockListTableViewCell.xib in Resources */,
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
 				42DD04D728116F17007C4A9F /* 98431-loading-animation.json in Resources */,
@@ -852,6 +889,7 @@
 				42DE587D280180A200D764F7 /* DiscoverStudyGroupsViewController.swift in Sources */,
 				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
 				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
+				42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */,
 				42B7FAA12819664500E68DE6 /* AuthViewController.swift in Sources */,
 				42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */,
 				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,
@@ -871,6 +909,8 @@
 				42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */,
 				42405B152815A13800A12777 /* PersonalNoteTableViewCell.swift in Sources */,
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
+				42383E0A28280B14005CF4B4 /* DeleteAccountTableViewCell.swift in Sources */,
+				42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
 				42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */,
@@ -895,12 +935,15 @@
 				423A125A2812AB130075B34F /* NoteContentCollectionViewCell.swift in Sources */,
 				42DD04D5281130A1007C4A9F /* NoteDetailViewController.swift in Sources */,
 				4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */,
+				4246EBD92822835A00C5D183 /* UISegmentedControl.swift in Sources */,
+				4246EBDE2822AA3C00C5D183 /* BlockListTableViewCell.swift in Sources */,
 				42405B252817873D00A12777 /* LoginViewController.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
 				423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */,
 				42E2B699280EEA6700B51D9F /* ChatRoomListTableViewCell.swift in Sources */,
 				423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */,
 				42E2B67A280D7FA700B51D9F /* GroupDataModel.swift in Sources */,
+				4246EBDB2822A99100C5D183 /* BlockListViewController.swift in Sources */,
 				42E2B6582809179F00B51D9F /* DrawingViewController.swift in Sources */,
 				42D2C1FF2820197F004CD0CC /* UIColor+Extension.swift in Sources */,
 				42E2B674280D666500B51D9F /* GroupsCollectionViewCell.swift in Sources */,
@@ -911,6 +954,7 @@
 				42405B1A2816BA5C00A12777 /* Annotation.swift in Sources */,
 				42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */,
 				42F936482805B44E0058EB07 /* UITableView+Extension.swift in Sources */,
+				4246EBD728222CF700C5D183 /* OtherProfileViewController.swift in Sources */,
 				42B7FA9F2817E6DB00E68DE6 /* FirebaseManager.swift in Sources */,
 				42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */,
 				42DD04CC280FE4B4007C4A9F /* LeftChatRoomTableViewCell.swift in Sources */,
@@ -1072,8 +1116,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1106,8 +1151,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

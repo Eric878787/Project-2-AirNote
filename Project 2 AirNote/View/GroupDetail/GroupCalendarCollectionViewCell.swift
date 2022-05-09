@@ -24,9 +24,11 @@ class GroupCalendarCollectionViewCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
-        dateIcon.image = UIImage(systemName: "calendar")
-        
         super.layoutSubviews()
-        contentView.backgroundColor = .systemGray2
+        dateIcon.image = UIImage(systemName: "calendar")
+        dateIcon.tintColor = .myDarkGreen
+        dateLabel.font =  UIFont(name: "PingFangTC-Semibold", size: 14)
+        contentLabel.font =  UIFont(name: "PingFangTC-Regular", size: 14)
+        durationLabel.font = UIFont(name: "PingFangTC-Regular", size: 14)
     }
 }

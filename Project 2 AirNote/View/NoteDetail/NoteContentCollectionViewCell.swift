@@ -26,8 +26,8 @@ class NoteContentCollectionViewCell: UICollectionViewCell {
 extension NoteContentCollectionViewCell {
  
     func configure() {
-        contentView.backgroundColor = .systemGray2
         contentLabel.numberOfLines = 0
+        contentLabel.font = UIFont(name: "PingFangTC-Semibold", size: 14)
         contentView.addSubview(contentLabel)
         
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,6 @@ extension NoteContentCollectionViewCell {
             contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
