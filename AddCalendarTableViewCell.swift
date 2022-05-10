@@ -13,6 +13,8 @@ class AddCalendarTableViewCell: UITableViewCell {
     
     @IBOutlet weak var addButton: UIButton!
     
+    @IBOutlet weak var minusButton: UIButton!
+    
     @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -31,6 +33,8 @@ class AddCalendarTableViewCell: UITableViewCell {
     
     private var tagCount = 0
     
+    private var calendarCounts = 0
+    
     var calendarHandler: (([Date], [String]) -> Void)?
     
     override func awakeFromNib() {
@@ -43,7 +47,15 @@ class AddCalendarTableViewCell: UITableViewCell {
         
         addButton.setTitleColor( .myDarkGreen, for: .normal)
         
+        addButton.setTitleColor( .systemGray6, for: .disabled)
+        
         addButton.tintColor = .myDarkGreen
+        
+        minusButton.setTitleColor( .myDarkGreen, for: .normal)
+        
+        minusButton.setTitleColor( .systemGray6, for: .disabled)
+        
+        minusButton.tintColor = .myDarkGreen
         
         confirmButton.setTitle("確認", for: .normal)
         
@@ -64,7 +76,26 @@ class AddCalendarTableViewCell: UITableViewCell {
         datePickerView.isHidden = true
     }
     
+    func enableButton() {
+        
+        if  calendarCounts >= 5 {
+            addButton.isEnabled = false
+        } else if calendarCounts <= 0 {
+            minusButton.isEnabled = false
+        } else {
+            
+            addButton.isEnabled = true
+            
+            minusButton.isEnabled = true
+        }
+        
+    }
+    
     @IBAction func addCalendar(_ sender: Any) {
+        
+        calendarCounts += 1
+        
+        enableButton()
         
         datePickerView.isHidden = true
         
@@ -75,6 +106,23 @@ class AddCalendarTableViewCell: UITableViewCell {
         layoutCalendars()
         
     }
+    
+    @IBAction func minusCalendar(_ sender: Any) {
+        
+        calendarCounts -= 1
+        
+        enableButton()
+        
+        datePickerView.isHidden = true
+        
+        dateArray.removeLast()
+        
+        textArray.removeLast()
+        
+        layoutCalendars()
+        
+    }
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -134,11 +182,11 @@ class AddCalendarTableViewCell: UITableViewCell {
         
         calendarButton.setTitle("\(dateFormatter.string(from: dateArray[calendarButton.tag]))", for: .normal)
         
-        calendarButton.setTitleColor(.black, for: .normal)
+        calendarButton.setTitleColor(.white, for: .normal)
         
         calendarButton.titleLabel?.font = UIFont(name: "Arial", size: 12)
         
-        calendarButton.backgroundColor = .systemGray6
+        calendarButton.backgroundColor = .myDarkGreen
         
         calendarButton.layer.borderWidth = 1
         

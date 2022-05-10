@@ -373,6 +373,7 @@ extension OtherProfileViewController: UITableViewDataSource {
             let url = URL(string: notes[indexPath.row].cover)
             cell.mainImageView.kf.indicatorType = .activity
             cell.mainImageView.kf.setImage(with: url)
+            cell.categoryButton.setTitle("\(notes[indexPath.row].category)", for: .normal)
             
             // querying users' name & avatar
             for user in users where user.uid == notes[indexPath.row].authorId {
@@ -392,6 +393,7 @@ extension OtherProfileViewController: UITableViewDataSource {
             let url = URL(string: groups[indexPath.row].groupCover)
             cell.coverImage.kf.indicatorType = .activity
             cell.coverImage.kf.setImage(with: url)
+            cell.categoryButton.setTitle("\(groups[indexPath.row].groupCategory)", for: .normal)
             
             // querying users' name & avatar
             for user in users where user.uid == groups[indexPath.row].groupOwner {

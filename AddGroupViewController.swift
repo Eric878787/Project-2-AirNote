@@ -200,25 +200,28 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func buttonDidSelect() {
         
-        let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
+        let controller = UIAlertController(title: "請上傳封面", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         // 相機
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePicture()
         }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
         // 相薄
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbum()
         }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
         
         // 手繪版
         let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
             self.openDrawingPad()
         }
+        drawingPadAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(drawingPadAction)
         
         // 取消

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "42DE585228005A7200D764F7"
-               BuildableName = "Project 2 AirNote.app"
+               BuildableName = "AirNote.app"
                BlueprintName = "Project 2 AirNote"
                ReferencedContainer = "container:Project 2 AirNote.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "42DE585228005A7200D764F7"
-            BuildableName = "Project 2 AirNote.app"
+            BuildableName = "AirNote.app"
             BlueprintName = "Project 2 AirNote"
             ReferencedContainer = "container:Project 2 AirNote.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "42DE585228005A7200D764F7"
-            BuildableName = "Project 2 AirNote.app"
+            BuildableName = "AirNote.app"
             BlueprintName = "Project 2 AirNote"
             ReferencedContainer = "container:Project 2 AirNote.xcodeproj">
          </BuildableReference>

@@ -194,25 +194,28 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func buttonDidSelect() {
         
-        let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
+        let controller = UIAlertController(title: "請上傳封面", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         // 相機
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePicture()
         }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
         // 相薄
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbum()
         }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
         
         // 手繪版
         let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
             self.openDrawingPad()
         }
+        drawingPadAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(drawingPadAction)
         
         // 取消
@@ -253,20 +256,29 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
     
     func selectMultiImages() {
         
-        let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
+        let controller = UIAlertController(title: "請上傳內頁", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         // 相機
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePictureForMulti()
         }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
         // 相薄
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbumForMulti()
         }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
+        
+        // 手繪版
+        let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
+            self.openDrawingPadForMulti()
+        }
+        drawingPadAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(drawingPadAction)
         
         // 取消
         let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
@@ -317,10 +329,32 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
         self.present(pHPImagePicker, animated: true)
     }
     
-    // 開啟相機（content photo）
+    // 開啟相機
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
         self.present(multiImagePickerController, animated: true)
+    }
+    
+    // 開啟手繪版
+    func openDrawingPadForMulti() {
+        let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
+        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
+        vc.imageProvider = { [weak self] image in
+            if let image = image as? UIImage {
+                // 判斷是否超過4張
+                if self?.contentImages.count ?? 0 < 4 {
+                    self?.contentImages.insert(image, at: 0)
+                }  else {
+                    self?.contentImages.remove(at: 3)
+                    self?.contentImages.insert(image, at: 0)
+                }
+                DispatchQueue.main.async {
+                    self?.addNoteTableView.reloadData()
+                }
+            }
+            
+        }
     }
     
 }

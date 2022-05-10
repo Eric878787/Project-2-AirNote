@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="599" id="KGk-i7-Jjw" customClass="AddCalendarTableViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="599" id="KGk-i7-Jjw" customClass="AddCalendarTableViewCell" customModule="AirNote" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="612" height="599"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -27,9 +28,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Fj-Yv-Ut9">
-                        <rect key="frame" x="61.5" y="15" width="45" height="30"/>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" image="plus.circle" catalog="system"/>
+                        <rect key="frame" x="66.5" y="15" width="20" height="30"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="plus.circle" catalog="system"/>
                         <connections>
                             <action selector="addCalendar:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qkh-DR-qSZ"/>
                         </connections>
@@ -64,6 +65,15 @@
                             <constraint firstItem="X3Y-Kz-41I" firstAttribute="width" secondItem="won-eG-QTe" secondAttribute="width" multiplier="0.2" id="yJU-BC-1Xr"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fr-7t-j6Z">
+                        <rect key="frame" x="91.5" y="19" width="20" height="22"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="minus.circle" catalog="system"/>
+                        <connections>
+                            <action selector="addCalendar:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0dW-aY-rl3"/>
+                            <action selector="minusCalendar:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RwQ-q7-90l"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="oSj-cZ-90L" secondAttribute="bottom" constant="15" id="1bj-yS-vWr"/>
@@ -77,9 +87,11 @@
                     <constraint firstItem="won-eG-QTe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gJY-O5-zjq"/>
                     <constraint firstAttribute="trailing" secondItem="oSj-cZ-90L" secondAttribute="trailing" constant="15" id="gbq-4f-gGm"/>
                     <constraint firstItem="4Fj-Yv-Ut9" firstAttribute="height" secondItem="gMT-cx-U8h" secondAttribute="height" id="iwe-XE-4rd"/>
-                    <constraint firstItem="4Fj-Yv-Ut9" firstAttribute="leading" secondItem="gMT-cx-U8h" secondAttribute="trailing" constant="5" id="l4d-8B-MMa"/>
+                    <constraint firstItem="4Fj-Yv-Ut9" firstAttribute="leading" secondItem="gMT-cx-U8h" secondAttribute="trailing" constant="10" id="l4d-8B-MMa"/>
                     <constraint firstItem="gMT-cx-U8h" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="ry7-yS-NrB"/>
                     <constraint firstItem="won-eG-QTe" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.75" id="uFX-6k-3EZ"/>
+                    <constraint firstItem="7fr-7t-j6Z" firstAttribute="centerY" secondItem="4Fj-Yv-Ut9" secondAttribute="centerY" id="udh-4r-nRq"/>
+                    <constraint firstItem="7fr-7t-j6Z" firstAttribute="leading" secondItem="4Fj-Yv-Ut9" secondAttribute="trailing" constant="5" id="wTv-NY-Zae"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -88,6 +100,7 @@
                 <outlet property="confirmButton" destination="X3Y-Kz-41I" id="9kZ-jX-GKw"/>
                 <outlet property="datePicker" destination="KsK-dA-YfX" id="hcy-tn-fnU"/>
                 <outlet property="datePickerView" destination="won-eG-QTe" id="YEI-er-hdH"/>
+                <outlet property="minusButton" destination="7fr-7t-j6Z" id="g9h-o2-vix"/>
                 <outlet property="stackView" destination="oSj-cZ-90L" id="L17-vd-rF8"/>
                 <outlet property="titleLabel" destination="gMT-cx-U8h" id="TZh-nG-1GM"/>
             </connections>
@@ -95,6 +108,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="minus.circle" catalog="system" width="128" height="121"/>
         <image name="plus.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

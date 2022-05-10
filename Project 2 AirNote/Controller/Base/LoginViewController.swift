@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     
     private var asVisitorButton = UIButton()
     
-    
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ThH-hC-Tb9">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,7 +12,7 @@
         <!--Add Content View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="AddContentViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Y6W-OH-hqX" customClass="AddContentViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -45,7 +46,7 @@
         <!--Add Note View Controller-->
         <scene sceneID="0h3-bG-8gr">
             <objects>
-                <viewController storyboardIdentifier="AddNoteViewController" id="nbf-Pe-dUd" customClass="AddNoteViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddNoteViewController" id="nbf-Pe-dUd" customClass="AddNoteViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hfi-aP-nMf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +61,7 @@
         <!--Edit Note View Controller-->
         <scene sceneID="biQ-St-VIm">
             <objects>
-                <viewController storyboardIdentifier="EditNoteViewController" id="wQ0-1O-D6j" customClass="EditNoteViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditNoteViewController" id="wQ0-1O-D6j" customClass="EditNoteViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NiN-2V-Ca8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,7 +76,7 @@
         <!--Cafe Map View Controller-->
         <scene sceneID="yUf-XT-CKA">
             <objects>
-                <viewController storyboardIdentifier="CafeMapViewController" id="E9I-17-OKU" customClass="CafeMapViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CafeMapViewController" id="E9I-17-OKU" customClass="CafeMapViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jgg-Hc-0sW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -83,6 +84,13 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N02-mE-p55">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jV-VS-NIm">
+                                <rect key="frame" x="355" y="804.5" width="29" height="27.5"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="location.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cQR-Tl-wUj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -91,9 +99,12 @@
                             <constraint firstItem="cQR-Tl-wUj" firstAttribute="bottom" secondItem="N02-mE-p55" secondAttribute="bottom" id="GQS-kP-NOk"/>
                             <constraint firstItem="N02-mE-p55" firstAttribute="top" secondItem="cQR-Tl-wUj" secondAttribute="top" id="L47-5B-ILN"/>
                             <constraint firstItem="cQR-Tl-wUj" firstAttribute="trailing" secondItem="N02-mE-p55" secondAttribute="trailing" id="che-ZG-HbV"/>
+                            <constraint firstItem="cQR-Tl-wUj" firstAttribute="bottom" secondItem="5jV-VS-NIm" secondAttribute="bottom" constant="30" id="eRs-ma-6mk"/>
+                            <constraint firstItem="cQR-Tl-wUj" firstAttribute="trailing" secondItem="5jV-VS-NIm" secondAttribute="trailing" constant="30" id="k1r-fw-xx8"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bringToUserLocationButton" destination="5jV-VS-NIm" id="jpr-Wl-rqV"/>
                         <outlet property="cafeMapView" destination="N02-mE-p55" id="MDQ-Jj-pRg"/>
                     </connections>
                 </viewController>
@@ -104,7 +115,7 @@
         <!--Add Group View Controller-->
         <scene sceneID="xUN-Rk-VdR">
             <objects>
-                <viewController storyboardIdentifier="AddGroupViewController" id="4Fc-J2-VXv" customClass="AddGroupViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddGroupViewController" id="4Fc-J2-VXv" customClass="AddGroupViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jIp-2b-yjL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,6 +129,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="location.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

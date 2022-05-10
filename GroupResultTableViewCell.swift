@@ -51,7 +51,7 @@ class GroupResultTableViewCell: UITableViewCell {
         categoryLabel.layer.borderWidth = 1
         categoryLabel.layer.borderColor = UIColor.myBrown.cgColor
         categoryLabel.titleLabel?.textColor = .myBrown
-        categoryLabel.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 14)
+        categoryLabel.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 12)
         categoryLabel.layer.cornerRadius = 10
     }
     

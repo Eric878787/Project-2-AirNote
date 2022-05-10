@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,7 +12,7 @@
         <!--Drawing Pad View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="DrawingPadViewController" id="Y6W-OH-hqX" customClass="DrawingPadViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DrawingPadViewController" id="Y6W-OH-hqX" customClass="DrawingPadViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,144 +53,102 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oSj-JX-med">
-                                <rect key="frame" x="0.0" y="802" width="264" height="60"/>
+                                <rect key="frame" x="0.0" y="832" width="330" height="30"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvQ-E8-avG">
-                                        <rect key="frame" x="0.0" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="xvQ-E8-avG" secondAttribute="height" multiplier="1:1" id="YuM-iC-Y8v"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="M64-J9-QbQ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqx-OV-6kt">
-                                        <rect key="frame" x="24" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.2464599609" green="0.22824433450000001" blue="0.22794994709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="30" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.2464599609" green="0.22824433450000001" blue="0.22794994709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Det-BB-kMd"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySh-XH-kJH">
-                                        <rect key="frame" x="48" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" systemColor="systemRedColor"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="60" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="5O5-ZG-Mgs"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="27o-5P-Nay">
-                                        <rect key="frame" x="72" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="90" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="OKM-1H-GQJ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWb-UA-BkP">
-                                        <rect key="frame" x="96" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" systemColor="systemCyanColor"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="120" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="IB8-l9-b7H"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOI-DS-sRd">
-                                        <rect key="frame" x="120" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.04979176852085504" green="0.39764495485836693" blue="0.047749918173160613" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="150" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.04979176852085504" green="0.39764495485836693" blue="0.047749918173160613" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="laD-wp-w0c"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsC-CC-gGd">
-                                        <rect key="frame" x="144" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.10476613849999999" green="0.76942896839999997" blue="0.095246042020000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="180" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.10476613849999999" green="0.76942896839999997" blue="0.095246042020000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="BIM-92-8Rx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzM-Iq-hjY">
-                                        <rect key="frame" x="168" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.44347940029999999" green="0.32083907299999997" blue="0.063812970450000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="210" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.44347940029999999" green="0.32083907299999997" blue="0.063812970450000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="7v3-hH-7cF"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zlv-Gd-W2f">
-                                        <rect key="frame" x="192" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.96675861742078639" green="0.72124687935397869" blue="0.26555828118610586" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="240" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.96675861742078639" green="0.72124687935397869" blue="0.26555828118610586" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="BvA-p5-jw9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4p-Jk-Ce9">
-                                        <rect key="frame" x="216" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.96675861742078639" green="0.88817258940281296" blue="0.10194162360643171" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="270" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.96675861742078639" green="0.88817258940281296" blue="0.10194162360643171" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="i5Z-1b-hme"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pC-nb-ZdE">
-                                        <rect key="frame" x="240" y="0.0" width="24" height="60"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="strokeColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </backgroundConfiguration>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="300" y="0.0" width="30" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="pencilPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="f7N-FE-xfK"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="edN-bb-dWg"/>
+                                    <constraint firstAttribute="height" constant="30" id="edN-bb-dWg"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -207,7 +166,7 @@
                             <constraint firstItem="MBV-4U-vM7" firstAttribute="trailing" secondItem="5EZ-qb-Rvc" secondAttribute="trailing" id="fkp-f9-7U4"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="oSj-JX-med" secondAttribute="bottom" id="gSK-0Y-mPe"/>
                             <constraint firstAttribute="bottom" secondItem="P5m-EY-PMS" secondAttribute="bottom" id="oLk-yf-EaK"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oSj-JX-med" secondAttribute="trailing" constant="50" id="rT1-pt-qNQ"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oSj-JX-med" secondAttribute="trailing" constant="40" id="rT1-pt-qNQ"/>
                             <constraint firstItem="MBV-4U-vM7" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="sVC-0y-KUe"/>
                             <constraint firstAttribute="top" secondItem="MBV-4U-vM7" secondAttribute="top" id="t1a-Kc-f11"/>
                         </constraints>
@@ -228,6 +187,8 @@
                         <outletCollection property="pencils" destination="hzM-Iq-hjY" collectionClass="NSMutableArray" id="cBQ-Le-w8B"/>
                         <outletCollection property="pencils" destination="Zlv-Gd-W2f" collectionClass="NSMutableArray" id="V4x-6d-wIT"/>
                         <outletCollection property="pencils" destination="C4p-Jk-Ce9" collectionClass="NSMutableArray" id="VEq-iF-otS"/>
+                        <outletCollection property="pencils" destination="OOI-DS-sRd" collectionClass="NSMutableArray" id="C7p-ET-2ie"/>
+                        <outletCollection property="pencils" destination="1pC-nb-ZdE" collectionClass="NSMutableArray" id="5fm-xn-07z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -237,15 +198,15 @@
         <!--Set Up Pad View Controller-->
         <scene sceneID="Yfe-PU-vcc">
             <objects>
-                <viewController storyboardIdentifier="SetUpPadViewController" id="Jf5-Kh-u53" customClass="SetUpPadViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetUpPadViewController" id="Jf5-Kh-u53" customClass="SetUpPadViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WlO-bw-Ph1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBq-oc-hUZ">
-                                <rect key="frame" x="367" y="5" width="42" height="31"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system"/>
+                                <rect key="frame" x="391.5" y="5" width="17.5" height="22"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="xmark" catalog="system"/>
                                 <connections>
                                     <action selector="closePressed:" destination="Jf5-Kh-u53" eventType="touchUpInside" id="zpU-e3-pmB"/>
                                 </connections>
@@ -389,6 +350,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="closeButton" destination="RBq-oc-hUZ" id="3WS-Ik-em5"/>
                         <outlet property="labelBlue" destination="1MM-bX-bqn" id="Pug-Az-lRR"/>
                         <outlet property="labelBrush" destination="hSs-ZT-eP7" id="psF-Nn-iVl"/>
                         <outlet property="labelGreen" destination="5qt-ZB-lsw" id="cJn-db-tHh"/>
