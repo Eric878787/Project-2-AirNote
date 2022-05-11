@@ -1161,7 +1161,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project 2 AirNote/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "請允許AirNote取用您的位置資料，查看附近的地點";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1196,7 +1196,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project 2 AirNote/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "請允許AirNote取用您的位置資料，查看附近的地點";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
