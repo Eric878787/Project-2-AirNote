@@ -439,11 +439,9 @@ extension AddNoteViewController {
                                 switch result {
                                 case .success:
                                     DispatchQueue.main.async {
-                                        self.loadingAnimation.loadingView.pause()
-                                        self.loadingAnimation.loadingView.isHidden = true
+                                        LKProgressHUD.dismiss()
                                         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                                         controller.addAction(cancelAction)
-                                        LKProgressHUD.dismiss()
                                         self.present(controller, animated: true, completion: nil)
                                     }
                                 case .failure(let error):
