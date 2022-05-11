@@ -430,14 +430,12 @@ extension EditNoteViewController {
     func upload() {
         
         let group = DispatchGroup()
-        LKProgressHUD.show()
         let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         group.enter()
         // Loading Animation
-        configureAnimation()
-        loadingAnimation.loadingView.play()
+        LKProgressHUD.show()
         guard let image = coverImage else { return }
         noteManager.uploadPhoto(image: image) { result in
             switch result {
@@ -476,11 +474,9 @@ extension EditNoteViewController {
                         self?.navigationController?.popToRootViewController(animated: true)
                     }
                     DispatchQueue.main.async {
-                        self?.loadingAnimation.loadingView.pause()
-                        self?.loadingAnimation.loadingView.isHidden = true
+                        LKProgressHUD.dismiss()
                         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                         controller.addAction(cancelAction)
-                        LKProgressHUD.show()
                         self?.present(controller, animated: true, completion: nil)
                     }
                 case.failure:
