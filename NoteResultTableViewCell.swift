@@ -56,7 +56,7 @@ class NoteResultTableViewCell: UITableViewCell {
         categoryButton.layer.borderWidth = 1
         categoryButton.layer.borderColor = UIColor.myBrown.cgColor
         categoryButton.titleLabel?.textColor = .myBrown
-        categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 14)
+        categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 12)
         categoryButton.layer.cornerRadius = 10
     }
     

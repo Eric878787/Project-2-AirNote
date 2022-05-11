@@ -32,6 +32,15 @@ class DrawingPadViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        for pencil in pencils {
+            pencil.layer.borderColor = UIColor.systemGray4.cgColor
+            pencil.layer.borderWidth = 1
+            pencil.layer.cornerRadius = pencil.frame.height / 2
+        }
+    }
+    
     // MARK: - Actions
     
     private func configButtons() {
@@ -101,11 +110,11 @@ class DrawingPadViewController: UIViewController {
             return
         }
         for pencil in pencils {
-            pencil.layer.borderWidth = 0
+            pencil.layer.borderColor = UIColor.systemGray4.cgColor
+            sender.layer.borderWidth = 1
         }
-        sender.layer.borderColor = UIColor.black.cgColor
+        sender.layer.borderColor = UIColor.systemGray2.cgColor
         sender.layer.borderWidth = 2
-        sender.layer.cornerRadius = 5
         color = pencil.color
         if pencil == .eraser {
             opacity = 1.0

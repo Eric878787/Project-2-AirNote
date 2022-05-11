@@ -20,6 +20,7 @@ class GroupDetailViewController: UIViewController {
     var room: ChatRoom?
     var users: [User] = []
     var user: User?
+    var userToBeBlocked = ""
     
     // Data Manager
     private var groupManager = GroupManager()
@@ -38,8 +39,9 @@ class GroupDetailViewController: UIViewController {
         // Register Cell
         registerCell()
         
-        // CollectionView DataSource
+        // CollectionView DataSource & Delegate
         groupDetailCollectionView.dataSource = self
+        groupDetailCollectionView.delegate = self
         
         // CollectionView Layout
         groupDetailCollectionView.collectionViewLayout = configureLayout()
@@ -67,6 +69,68 @@ class GroupDetailViewController: UIViewController {
         // Mapping Group Owner
         for user in users where user.uid == group?.groupOwner {
             owner = user
+        }
+        
+    }
+    
+}
+// MARK: Block User
+extension GroupDetailViewController: TitleSupplementaryViewDelegate {
+    
+    func didTouchellipsis() {
+        
+        userToBeBlocked = group?.groupOwner ?? ""
+        openActionList()
+        
+    }
+    
+    @objc private func openActionList() {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+            self.blockUser()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        // iPad Situation
+        if let popoverController = controller.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        self.present(controller, animated: true)
+        
+    }
+    
+    
+    private func blockUser() {
+        
+        user?.blockUsers.append(userToBeBlocked)
+        
+        guard let currentUser = user else { return }
+        
+        UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
+            
+            switch result {
+                
+            case .success:
+                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "確認", style: .default) { action in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                controller.addAction(action)
+                self.present(controller, animated: true)
+                
+                print("封鎖成功")
+                
+            case .failure:
+                
+                print("封鎖失敗")
+                
+            }
         }
         
     }
@@ -133,7 +197,7 @@ extension GroupDetailViewController {
 // MARK: To Profile Page
 extension GroupDetailViewController: NoteTitleDelegate {
     func saveNote(_ selectedCell: NoteTitleCollectionViewCell) {
-        return 
+        return
     }
     
     
@@ -261,7 +325,7 @@ extension GroupDetailViewController {
         
     }
     
-   @objc func toChatRoom() {
+    @objc func toChatRoom() {
         let storyBoard = UIStoryboard(name: "ChatroomLobby", bundle: nil)
         guard let vc =  storyBoard.instantiateViewController(withIdentifier: "ChatRoomViewController") as? ChatRoomViewController else { return }
         vc.group = self.group
@@ -382,13 +446,16 @@ extension GroupDetailViewController: UICollectionViewDataSource {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath)
                 as? TitleSupplementaryView else { return UICollectionReusableView() }
         
+        header.delegate = self
+        header.blockUserDelegate = self
+        
         switch indexPath.section {
         case 0:
-            header.delegate = self
             header.avatar.isHidden = false
             header.name.isHidden = false
             header.textLabel.isHidden = true
             header.timeLabel.isHidden = true
+            header.blockButton.isHidden = false
             if owner?.userAvatar != nil {
                 let url = URL(string: owner?.userAvatar ?? "")
                 header.avatar.kf.indicatorType = .activity
@@ -410,12 +477,14 @@ extension GroupDetailViewController: UICollectionViewDataSource {
             header.avatar.isHidden = true
             header.name.isHidden = true
             header.timeLabel.isHidden = false
+            header.blockButton.isHidden = true
             return header
         case 2:
             header.textLabel.isHidden = true
             header.avatar.isHidden = true
             header.name.isHidden = true
             header.timeLabel.isHidden = true
+            header.blockButton.isHidden = true
             return header
         case 3:
             header.textLabel.text = "排程"
@@ -423,6 +492,7 @@ extension GroupDetailViewController: UICollectionViewDataSource {
             header.avatar.isHidden = true
             header.name.isHidden = true
             header.timeLabel.isHidden = true
+            header.blockButton.isHidden = true
             return header
         default:
             return UICollectionReusableView()
@@ -457,14 +527,13 @@ extension GroupDetailViewController {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+//        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
         
         let groupHeight = NSCollectionLayoutDimension.fractionalWidth(0.8)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: groupHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
@@ -529,6 +598,21 @@ extension GroupDetailViewController {
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section
+    }
+    
+}
+
+// MARK: CollectionView Delegate
+extension GroupDetailViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 {
+            let vc = ImageViewerViewController()
+            vc.images.append(self.group?.groupCover ?? "")
+            vc.currentPage = indexPath.item
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }

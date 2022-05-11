@@ -144,7 +144,15 @@ class NoteDetailViewController: UIViewController, UITextFieldDelegate {
 }
 
 // MARK: Block User
-extension NoteDetailViewController {
+extension NoteDetailViewController: TitleSupplementaryViewDelegate {
+    
+    func didTouchellipsis() {
+        
+        userToBeBlocked = note.authorId
+        openActionList()
+        
+    }
+    
     
     private func filterBlockedUsersComment() {
         
@@ -193,14 +201,15 @@ extension NoteDetailViewController {
         
         // iPad Situation
         if let popoverController = controller.popoverPresentationController {
-          popoverController.sourceView = self.view
-          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-          popoverController.permittedArrowDirections = []
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
         }
         
         self.present(controller, animated: true)
         
     }
+    
     
     private func blockUser() {
         
@@ -215,7 +224,11 @@ extension NoteDetailViewController {
             case .success:
                 let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
                 let action = UIAlertAction(title: "確認", style: .default) { action in
-                    self.fetchUser()
+                    if self.userToBeBlocked == self.note.authorId {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    } else {
+                        self.fetchUser()
+                    }
                 }
                 controller.addAction(action)
                 self.present(controller, animated: true)
@@ -428,7 +441,7 @@ extension NoteDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return note.images.count ?? 0
+            return note.images.count + 1 ?? 0
         case 1:
             return 1
         case 2:
@@ -446,9 +459,20 @@ extension NoteDetailViewController: UICollectionViewDataSource {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteCarouselCollectionViewCell.reuseIdentifer, for: indexPath)
                     as? NoteCarouselCollectionViewCell else { return UICollectionViewCell()}
-            let url = URL(string: note.images[indexPath.item])
-            cell.photoView.kf.indicatorType = .activity
-            cell.photoView.kf.setImage(with: url)
+            if indexPath.item == 0 {
+                
+                let url = URL(string: note.cover)
+                cell.photoView.kf.indicatorType = .activity
+                cell.photoView.kf.setImage(with: url)
+                
+            } else {
+                
+                let url = URL(string: note.images[indexPath.item - 1])
+                cell.photoView.kf.indicatorType = .activity
+                cell.photoView.kf.setImage(with: url)
+                
+            }
+            
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteTitleCollectionViewCell.self), for: indexPath)
@@ -501,13 +525,14 @@ extension NoteDetailViewController: UICollectionViewDataSource {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath)
                 as? TitleSupplementaryView else { return UICollectionReusableView() }
         header.delegate = self
-        
+        header.blockUserDelegate = self
         switch indexPath.section {
         case 0:
             header.avatar.isHidden = false
             header.name.isHidden = false
             header.textLabel.isHidden = true
             header.timeLabel.isHidden = true
+            header.blockButton.isHidden = false
             if aurthor?.userAvatar != nil {
                 let url = URL(string: aurthor?.userAvatar ?? "")
                 header.avatar.kf.indicatorType = .activity
@@ -529,12 +554,14 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             header.avatar.isHidden = true
             header.name.isHidden = true
             header.timeLabel.isHidden = false
+            header.blockButton.isHidden = true
             return header
         case 2:
             header.textLabel.isHidden = true
             header.avatar.isHidden = true
             header.name.isHidden = true
             header.timeLabel.isHidden = true
+            header.blockButton.isHidden = true
             return header
         case 3:
             header.textLabel.text = "評論"
@@ -542,6 +569,7 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             header.avatar.isHidden = true
             header.name.isHidden = true
             header.timeLabel.isHidden = true
+            header.blockButton.isHidden = true
             return header
         default:
             return UICollectionReusableView()

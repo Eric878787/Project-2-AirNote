@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="luK-fY-3Xe">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,7 +12,7 @@
         <!--Discover Study Groups View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="DiscoverStudyGroupsViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Y6W-OH-hqX" customClass="DiscoverStudyGroupsViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,7 +28,7 @@
         <!--Group Map View Controller-->
         <scene sceneID="0On-aB-jQj">
             <objects>
-                <viewController storyboardIdentifier="GroupMapViewController" id="y0m-QT-SUn" customClass="GroupMapViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GroupMapViewController" id="y0m-QT-SUn" customClass="GroupMapViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Aet-Nu-z2R">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,17 +36,27 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Do8-SA-GWe">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RbE-dd-JbL">
+                                <rect key="frame" x="355" y="804.5" width="29" height="27.5"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="location.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C7e-QL-GDK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="C7e-QL-GDK" firstAttribute="trailing" secondItem="Do8-SA-GWe" secondAttribute="trailing" id="MCa-8m-ftY"/>
+                            <constraint firstItem="C7e-QL-GDK" firstAttribute="bottom" secondItem="RbE-dd-JbL" secondAttribute="bottom" constant="30" id="Nlg-xm-P2y"/>
                             <constraint firstItem="C7e-QL-GDK" firstAttribute="bottom" secondItem="Do8-SA-GWe" secondAttribute="bottom" id="WCp-Nj-Lzg"/>
                             <constraint firstItem="Do8-SA-GWe" firstAttribute="top" secondItem="C7e-QL-GDK" secondAttribute="top" id="XYU-gZ-vnu"/>
+                            <constraint firstItem="C7e-QL-GDK" firstAttribute="trailing" secondItem="RbE-dd-JbL" secondAttribute="trailing" constant="30" id="grr-4b-Y1J"/>
                             <constraint firstItem="Do8-SA-GWe" firstAttribute="leading" secondItem="C7e-QL-GDK" secondAttribute="leading" id="kV3-7w-0y7"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bringToUserLocationButton" destination="RbE-dd-JbL" id="deq-I2-E1e"/>
                         <outlet property="groupMapView" destination="Do8-SA-GWe" id="rcy-wO-JRu"/>
                     </connections>
                 </viewController>
@@ -73,6 +84,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="location.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

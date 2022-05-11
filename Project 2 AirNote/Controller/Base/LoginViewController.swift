@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     
     private var asVisitorButton = UIButton()
     
-    
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -28,6 +27,8 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var mainTitle: UILabel!
     
+    @IBOutlet weak var termsAndConditionsStackView: UIStackView!
+    
     
     // User Manager
     private var existingUsers: [User] = []
@@ -37,7 +38,6 @@ class LoginViewController: UIViewController {
         configureSignInWithAppleButton()
         configureAsVisitorButton()
         configureNativeSignIn()
-//        layoutingSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -154,6 +154,22 @@ class LoginViewController: UIViewController {
         
     }
     
+    
+    @IBAction func openPrivacy(_ sender: Any) {
+        
+        let vc = WebViewController()
+        vc.urlString = "https://pages.flycricket.io/airnote/privacy.html"
+        self.present(vc, animated: true)
+        
+    }
+    
+    
+    @IBAction func openEULA(_ sender: Any) {
+        let vc = WebViewController()
+        vc.urlString = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+        self.present(vc, animated: true)
+    }
+    
 }
 
 // MARK: Configure Layouts
@@ -213,7 +229,7 @@ extension LoginViewController {
         NSLayoutConstraint.activate([
             asVisitorButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             asVisitorButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            asVisitorButton.bottomAnchor.constraint(equalTo: signInWithAppleButton.bottomAnchor, constant: -50)
+            asVisitorButton.bottomAnchor.constraint(equalTo: signInWithAppleButton.topAnchor, constant: -20)
         ])
         
     }
@@ -228,7 +244,7 @@ extension LoginViewController {
         NSLayoutConstraint.activate([
             signInWithAppleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             signInWithAppleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            signInWithAppleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+            signInWithAppleButton.bottomAnchor.constraint(equalTo: termsAndConditionsStackView.topAnchor, constant: -10)
         ])
     }
     

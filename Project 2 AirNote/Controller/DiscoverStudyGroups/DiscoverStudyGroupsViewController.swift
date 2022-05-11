@@ -38,6 +38,9 @@ class DiscoverStudyGroupsViewController: UIViewController {
         return groupsCollectionView
     }()
     
+    // MARK: Add Note Button
+    private var addGroupButton = UIButton()
+    
     // MARK: Category
     private var selectedCategoryIndex = 0
     var category: [String] = ["所有讀書會", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
@@ -53,7 +56,7 @@ class DiscoverStudyGroupsViewController: UIViewController {
     // MARK: Users Data
     var users: [User] = []
     var user: User?
-    
+    private var userToBeBlocked = ""
     var currentUser = Auth.auth().currentUser
     
     override func viewDidLoad() {
@@ -67,6 +70,9 @@ class DiscoverStudyGroupsViewController: UIViewController {
         
         // Set Up Groups CollectionView
         configureGroupsCollectionView()
+        
+        // Configure Add Group Button
+        configureAddGroupButton()
         
         // Search Button
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
@@ -88,6 +94,54 @@ class DiscoverStudyGroupsViewController: UIViewController {
         // Fetch Groups Data
         fetchGroups()
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        addGroupButton.layer.cornerRadius = addGroupButton.frame.height / 2
+    }
+    
+}
+
+// MARK: Configure Add Note Button
+extension DiscoverStudyGroupsViewController {
+    
+    func configureAddGroupButton() {
+        
+        addGroupButton.translatesAutoresizingMaskIntoConstraints = false
+        addGroupButton.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30)), for: .normal)
+        addGroupButton.backgroundColor = .myDarkGreen
+        addGroupButton.tintColor = .white
+        addGroupButton.imageView?.contentMode = .scaleAspectFill
+        addGroupButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        addGroupButton.addTarget(self, action: #selector(pushToNextPage), for: .touchUpInside)
+        view.addSubview(addGroupButton)
+        
+        NSLayoutConstraint.activate([
+            addGroupButton.widthAnchor.constraint(equalToConstant: 50),
+            addGroupButton.heightAnchor.constraint(equalTo: addGroupButton.widthAnchor),
+            addGroupButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            addGroupButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30)
+        ])
+        
+    }
+    
+    @objc func pushToNextPage() {
+        
+        guard let currentUser = self.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
+        guard let vc = UIStoryboard.addContent.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -144,6 +198,71 @@ extension DiscoverStudyGroupsViewController {
     }
 }
 
+// MARK: Block User
+extension DiscoverStudyGroupsViewController {
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: groupsCollectionView)
+            if let indexPath = groupsCollectionView.indexPathForItem(at: touchPoint) {
+                userToBeBlocked = filterGroups[indexPath.item].groupOwner
+                openActionList()
+            }
+        }
+    }
+    
+    @objc private func openActionList() {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+            self.blockUser()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        // iPad Situation
+        if let popoverController = controller.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        self.present(controller, animated: true)
+        
+    }
+    
+    private func blockUser() {
+        
+        user?.blockUsers.append(userToBeBlocked)
+        
+        guard let currentUser = user else { return }
+        
+        UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
+            
+            switch result {
+                
+            case .success:
+                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "確認", style: .default) { action in
+                    self.fetchGroups()
+                }
+                controller.addAction(action)
+                self.present(controller, animated: true)
+                
+                print("封鎖成功")
+                
+            case .failure:
+                
+                print("封鎖失敗")
+                
+            }
+        }
+        
+    }
+    
+}
+
 // MARK: Configure Category CollectionView
 extension DiscoverStudyGroupsViewController {
     
@@ -177,10 +296,6 @@ extension DiscoverStudyGroupsViewController {
                 
                 // Fetch Users Data
                 self?.fetchUsers()
-                
-                DispatchQueue.main.async {
-                    self?.groupsCollectionView.reloadData()
-                }
                 
             case .failure(let error):
                 
@@ -242,6 +357,8 @@ extension DiscoverStudyGroupsViewController {
     private func configureGroupsCollectionView() {
         groupsCollectionView.dataSource = self
         groupsCollectionView.delegate = self
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        groupsCollectionView.addGestureRecognizer(longPress)
         
         view.addSubview(groupsCollectionView)
         

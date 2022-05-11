@@ -13,7 +13,10 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var groupMapView: MKMapView!
     
+    @IBOutlet weak var bringToUserLocationButton: UIButton!
+    
     let locationManager = CLLocationManager()
+    
     
     // MARK: Groups Data
     var groups: [Group] = []
@@ -21,6 +24,8 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
     var users: [User] = []
     
     var user: User?
+    
+    var userToBeBlocked = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +40,16 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 20.0
         
+        
         // Set up group annotation
         groupMapView.delegate = self
         layoutGroup()
+        configButton()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        bringToUserLocationButton.layer.cornerRadius =  bringToUserLocationButton.frame.height / 2
     }
 }
 
@@ -45,13 +57,30 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
 extension GroupMapViewController {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if groupMapView.userLocation.coordinate.latitude != 0.0 || groupMapView.userLocation.coordinate.longitude != 0.0 {
         bringToUserLocation()
+        } else {
+            return
+        }
     }
     
-    func bringToUserLocation() {
+    @objc func bringToUserLocation() {
+        locationManager.startUpdatingLocation()
         let location = groupMapView.userLocation
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         groupMapView.setRegion(region, animated: true)
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func configButton() {
+        
+        //  Button
+        bringToUserLocationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+        bringToUserLocationButton.tintColor = .myDarkGreen
+        bringToUserLocationButton.backgroundColor = .white
+        bringToUserLocationButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        bringToUserLocationButton.addTarget(self, action: #selector(bringToUserLocation), for: .touchUpInside)
+        
     }
     
 }
@@ -82,7 +111,7 @@ extension GroupMapViewController: MKMapViewDelegate {
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-            button.setImage(UIImage(systemName:"plus.magnifyingglass"), for: .normal)
+            button.setImage(UIImage(systemName: "plus.magnifyingglass"), for: .normal)
             button.tintColor = .myDarkGreen
             view.rightCalloutAccessoryView = button
         }
@@ -90,6 +119,9 @@ extension GroupMapViewController: MKMapViewDelegate {
     }
     
     func layoutGroup() {
+        
+        var tag = 0
+        
         for group in groups {
             let coordinate = CLLocationCoordinate2D(latitude: group.location.latitude, longitude: group.location.longitude)
             let title = group.groupTitle
@@ -101,6 +133,7 @@ extension GroupMapViewController: MKMapViewDelegate {
                 title: title,
                 subtitle: subtitle,
                 groupId: groupId)
+
             groupMapView.addAnnotation(annotation)
         }
     }

@@ -23,6 +23,7 @@ class SearchGroupsViewController: UIViewController {
     var users: [User] = []
     var user: User?
     var currentUserId = FirebaseManager.shared.currentUser?.uid
+    private var userToBeBlocked = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +88,8 @@ extension SearchGroupsViewController {
         searchGroupsTableView.registerCellWithNib(identifier: String(describing: GroupResultTableViewCell.self), bundle: nil)
         searchGroupsTableView.dataSource = self
         searchGroupsTableView.delegate = self
-        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        searchGroupsTableView.addGestureRecognizer(longPress)
         view.addSubview(searchGroupsTableView)
         
         searchGroupsTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,6 +97,71 @@ extension SearchGroupsViewController {
         searchGroupsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         searchGroupsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         searchGroupsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        
+    }
+    
+}
+
+// MARK: Block User
+extension SearchGroupsViewController  {
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: searchGroupsTableView)
+            if let indexPath = searchGroupsTableView.indexPathForRow(at: touchPoint) {
+                userToBeBlocked = filteredgroups[indexPath.row].groupOwner
+                openActionList()
+            }
+        }
+    }
+    
+    @objc private func openActionList() {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+            self.blockUser()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        // iPad Situation
+        if let popoverController = controller.popoverPresentationController {
+          popoverController.sourceView = self.view
+          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+          popoverController.permittedArrowDirections = []
+        }
+        
+        self.present(controller, animated: true)
+        
+    }
+    
+    private func blockUser() {
+        
+        user?.blockUsers.append(userToBeBlocked)
+        
+        guard let currentUser = user else { return }
+        
+        UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
+            
+            switch result {
+                
+            case .success:
+                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "確認", style: .default) { action in
+                    self.fetchGroups()
+                }
+                controller.addAction(action)
+                self.present(controller, animated: true)
+                
+                print("封鎖成功")
+                
+            case .failure:
+                
+                print("封鎖失敗")
+                
+            }
+        }
         
     }
     
@@ -115,10 +182,6 @@ extension SearchGroupsViewController {
                 
                 // Fetch users
                 self?.fetchUsers()
-                
-                DispatchQueue.main.async {
-                    self?.searchGroupsTableView.reloadData()
-                }
                 
             case .failure(let error):
                 

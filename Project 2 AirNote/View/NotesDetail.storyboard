@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,7 +13,7 @@
         <!--Note Detail View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="NoteDetailViewController" id="Y6W-OH-hqX" customClass="NoteDetailViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NoteDetailViewController" id="Y6W-OH-hqX" customClass="NoteDetailViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -33,14 +34,14 @@
                                 </cells>
                             </collectionView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hfi-oL-REo">
-                                <rect key="frame" x="10" y="818" width="347.5" height="34"/>
+                                <rect key="frame" x="10" y="818" width="373" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-Ml-2Uh">
-                                <rect key="frame" x="362.5" y="818" width="46.5" height="31"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
+                                <rect key="frame" x="388" y="824" width="21" height="22"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="paperplane.fill" catalog="system"/>
                                 <connections>
                                     <action selector="sendComment:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="d4a-zF-lfE"/>
                                 </connections>
@@ -51,13 +52,13 @@
                         <constraints>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="hfi-oL-REo" secondAttribute="bottom" constant="10" id="1Fm-Uh-INO"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="aD8-Ml-2Uh" secondAttribute="trailing" constant="5" id="6iD-KB-3LB"/>
+                            <constraint firstItem="aD8-Ml-2Uh" firstAttribute="centerY" secondItem="hfi-oL-REo" secondAttribute="centerY" id="8M9-bz-vUn"/>
                             <constraint firstItem="aD8-Ml-2Uh" firstAttribute="leading" secondItem="hfi-oL-REo" secondAttribute="trailing" constant="5" id="Cfr-ol-C3X"/>
                             <constraint firstItem="NS7-gs-yWa" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ET9-4d-ZXH"/>
                             <constraint firstItem="hfi-oL-REo" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="JhD-hJ-DAu"/>
                             <constraint firstItem="hfi-oL-REo" firstAttribute="top" secondItem="NS7-gs-yWa" secondAttribute="bottom" constant="5" id="T6z-ad-6hK"/>
                             <constraint firstItem="NS7-gs-yWa" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="aVa-eD-InE"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="NS7-gs-yWa" secondAttribute="trailing" id="vAk-gv-cdF"/>
-                            <constraint firstItem="aD8-Ml-2Uh" firstAttribute="top" secondItem="NS7-gs-yWa" secondAttribute="bottom" constant="5" id="y6i-1v-HRH"/>
                         </constraints>
                     </view>
                     <connections>

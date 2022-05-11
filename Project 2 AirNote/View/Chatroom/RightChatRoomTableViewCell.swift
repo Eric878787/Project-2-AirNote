@@ -12,9 +12,9 @@ class RightChatRoomTableViewCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     
     @IBOutlet weak var rightBackgroundView: UIView!
-    
-    @IBOutlet weak var messageImage: UIImageView!
 
+    @IBOutlet weak var createdTimeLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
@@ -26,9 +26,6 @@ class RightChatRoomTableViewCell: UITableViewCell {
         messageLabel.textColor = .white
         rightBackgroundView.clipsToBounds = true
         rightBackgroundView.layer.cornerRadius = 10
-        
-        messageImage.layer.cornerRadius = 10
-        messageImage.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

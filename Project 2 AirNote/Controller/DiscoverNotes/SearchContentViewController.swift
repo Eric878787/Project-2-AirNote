@@ -227,8 +227,7 @@ extension SearchContentViewController {
                 
             case .success:
                 let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "返回首頁", style: .default) { action in
-                    self.navigationController?.popToRootViewController(animated: true)
+                let action = UIAlertAction(title: "確認", style: .default) { action in
                     self.fetchNotes()
                 }
                 controller.addAction(action)
