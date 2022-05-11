@@ -80,6 +80,7 @@ extension CafeMapViewController {
         print(cafeMapView.userLocation.coordinate)
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         cafeMapView.setRegion(region, animated: true)
+        locationManager.stopUpdatingLocation()
     }
     
     func configButton() {
@@ -88,6 +89,7 @@ extension CafeMapViewController {
         bringToUserLocationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
         bringToUserLocationButton.tintColor = .myDarkGreen
         bringToUserLocationButton.backgroundColor = .white
+        bringToUserLocationButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         bringToUserLocationButton.addTarget(self, action: #selector(bringToUserLocation), for: .touchUpInside)
         
     }

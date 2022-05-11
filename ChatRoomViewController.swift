@@ -119,7 +119,7 @@ extension ChatRoomViewController {
                 DispatchQueue.main.async {
                     self?.chatRoomTableView.reloadData()
                     if self?.group?.messages != [] {
-                        self?.chatRoomTableView.scrollToRow(at: [0, (self?.group?.messages.count ?? 1) - 1] , at: .bottom, animated: false)
+                        self?.chatRoomTableView.scrollToRow(at: [0, (self?.group?.messages.count ?? 1) - 1], at: .bottom, animated: false)
                     }
                 }
                 
@@ -140,6 +140,8 @@ extension ChatRoomViewController {
         chatRoomTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         chatRoomTableView.registerCellWithNib(identifier: String(describing: LeftChatRoomTableViewCell.self), bundle: nil)
         chatRoomTableView.registerCellWithNib(identifier: String(describing: RightChatRoomTableViewCell.self), bundle: nil)
+        chatRoomTableView.registerCellWithNib(identifier: String(describing: LeftImageTableViewCell.self), bundle: nil)
+        chatRoomTableView.registerCellWithNib(identifier: String(describing: RightImageTableViewCell.self), bundle: nil)
         chatRoomTableView.dataSource = self
         
         view.addSubview(chatRoomTableView)
@@ -175,6 +177,7 @@ extension ChatRoomViewController {
         messageTextView.layer.borderWidth = 1
         messageTextView.layer.borderColor = UIColor.systemGray6.cgColor
         messageTextView.layer.cornerRadius = 10
+        messageTextView.font = UIFont(name: "PingFangTC-Regular", size: 14)
         view.addSubview(messageTextView)
         
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
@@ -277,39 +280,127 @@ extension ChatRoomViewController: UITableViewDataSource {
         guard let uid = FirebaseManager.shared.currentUser?.uid else { return UITableViewCell() }
         guard let group = self.group else { return UITableViewCell() }
         if group.messages[indexPath.row].sender == uid {
-            let rightChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightChatRoomTableViewCell", for: indexPath)
-            guard let cell = rightChatRoomTableViewCell as? RightChatRoomTableViewCell else { return rightChatRoomTableViewCell }
-            let url = URL(string:group.messages[indexPath.row].image ?? "")
-            cell.messageImage.kf.indicatorType = .activity
-            cell.messageImage.kf.setImage(with: url)
-            cell.messageLabel.text = group.messages[indexPath.row].content
             
             if group.messages[indexPath.row].image == nil {
-                cell.messageImage.isHidden = true
-            } else { cell.messageImage.isHidden = false }
+                
+                let rightChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightChatRoomTableViewCell", for: indexPath)
+                guard let cell = rightChatRoomTableViewCell as? RightChatRoomTableViewCell else { return rightChatRoomTableViewCell }
+                cell.messageLabel.text = group.messages[indexPath.row].content
+                let localDate = group.messages[indexPath.row].createdTime
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM d, h:mm a"
+                cell.createdTimeLabel.text =  dateFormatter.string(from: localDate)
+                
+                return cell
+              
+            } else {
+                
+                let rightImageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightImageTableViewCell", for: indexPath)
+                guard let cell = rightImageTableViewCell as? RightImageTableViewCell else { return rightImageTableViewCell }
+                let url = URL(string:group.messages[indexPath.row].image ?? "")
+                cell.messageImage.kf.indicatorType = .activity
+                cell.messageImage.kf.setImage(with: url)
+                let localDate = group.messages[indexPath.row].createdTime
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM d, h:mm a"
+                cell.createdTimeLabel.text =  dateFormatter.string(from: localDate)
+                
+                cell.imageHandler = {
+                    
+                    let vc = ImageViewerViewController()
+                    guard let image = group.messages[indexPath.row].image else { return }
+                    vc.images.append(image)
+                    vc.currentPage = 0
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                }
+                
+                return cell
             
-            return cell
-        } else {
-            let leftChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftChatRoomTableViewCell", for: indexPath)
-            guard let cell = leftChatRoomTableViewCell as? LeftChatRoomTableViewCell else { return leftChatRoomTableViewCell }
-            let url = URL(string:group.messages[indexPath.row].image ?? "")
-            cell.messageImage.kf.indicatorType = .activity
-            cell.messageImage.kf.setImage(with: url)
-            cell.messageLabel.text = group.messages[indexPath.row].content
-            
-            if group.messages[indexPath.row].image == nil {
-                cell.messageImage.isHidden = true
-            } else { cell.messageImage.isHidden = false }
-            
-            // querying users' name & avatar
-            for user in users where user.uid == group.messages[indexPath.row].sender {
-                cell.nameLabel.text = user.userName
-                let url = URL(string: user.userAvatar)
-                cell.avatarImageView.kf.indicatorType = .activity
-                cell.avatarImageView.kf.setImage(with: url)
             }
             
-            return cell
+        } else {
+            
+            if group.messages[indexPath.row].image == nil {
+                
+                let leftChatRoomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftChatRoomTableViewCell", for: indexPath)
+                guard let cell = leftChatRoomTableViewCell as? LeftChatRoomTableViewCell else { return leftChatRoomTableViewCell }
+                var sender: User?
+                cell.messageLabel.text = group.messages[indexPath.row].content
+                let localDate = group.messages[indexPath.row].createdTime
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM d, h:mm a"
+                cell.createdTimeLabel.text =  dateFormatter.string(from: localDate)
+                
+                for user in users where user.uid == group.messages[indexPath.row].sender {
+                    let url = URL(string: user.userAvatar)
+                    cell.avatarImageView.kf.indicatorType = .activity
+                    cell.avatarImageView.kf.setImage(with: url)
+                    sender = user
+                }
+                
+                cell.avatarHandler = {
+                    
+                    if group.messages[indexPath.row].sender != uid {
+                        let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
+                        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+                        vc.userInThisPage = sender
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    } else {
+                        self.tabBarController?.selectedIndex = 4
+                    }
+                    
+                }
+
+                
+                return cell
+              
+            } else {
+                
+                let leftImageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftImageTableViewCell", for: indexPath)
+                guard let cell = leftImageTableViewCell as? LeftImageTableViewCell else { return leftImageTableViewCell }
+                var sender: User?
+                let url = URL(string:group.messages[indexPath.row].image ?? "")
+                cell.messageImage.kf.indicatorType = .activity
+                cell.messageImage.kf.setImage(with: url)
+                let localDate = group.messages[indexPath.row].createdTime
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM d, h:mm a"
+                cell.createdTimeLabel.text =  dateFormatter.string(from: localDate)
+                
+                for user in users where user.uid == group.messages[indexPath.row].sender {
+                    let url = URL(string: user.userAvatar)
+                    cell.avatarImageView.kf.indicatorType = .activity
+                    cell.avatarImageView.kf.setImage(with: url)
+                    sender = user
+                }
+                
+                cell.imageHandler = {
+                    
+                    let vc = ImageViewerViewController()
+                    guard let image = group.messages[indexPath.row].image else { return }
+                    vc.images.append(image)
+                    vc.currentPage = 0
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                }
+                
+                cell.avatarHandler = {
+                    
+                    if group.messages[indexPath.row].sender != uid {
+                        let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
+                        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+                        vc.userInThisPage = sender
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    } else {
+                        self.tabBarController?.selectedIndex = 4
+                    }
+                    
+                }
+                
+                return cell
+            
+            }
         }
     }
 }

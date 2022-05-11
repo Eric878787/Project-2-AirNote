@@ -392,8 +392,7 @@ extension AddNoteViewController {
         
         group.enter()
         // Loading Animation
-        configureAnimation()
-        loadingAnimation.loadingView.play()
+        LKProgressHUD.show()
         guard let image = coverImage else { return }
         noteManager.uploadPhoto(image: image) { result in
             switch result {
@@ -444,6 +443,7 @@ extension AddNoteViewController {
                                         self.loadingAnimation.loadingView.isHidden = true
                                         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                                         controller.addAction(cancelAction)
+                                        LKProgressHUD.dismiss()
                                         self.present(controller, animated: true, completion: nil)
                                     }
                                 case .failure(let error):

@@ -441,7 +441,7 @@ extension NoteDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return note.images.count ?? 0
+            return note.images.count + 1 ?? 0
         case 1:
             return 1
         case 2:
@@ -459,9 +459,20 @@ extension NoteDetailViewController: UICollectionViewDataSource {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteCarouselCollectionViewCell.reuseIdentifer, for: indexPath)
                     as? NoteCarouselCollectionViewCell else { return UICollectionViewCell()}
-            let url = URL(string: note.images[indexPath.item])
-            cell.photoView.kf.indicatorType = .activity
-            cell.photoView.kf.setImage(with: url)
+            if indexPath.item == 0 {
+                
+                let url = URL(string: note.cover)
+                cell.photoView.kf.indicatorType = .activity
+                cell.photoView.kf.setImage(with: url)
+                
+            } else {
+                
+                let url = URL(string: note.images[indexPath.item - 1])
+                cell.photoView.kf.indicatorType = .activity
+                cell.photoView.kf.setImage(with: url)
+                
+            }
+            
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteTitleCollectionViewCell.self), for: indexPath)

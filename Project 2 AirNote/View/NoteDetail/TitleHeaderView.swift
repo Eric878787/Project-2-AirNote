@@ -96,8 +96,9 @@ class TitleSupplementaryView: UICollectionReusableView {
     func addTapGesture() {
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        let tapImageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         avatar.isUserInteractionEnabled = true
-        avatar.addGestureRecognizer(tapGestureRecognizer)
+        avatar.addGestureRecognizer(tapImageGestureRecognizer)
         name.isUserInteractionEnabled = true
         name.addGestureRecognizer(tapGestureRecognizer)
         

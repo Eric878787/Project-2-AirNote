@@ -430,6 +430,7 @@ extension EditNoteViewController {
     func upload() {
         
         let group = DispatchGroup()
+        LKProgressHUD.show()
         let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
@@ -479,6 +480,7 @@ extension EditNoteViewController {
                         self?.loadingAnimation.loadingView.isHidden = true
                         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                         controller.addAction(cancelAction)
+                        LKProgressHUD.show()
                         self?.present(controller, animated: true, completion: nil)
                     }
                 case.failure:

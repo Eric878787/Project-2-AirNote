@@ -15,7 +15,7 @@ class AddGroupViewController: UIViewController {
     private var addGroupTableView = UITableView(frame: .zero)
     
     // MARK: Properties
-    private var group = Group(schedules: [],
+    private var group = Group(schedules: [Schedule(date: Date(), title: "")],
                               createdTime: Date(),
                               groupCategory: "",
                               groupKeywords: [],
@@ -62,8 +62,12 @@ extension AddGroupViewController {
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddCalendarTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddCoverTableViewCell.self), bundle: nil)
         addGroupTableView.registerCellWithNib(identifier: String(describing: AddAddressTableViewCell.self), bundle: nil)
+        addGroupTableView.registerHeaderWithNib(identifier: String(describing: AddCalendarHeaderView.self), bundle: nil)
         addGroupTableView.dataSource = self
         addGroupTableView.delegate = self
+        if #available(iOS 15.0, *) {
+            addGroupTableView.sectionHeaderTopPadding = 0.0
+              }
         addGroupTableView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(addGroupTableView)
@@ -77,14 +81,71 @@ extension AddGroupViewController {
 }
 
 // MARK: Table View DataSource
-extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
+extension AddGroupViewController: UITableViewDataSource, CoverDelegate, AddCalendarHeaderViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func addCalendar(_ header: AddCalendarHeaderView) {
+        self.group.schedules.append(Schedule(date: Date(), title: ""))
+        addGroupTableView.reloadSections(IndexSet(integer: 3), with: .automatic)
+    }
+    
+    func minusCalendar(_ header: AddCalendarHeaderView) {
+        self.group.schedules.removeLast()
+        addGroupTableView.reloadSections(IndexSet(integer: 3), with: .automatic)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = addGroupTableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: AddCalendarHeaderView.self) )
+                as? AddCalendarHeaderView else { return UITableViewHeaderFooterView() }
+        if section == 3 {
+            header.delegate = self
+            
+            var count = group.schedules.count
+            
+            if  count >= 5 {
+                header.addButton.isEnabled = false
+                
+            } else if count <= 1 {
+                header.minusButton.isEnabled = false
+            } else {
+                
+                header.addButton.isEnabled = true
+                
+                header.minusButton.isEnabled = true
+            }
+            
+            return  header
+        } else {
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 3 {
+            return UITableView.automaticDimension
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
         6
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 3 {
+            return group.schedules.count
+        } else {
+            return 1
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        
+        if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddTitleTableViewCell.self), for: indexPath)
             guard let addTitleCell = cell as? AddTitleTableViewCell else { return cell }
             addTitleCell.dataHandler = { [weak self] title in
@@ -92,14 +153,14 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
 //                self?.room.roomTitle = title
             }
             return addTitleCell
-        } else if indexPath.row == 1 {
+        } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddContentTableViewCell.self), for: indexPath)
             guard let addContentCell = cell as? AddContentTableViewCell else { return cell }
             addContentCell.dataHandler = {  [weak self] content in
                 self?.group.groupContent = content
             }
             return addContentCell
-        } else if indexPath.row == 2 {
+        } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddKeywordsTableViewCell.self), for: indexPath)
             guard let addKeywordsCell = cell as? AddKeywordsTableViewCell else { return cell }
             addKeywordsCell.dataHandler = { [weak self] selectedTags, selectedCategory in
@@ -107,25 +168,28 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate {
                 self?.group.groupKeywords = selectedTags
             }
             return addKeywordsCell
-        } else if indexPath.row == 3 {
+        } else if indexPath.section == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddCalendarTableViewCell.self), for: indexPath)
             guard let addCalendarCell = cell as? AddCalendarTableViewCell else { return cell }
-            addCalendarCell.calendarHandler = { [weak self] dateArray, textArray in
+            
+            addCalendarCell.datePicker.date = self.group.schedules[indexPath.row].date
+            
+            addCalendarCell.textField.text =  self.group.schedules[indexPath.row].title
+            
+            addCalendarCell.dateHandler  = { [weak self] date in
                 
-                self?.group.schedules = []
-                
-                for date in dateArray {
-                    let schedule = Schedule(date: date, title: "")
-                    self?.group.schedules.append(schedule)
-                }
-                
-                for title in 0..<textArray.count {
-                    self?.group.schedules[title].title = textArray[title]
-                }
+                self?.group.schedules[indexPath.row].date = date
                 
             }
+            
+            addCalendarCell.textHandler = { [weak self] text in
+                
+                self?.group.schedules[indexPath.row].title = text
+                
+            }
+
             return addCalendarCell
-        } else if indexPath.row == 4{
+        } else if indexPath.section == 4 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddCoverTableViewCell.self), for: indexPath)
             guard let addCoverCell = cell as? AddCoverTableViewCell else { return cell }
             addCoverCell.delegate = self
@@ -172,7 +236,7 @@ extension AddGroupViewController: UITableViewDelegate {
 //            return 500
 //        }
     
-        if indexPath.row == 1 {
+        if indexPath.section == 1 {
             return 300
         } else {
             return  UITableView.automaticDimension
@@ -304,6 +368,7 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
         let group = DispatchGroup()
         
         group.enter()
+        LKProgressHUD.show()
         guard let image = coverImage else { return }
         GroupManager.shared.uploadPhoto(image: image) { result in
             switch result {
@@ -353,6 +418,7 @@ extension AddGroupViewController {
                         DispatchQueue.main.async {
                             cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                             controller.addAction(cancelAction)
+                            LKProgressHUD.dismiss()
                             self.present(controller, animated: true, completion: nil)
                         }
                     case .failure(let error):
