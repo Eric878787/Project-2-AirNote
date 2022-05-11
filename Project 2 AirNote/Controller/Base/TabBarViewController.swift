@@ -13,7 +13,7 @@ private enum Tab {
     
     case discoverStudyGroups
     
-    case addContent
+//    case addContent
     
     case chatroomLobby
     
@@ -29,7 +29,7 @@ private enum Tab {
             
         case .discoverStudyGroups: controller = UIStoryboard.discoverStudyGroups.instantiateInitialViewController()!
             
-        case.addContent: controller = UIStoryboard.addContent.instantiateInitialViewController()!
+//        case.addContent: controller = UIStoryboard.addContent.instantiateInitialViewController()!
             
         case.chatroomLobby: controller = UIStoryboard.chatroomLobby.instantiateInitialViewController()!
             
@@ -62,12 +62,12 @@ private enum Tab {
                 selectedImage: nil
             )
             
-        case .addContent:
-            return UITabBarItem(
-                title: "新增內容",
-                image: UIImage(systemName: "plus"),
-                selectedImage: nil
-            )
+//        case .addContent:
+//            return UITabBarItem(
+//                title: "新增內容",
+//                image: UIImage(systemName: "plus"),
+//                selectedImage: nil
+//            )
             
         case.chatroomLobby:
             return UITabBarItem(
@@ -89,7 +89,7 @@ private enum Tab {
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
-    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .addContent, .chatroomLobby, .profile]
+    private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .chatroomLobby, .profile]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +105,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         if FirebaseManager.shared.currentUser == nil  {
             
             if let viewControllers = tabBarController.viewControllers {
-                if viewController == viewControllers[2] || viewController == viewControllers[3] || viewController == viewControllers[4] {
+                if viewController == viewControllers[2] || viewController == viewControllers[3] {
                     
                     guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return false }
                     

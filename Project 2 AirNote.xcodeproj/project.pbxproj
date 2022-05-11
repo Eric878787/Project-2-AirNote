@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		421D5C7B2829461800F5747C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421D5C7A2829461800F5747C /* WebViewController.swift */; };
+		421D5C7D282B65E500F5747C /* AddCalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421D5C7C282B65E500F5747C /* AddCalendarHeaderView.swift */; };
+		421D5C7F282B68C100F5747C /* AddCalendarHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421D5C7E282B68C100F5747C /* AddCalendarHeaderView.xib */; };
+		421D5C82282B9DE600F5747C /* RightImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421D5C80282B9DE600F5747C /* RightImageTableViewCell.swift */; };
+		421D5C83282B9DE600F5747C /* RightImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421D5C81282B9DE600F5747C /* RightImageTableViewCell.xib */; };
+		421D5C86282B9E0700F5747C /* LeftImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421D5C84282B9E0700F5747C /* LeftImageTableViewCell.swift */; };
+		421D5C87282B9E0700F5747C /* LeftImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421D5C85282B9E0700F5747C /* LeftImageTableViewCell.xib */; };
 		4235C5C0281BD2A600DEF3E6 /* NoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */; };
 		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
 		42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */; };
@@ -127,6 +134,13 @@
 
 /* Begin PBXFileReference section */
 		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
+		421D5C7A2829461800F5747C /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		421D5C7C282B65E500F5747C /* AddCalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCalendarHeaderView.swift; sourceTree = "<group>"; };
+		421D5C7E282B68C100F5747C /* AddCalendarHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCalendarHeaderView.xib; sourceTree = "<group>"; };
+		421D5C80282B9DE600F5747C /* RightImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightImageTableViewCell.swift; sourceTree = "<group>"; };
+		421D5C81282B9DE600F5747C /* RightImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightImageTableViewCell.xib; sourceTree = "<group>"; };
+		421D5C84282B9E0700F5747C /* LeftImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftImageTableViewCell.swift; sourceTree = "<group>"; };
+		421D5C85282B9E0700F5747C /* LeftImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftImageTableViewCell.xib; sourceTree = "<group>"; };
 		4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeader.swift; sourceTree = "<group>"; };
 		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
 		42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageViewer.storyboard; sourceTree = "<group>"; };
@@ -185,7 +199,7 @@
 		42DD04D828116FED007C4A9F /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		42DD04DB281175FC007C4A9F /* 97127-loading-icon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "97127-loading-icon.json"; sourceTree = "<group>"; };
 		42DD04DD281178E7007C4A9F /* 27938-upload-files .json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "27938-upload-files .json"; sourceTree = "<group>"; };
-		42DE585328005A7200D764F7 /* Project 2 AirNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project 2 AirNote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42DE585328005A7200D764F7 /* AirNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DE585628005A7200D764F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42DE585828005A7200D764F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		42DE585A28005A7200D764F7 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -389,7 +403,7 @@
 		42DE585428005A7200D764F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42DE585328005A7200D764F7 /* Project 2 AirNote.app */,
+				42DE585328005A7200D764F7 /* AirNote.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -482,6 +496,7 @@
 			isa = PBXGroup;
 			children = (
 				42405B242817873D00A12777 /* LoginViewController.swift */,
+				421D5C7A2829461800F5747C /* WebViewController.swift */,
 				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
 				42B7FAA02819664500E68DE6 /* AuthViewController.swift */,
 				42383E0228237474005CF4B4 /* ImageViewerViewController.swift */,
@@ -624,6 +639,8 @@
 		42E2B681280DA41600B51D9F /* AddGroup */ = {
 			isa = PBXGroup;
 			children = (
+				421D5C7C282B65E500F5747C /* AddCalendarHeaderView.swift */,
+				421D5C7E282B68C100F5747C /* AddCalendarHeaderView.xib */,
 				42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */,
 				42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */,
 				42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */,
@@ -649,8 +666,12 @@
 				42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */,
 				42DD04CA280FE4B4007C4A9F /* LeftChatRoomTableViewCell.swift */,
 				42DD04CF280FF498007C4A9F /* LeftChatRoomTableViewCell.xib */,
+				421D5C84282B9E0700F5747C /* LeftImageTableViewCell.swift */,
+				421D5C85282B9E0700F5747C /* LeftImageTableViewCell.xib */,
 				42DD04CE280FF498007C4A9F /* RightChatRoomTableViewCell.swift */,
 				42DD04CB280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib */,
+				421D5C80282B9DE600F5747C /* RightImageTableViewCell.swift */,
+				421D5C81282B9DE600F5747C /* RightImageTableViewCell.xib */,
 			);
 			path = Chatroom;
 			sourceTree = "<group>";
@@ -735,7 +756,7 @@
 			);
 			name = "Project 2 AirNote";
 			productName = "Project 2 AirNote";
-			productReference = 42DE585328005A7200D764F7 /* Project 2 AirNote.app */;
+			productReference = 42DE585328005A7200D764F7 /* AirNote.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -796,6 +817,7 @@
 				42DD04D1280FF498007C4A9F /* LeftChatRoomTableViewCell.xib in Resources */,
 				42F9363F28058BEB0058EB07 /* AddContent.storyboard in Resources */,
 				42F936302803F5950058EB07 /* CategoryCollectionViewCell.xib in Resources */,
+				421D5C87282B9E0700F5747C /* LeftImageTableViewCell.xib in Resources */,
 				42E2B695280ED7D400B51D9F /* ChatroomLobby.storyboard in Resources */,
 				42B7FA9D2817E48100E68DE6 /* Auth.storyboard in Resources */,
 				42DE586028005A7600D764F7 /* Assets.xcassets in Resources */,
@@ -806,10 +828,12 @@
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
 				42405B162815A13800A12777 /* PersonalNoteTableViewCell.xib in Resources */,
+				421D5C83282B9DE600F5747C /* RightImageTableViewCell.xib in Resources */,
 				423A12742813F32A0075B34F /* GroupTitleCollectionViewCell.xib in Resources */,
 				42B432C22822D4D100D158EC /* BlockListTableViewCell.xib in Resources */,
 				42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */,
 				42DE585E28005A7200D764F7 /* Main.storyboard in Resources */,
+				421D5C7F282B68C100F5747C /* AddCalendarHeaderView.xib in Resources */,
 				42DD04D728116F17007C4A9F /* 98431-loading-animation.json in Resources */,
 				42DE58712801696800D764F7 /* DiscoverNotes.storyboard in Resources */,
 				423A126028131EF20075B34F /* NoteCommentCollectionViewCell.xib in Resources */,
@@ -924,12 +948,14 @@
 				42E2B678280D7F9600B51D9F /* GroupManager.swift in Sources */,
 				42DE585728005A7200D764F7 /* AppDelegate.swift in Sources */,
 				42DE58752801783B00D764F7 /* UIStoryboard+Extension.swift in Sources */,
+				421D5C7B2829461800F5747C /* WebViewController.swift in Sources */,
 				423A12732813F32A0075B34F /* GroupTitleCollectionViewCell.swift in Sources */,
 				423A125C281318A10075B34F /* NoteCommentCollectionViewCell.swift in Sources */,
 				42405B0D2815A05F00A12777 /* ProfileViewController.swift in Sources */,
 				42DD04D0280FF498007C4A9F /* RightChatRoomTableViewCell.swift in Sources */,
 				42405B152815A13800A12777 /* PersonalNoteTableViewCell.swift in Sources */,
 				42F93638280573A30058EB07 /* UserManager.swift in Sources */,
+				421D5C82282B9DE600F5747C /* RightImageTableViewCell.swift in Sources */,
 				42383E0A28280B14005CF4B4 /* DeleteAccountTableViewCell.swift in Sources */,
 				42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
@@ -946,6 +972,7 @@
 				42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */,
 				42E2B688280DA4E500B51D9F /* AddAddressTableViewCell.swift in Sources */,
 				42405B212816D57E00A12777 /* CafeDataModel.swift in Sources */,
+				421D5C7D282B65E500F5747C /* AddCalendarHeaderView.swift in Sources */,
 				42F9363D28058BA20058EB07 /* AddContentViewController.swift in Sources */,
 				423A12692813F1620075B34F /* GroupDetailViewController.swift in Sources */,
 				42405B1F2816D53200A12777 /* CafeManager.swift in Sources */,
@@ -977,6 +1004,7 @@
 				42F936482805B44E0058EB07 /* UITableView+Extension.swift in Sources */,
 				4246EBD728222CF700C5D183 /* OtherProfileViewController.swift in Sources */,
 				42B7FA9F2817E6DB00E68DE6 /* FirebaseManager.swift in Sources */,
+				421D5C86282B9E0700F5747C /* LeftImageTableViewCell.swift in Sources */,
 				42F93654280674E10058EB07 /* AddKeywordsTableViewCell.swift in Sources */,
 				42DD04CC280FE4B4007C4A9F /* LeftChatRoomTableViewCell.swift in Sources */,
 				42E2B684280DA4BE00B51D9F /* AddCalendarTableViewCell.swift in Sources */,
@@ -1055,7 +1083,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1109,7 +1137,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1128,26 +1156,27 @@
 				CODE_SIGN_ENTITLEMENTS = "Project 2 AirNote/Project 2 AirNote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6S28UJ4A7B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project 2 AirNote/Info.plist";
-				INFOPLIST_KEY_NSCameraUsageDescription = "是否同意取用相機";
+				INFOPLIST_KEY_NSCameraUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "是否同意取用相簿";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ec.Project-2-AirNote";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AirNote;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1166,23 +1195,23 @@
 				DEVELOPMENT_TEAM = 6S28UJ4A7B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project 2 AirNote/Info.plist";
-				INFOPLIST_KEY_NSCameraUsageDescription = "是否同意取用相機";
+				INFOPLIST_KEY_NSCameraUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "是否同意取用相簿";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "您的相片將被用於AirNote筆記 / 讀書會 頁面";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ec.Project-2-AirNote";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AirNote;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

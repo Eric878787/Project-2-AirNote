@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol TitleSupplementaryViewDelegate {
+    
+    func didTouchellipsis()
+    
+}
+
 class TitleSupplementaryView: UICollectionReusableView {
     static let reuseIdentifier = String(describing: TitleSupplementaryView.self)
     
@@ -18,7 +24,11 @@ class TitleSupplementaryView: UICollectionReusableView {
     
     let timeLabel = UILabel()
     
+    let blockButton = UIButton()
+    
     var delegate: NoteTitleDelegate?
+    
+    var blockUserDelegate: TitleSupplementaryViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,6 +58,7 @@ class TitleSupplementaryView: UICollectionReusableView {
         addSubview(avatar)
         addSubview(name)
         addSubview(timeLabel)
+        addSubview(blockButton)
         textLabel.font = UIFont(name: "PingFangTC-Semibold", size: 18)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.font = UIFont(name: "PingFangTC-Regular", size: 14)
@@ -56,12 +67,15 @@ class TitleSupplementaryView: UICollectionReusableView {
         avatar.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
         name.font = UIFont(name: "PingFangTC-Semibold", size: 14)
+        blockButton.tintColor = .myDarkGreen
+        blockButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        blockButton.addTarget(self, action: #selector(ellipsisToched), for: .touchUpInside)
+        blockButton.translatesAutoresizingMaskIntoConstraints = false
         
         let inset: CGFloat = 0
         
         NSLayoutConstraint.activate([
             textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-//            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
             textLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             textLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             timeLabel.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor, constant: -inset),
@@ -72,7 +86,9 @@ class TitleSupplementaryView: UICollectionReusableView {
             avatar.widthAnchor.constraint(equalToConstant: 40),
             avatar.heightAnchor.constraint(equalToConstant: 40),
             name.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 5),
-            name.centerYAnchor.constraint(equalTo: avatar.centerYAnchor)
+            name.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
+            blockButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            blockButton.centerYAnchor.constraint(equalTo: avatar.centerYAnchor)
             
         ])
     }
@@ -80,8 +96,9 @@ class TitleSupplementaryView: UICollectionReusableView {
     func addTapGesture() {
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        let tapImageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         avatar.isUserInteractionEnabled = true
-        avatar.addGestureRecognizer(tapGestureRecognizer)
+        avatar.addGestureRecognizer(tapImageGestureRecognizer)
         name.isUserInteractionEnabled = true
         name.addGestureRecognizer(tapGestureRecognizer)
         
@@ -89,6 +106,12 @@ class TitleSupplementaryView: UICollectionReusableView {
     
     @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.toProfilePage()
+        
+    }
+    
+    @objc private func ellipsisToched() {
+        
+        blockUserDelegate?.didTouchellipsis()
         
     }
 }

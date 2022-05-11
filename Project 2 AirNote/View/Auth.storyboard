@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,36 +12,36 @@
         <!--Login View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="Y6W-OH-hqX" customClass="LoginViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="Y6W-OH-hqX" customClass="LoginViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJj-oJ-yk0">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Air Note" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cud-2s-Fcy">
-                                <rect key="frame" x="50" y="144" width="314" height="46.5"/>
+                                <rect key="frame" x="50" y="144" width="275" height="46.333333333333343"/>
                                 <fontDescription key="fontDescription" name="Kefa-Regular" family="Kefa" pointSize="40"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="M78-Zf-GQo">
-                                <rect key="frame" x="16" y="298" width="382" height="300"/>
+                                <rect key="frame" x="16" y="256" width="343" height="300"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CLL-rK-1vV">
-                                        <rect key="frame" x="38" y="0.0" width="306" height="64"/>
+                                        <rect key="frame" x="34.333333333333343" y="0.0" width="274.33333333333326" height="63.666666666666664"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入密碼" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cYQ-rn-SKc">
-                                        <rect key="frame" x="38" y="79" width="306" height="63.5"/>
+                                        <rect key="frame" x="34.333333333333343" y="78.666666666666686" width="274.33333333333326" height="64"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWd-fp-SHT">
-                                        <rect key="frame" x="38" y="157.5" width="306" height="64"/>
+                                        <rect key="frame" x="34.333333333333343" y="157.66666666666669" width="274.33333333333326" height="63.666666666666657"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
@@ -48,7 +49,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qz8-f1-51E">
-                                        <rect key="frame" x="38" y="236.5" width="306" height="63.5"/>
+                                        <rect key="frame" x="34.333333333333343" y="236.33333333333329" width="274.33333333333326" height="63.666666666666657"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
@@ -64,6 +65,61 @@
                                     <constraint firstItem="PWd-fp-SHT" firstAttribute="width" secondItem="Qz8-f1-51E" secondAttribute="width" id="crf-tV-BWK"/>
                                 </constraints>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xS-el-yAP">
+                                <rect key="frame" x="30" y="736.33333333333337" width="315" height="26.666666666666629"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="登入即代表您同意AirNote的" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4v-jN-6j9">
+                                        <rect key="frame" x="0.0" y="0.0" width="132" height="26.666666666666668"/>
+                                        <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="9"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMb-tY-JO2">
+                                        <rect key="frame" x="132" y="0.0" width="69" height="26.666666666666668"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="隱私權政策">
+                                                    <attributes>
+                                                        <color key="NSColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                                                        <font key="NSFont" size="9" name="PingFangTC-Regular"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        <integer key="NSUnderline" value="1"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="openPrivacy:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Tr9-TX-Qcb"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="及" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NN2-H5-CHU">
+                                        <rect key="frame" x="201" y="0.0" width="9" height="26.666666666666668"/>
+                                        <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="9"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYR-p8-hZV">
+                                        <rect key="frame" x="210" y="0.0" width="105" height="26.666666666666668"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="終端使用者授權合約">
+                                                    <attributes>
+                                                        <color key="NSColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                                                        <font key="NSFont" size="9" name="PingFangTC-Regular"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        <integer key="NSUnderline" value="1"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="openEULA:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="H6C-ke-DIg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -73,10 +129,13 @@
                             <constraint firstItem="cud-2s-Fcy" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="50" id="CaM-Yg-4GL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="M78-Zf-GQo" secondAttribute="trailing" constant="16" id="GsU-dR-JNf"/>
                             <constraint firstAttribute="bottom" secondItem="sJj-oJ-yk0" secondAttribute="bottom" id="NN0-HQ-cEM"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="7xS-el-yAP" secondAttribute="bottom" constant="15" id="ZcA-pF-2XM"/>
                             <constraint firstItem="cud-2s-Fcy" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="100" id="cMo-KX-ePJ"/>
                             <constraint firstItem="sJj-oJ-yk0" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="ijl-6s-xgm"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="cud-2s-Fcy" secondAttribute="trailing" constant="50" id="oZ4-mU-Rdu"/>
                             <constraint firstItem="M78-Zf-GQo" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="qzN-Ms-YVm"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="7xS-el-yAP" secondAttribute="trailing" constant="30" id="suJ-9g-328"/>
+                            <constraint firstItem="7xS-el-yAP" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="vYD-Ak-XKI"/>
                             <constraint firstItem="M78-Zf-GQo" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="xOO-91-J9C"/>
                             <constraint firstItem="M78-Zf-GQo" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="xnR-Sw-mBB"/>
                         </constraints>
@@ -88,6 +147,7 @@
                         <outlet property="mainTitle" destination="cud-2s-Fcy" id="stv-ve-aFn"/>
                         <outlet property="passwordTextField" destination="cYQ-rn-SKc" id="whx-Iv-vat"/>
                         <outlet property="signUpButton" destination="Qz8-f1-51E" id="lwN-Zl-39k"/>
+                        <outlet property="termsAndConditionsStackView" destination="7xS-el-yAP" id="PiP-F6-0O2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -97,26 +157,26 @@
         <!--Auth View Controller-->
         <scene sceneID="iBy-aF-moO">
             <objects>
-                <viewController storyboardIdentifier="AuthViewController" id="dgX-or-EId" customClass="AuthViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthViewController" id="dgX-or-EId" customClass="AuthViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="93p-bb-If5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ela-av-EPk">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AH4-dB-GKO">
-                                <rect key="frame" x="0.0" y="709.5" width="414" height="196.5"/>
+                                <rect key="frame" x="0.0" y="625.66666666666663" width="375" height="196.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請先登入會員" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cq2-C2-uAl">
-                                        <rect key="frame" x="16" y="24" width="108" height="26.5"/>
+                                        <rect key="frame" x="16" y="24" width="108" height="26.333333333333329"/>
                                         <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="18"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GcW-Gx-xEe">
-                                        <rect key="frame" x="374" y="16" width="24" height="24"/>
+                                        <rect key="frame" x="335" y="16" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="Dwi-tc-JW4"/>
                                             <constraint firstAttribute="height" constant="24" id="J9o-gD-KCw"/>
@@ -128,13 +188,13 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登入即可使用更多功能" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHy-DC-dow">
-                                        <rect key="frame" x="16" y="74.5" width="382" height="22"/>
+                                        <rect key="frame" x="16" y="74.333333333333371" width="343" height="22"/>
                                         <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="15"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PP9-6y-osJ">
-                                        <rect key="frame" x="16" y="112.5" width="382" height="48"/>
+                                        <rect key="frame" x="16" y="112.33333333333337" width="343" height="48"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="fIa-Ic-Cdd"/>

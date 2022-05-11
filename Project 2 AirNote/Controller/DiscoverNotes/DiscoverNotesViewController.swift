@@ -39,6 +39,9 @@ class DiscoverNotesViewController: UIViewController {
         return notesCollectionView
     }()
     
+    // MARK: Add Note Button
+    private var addNoteButton = UIButton()
+    
     // MARK: Category
     private var selectedCategoryIndex = 0
     var category: [String] = ["所有筆記", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
@@ -68,10 +71,13 @@ class DiscoverNotesViewController: UIViewController {
         // Set Up Notes CollecitonView
         configureNotesCollectionView()
         
+        // Configure Add Note Button
+        configureAddNoteButton()
+        
         // Search Button
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(toSearchPage))
         self.navigationItem.rightBarButtonItem = searchButton
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +91,11 @@ class DiscoverNotesViewController: UIViewController {
         // Fetch Notes Data
         fetchNotes()
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        addNoteButton.layer.cornerRadius = addNoteButton.frame.height / 2
     }
     
 }
@@ -235,8 +246,7 @@ extension DiscoverNotesViewController {
                 
             case .success:
                 let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "返回首頁", style: .default) { action in
-                    self.navigationController?.popToRootViewController(animated: true)
+                let action = UIAlertAction(title: "確認", style: .default) { action in
                     self.fetchNotes()
                 }
                 controller.addAction(action)
@@ -293,6 +303,50 @@ extension DiscoverNotesViewController {
     }
     
 }
+
+// MARK: Configure Add Note Button
+extension DiscoverNotesViewController {
+    
+    func configureAddNoteButton() {
+        
+        addNoteButton.translatesAutoresizingMaskIntoConstraints = false
+        addNoteButton.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30)), for: .normal)
+        addNoteButton.backgroundColor = .myDarkGreen
+        addNoteButton.tintColor = .white
+        addNoteButton.imageView?.contentMode = .scaleAspectFill
+        addNoteButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        addNoteButton.addTarget(self, action: #selector(pushToNextPage), for: .touchUpInside)
+        view.addSubview(addNoteButton)
+        
+        NSLayoutConstraint.activate([
+            addNoteButton.widthAnchor.constraint(equalToConstant: 50),
+            addNoteButton.heightAnchor.constraint(equalTo: addNoteButton.widthAnchor),
+            addNoteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            addNoteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30)
+        ])
+        
+    }
+    
+    @objc func pushToNextPage() {
+        
+        guard let currentUser = self.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+
+        guard let vc = UIStoryboard.addContent.instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
 
 // MARK: CollectionView DataSource
 extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectionDelegate {

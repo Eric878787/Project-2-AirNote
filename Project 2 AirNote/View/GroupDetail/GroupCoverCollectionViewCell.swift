@@ -25,15 +25,14 @@ class GroupCoverCollectionViewCell: UICollectionViewCell {
 
 extension GroupCoverCollectionViewCell {
     func configure() {
-        contentView.backgroundColor = .systemGray2
         contentContainer.translatesAutoresizingMaskIntoConstraints = false
-        
-        contentView.addSubview(photoView)
         contentView.addSubview(contentContainer)
         
         photoView.translatesAutoresizingMaskIntoConstraints = false
-        photoView.layer.cornerRadius = 4
-        photoView.clipsToBounds = true
+        photoView.layer.borderWidth = 1
+        photoView.layer.borderColor = UIColor.systemGray6.cgColor
+        photoView.layer.cornerRadius = 5
+        photoView.contentMode = .scaleAspectFill
         contentContainer.addSubview(photoView)
         
         NSLayoutConstraint.activate([
@@ -42,10 +41,10 @@ extension GroupCoverCollectionViewCell {
             contentContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            photoView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
-            photoView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
-            photoView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
-            photoView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor)
+            photoView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 10),
+            photoView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -10),
+            photoView.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 10),
+            photoView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -10)
         ])
     }
 }

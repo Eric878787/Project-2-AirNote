@@ -19,6 +19,8 @@ class CafeMapViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var cafeMapView: MKMapView!
     
+    @IBOutlet weak var bringToUserLocationButton: UIButton!
+    
     let locationManager = CLLocationManager()
     
     private var cafeManager = CafeManager()
@@ -49,6 +51,14 @@ class CafeMapViewController: UIViewController, CLLocationManagerDelegate {
         
         // Set up group annotation
         cafeMapView.delegate = self
+        
+        // Config Button
+        configButton()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        bringToUserLocationButton.layer.cornerRadius =  bringToUserLocationButton.frame.height / 2
     }
     
 }
@@ -57,14 +67,31 @@ class CafeMapViewController: UIViewController, CLLocationManagerDelegate {
 extension CafeMapViewController {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if cafeMapView.userLocation.coordinate.latitude != 0.0 || cafeMapView.userLocation.coordinate.longitude != 0.0 {
         bringToUserLocation()
+        } else {
+            return
+        }
     }
     
-    func bringToUserLocation() {
+    @objc func bringToUserLocation() {
+        locationManager.startUpdatingLocation()
         let location = cafeMapView.userLocation
         print(cafeMapView.userLocation.coordinate)
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         cafeMapView.setRegion(region, animated: true)
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func configButton() {
+        
+        //  Button
+        bringToUserLocationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+        bringToUserLocationButton.tintColor = .myDarkGreen
+        bringToUserLocationButton.backgroundColor = .white
+        bringToUserLocationButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        bringToUserLocationButton.addTarget(self, action: #selector(bringToUserLocation), for: .touchUpInside)
+        
     }
     
 }
@@ -94,7 +121,10 @@ extension CafeMapViewController: MKMapViewDelegate {
                 reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            button.setImage(UIImage(systemName: "plus"), for: .normal)
+            button.tintColor = .myDarkGreen
+            view.rightCalloutAccessoryView = button
         }
         return view
     }

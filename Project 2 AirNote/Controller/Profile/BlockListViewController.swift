@@ -27,11 +27,18 @@ class BlockListViewController: UIViewController {
         
         blockListTableView.registerCellWithNib(identifier: String(describing: BlockListTableViewCell.self), bundle: nil)
         
+        self.tabBarController?.tabBar.isHidden = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         blockListTableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
 }

@@ -28,6 +28,8 @@ class SetUpPadViewController: UIViewController {
     @IBOutlet weak var labelGreen: UILabel!
     @IBOutlet weak var labelBlue: UILabel!
     
+    @IBOutlet weak var closeButton: UIButton!
+    
     var brush: CGFloat = 10.0
     var opacity: CGFloat = 1.0
     var red: CGFloat = 0.0
@@ -51,6 +53,8 @@ class SetUpPadViewController: UIViewController {
         labelBlue.text = Int(sliderBlue.value).description
         
         drawPreview()
+        
+        closeButton.tintColor = .myDarkGreen
     }
     
     // MARK: - Actions

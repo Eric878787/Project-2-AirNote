@@ -51,7 +51,7 @@ class PersonalGroupTableViewCell: UITableViewCell {
         categoryButton.layer.borderWidth = 1
         categoryButton.layer.shadowColor = UIColor.myBrown.cgColor
         categoryButton.titleLabel?.textColor = .myBrown
-        categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 14)
+        categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 12)
         categoryButton.layer.cornerRadius = 10
     }
     

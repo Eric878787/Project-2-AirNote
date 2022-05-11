@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8lG-Yj-bct">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,7 +12,7 @@
         <!--Profile View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="ProfileViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Y6W-OH-hqX" customClass="ProfileViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,7 +100,7 @@
         <!--Block List View Controller-->
         <scene sceneID="NcO-AA-5ro">
             <objects>
-                <viewController storyboardIdentifier="BlockListViewController" id="4Iq-P6-2CZ" customClass="BlockListViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BlockListViewController" id="4Iq-P6-2CZ" customClass="BlockListViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pCS-Kj-Nu2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,7 +130,7 @@
         <!--Other Profile View Controller-->
         <scene sceneID="fAx-yY-sBM">
             <objects>
-                <viewController storyboardIdentifier="OtherProfileViewController" id="s2h-34-Z95" customClass="OtherProfileViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OtherProfileViewController" id="s2h-34-Z95" customClass="OtherProfileViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A3a-yN-JNe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,7 +253,7 @@
         <!--Profile View Controller-->
         <scene sceneID="f17-kG-8gE">
             <objects>
-                <viewController id="NH5-8q-8BS" customClass="ProfileViewController" customModule="Project_2_AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="NH5-8q-8BS" customClass="ProfileViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lPw-NO-Wl0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -307,13 +308,13 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gsY-j5-zbP">
-                                <rect key="frame" x="15" y="249" width="384" height="613"/>
+                                <rect key="frame" x="15" y="242.5" width="384" height="619.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdi-2M-YM6">
-                                <rect key="frame" x="141.5" y="213" width="42.5" height="31"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="pencil" catalog="system"/>
+                                <rect key="frame" x="146.5" y="219" width="18.5" height="18.5"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="pencil" catalog="system"/>
                                 <connections>
                                     <action selector="settingName:" destination="NH5-8q-8BS" eventType="touchUpInside" id="xkA-AX-K54"/>
                                 </connections>
@@ -327,7 +328,7 @@
                             <constraint firstItem="em2-km-0Tn" firstAttribute="height" secondItem="a3t-Mo-lD1" secondAttribute="height" multiplier="0.67" id="7IR-P6-f9g"/>
                             <constraint firstItem="h3j-bz-3hI" firstAttribute="leading" secondItem="a3t-Mo-lD1" secondAttribute="leading" id="7q6-uG-QzW"/>
                             <constraint firstItem="em2-km-0Tn" firstAttribute="centerY" secondItem="a3t-Mo-lD1" secondAttribute="centerY" id="AhC-L4-Efu"/>
-                            <constraint firstItem="xdi-2M-YM6" firstAttribute="leading" secondItem="h3j-bz-3hI" secondAttribute="trailing" id="Hch-Go-Mx7"/>
+                            <constraint firstItem="xdi-2M-YM6" firstAttribute="leading" secondItem="h3j-bz-3hI" secondAttribute="trailing" constant="5" id="Hch-Go-Mx7"/>
                             <constraint firstItem="h3j-bz-3hI" firstAttribute="top" secondItem="a3t-Mo-lD1" secondAttribute="bottom" constant="15" id="IDz-Od-NOx"/>
                             <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" secondItem="gsY-j5-zbP" secondAttribute="trailing" constant="15" id="Idn-JC-m6Z"/>
                             <constraint firstItem="gsY-j5-zbP" firstAttribute="top" secondItem="xdi-2M-YM6" secondAttribute="bottom" constant="5" id="Ipz-Dr-8Ac"/>
