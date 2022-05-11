@@ -585,6 +585,7 @@ extension NoteDetailViewController: UICollectionViewDelegate {
         if indexPath.section == 0 {
             let vc = ImageViewerViewController()
             vc.images = self.note.images
+            vc.images.insert(self.note.cover, at: 0)
             vc.currentPage = indexPath.item
             self.navigationController?.pushViewController(vc, animated: true)
         }
