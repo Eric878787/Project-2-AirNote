@@ -30,6 +30,8 @@ class AddCalendarHeaderView: UITableViewHeaderFooterView {
         
         titleLabel.text = "行事曆"
         
+        titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
+        
         addButton.setTitleColor( .myDarkGreen, for: .normal)
         
         addButton.setTitleColor( .systemGray6, for: .disabled)

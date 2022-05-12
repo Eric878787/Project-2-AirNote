@@ -41,6 +41,7 @@ class SearchGroupsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // Fetch notes
+        LKProgressHUD.show()
         fetchGroups()
         
     }
@@ -223,6 +224,7 @@ extension SearchGroupsViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
                     self?.searchGroupsTableView.reloadData()
                 }
                 

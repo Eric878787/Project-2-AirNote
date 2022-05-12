@@ -17,6 +17,7 @@ class AddContentTableViewCell: UITableViewCell, UITextViewDelegate {
         super.awakeFromNib()
         self.selectionStyle = .none
         titleLabel.text = "內容"
+        titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         contentTextView.delegate = self
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.systemGray6.cgColor

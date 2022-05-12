@@ -89,6 +89,7 @@ class DiscoverNotesViewController: UIViewController {
         categoryCollectionView.reloadData()
         
         // Fetch Notes Data
+        LKProgressHUD.show()
         fetchNotes()
         
     }
@@ -155,6 +156,7 @@ extension DiscoverNotesViewController {
                 
                 
                 DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
                     self?.notesCollectionView.reloadData()
                 }
                 

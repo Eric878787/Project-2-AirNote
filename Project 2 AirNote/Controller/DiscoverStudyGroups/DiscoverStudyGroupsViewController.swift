@@ -92,6 +92,7 @@ class DiscoverStudyGroupsViewController: UIViewController {
         categoryCollectionView.reloadData()
         
         // Fetch Groups Data
+        LKProgressHUD.show()
         fetchGroups()
         
     }
@@ -338,6 +339,7 @@ extension DiscoverStudyGroupsViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
                     self?.groupsCollectionView.reloadData()
                 }
                 

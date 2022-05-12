@@ -18,6 +18,7 @@ class AddTitleTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         self.selectionStyle = .none
         titleLabel.text = "標題"
+        titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         titleTextField.delegate = self
     }
     

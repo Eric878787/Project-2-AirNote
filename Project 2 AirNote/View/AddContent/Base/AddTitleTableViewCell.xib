@@ -24,19 +24,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入標題" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mnO-zX-qor">
-                        <rect key="frame" x="15" y="41" width="291" height="45"/>
+                        <rect key="frame" x="16" y="44" width="289" height="41"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Kjw-lG-W2M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="56W-Xb-8yl"/>
-                    <constraint firstAttribute="trailing" secondItem="mnO-zX-qor" secondAttribute="trailing" constant="15" id="6iA-8m-W39"/>
+                    <constraint firstAttribute="trailing" secondItem="mnO-zX-qor" secondAttribute="trailing" constant="16" id="6iA-8m-W39"/>
                     <constraint firstItem="Kjw-lG-W2M" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="CZf-GP-ppr"/>
-                    <constraint firstItem="mnO-zX-qor" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="MSR-ep-1gh"/>
+                    <constraint firstItem="mnO-zX-qor" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="MSR-ep-1gh"/>
                     <constraint firstAttribute="trailing" secondItem="Kjw-lG-W2M" secondAttribute="trailing" constant="15" id="N1u-n7-1M3"/>
-                    <constraint firstItem="mnO-zX-qor" firstAttribute="top" secondItem="Kjw-lG-W2M" secondAttribute="bottom" constant="5" id="pbY-i1-IHe"/>
-                    <constraint firstAttribute="bottom" secondItem="mnO-zX-qor" secondAttribute="bottom" constant="15" id="rzt-i2-ETa"/>
+                    <constraint firstItem="mnO-zX-qor" firstAttribute="top" secondItem="Kjw-lG-W2M" secondAttribute="bottom" constant="8" id="pbY-i1-IHe"/>
+                    <constraint firstAttribute="bottom" secondItem="mnO-zX-qor" secondAttribute="bottom" constant="16" id="rzt-i2-ETa"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

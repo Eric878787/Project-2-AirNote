@@ -14,12 +14,21 @@ protocol SelectImagesDelegate {
 
 class AddPhotosTableViewCell: UITableViewCell {
     
+    @IBOutlet var bookImageViews: [UIImageView]!
+    
+    @IBOutlet weak var addButton: UIButton!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var uploadButton: UIButton!
+    
     var delegate: SelectImagesDelegate?
 
     override func awakeFromNib() {
         self.selectionStyle = .none
         super.awakeFromNib()
         titleLabel.text = "內頁"
+        titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         for imageView in bookImageViews {
             imageView.tintColor = .myDarkGreen
         }
@@ -41,18 +50,7 @@ class AddPhotosTableViewCell: UITableViewCell {
         uploadButton.layer.borderWidth = 1
         uploadButton.layer.cornerRadius = 10
         uploadButton.clipsToBounds = true
-    }
-
-    @IBOutlet var bookImageViews: [UIImageView]!
-    
-    @IBOutlet weak var addButton: UIButton!
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var uploadButton: UIButton!
-    
-    @IBAction func uploadNote(_ sender: Any) {
-        delegate?.uploadNote()
+        uploadButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -61,7 +59,12 @@ class AddPhotosTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func uploadNote(_ sender: Any) {
+        delegate?.uploadNote()
+    }
+    
     @IBAction func selectImages(_ sender: Any) {
         delegate?.selectMultiImages()
     }
+    
 }

@@ -37,6 +37,10 @@ class PersonalNoteTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        layoutItems()
+    }
+    
+    func layoutItems() {
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
         avatarImageView.clipsToBounds = true
         mainImageView.clipsToBounds = true

@@ -40,8 +40,9 @@ class SearchContentViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // Fetch notes
+        LKProgressHUD.show()
         fetchNotes()
-        searchNotesTableView.reloadData()
+//        searchNotesTableView.reloadData()
         
     }
 }
@@ -170,6 +171,7 @@ extension SearchContentViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
                     self?.searchNotesTableView.reloadData()
                 }
                 
