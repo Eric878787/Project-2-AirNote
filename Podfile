@@ -19,5 +19,6 @@ target 'Project 2 AirNote' do
   pod 'Firebase'
   pod 'JGProgressHUD'
   pod 'Firebase/Crashlytics'
+  pod 'GoogleMLKit/ImageLabeling'
 
 end

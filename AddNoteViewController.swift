@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import MLKit
 
 class AddNoteViewController: UIViewController {
     
@@ -41,6 +42,8 @@ class AddNoteViewController: UIViewController {
     // MARK: Loading Animation
     private var loadingAnimation = LottieAnimation()
     
+    var resultsText = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +59,47 @@ class AddNoteViewController: UIViewController {
         
     }
     
+}
+
+// MARK: ML Kit
+extension AddNoteViewController {
+    
+    func detectLabels(image: UIImage?, shouldUseCustomModel: Bool) {
+      guard let image = image else { return }
+        
+      // [START config_label]
+      var options: CommonImageLabelerOptions!
+        options = ImageLabelerOptions()
+      // [END config_label]
+
+      // [START init_label]
+      let onDeviceLabeler = ImageLabeler.imageLabeler(options: options)
+      // [END init_label]
+
+      // Initialize a `VisionImage` object with the given `UIImage`.
+      let visionImage = VisionImage(image: image)
+      visionImage.orientation = image.imageOrientation
+
+      // [START detect_label]
+      weak var weakSelf = self
+      onDeviceLabeler.process(visionImage) { labels, error in
+        guard let strongSelf = weakSelf else {
+          print("Self is nil!")
+          return
+        }
+        guard error == nil, let labels = labels, !labels.isEmpty else {
+          return
+        }
+
+        // [START_EXCLUDE]
+          strongSelf.resultsText = labels.map { label -> String in
+          return "Label: \(label.text), Confidence: \(label.confidence), Index: \(label.index)"
+        }.joined(separator: "\n")
+          print("==========\(self.resultsText)")
+        // [END_EXCLUDE]
+      }
+      // [END detect_label]
+    }
 }
 
 // MARK: Configure Add Note Tableview
@@ -162,6 +206,7 @@ extension AddNoteViewController: UITableViewDelegate {
     }
 }
 
+
 // MARK: UIIMagePicker Delegate
 extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -171,6 +216,7 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
             
             if let image = info[.editedImage] as? UIImage {
                 coverImage = image
+                self.detectLabels(image: coverImage, shouldUseCustomModel: false)
             }
             
         } else {

@@ -131,10 +131,6 @@ extension ChatRoomViewController {
     }
 }
 
-// MARK: PHONE CALL
-
-
-
 // MARK: Configure Layouts
 extension ChatRoomViewController {
     

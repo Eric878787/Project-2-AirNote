@@ -38,7 +38,9 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="1iY-eG-fFI"/>
                             <constraint firstItem="86Z-EB-IXw" firstAttribute="leading" secondItem="MJr-RM-YOG" secondAttribute="leading" constant="5" id="Mi5-LA-006"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="dfP-N0-kuL"/>
                             <constraint firstItem="86Z-EB-IXw" firstAttribute="top" secondItem="MJr-RM-YOG" secondAttribute="top" constant="5" id="nUl-FO-RFe"/>
                             <constraint firstAttribute="trailing" secondItem="86Z-EB-IXw" secondAttribute="trailing" constant="5" id="sSc-bb-5g4"/>
                             <constraint firstAttribute="bottom" secondItem="86Z-EB-IXw" secondAttribute="bottom" constant="5" id="z2C-VU-EGu"/>
@@ -52,6 +54,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qNr-dh-AIx" secondAttribute="bottom" constant="5" id="I2M-uQ-3tt"/>
                     <constraint firstItem="qNr-dh-AIx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="K3b-sI-tdQ"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="MJr-RM-YOG" secondAttribute="bottom" constant="5" id="SPj-Pe-3wB"/>
                     <constraint firstItem="GC7-Of-uEa" firstAttribute="bottom" secondItem="86Z-EB-IXw" secondAttribute="bottom" id="YJf-aJ-9qs"/>
