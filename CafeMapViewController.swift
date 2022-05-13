@@ -131,10 +131,10 @@ extension CafeMapViewController: MKMapViewDelegate {
     
     func layoutGroup() {
         for cafe in cafes {
-            let coordinate = CLLocationCoordinate2D(latitude: Double(cafe.latitude) ?? 0 , longitude: Double(cafe.longitude) ?? 0)
+            let coordinate = CLLocationCoordinate2D(latitude: Double(cafe.latitude) ?? 0, longitude: Double(cafe.longitude) ?? 0)
             let title = cafe.name
             let subtitle = cafe.address
-            
+                    
             let annotation = Annotation(
                 coordinate: coordinate,
                 title: title,

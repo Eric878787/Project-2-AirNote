@@ -17,7 +17,7 @@ class CafeManager {
               if let data = data {
                   do {
                      let result = try JSONDecoder().decode([Cafe].self, from: data)
-                      for count in 0..<19 {
+                      for count in 0..<29 {
                           cafes.append(result[count])
                       }
                       DispatchQueue.main.async {

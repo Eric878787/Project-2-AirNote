@@ -34,12 +34,15 @@
                                 </cells>
                             </collectionView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hfi-oL-REo">
-                                <rect key="frame" x="10" y="818" width="373" height="34"/>
+                                <rect key="frame" x="10" y="818" width="360" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-Ml-2Uh">
-                                <rect key="frame" x="388" y="824" width="21" height="22"/>
+                                <rect key="frame" x="375" y="818" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="aD8-Ml-2Uh" secondAttribute="height" multiplier="1:1" id="uMJ-qF-kWD"/>
+                                </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="paperplane.fill" catalog="system"/>
                                 <connections>
@@ -57,6 +60,7 @@
                             <constraint firstItem="NS7-gs-yWa" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ET9-4d-ZXH"/>
                             <constraint firstItem="hfi-oL-REo" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="JhD-hJ-DAu"/>
                             <constraint firstItem="hfi-oL-REo" firstAttribute="top" secondItem="NS7-gs-yWa" secondAttribute="bottom" constant="5" id="T6z-ad-6hK"/>
+                            <constraint firstItem="aD8-Ml-2Uh" firstAttribute="height" secondItem="hfi-oL-REo" secondAttribute="height" id="WJH-nE-FrI"/>
                             <constraint firstItem="NS7-gs-yWa" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="aVa-eD-InE"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="NS7-gs-yWa" secondAttribute="trailing" id="vAk-gv-cdF"/>
                         </constraints>

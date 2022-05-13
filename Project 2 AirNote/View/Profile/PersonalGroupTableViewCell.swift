@@ -35,7 +35,7 @@ class PersonalGroupTableViewCell: UITableViewCell {
         contentView.backgroundColor = .myBeige
         dateIcon.tintColor = .myDarkGreen
         membersIcon.tintColor = .myDarkGreen
-        categoryButton.isEnabled = false
+        configLayout()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -48,11 +48,20 @@ class PersonalGroupTableViewCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         avatarImage.layer.cornerRadius = avatarImage.bounds.height/2
         avatarImage.clipsToBounds = true
+    }
+    
+    func configLayout() {
+        coverImage.clipsToBounds = true
+        coverImage.layer.cornerRadius = 10
         categoryButton.layer.borderWidth = 1
-        categoryButton.layer.shadowColor = UIColor.myBrown.cgColor
-        categoryButton.titleLabel?.textColor = .myBrown
+        categoryButton.layer.borderColor = UIColor.myBrown.cgColor
+        categoryButton.isEnabled = false
+        categoryButton.setTitleColor(.myBrown, for: .disabled)
+        categoryButton.setTitleColor(.myBrown, for: .normal)
         categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 12)
         categoryButton.layer.cornerRadius = 10
+        categoryButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+
     }
     
 }

@@ -31,9 +31,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="RsU-c0-ng5" secondAttribute="bottom" constant="5" id="G4R-I5-NXh"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Qmz-uV-II4"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Qmz-uV-II4"/>
                             <constraint firstItem="RsU-c0-ng5" firstAttribute="top" secondItem="TUp-Xf-Xen" secondAttribute="top" constant="5" id="VtZ-Tz-GvO"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="b8s-eI-zsW"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="b8s-eI-zsW"/>
                             <constraint firstItem="RsU-c0-ng5" firstAttribute="leading" secondItem="TUp-Xf-Xen" secondAttribute="leading" constant="5" id="eFy-ne-hdq"/>
                             <constraint firstAttribute="trailing" secondItem="RsU-c0-ng5" secondAttribute="trailing" constant="5" id="kYj-nb-weG"/>
                         </constraints>

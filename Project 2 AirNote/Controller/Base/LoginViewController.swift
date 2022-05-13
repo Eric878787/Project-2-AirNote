@@ -44,12 +44,12 @@ class LoginViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // refresh textfield border
-        emailTextField.layer.borderColor = UIColor.clear.cgColor
-        emailTextField.layer.cornerRadius = 10
-        emailTextField.layer.borderWidth = 1
-        passwordTextField.layer.borderColor = UIColor.clear.cgColor
-        passwordTextField.layer.borderWidth = 1
-        passwordTextField.layer.cornerRadius = 10
+        
+        emailTextField.layer.cornerRadius = 5
+        emailTextField.clipsToBounds = true
+        
+        passwordTextField.layer.cornerRadius = 5
+        passwordTextField.clipsToBounds = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -188,7 +188,7 @@ extension LoginViewController {
         signUpButton.setTitleColor(.black, for: .normal)
         signUpButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
         signUpButton.backgroundColor = .white
-        signUpButton.layer.cornerRadius = 10
+        signUpButton.layer.cornerRadius = 5
         signUpButton.clipsToBounds = true
         
         // Log In Button
@@ -196,7 +196,7 @@ extension LoginViewController {
         logInButton.setTitleColor(.black, for: .normal)
         logInButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
         logInButton.backgroundColor = .white
-        logInButton.layer.cornerRadius = 10
+        logInButton.layer.cornerRadius = 5
         logInButton.clipsToBounds = true
         
     }

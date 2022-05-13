@@ -16,13 +16,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Re-K8-E6W">
-                    <rect key="frame" x="15" y="15" width="41.5" height="62"/>
+                    <rect key="frame" x="16" y="16" width="41.5" height="61"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4tw-5I-jNr">
-                    <rect key="frame" x="91.5" y="35" width="20" height="22"/>
+                    <rect key="frame" x="93.5" y="35.5" width="20" height="22"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="minus.circle" catalog="system"/>
                     <connections>
@@ -30,7 +30,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wam-D4-zk7">
-                    <rect key="frame" x="66.5" y="15" width="20" height="62"/>
+                    <rect key="frame" x="65.5" y="16" width="20" height="61"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="plus.circle" catalog="system"/>
                     <connections>
@@ -41,12 +41,12 @@
             <viewLayoutGuide key="safeArea" id="tDg-DP-fA7"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="4tw-5I-jNr" firstAttribute="leading" secondItem="Wam-D4-zk7" secondAttribute="trailing" constant="5" id="Jc3-9a-e3y"/>
+                <constraint firstItem="4tw-5I-jNr" firstAttribute="leading" secondItem="Wam-D4-zk7" secondAttribute="trailing" constant="8" id="Jc3-9a-e3y"/>
                 <constraint firstAttribute="bottom" secondItem="8Re-K8-E6W" secondAttribute="bottom" id="Mo2-UT-KbL"/>
-                <constraint firstItem="8Re-K8-E6W" firstAttribute="top" secondItem="SSJ-dX-VYW" secondAttribute="top" constant="15" id="VeQ-lF-Lxy"/>
+                <constraint firstItem="8Re-K8-E6W" firstAttribute="top" secondItem="SSJ-dX-VYW" secondAttribute="top" constant="16" id="VeQ-lF-Lxy"/>
                 <constraint firstItem="Wam-D4-zk7" firstAttribute="height" secondItem="8Re-K8-E6W" secondAttribute="height" id="Yuh-Hd-HEL"/>
-                <constraint firstItem="Wam-D4-zk7" firstAttribute="leading" secondItem="8Re-K8-E6W" secondAttribute="trailing" constant="10" id="lb0-2i-mPL"/>
-                <constraint firstItem="8Re-K8-E6W" firstAttribute="leading" secondItem="SSJ-dX-VYW" secondAttribute="leading" constant="15" id="mPs-iJ-QMT"/>
+                <constraint firstItem="Wam-D4-zk7" firstAttribute="leading" secondItem="8Re-K8-E6W" secondAttribute="trailing" constant="8" id="lb0-2i-mPL"/>
+                <constraint firstItem="8Re-K8-E6W" firstAttribute="leading" secondItem="SSJ-dX-VYW" secondAttribute="leading" constant="16" id="mPs-iJ-QMT"/>
                 <constraint firstItem="Wam-D4-zk7" firstAttribute="centerY" secondItem="8Re-K8-E6W" secondAttribute="centerY" id="u6y-j1-7R2"/>
                 <constraint firstItem="4tw-5I-jNr" firstAttribute="centerY" secondItem="Wam-D4-zk7" secondAttribute="centerY" id="uYi-wH-fgL"/>
             </constraints>

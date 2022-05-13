@@ -28,6 +28,8 @@ class ChatRoomViewController: UIViewController {
     // Chat Room DataSource
     var group: Group?
     
+    var indexOfMessageToBeDeleted: Int?
+    
     private var chatRoomManager = ChatRoomManager()
     
     // Selected Image
@@ -43,6 +45,9 @@ class ChatRoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Hide Tab Bar
+        self.tabBarController?.tabBar.isHidden = true
+        
         // Set Up Navigation Item
         
         // Configure Layouts
@@ -57,6 +62,11 @@ class ChatRoomViewController: UIViewController {
         // Image Picker
         imagePickerController.delegate = self
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
 }
@@ -115,7 +125,6 @@ extension ChatRoomViewController {
                     
                 }
                 
-                
                 DispatchQueue.main.async {
                     self?.chatRoomTableView.reloadData()
                     if self?.group?.messages != [] {
@@ -131,6 +140,72 @@ extension ChatRoomViewController {
     }
 }
 
+// MARK: Delete Message
+extension ChatRoomViewController {
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        
+        if sender.state == .began {
+            let touchPoint = sender.location(in: chatRoomTableView)
+            if let indexPath = chatRoomTableView.indexPathForRow(at: touchPoint) {
+                indexOfMessageToBeDeleted = indexPath.row
+                
+                if group?.messages[indexPath.row].sender == FirebaseManager.shared.currentUser?.uid {
+                
+                openActionList()
+                    
+                } else {
+                    
+                    return
+                    
+                }
+            }
+        }
+    }
+    
+    @objc private func openActionList() {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "刪除訊息", style: .default) { action in
+            LKProgressHUD.show()
+            self.deleteMessage()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        // iPad Situation
+        if let popoverController = controller.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        
+        self.present(controller, animated: true)
+        
+    }
+    
+    private func deleteMessage() {
+        guard let indexPathForRow = indexOfMessageToBeDeleted else { return }
+        self.group?.messages.remove(at: indexPathForRow)
+        guard let group = self.group else { return }
+        GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { [weak self] result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
+                }
+            case .failure(let error):
+                print("fetchData.failure: \(error)")
+            }
+        }
+    }
+    
+}
+
 
 // MARK: Configure Layouts
 extension ChatRoomViewController {
@@ -143,6 +218,9 @@ extension ChatRoomViewController {
         chatRoomTableView.registerCellWithNib(identifier: String(describing: LeftImageTableViewCell.self), bundle: nil)
         chatRoomTableView.registerCellWithNib(identifier: String(describing: RightImageTableViewCell.self), bundle: nil)
         chatRoomTableView.dataSource = self
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        chatRoomTableView.addGestureRecognizer(longPress)
         
         view.addSubview(chatRoomTableView)
         
@@ -221,7 +299,6 @@ extension ChatRoomViewController {
             case .success:
                 DispatchQueue.main.async {
                     self?.messageTextView.text = ""
-                    self?.chatRoomTableView.reloadData()
                 }
             case .failure(let error):
                 print("fetchData.failure: \(error)")
@@ -253,9 +330,7 @@ extension ChatRoomViewController: UIImagePickerControllerDelegate, UINavigationC
                     GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { [weak self] result in
                         switch result {
                         case .success:
-                            DispatchQueue.main.async {
-                                self?.chatRoomTableView.reloadData()
-                            }
+                            print("\(result)")
                         case .failure(let error):
                             print("fetchData.failure: \(error)")
                         }

@@ -41,6 +41,7 @@ class SearchGroupsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // Fetch notes
+        LKProgressHUD.show()
         fetchGroups()
         
     }
@@ -106,6 +107,10 @@ extension SearchGroupsViewController {
 extension SearchGroupsViewController  {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        
         if sender.state == .began {
             let touchPoint = sender.location(in: searchGroupsTableView)
             if let indexPath = searchGroupsTableView.indexPathForRow(at: touchPoint) {
@@ -223,6 +228,7 @@ extension SearchGroupsViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
                     self?.searchGroupsTableView.reloadData()
                 }
                 

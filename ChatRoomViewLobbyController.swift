@@ -33,6 +33,7 @@ class ChatRoomViewLobbyController: UIViewController {
         super.viewWillAppear(true)
         
         // fetch Data
+        LKProgressHUD.show()
         fetchuser()
         
     }
@@ -59,27 +60,39 @@ extension ChatRoomViewLobbyController {
     
     private func fetchGroups() {
         
-        guard let groupIds = self.user?.joinedGroups else { return }
-        
-        GroupManager.shared.fetchSpecificGroups(groupIds: groupIds){ [weak self] result in
-            
-            switch result {
-                
-            case .success(let groups):
-                
-                self?.groups = groups
-                
-                self?.groups.sort{
-                    ( $0.createdTime ) > ( $1.createdTime )
-                }
-                
-                self?.chatRoomListTableView.reloadData()
-                
-            case .failure(let error):
-                
-                print("\(error)")
-            }
+        if self.user?.joinedGroups == [] {
+            LKProgressHUD.dismiss()
         }
+        
+        if let groupIds = self.user?.joinedGroups {
+            
+            GroupManager.shared.fetchSpecificGroups(groupIds: groupIds){ [weak self] result in
+                
+                switch result {
+                    
+                case .success(let groups):
+                    
+                    self?.groups = groups
+                    
+                    self?.groups.sort{
+                        ( $0.createdTime ) > ( $1.createdTime )
+                    }
+                    
+                    LKProgressHUD.dismiss()
+                    self?.chatRoomListTableView.reloadData()
+                    
+                case .failure(let error):
+                    print("\(error)")
+                }
+            }
+            
+        } else {
+            
+            return
+            
+        }
+        
+        
     }
 }
 

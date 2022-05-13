@@ -40,8 +40,9 @@ class SearchContentViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // Fetch notes
+        LKProgressHUD.show()
         fetchNotes()
-        searchNotesTableView.reloadData()
+//        searchNotesTableView.reloadData()
         
     }
 }
@@ -170,6 +171,7 @@ extension SearchContentViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
                     self?.searchNotesTableView.reloadData()
                 }
                 
@@ -185,6 +187,10 @@ extension SearchContentViewController {
 extension SearchContentViewController {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        
         if sender.state == .began {
             let touchPoint = sender.location(in: searchNotesTableView)
             if let indexPath = searchNotesTableView.indexPathForRow(at: touchPoint) {
@@ -262,6 +268,9 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
             return
             
         }
+        
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         
         var selectedIndexPathItem = searchNotesTableView.indexPath(for: selectedCell)?.row
         
