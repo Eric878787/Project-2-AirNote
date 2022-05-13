@@ -203,6 +203,10 @@ extension DiscoverStudyGroupsViewController {
 extension DiscoverStudyGroupsViewController {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        
         if sender.state == .began {
             let touchPoint = sender.location(in: groupsCollectionView)
             if let indexPath = groupsCollectionView.indexPathForItem(at: touchPoint) {

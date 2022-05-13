@@ -42,8 +42,6 @@ class AddNoteViewController: UIViewController {
     // MARK: Loading Animation
     private var loadingAnimation = LottieAnimation()
     
-    var resultsText = ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,42 +62,95 @@ class AddNoteViewController: UIViewController {
 // MARK: ML Kit
 extension AddNoteViewController {
     
-    func detectLabels(image: UIImage?, shouldUseCustomModel: Bool) {
-      guard let image = image else { return }
+    private func detectLabels(image: UIImage?, shouldUseCustomModel: Bool) {
         
-      // [START config_label]
-      var options: CommonImageLabelerOptions!
+        var resultsText = ""
+        
+        guard let image = image else { return }
+        
+        // [START config_label]
+        var options: CommonImageLabelerOptions!
         options = ImageLabelerOptions()
-      // [END config_label]
-
-      // [START init_label]
-      let onDeviceLabeler = ImageLabeler.imageLabeler(options: options)
-      // [END init_label]
-
-      // Initialize a `VisionImage` object with the given `UIImage`.
-      let visionImage = VisionImage(image: image)
-      visionImage.orientation = image.imageOrientation
-
-      // [START detect_label]
-      weak var weakSelf = self
-      onDeviceLabeler.process(visionImage) { labels, error in
-        guard let strongSelf = weakSelf else {
-          print("Self is nil!")
-          return
+        // [END config_label]
+        
+        // [START init_label]
+        let onDeviceLabeler = ImageLabeler.imageLabeler(options: options)
+        // [END init_label]
+        
+        // Initialize a `VisionImage` object with the given `UIImage`.
+        let visionImage = VisionImage(image: image)
+        visionImage.orientation = image.imageOrientation
+        
+        // [START detect_label]
+        weak var weakSelf = self
+        onDeviceLabeler.process(visionImage) { labels, error in
+            guard let strongSelf = weakSelf else {
+                print("Self is nil!")
+                return
+            }
+            guard error == nil, let labels = labels, !labels.isEmpty else {
+                return
+            }
+            
+            // [START_EXCLUDE]
+            resultsText = labels.map { label -> String in
+                return "Label: \(label.text), Confidence: \(label.confidence), Index: \(label.index)"
+            }.joined(separator: "\n")
+            self.note.keywords.append(resultsText)
+            print("==========\(resultsText)")
+            self.detectTextOnDevice(image: image)
+            // [END_EXCLUDE]
         }
-        guard error == nil, let labels = labels, !labels.isEmpty else {
-          return
-        }
-
-        // [START_EXCLUDE]
-          strongSelf.resultsText = labels.map { label -> String in
-          return "Label: \(label.text), Confidence: \(label.confidence), Index: \(label.index)"
-        }.joined(separator: "\n")
-          print("==========\(self.resultsText)")
-        // [END_EXCLUDE]
-      }
-      // [END detect_label]
+        // [END detect_label]
     }
+    
+    private func detectTextOnDevice(image: UIImage?) {
+        
+        guard let image = image else { return }
+        
+        let options = ChineseTextRecognizerOptions()
+        
+        let textRecognizer = TextRecognizer.textRecognizer(options: options)
+        
+        // Initialize a `VisionImage` object with the given `UIImage`.
+        let visionImage = VisionImage(image: image)
+        visionImage.orientation = image.imageOrientation
+        
+        process(visionImage, with: textRecognizer)
+    }
+    
+    private func process(_ visionImage: VisionImage, with textRecognizer: TextRecognizer?) {
+        
+        weak var weakSelf = self
+        
+        var resultsText = ""
+        
+        textRecognizer?.process(visionImage) { text, error in
+            
+            guard let strongSelf = weakSelf else {
+                
+                print("Self is nil!")
+                
+                return
+            }
+            guard error == nil, let text = text else {
+                let errorString = error?.localizedDescription ?? Constants.detectionNoResultsMessage
+                resultsText = "Text recognizer failed with error: \(errorString)"
+                return
+            }
+            resultsText += "\(text.text)"
+            self.note.keywords.append(resultsText)
+            print("xxxxxxxxxx\(resultsText)")
+            LKProgressHUD.dismiss()
+        }
+    }
+    
+}
+
+private enum Constants {
+  static let images = ["image_has_text.jpg"]
+  static let detectionNoResultsMessage = "No results returned."
+  static let failedToDetectObjectsMessage = "Failed to detect objects in image."
 }
 
 // MARK: Configure Add Note Tableview
@@ -198,8 +249,8 @@ extension AddNoteViewController: UITableViewDelegate {
         
         if indexPath.row == 1 {
             return 300
-//        } else if indexPath.row == 4 {
-//            return 600
+            //        } else if indexPath.row == 4 {
+            //            return 600
         } else {
             return  UITableView.automaticDimension
         }
@@ -216,6 +267,8 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
             
             if let image = info[.editedImage] as? UIImage {
                 coverImage = image
+                
+                LKProgressHUD.show()
                 self.detectLabels(image: coverImage, shouldUseCustomModel: false)
             }
             

@@ -30,16 +30,10 @@ class GroupManager {
                 
                 for document in querySnapshot!.documents {
                     
-                    do {
-                        if let group = try document.data(as: Group.self, decoder: Firestore.Decoder()) {
-                            
-                            groups.append(group)
-                            
-                        }
+                    if let group = try? document.data(as: Group.self, decoder: Firestore.Decoder()) {
+                    
+                    groups.append(group)
                         
-                    } catch {
-                        
-                        completion(.failure(error))
                     }
                 }
                 
@@ -90,9 +84,8 @@ class GroupManager {
             guard let document = documentSnapshot else { return }
             var updatedGroup: Group?
             do {
-                if let group = try document.data(as: Group.self, decoder: Firestore.Decoder()) {
+                let group = try document.data(as: Group.self, decoder: Firestore.Decoder())
                     updatedGroup = group
-                }
             } catch {
                 completion(.failure(error))
             }

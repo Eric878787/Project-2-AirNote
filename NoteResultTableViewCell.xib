@@ -11,10 +11,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" restorationIdentifier="NoteResultTableViewCell" selectionStyle="default" indentationWidth="10" rowHeight="115" id="KGk-i7-Jjw" customClass="NoteResultTableViewCell" customModule="AirNote" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="652" height="115"/>
+            <rect key="frame" x="0.0" y="0.0" width="420" height="115"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="652" height="115"/>
+                <rect key="frame" x="0.0" y="0.0" width="420" height="115"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yTR-eG-T73">
@@ -25,7 +25,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pV4-Xi-mWZ">
-                        <rect key="frame" x="612" y="80" width="30" height="30"/>
+                        <rect key="frame" x="380" y="80" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="pV4-Xi-mWZ" secondAttribute="height" multiplier="1:1" id="pop-VK-Th4"/>
                         </constraints>
@@ -45,8 +45,8 @@
                             <constraint firstAttribute="width" constant="30" id="lei-uT-Gcj"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="好棒棒的筆記好棒棒的" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8D-i1-5Ac">
-                        <rect key="frame" x="120" y="10" width="200" height="28"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" horizontalCompressionResistancePriority="749" text="好棒棒" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8D-i1-5Ac">
+                        <rect key="frame" x="120" y="10" width="60" height="28"/>
                         <fontDescription key="fontDescription" name="PingFangTC-Semibold" family="PingFang TC" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -58,9 +58,15 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxb-kU-N1P">
-                        <rect key="frame" x="575" y="10" width="67" height="31"/>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <rect key="frame" x="350" y="10" width="60" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="58" id="Oex-V9-LXf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name=".PingFangTC-Regular" family=".PingFang TC" pointSize="15"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="廣告行銷">
+                            <color key="titleColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </state>
                     </button>
                 </subviews>
                 <constraints>
@@ -91,7 +97,7 @@
                 <outlet property="mainImageView" destination="yTR-eG-T73" id="76b-XH-tmm"/>
                 <outlet property="titleLabel" destination="e8D-i1-5Ac" id="WBf-G2-Oi2"/>
             </connections>
-            <point key="canvasLocation" x="-169.56521739130437" y="29.129464285714285"/>
+            <point key="canvasLocation" x="-337.68115942028987" y="29.129464285714285"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -175,6 +175,9 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        
         if (sender.state == UIGestureRecognizer.State.ended) {
             
             let touchPoint = sender.location(in: noteDetailCollectionView)
@@ -209,7 +212,6 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
         self.present(controller, animated: true)
         
     }
-    
     
     private func blockUser() {
         
@@ -336,6 +338,9 @@ extension NoteDetailViewController: NoteTitleDelegate {
             return
             
         }
+        
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         
         if selectedCell.saveButton.imageView?.image == UIImage(systemName: "suit.heart") {
             

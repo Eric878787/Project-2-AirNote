@@ -232,6 +232,9 @@ extension DiscoverNotesViewController {
             popoverController.permittedArrowDirections = []
         }
         
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        
         self.present(controller, animated: true)
         
     }
@@ -342,7 +345,7 @@ extension DiscoverNotesViewController {
             return
             
         }
-
+        
         guard let vc = UIStoryboard.addContent.instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController else { return }
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -366,6 +369,11 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             return
             
         }
+        
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+        
+        LKProgressHUD.show()
         
         var selectedIndexPathItem = notesCollectionView.indexPath(for: selectedCell)?.item
         
@@ -428,6 +436,8 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                     case .success:
                         
                         self.notesCollectionView.reloadData()
+                        
+                        LKProgressHUD.dismiss()
                         
                         print("收藏成功")
                         
