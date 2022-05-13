@@ -19,9 +19,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lkk-Vz-NLd">
-                        <rect key="frame" x="16" y="16" width="360" height="21"/>
+                        <rect key="frame" x="16" y="16" width="41.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xba-Qw-izP">
+                        <rect key="frame" x="65.5" y="19.5" width="310.5" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Sx2-db-Fi1">
@@ -33,18 +39,21 @@
                     </textView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="xba-Qw-izP" firstAttribute="centerY" secondItem="Lkk-Vz-NLd" secondAttribute="centerY" id="3ii-46-BPA"/>
                     <constraint firstItem="Lkk-Vz-NLd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="51w-QT-o8Z"/>
                     <constraint firstAttribute="trailing" secondItem="Sx2-db-Fi1" secondAttribute="trailing" constant="15" id="9OC-7v-Nwh"/>
                     <constraint firstItem="Sx2-db-Fi1" firstAttribute="top" secondItem="Lkk-Vz-NLd" secondAttribute="bottom" constant="8" id="DoJ-jl-GGs"/>
+                    <constraint firstAttribute="trailing" secondItem="xba-Qw-izP" secondAttribute="trailing" constant="16" id="FUQ-cC-96C"/>
                     <constraint firstItem="Sx2-db-Fi1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="VpH-Iv-erp"/>
-                    <constraint firstAttribute="trailing" secondItem="Lkk-Vz-NLd" secondAttribute="trailing" constant="16" id="c3q-UY-acP"/>
                     <constraint firstItem="Lkk-Vz-NLd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="f45-QJ-FuY"/>
+                    <constraint firstItem="xba-Qw-izP" firstAttribute="leading" secondItem="Lkk-Vz-NLd" secondAttribute="trailing" constant="8" id="hUx-YQ-82E"/>
                     <constraint firstAttribute="bottom" secondItem="Sx2-db-Fi1" secondAttribute="bottom" constant="15" id="saa-3m-Tix"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="contentTextView" destination="Sx2-db-Fi1" id="xxx-UF-lO2"/>
+                <outlet property="textCountLabel" destination="xba-Qw-izP" id="Jrl-ou-Xad"/>
                 <outlet property="titleLabel" destination="Lkk-Vz-NLd" id="QjA-TL-jRu"/>
             </connections>
             <point key="canvasLocation" x="189.85507246376812" y="193.52678571428569"/>

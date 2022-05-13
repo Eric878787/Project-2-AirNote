@@ -43,6 +43,9 @@ class ChatRoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Hide Tab Bar
+        self.tabBarController?.tabBar.isHidden = true
+        
         // Set Up Navigation Item
         
         // Configure Layouts
@@ -57,6 +60,11 @@ class ChatRoomViewController: UIViewController {
         // Image Picker
         imagePickerController.delegate = self
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
 }

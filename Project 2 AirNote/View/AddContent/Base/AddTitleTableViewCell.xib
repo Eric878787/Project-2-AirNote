@@ -17,8 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="321" height="101"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjw-lG-W2M">
-                        <rect key="frame" x="15" y="15" width="291" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjw-lG-W2M">
+                        <rect key="frame" x="15" y="15" width="41.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -28,19 +28,28 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s4Q-pX-rkq">
+                        <rect key="frame" x="64.5" y="18" width="240.5" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Kjw-lG-W2M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="56W-Xb-8yl"/>
                     <constraint firstAttribute="trailing" secondItem="mnO-zX-qor" secondAttribute="trailing" constant="16" id="6iA-8m-W39"/>
                     <constraint firstItem="Kjw-lG-W2M" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="CZf-GP-ppr"/>
+                    <constraint firstItem="s4Q-pX-rkq" firstAttribute="centerY" secondItem="Kjw-lG-W2M" secondAttribute="centerY" id="HU0-Nv-hBB"/>
+                    <constraint firstAttribute="trailing" secondItem="s4Q-pX-rkq" secondAttribute="trailing" constant="16" id="J3b-m1-NgL"/>
                     <constraint firstItem="mnO-zX-qor" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="MSR-ep-1gh"/>
-                    <constraint firstAttribute="trailing" secondItem="Kjw-lG-W2M" secondAttribute="trailing" constant="15" id="N1u-n7-1M3"/>
+                    <constraint firstItem="s4Q-pX-rkq" firstAttribute="leading" secondItem="Kjw-lG-W2M" secondAttribute="trailing" constant="8" id="exp-Ep-NfI"/>
                     <constraint firstItem="mnO-zX-qor" firstAttribute="top" secondItem="Kjw-lG-W2M" secondAttribute="bottom" constant="8" id="pbY-i1-IHe"/>
                     <constraint firstAttribute="bottom" secondItem="mnO-zX-qor" secondAttribute="bottom" constant="16" id="rzt-i2-ETa"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="textCountLabel" destination="s4Q-pX-rkq" id="RVD-4d-pf4"/>
                 <outlet property="titleLabel" destination="Kjw-lG-W2M" id="X56-Nb-oWb"/>
                 <outlet property="titleTextField" destination="mnO-zX-qor" id="rFp-MQ-KPk"/>
             </connections>

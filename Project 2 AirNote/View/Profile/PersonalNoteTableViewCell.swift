@@ -40,6 +40,11 @@ class PersonalNoteTableViewCell: UITableViewCell {
         layoutItems()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        layoutItems()
+    }
+    
     func layoutItems() {
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.height/2
         avatarImageView.clipsToBounds = true

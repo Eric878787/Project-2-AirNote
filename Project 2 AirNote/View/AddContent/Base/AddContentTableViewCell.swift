@@ -10,7 +10,11 @@ import UIKit
 class AddContentTableViewCell: UITableViewCell, UITextViewDelegate {
     
     @IBOutlet weak var contentTextView: UITextView!
+    
     @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var textCountLabel: UILabel!
+    
     var dataHandler: ((String) -> Void)?
     
     override func awakeFromNib() {
@@ -22,6 +26,7 @@ class AddContentTableViewCell: UITableViewCell, UITextViewDelegate {
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.systemGray6.cgColor
         contentTextView.layer.cornerRadius = 10
+        textCountLabel.text = "0/100"
         
     }
     
@@ -32,6 +37,7 @@ class AddContentTableViewCell: UITableViewCell, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let text = textView.text else { return }
+        textCountLabel.text = "\(contentTextView.text?.count ?? 0)/100"
         dataHandler?(text)
     }
     

@@ -11,6 +11,7 @@ class AddTitleTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var textCountLabel: UILabel!
     
     var dataHandler: ((String) -> Void)?
     
@@ -20,6 +21,7 @@ class AddTitleTableViewCell: UITableViewCell, UITextFieldDelegate {
         titleLabel.text = "標題"
         titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         titleTextField.delegate = self
+        textCountLabel.text = "0/10"
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,6 +32,7 @@ class AddTitleTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
+        textCountLabel.text = "\(textField.text?.count ?? 0)/10"
         dataHandler?(text)
     }
     

@@ -16,7 +16,6 @@
 		421D5C87282B9E0700F5747C /* LeftImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421D5C85282B9E0700F5747C /* LeftImageTableViewCell.xib */; };
 		4235C5C0281BD2A600DEF3E6 /* NoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */; };
 		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
-		42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */; };
 		42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0228237474005CF4B4 /* ImageViewerViewController.swift */; };
 		42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */; };
 		42383E0A28280B14005CF4B4 /* DeleteAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */; };
@@ -143,7 +142,6 @@
 		421D5C85282B9E0700F5747C /* LeftImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftImageTableViewCell.xib; sourceTree = "<group>"; };
 		4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeader.swift; sourceTree = "<group>"; };
 		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
-		42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageViewer.storyboard; sourceTree = "<group>"; };
 		42383E0228237474005CF4B4 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
 		42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountTableViewCell.swift; sourceTree = "<group>"; };
@@ -437,7 +435,6 @@
 				42DD04D228112FDA007C4A9F /* NoteDetail */,
 				423A126C2813F2120075B34F /* GroupDetail */,
 				42405B122815A0EF00A12777 /* Profile */,
-				42383DFE282373F6005CF4B4 /* ImageViewer.storyboard */,
 				42DE58702801696800D764F7 /* DiscoverNotes.storyboard */,
 				423A1251281246340075B34F /* NotesDetail.storyboard */,
 				42DE58792801808600D764F7 /* DiscoverStudyGroups.storyboard */,
@@ -825,7 +822,6 @@
 				42F936442805B0000058EB07 /* AddTitleTableViewCell.xib in Resources */,
 				42F93655280674E10058EB07 /* AddKeywordsTableViewCell.xib in Resources */,
 				42E2B689280DA4E500B51D9F /* AddAddressTableViewCell.xib in Resources */,
-				42383DFF282373F6005CF4B4 /* ImageViewer.storyboard in Resources */,
 				42E2B66B280C039E00B51D9F /* NoteResultTableViewCell.xib in Resources */,
 				42E2B6562807E6AC00B51D9F /* AddPhotosTableViewCell.xib in Resources */,
 				42405B162815A13800A12777 /* PersonalNoteTableViewCell.xib in Resources */,

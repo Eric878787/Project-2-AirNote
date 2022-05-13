@@ -117,8 +117,7 @@ class ProfileViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
         
     }
-    
-    
+
     @IBAction func cameraTapped(_ sender: Any) {
         
         let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
@@ -139,7 +138,9 @@ class ProfileViewController: UIViewController {
         controller.addAction(savedPhotosAlbumAction)
         
         // 取消
-        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive) { _ in
+            self.profilePageTableView.reloadData()
+        }
         controller.addAction(cancelAction)
         
         self.present(controller, animated: true, completion: nil)
@@ -181,23 +182,32 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         controller.addAction(savedPhotosAlbumAction)
         
         // 取消
-        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive) { _ in
+            self.profilePageTableView.reloadData()
+        }
         controller.addAction(cancelAction)
         
         self.present(controller, animated: true, completion: nil)
         
     }
     
-    /// 開啟相機
+    // 開啟相機
     func takePicture() {
         imagePickerController.sourceType = .camera
         self.present(imagePickerController, animated: true)
     }
     
-    /// 開啟相簿
+    // 開啟相簿
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
         self.present(imagePickerController, animated: true)
+    }
+    
+    // 取消選取
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true) {
+            self.profilePageTableView.reloadData()
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -234,7 +244,6 @@ extension ProfileViewController {
         profilePageTableView.register(DeleteAccountTableViewCell.self, forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
         profilePageTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
         profilePageTableView.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: GroupHeader.reuseIdentifier)
-        
         
     }
     
@@ -331,14 +340,12 @@ extension ProfileViewController {
         
     }
     
-    
     @objc func toBlockList() {
         
         guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController") as? BlockListViewController else { return }
         vc.user = self.user
         vc.blockList = self.blockedUsers
         self.navigationController?.pushViewController(vc, animated: true)
-        
         
     }
     
@@ -790,5 +797,4 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
         }
         
     }
-    
 }
