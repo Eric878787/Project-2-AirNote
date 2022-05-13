@@ -18,17 +18,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dyY-Mu-1cC">
-                        <rect key="frame" x="15" y="15" width="582" height="84"/>
+                        <rect key="frame" x="16" y="16" width="580" height="80"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="KsK-dA-YfX">
-                                <rect key="frame" x="0.0" y="5" width="174.5" height="74"/>
+                                <rect key="frame" x="0.0" y="3" width="174" height="74"/>
                                 <locale key="locale" localeIdentifier="zh_TW"/>
                                 <connections>
                                     <action selector="changeDate:" destination="KGk-i7-Jjw" eventType="valueChanged" id="tgJ-4w-Ldr"/>
                                 </connections>
                             </datePicker>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入事項" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oWu-ws-08J">
-                                <rect key="frame" x="179.5" y="25" width="402.5" height="34"/>
+                                <rect key="frame" x="179" y="23" width="401" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -39,10 +39,10 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="dyY-Mu-1cC" secondAttribute="trailing" constant="15" id="7S0-2F-6Z8"/>
-                    <constraint firstItem="dyY-Mu-1cC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="d8L-ci-fbb"/>
-                    <constraint firstItem="dyY-Mu-1cC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ldy-HW-EIO"/>
-                    <constraint firstAttribute="bottom" secondItem="dyY-Mu-1cC" secondAttribute="bottom" constant="5" id="qFN-gA-xae"/>
+                    <constraint firstAttribute="trailing" secondItem="dyY-Mu-1cC" secondAttribute="trailing" constant="16" id="7S0-2F-6Z8"/>
+                    <constraint firstItem="dyY-Mu-1cC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="d8L-ci-fbb"/>
+                    <constraint firstItem="dyY-Mu-1cC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ldy-HW-EIO"/>
+                    <constraint firstAttribute="bottom" secondItem="dyY-Mu-1cC" secondAttribute="bottom" constant="8" id="qFN-gA-xae"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

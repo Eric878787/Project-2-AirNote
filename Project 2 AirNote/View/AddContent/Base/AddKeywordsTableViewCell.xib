@@ -19,40 +19,40 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="InE-Ma-SrK">
-                        <rect key="frame" x="15" y="40.5" width="451" height="34"/>
+                        <rect key="frame" x="16" y="44.5" width="449" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vb7-By-z4S">
-                        <rect key="frame" x="15" y="15" width="451" height="20.5"/>
+                        <rect key="frame" x="16" y="16" width="449" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfN-jg-O42">
-                        <rect key="frame" x="15" y="104.5" width="451" height="20.5"/>
+                        <rect key="frame" x="16" y="110.5" width="449" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fle-Il-LDc">
-                        <rect key="frame" x="15" y="130" width="451" height="145"/>
+                        <rect key="frame" x="16" y="139" width="449" height="135"/>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Vb7-By-z4S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="4xe-iw-b6D"/>
-                    <constraint firstItem="fle-Il-LDc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="EzU-MJ-zq6"/>
-                    <constraint firstItem="InE-Ma-SrK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="LRS-1n-jBA"/>
-                    <constraint firstItem="zfN-jg-O42" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="QDP-yx-q4i"/>
-                    <constraint firstItem="InE-Ma-SrK" firstAttribute="top" secondItem="Vb7-By-z4S" secondAttribute="bottom" constant="5" id="XV4-Z9-2EE"/>
-                    <constraint firstAttribute="bottom" secondItem="fle-Il-LDc" secondAttribute="bottom" constant="15" id="ZrO-rt-arM"/>
-                    <constraint firstAttribute="trailing" secondItem="InE-Ma-SrK" secondAttribute="trailing" constant="15" id="epk-8P-7Ds"/>
-                    <constraint firstItem="zfN-jg-O42" firstAttribute="top" secondItem="InE-Ma-SrK" secondAttribute="bottom" constant="30" id="i02-bd-Pze"/>
-                    <constraint firstAttribute="trailing" secondItem="fle-Il-LDc" secondAttribute="trailing" constant="15" id="pea-0J-VLP"/>
-                    <constraint firstAttribute="trailing" secondItem="zfN-jg-O42" secondAttribute="trailing" constant="15" id="plr-Zx-snh"/>
-                    <constraint firstAttribute="trailing" secondItem="Vb7-By-z4S" secondAttribute="trailing" constant="15" id="rC2-hf-A6L"/>
-                    <constraint firstItem="Vb7-By-z4S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="tHP-cx-hLK"/>
-                    <constraint firstItem="fle-Il-LDc" firstAttribute="top" secondItem="zfN-jg-O42" secondAttribute="bottom" constant="5" id="xOj-2t-41S"/>
+                    <constraint firstItem="Vb7-By-z4S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="4xe-iw-b6D"/>
+                    <constraint firstItem="fle-Il-LDc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="EzU-MJ-zq6"/>
+                    <constraint firstItem="InE-Ma-SrK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="LRS-1n-jBA"/>
+                    <constraint firstItem="zfN-jg-O42" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="QDP-yx-q4i"/>
+                    <constraint firstItem="InE-Ma-SrK" firstAttribute="top" secondItem="Vb7-By-z4S" secondAttribute="bottom" constant="8" id="XV4-Z9-2EE"/>
+                    <constraint firstAttribute="bottom" secondItem="fle-Il-LDc" secondAttribute="bottom" constant="16" id="ZrO-rt-arM"/>
+                    <constraint firstAttribute="trailing" secondItem="InE-Ma-SrK" secondAttribute="trailing" constant="16" id="epk-8P-7Ds"/>
+                    <constraint firstItem="zfN-jg-O42" firstAttribute="top" secondItem="InE-Ma-SrK" secondAttribute="bottom" constant="32" id="i02-bd-Pze"/>
+                    <constraint firstAttribute="trailing" secondItem="fle-Il-LDc" secondAttribute="trailing" constant="16" id="pea-0J-VLP"/>
+                    <constraint firstAttribute="trailing" secondItem="zfN-jg-O42" secondAttribute="trailing" constant="16" id="plr-Zx-snh"/>
+                    <constraint firstAttribute="trailing" secondItem="Vb7-By-z4S" secondAttribute="trailing" constant="16" id="rC2-hf-A6L"/>
+                    <constraint firstItem="Vb7-By-z4S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="tHP-cx-hLK"/>
+                    <constraint firstItem="fle-Il-LDc" firstAttribute="top" secondItem="zfN-jg-O42" secondAttribute="bottom" constant="8" id="xOj-2t-41S"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -227,9 +227,7 @@ extension EditNoteViewController: UITableViewDelegate {
         //        }
         
         if indexPath.row == 1 {
-            return 150
-        } else if indexPath.row == 2 {
-            return 165
+            return 300
         } else if indexPath.row == 4 {
             return 600
         } else {
@@ -277,18 +275,21 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePicture()
         }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
         // 相薄
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbum()
         }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
         
         // 手繪版
         let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
             self.openDrawingPad()
         }
+        drawingPadAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(drawingPadAction)
         
         // 取消
@@ -336,13 +337,22 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePictureForMulti()
         }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
         // 相薄
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbumForMulti()
         }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
+        
+        // 手繪版
+        let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
+            self.openDrawingPadForMulti()
+        }
+        drawingPadAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(drawingPadAction)
         
         // 取消
         let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
@@ -397,6 +407,28 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
         self.present(multiImagePickerController, animated: true)
+    }
+    
+    // 開啟手繪版
+    func openDrawingPadForMulti() {
+        let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
+        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
+        vc.imageProvider = { [weak self] image in
+            if let image = image as? UIImage {
+                // 判斷是否超過4張
+                if self?.contentImages.count ?? 0 < 4 {
+                    self?.contentImages.insert(image, at: 0)
+                }  else {
+                    self?.contentImages.remove(at: 3)
+                    self?.contentImages.insert(image, at: 0)
+                }
+                DispatchQueue.main.async {
+                    self?.addNoteTableView.reloadData()
+                }
+            }
+            
+        }
     }
     
 }

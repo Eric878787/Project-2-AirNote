@@ -19,32 +19,28 @@ class NoteManager {
     
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
         
-        db.collection("Notes").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
-            
-            if let error = error {
+        db.collection("Notes").order(by: "createdTime", descending: true).getDocuments { (querySnapshot, error) in
                 
-                completion(.failure(error))
-            } else {
+            guard let querySnapshot = querySnapshot else {
+                
+                completion(.failure(error!))
+                
+                return
+            }
                 
                 var notes = [Note]()
                 
-                for document in querySnapshot!.documents {
+            for document in querySnapshot.documents {
                     
-                    do {
-                        if let note = try document.data(as: Note.self, decoder: Firestore.Decoder()) {
-                            
-                            notes.append(note)
-                            
-                        }
+                    if let note = try? document.data(as: Note.self, decoder: Firestore.Decoder()) {
+                    
+                    notes.append(note)
                         
-                    } catch {
-                        
-                        completion(.failure(error))
                     }
+                    
                 }
                 
                 completion(.success(notes))
-            }
         }
     }
     

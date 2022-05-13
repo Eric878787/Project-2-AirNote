@@ -26,6 +26,8 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var userFollowingsLabel: UILabel!
     
+    @IBOutlet weak var cameraButton: UIButton!
+    
     
     // Select Image
     private let imagePickerController = UIImagePickerController()
@@ -89,6 +91,12 @@ class ProfileViewController: UIViewController {
         fetchUsers()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profileAvatar.layer.cornerRadius = profileAvatar.frame.height / 2
+        cameraButton.layer.cornerRadius = cameraButton.frame.height / 2
+    }
+    
     @IBAction func settingName(_ sender: Any) {
         
         let controller = UIAlertController(title: "暱稱", message: "請輸入你的暱稱", preferredStyle: .alert)
@@ -99,13 +107,42 @@ class ProfileViewController: UIViewController {
         let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in
             
             self.user?.userName = controller.textFields?[0].text ?? ""
+            LKProgressHUD.show()
             self.updateUserName()
-            self.layoutLabel()
             
         }
         
         action.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(action)
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+
+    @IBAction func cameraTapped(_ sender: Any) {
+        
+        let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        // 相機
+        let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
+            self.takePicture()
+        }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(cameraAction)
+        
+        // 相薄
+        let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
+            self.openPhotosAlbum()
+        }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(savedPhotosAlbumAction)
+        
+        // 取消
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive) { _ in
+            self.profilePageTableView.reloadData()
+        }
+        controller.addAction(cancelAction)
+        
         self.present(controller, animated: true, completion: nil)
         
     }
@@ -134,37 +171,52 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePicture()
         }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
         // 相薄
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbum()
         }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
         
         // 取消
-        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive) { _ in
+            self.profilePageTableView.reloadData()
+        }
         controller.addAction(cancelAction)
         
         self.present(controller, animated: true, completion: nil)
         
     }
     
-    /// 開啟相機
+    // 開啟相機
     func takePicture() {
         imagePickerController.sourceType = .camera
         self.present(imagePickerController, animated: true)
     }
     
-    /// 開啟相簿
+    // 開啟相簿
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
         self.present(imagePickerController, animated: true)
     }
     
+    // 取消選取
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true) {
+            self.profilePageTableView.reloadData()
+        }
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
+            
+            DispatchQueue.main.async {
+                LKProgressHUD.show()
+            }
             
             avatarImage = image
             
@@ -193,7 +245,6 @@ extension ProfileViewController {
         profilePageTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
         profilePageTableView.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: GroupHeader.reuseIdentifier)
         
-        
     }
     
 }
@@ -214,8 +265,13 @@ extension ProfileViewController {
             profileAvatar.image = UIImage(systemName: "person.circle")
             
         }
-        profileAvatar.layer.cornerRadius = profileAvatar.frame.height / 2
         profileAvatar.clipsToBounds = true
+        
+        // Plus Image
+        cameraButton.tintColor = .white
+        cameraButton.layer.borderColor = UIColor.white.cgColor
+        cameraButton.layer.borderWidth = 1
+        cameraButton.backgroundColor = .myDarkGreen
         
         // User Name
         if user?.userName != "" {
@@ -233,6 +289,8 @@ extension ProfileViewController {
         
         // User Followings
         userFollowingsButton.setTitle("\(user?.followings.count ?? 0)", for: .normal)
+        
+        LKProgressHUD.dismiss()
         
     }
     
@@ -282,7 +340,6 @@ extension ProfileViewController {
         
     }
     
-    
     @objc func toBlockList() {
         
         guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController") as? BlockListViewController else { return }
@@ -290,10 +347,11 @@ extension ProfileViewController {
         vc.blockList = self.blockedUsers
         self.navigationController?.pushViewController(vc, animated: true)
         
-        
     }
     
     private func fetchUsers() {
+        
+        LKProgressHUD.show()
         
         UserManager.shared.fetchUsers { result in
             switch result {
@@ -321,9 +379,7 @@ extension ProfileViewController {
                 
                 DispatchQueue.main.async {
                     
-                    self.layoutLabel()
                     self.fetchNotes()
-                    self.fetchGroups()
                     
                 }
                 
@@ -359,11 +415,13 @@ extension ProfileViewController {
             UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
                 switch result {
                 case .success:
-                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        self.navigationController?.popViewController(animated: true)
-                    }
                     
+                    LKProgressHUD.dismiss()
                     DispatchQueue.main.async {
+                        let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                            self.navigationController?.popViewController(animated: true)
+                            self.fetchUsers()
+                        }
                         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                         controller.addAction(cancelAction)
                         self.present(controller, animated: true, completion: nil)
@@ -377,19 +435,22 @@ extension ProfileViewController {
         
     }
     
-    private func updateUserName () {
+    private func updateUserName() {
         let controller = UIAlertController(title: "更新暱稱成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
         guard let user = self.user else { return }
+        LKProgressHUD.show()
         UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
             switch result {
             case .success:
-                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                    self.navigationController?.popViewController(animated: true)
-                }
                 
+                LKProgressHUD.dismiss()
                 DispatchQueue.main.async {
+                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                        self.fetchUsers()
+                    }
                     cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
                     controller.addAction(cancelAction)
                     self.present(controller, animated: true, completion: nil)
@@ -445,7 +506,7 @@ extension ProfileViewController {
                 // Default datasource of notesOnTableView
                 self.wrappingNotes(self.selectedNoteIndex)
                 
-                self.profilePageTableView.reloadData()
+                self.fetchGroups()
                 
             case .failure(let error):
                 
@@ -491,6 +552,8 @@ extension ProfileViewController {
                 self.wrappingGroups(self.selectedGroupIndex)
                 
                 self.profilePageTableView.reloadData()
+                
+                self.layoutLabel()
                 
             case .failure(let error):
                 
@@ -734,5 +797,4 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
         }
         
     }
-    
 }

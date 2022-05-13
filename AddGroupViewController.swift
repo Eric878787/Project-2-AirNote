@@ -8,6 +8,7 @@
 import UIKit
 import PhotosUI
 import CoreLocation
+import MLKit
 
 class AddGroupViewController: UIViewController {
     
@@ -31,7 +32,7 @@ class AddGroupViewController: UIViewController {
     
     // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
-
+    
     private var coverImage = UIImage(systemName: "magazine")
     
     override func viewDidLoad() {
@@ -67,7 +68,7 @@ extension AddGroupViewController {
         addGroupTableView.delegate = self
         if #available(iOS 15.0, *) {
             addGroupTableView.sectionHeaderTopPadding = 0.0
-              }
+        }
         addGroupTableView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(addGroupTableView)
@@ -130,7 +131,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate, AddCalen
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         6
     }
@@ -150,7 +151,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate, AddCalen
             guard let addTitleCell = cell as? AddTitleTableViewCell else { return cell }
             addTitleCell.dataHandler = { [weak self] title in
                 self?.group.groupTitle = title
-//                self?.room.roomTitle = title
+                //                self?.room.roomTitle = title
             }
             return addTitleCell
         } else if indexPath.section == 1 {
@@ -187,7 +188,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate, AddCalen
                 self?.group.schedules[indexPath.row].title = text
                 
             }
-
+            
             return addCalendarCell
         } else if indexPath.section == 4 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddCoverTableViewCell.self), for: indexPath)
@@ -204,16 +205,16 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate, AddCalen
             addAddressCell.dataHandler = { [weak self] address in
                 self?.group.location.address = address
                 geoCoder.geocodeAddressString(address) { (placemarks, error) in
-                       guard
-                           let placemarks = placemarks,
-                           let location = placemarks.first?.location
-                       else {
-                           print("location not found")
-                           return
-                       }
+                    guard
+                        let placemarks = placemarks,
+                        let location = placemarks.first?.location
+                    else {
+                        print("location not found")
+                        return
+                    }
                     self?.group.location.latitude = location.coordinate.latitude
                     self?.group.location.longitude = location.coordinate.longitude
-                   }
+                }
             }
             return addAddressCell
         }
@@ -224,18 +225,18 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate, AddCalen
 extension AddGroupViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.row == 0 {
-//            return 100
-//        } else if indexPath.row == 1 {
-//            return 300
-//        } else if indexPath.row == 2 {
-//            return 165
-//        } else if indexPath.row == 3{
-//            return 500
-//        } else {
-//            return 500
-//        }
-    
+        //        if indexPath.row == 0 {
+        //            return 100
+        //        } else if indexPath.row == 1 {
+        //            return 300
+        //        } else if indexPath.row == 2 {
+        //            return 165
+        //        } else if indexPath.row == 3{
+        //            return 500
+        //        } else {
+        //            return 500
+        //        }
+        
         if indexPath.section == 1 {
             return 300
         } else {
@@ -245,14 +246,110 @@ extension AddGroupViewController: UITableViewDelegate {
     
 }
 
+// MARK: ML Kit
+extension AddGroupViewController {
+    
+    private func detectLabels(image: UIImage?, shouldUseCustomModel: Bool) {
+        
+        var resultsText = ""
+        
+        guard let image = image else { return }
+        
+        // [START config_label]
+        var options: CommonImageLabelerOptions!
+        options = ImageLabelerOptions()
+        // [END config_label]
+        
+        // [START init_label]
+        let onDeviceLabeler = ImageLabeler.imageLabeler(options: options)
+        // [END init_label]
+        
+        // Initialize a `VisionImage` object with the given `UIImage`.
+        let visionImage = VisionImage(image: image)
+        visionImage.orientation = image.imageOrientation
+        
+        // [START detect_label]
+        weak var weakSelf = self
+        onDeviceLabeler.process(visionImage) { labels, error in
+            guard let strongSelf = weakSelf else {
+                print("Self is nil!")
+                return
+            }
+            guard error == nil, let labels = labels, !labels.isEmpty else {
+                return
+            }
+            
+            // [START_EXCLUDE]
+            resultsText = labels.map { label -> String in
+                return "Label: \(label.text), Confidence: \(label.confidence), Index: \(label.index)"
+            }.joined(separator: "\n")
+            self.group.groupKeywords.append(resultsText)
+            print("==========\(resultsText)")
+            self.detectTextOnDevice(image: image)
+            // [END_EXCLUDE]
+        }
+        // [END detect_label]
+    }
+    
+    private func detectTextOnDevice(image: UIImage?) {
+        
+        guard let image = image else { return }
+        
+        let options = ChineseTextRecognizerOptions()
+        
+        let textRecognizer = TextRecognizer.textRecognizer(options: options)
+        
+        // Initialize a `VisionImage` object with the given `UIImage`.
+        let visionImage = VisionImage(image: image)
+        visionImage.orientation = image.imageOrientation
+        
+        process(visionImage, with: textRecognizer)
+    }
+    
+    private func process(_ visionImage: VisionImage, with textRecognizer: TextRecognizer?) {
+        
+        weak var weakSelf = self
+        
+        var resultsText = ""
+        
+        textRecognizer?.process(visionImage) { text, error in
+            
+            guard let strongSelf = weakSelf else {
+                
+                print("Self is nil!")
+                
+                return
+            }
+            guard error == nil, let text = text else {
+                let errorString = error?.localizedDescription ?? Constants.detectionNoResultsMessage
+                resultsText = "Text recognizer failed with error: \(errorString)"
+                return
+            }
+            resultsText += "\(text.text)"
+            self.group.groupKeywords.append(resultsText)
+            print("xxxxxxxxxx\(resultsText)")
+            LKProgressHUD.dismiss()
+        }
+    }
+    
+}
+
+private enum Constants {
+  static let images = ["image_has_text.jpg"]
+  static let detectionNoResultsMessage = "No results returned."
+  static let failedToDetectObjectsMessage = "Failed to detect objects in image."
+}
+
 // MARK: UIIMagePicker Delegate
 extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.editedImage] as? UIImage {
-                
-                coverImage = image
+            
+            coverImage = image
+            LKProgressHUD.show()
+            self.detectLabels(image: coverImage, shouldUseCustomModel: false)
             
         }
         
@@ -324,7 +421,7 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
 
 extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
     func passAddress(_ cafe: Cafe) {
-       
+        
         group.location.address = cafe.address
         group.location.latitude = Double(cafe.latitude) ?? 0
         group.location.longitude = Double(cafe.longitude) ?? 0
@@ -385,7 +482,7 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
             GroupManager.shared.createGroup(group: self.group) { result in
                 switch result {
                 case .success(let groupId):
-                            self.fetchAndUpdateUser(groupId: groupId)
+                    self.fetchAndUpdateUser(groupId: groupId)
                 case.failure:
                     print(result)
                 }

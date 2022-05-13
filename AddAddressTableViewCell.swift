@@ -35,6 +35,8 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         titleLabel.text = "地點"
         
+        titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
+        
         cafeListButton.tintColor = .white
         
         cafeListButton.setTitleColor(.white, for: .normal)
@@ -62,7 +64,6 @@ class AddAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
         uploadButton.layer.borderWidth = 1
         
         uploadButton.layer.cornerRadius = 10
-        
         
     }
 

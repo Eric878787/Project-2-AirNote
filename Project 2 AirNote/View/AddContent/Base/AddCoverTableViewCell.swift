@@ -23,6 +23,7 @@ class AddCoverTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.text = "封面"
+        titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         self.selectionStyle = .none
         coverImageView.tintColor = .myDarkGreen
     }

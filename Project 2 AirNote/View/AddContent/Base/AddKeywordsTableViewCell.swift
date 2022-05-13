@@ -83,7 +83,9 @@ class AddKeywordsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.selectionStyle = .none
         categoryTitleLabel.text = "類別"
+        categoryTitleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         keyWordsTitleLabel.text = "關鍵字"
+        keyWordsTitleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         settingDefaultSelection()
     }
     

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -10,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="558" id="KGk-i7-Jjw" customClass="AddPhotosTableViewCell" customModule="Project_2_AirNote" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="558" id="KGk-i7-Jjw" customClass="AddPhotosTableViewCell" customModule="AirNote" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="396" height="558"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -18,29 +19,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Dr-1v-N6E">
-                        <rect key="frame" x="15" y="15" width="366" height="20.5"/>
+                        <rect key="frame" x="16" y="16" width="364" height="26"/>
                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9U0-4x-VSe">
-                        <rect key="frame" x="164.5" y="455.5" width="67" height="31"/>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                        <connections>
-                            <action selector="selectImages:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZKQ-Xe-N0F"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Nd-Rp8">
-                        <rect key="frame" x="163" y="501.5" width="70.5" height="31"/>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" title="Upload"/>
-                        <connections>
-                            <action selector="uploadNote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JE2-Vt-oU1"/>
-                        </connections>
-                    </button>
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdl-3a-hzW">
-                        <rect key="frame" x="15" y="40.5" width="366" height="400"/>
+                        <rect key="frame" x="16" y="50" width="364" height="400"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="cl3-Cn-5z3">
                                 <rect key="frame" x="0.0" y="0.0" width="945" height="400"/>
@@ -86,19 +71,43 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="sc9-RO-otr"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="Vbb-lq-Fft"/>
                     </scrollView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9U0-4x-VSe">
+                        <rect key="frame" x="164.5" y="466" width="67" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="O1n-Ee-KIb"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <connections>
+                            <action selector="selectImages:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZKQ-Xe-N0F"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Nd-Rp8">
+                        <rect key="frame" x="16" y="512" width="364" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="e20-Nk-Its"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Upload"/>
+                        <connections>
+                            <action selector="uploadNote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JE2-Vt-oU1"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="6Dr-1v-N6E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="0eI-f6-gPh"/>
+                    <constraint firstItem="6Dr-1v-N6E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="0eI-f6-gPh"/>
                     <constraint firstItem="79m-Nd-Rp8" firstAttribute="centerX" secondItem="9U0-4x-VSe" secondAttribute="centerX" id="0gP-6r-h3c"/>
-                    <constraint firstAttribute="trailing" secondItem="6Dr-1v-N6E" secondAttribute="trailing" constant="15" id="0sm-iJ-nxb"/>
-                    <constraint firstItem="jdl-3a-hzW" firstAttribute="top" secondItem="6Dr-1v-N6E" secondAttribute="bottom" constant="5" id="Blb-fT-Q5W"/>
-                    <constraint firstItem="jdl-3a-hzW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Ft8-Ff-4hh"/>
-                    <constraint firstItem="9U0-4x-VSe" firstAttribute="top" secondItem="jdl-3a-hzW" secondAttribute="bottom" constant="15" id="RJf-rf-Hen"/>
-                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="top" secondItem="9U0-4x-VSe" secondAttribute="bottom" constant="15" id="bB2-ZK-7xN"/>
-                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="width" secondItem="9U0-4x-VSe" secondAttribute="width" multiplier="1.05224" id="eUV-gc-Pmz"/>
-                    <constraint firstItem="6Dr-1v-N6E" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="hez-LD-Qrn"/>
-                    <constraint firstAttribute="trailing" secondItem="jdl-3a-hzW" secondAttribute="trailing" constant="15" id="iQH-IP-4wN"/>
-                    <constraint firstItem="9U0-4x-VSe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="xy1-jC-1JA"/>
+                    <constraint firstAttribute="trailing" secondItem="6Dr-1v-N6E" secondAttribute="trailing" constant="16" id="0sm-iJ-nxb"/>
+                    <constraint firstItem="jdl-3a-hzW" firstAttribute="top" secondItem="6Dr-1v-N6E" secondAttribute="bottom" constant="8" id="Blb-fT-Q5W"/>
+                    <constraint firstItem="jdl-3a-hzW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Ft8-Ff-4hh"/>
+                    <constraint firstItem="9U0-4x-VSe" firstAttribute="centerX" secondItem="jdl-3a-hzW" secondAttribute="centerX" id="Gg3-GB-Rj7"/>
+                    <constraint firstItem="9U0-4x-VSe" firstAttribute="top" secondItem="jdl-3a-hzW" secondAttribute="bottom" constant="16" id="RJf-rf-Hen"/>
+                    <constraint firstAttribute="bottom" secondItem="79m-Nd-Rp8" secondAttribute="bottom" constant="16" id="XTq-m8-NWE"/>
+                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="top" secondItem="9U0-4x-VSe" secondAttribute="bottom" constant="16" id="bB2-ZK-7xN"/>
+                    <constraint firstItem="79m-Nd-Rp8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="eO3-zD-P3m"/>
+                    <constraint firstItem="6Dr-1v-N6E" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="hez-LD-Qrn"/>
+                    <constraint firstAttribute="trailing" secondItem="jdl-3a-hzW" secondAttribute="trailing" constant="16" id="iQH-IP-4wN"/>
+                    <constraint firstAttribute="trailing" secondItem="79m-Nd-Rp8" secondAttribute="trailing" constant="16" id="ljf-ec-vQO"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

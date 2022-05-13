@@ -43,17 +43,12 @@ class UserManager {
                 
                 for document in querySnapshot!.documents {
                     
-                    do {
-                        if let user = try document.data(as: User.self, decoder: Firestore.Decoder()) {
-                            
-                            users.append(user)
-                            
-                        }
+                    if let user = try? document.data(as: User.self, decoder: Firestore.Decoder()) {
+                    
+                    users.append(user)
                         
-                    } catch {
-                        
-                        completion(.failure(error))
                     }
+                    
                 }
                 
                 completion(.success(users))
