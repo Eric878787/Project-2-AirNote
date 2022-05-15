@@ -18,7 +18,7 @@ class ImageViewerViewController: UIViewController {
     
     // Data Source
     var images: [String] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scView.delegate = self
@@ -74,10 +74,10 @@ extension ImageViewerViewController: UIScrollViewDelegate {
             imageView.clipsToBounds = true
             imageView.contentMode = .scaleAspectFit
             imageView.translatesAutoresizingMaskIntoConstraints = false
-//            imageView.frame = CGRect(x: theOffset,
-//                                     y: CGFloat(thePadding),
-//                                     width: (view.safeAreaLayoutGuide.layoutFrame.size.width),
-//                                     height: (view.safeAreaLayoutGuide.layoutFrame.size.height))
+            //            imageView.frame = CGRect(x: theOffset,
+            //                                     y: CGFloat(thePadding),
+            //                                     width: (view.safeAreaLayoutGuide.layoutFrame.size.width),
+            //                                     height: (view.safeAreaLayoutGuide.layoutFrame.size.height))
             imageView.kf.indicatorType = .activity
             imageView.kf.setImage(with: url)
             scView.addSubview(imageView)

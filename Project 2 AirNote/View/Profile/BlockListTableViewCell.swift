@@ -25,7 +25,6 @@ class BlockListTableViewCell: UITableViewCell {
     
     var delegate: BlockListDelegate?
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -39,9 +38,10 @@ class BlockListTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         // User Avatar
+        userAvatar.layer.cornerRadius = userAvatar.bounds.height/2
         userAvatar.clipsToBounds = true
-        userAvatar.layer.cornerRadius = userAvatar.frame.width / 2
 
         // UserName
         userName.font = UIFont(name: "PingFangTC-Regular", size: 16)

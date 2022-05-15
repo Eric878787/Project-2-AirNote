@@ -14,6 +14,7 @@
 		421D5C83282B9DE600F5747C /* RightImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421D5C81282B9DE600F5747C /* RightImageTableViewCell.xib */; };
 		421D5C86282B9E0700F5747C /* LeftImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421D5C84282B9E0700F5747C /* LeftImageTableViewCell.swift */; };
 		421D5C87282B9E0700F5747C /* LeftImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421D5C85282B9E0700F5747C /* LeftImageTableViewCell.xib */; };
+		4226EFD328311D2200D07F3E /* FollwerFollowingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226EFD228311D2200D07F3E /* FollwerFollowingListViewController.swift */; };
 		4235C5C0281BD2A600DEF3E6 /* NoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */; };
 		4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */; };
 		42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0228237474005CF4B4 /* ImageViewerViewController.swift */; };
@@ -140,6 +141,7 @@
 		421D5C81282B9DE600F5747C /* RightImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightImageTableViewCell.xib; sourceTree = "<group>"; };
 		421D5C84282B9E0700F5747C /* LeftImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftImageTableViewCell.swift; sourceTree = "<group>"; };
 		421D5C85282B9E0700F5747C /* LeftImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftImageTableViewCell.xib; sourceTree = "<group>"; };
+		4226EFD228311D2200D07F3E /* FollwerFollowingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollwerFollowingListViewController.swift; sourceTree = "<group>"; };
 		4235C5BF281BD2A600DEF3E6 /* NoteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeader.swift; sourceTree = "<group>"; };
 		4235C5C1281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupTableViewCell.swift; sourceTree = "<group>"; };
 		42383E0228237474005CF4B4 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				42405B0C2815A05F00A12777 /* ProfileViewController.swift */,
 				4246EBDA2822A99100C5D183 /* BlockListViewController.swift */,
 				4246EBD628222CF700C5D183 /* OtherProfileViewController.swift */,
+				4226EFD228311D2200D07F3E /* FollwerFollowingListViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1001,6 +1004,7 @@
 				4246EBDE2822AA3C00C5D183 /* BlockListTableViewCell.swift in Sources */,
 				42405B252817873D00A12777 /* LoginViewController.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
+				4226EFD328311D2200D07F3E /* FollwerFollowingListViewController.swift in Sources */,
 				423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */,
 				42E2B699280EEA6700B51D9F /* ChatRoomListTableViewCell.swift in Sources */,
 				423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */,

@@ -25,9 +25,9 @@ class FirebaseManager {
     
     var signUpSuccess: (() -> Void)?
     
-    var logInFailure: (() -> Void)?
+    var logInFailure: ((String) -> Void)?
     
-    var signUpFailure: (() -> Void)?
+    var signUpFailure: ((String) -> Void)?
     
     var deleteAccountSuccess: (() -> Void)?
     
@@ -42,7 +42,7 @@ extension FirebaseManager {
             guard let user = result?.user, error == nil
             else {
                 print("======\(error?.localizedDescription)")
-                self.signUpFailure?()
+                self.signUpFailure?(error?.localizedDescription ?? "unknowned failure")
                 return
             }
             self.signUpSuccess?()
@@ -53,8 +53,8 @@ extension FirebaseManager {
         authenticator.signIn(withEmail: email, password: password) { result, error in
             guard let user = result?.user,
                   error == nil else {
-                print(error?.localizedDescription)
-                self.logInFailure?()
+                print("========\(error?.localizedDescription)")
+                self.logInFailure?(error?.localizedDescription ?? "unknowned failure")
                 return
             }
             self.loginSuccess?()
@@ -120,7 +120,7 @@ extension FirebaseManager {
                     self.loginSuccess?()
                     return
                 }
-                self.logInFailure?()
+                self.logInFailure?(error?.localizedDescription ?? "unknowned failure")
                 return
             }
         }

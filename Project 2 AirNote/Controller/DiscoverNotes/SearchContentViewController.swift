@@ -223,7 +223,25 @@ extension SearchContentViewController {
     
     private func blockUser() {
         
+        guard userToBeBlocked != currentUser?.uid else {
+            
+            let controller = UIAlertController(title: "無法封鎖本人帳號", message: nil, preferredStyle: .alert)
+            let action = UIAlertAction(title: "確認", style: .default)
+            controller.addAction(action)
+            self.present(controller, animated: true)
+            
+            return
+        }
+        
         currentUser?.blockUsers.append(userToBeBlocked)
+        
+        guard let followers = self.currentUser?.followers else { return }
+        
+        guard let followings = self.currentUser?.followings else { return }
+        
+        self.currentUser?.followers = followers.filter{ $0 != userToBeBlocked}
+        
+        self.currentUser?.followings = followings.filter{ $0 != userToBeBlocked}
         
         guard let currentUser = currentUser else { return }
         

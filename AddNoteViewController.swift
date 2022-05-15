@@ -221,11 +221,24 @@ extension AddNoteViewController: UITableViewDataSource, CoverDelegate, SelectIma
             guard let addPhotosCell = cell as? AddPhotosTableViewCell else { return cell }
             addPhotosCell.delegate = self
             
+            addPhotosCell.hideDeleteButton()
+            
+            for item in 0...3 {
+                
+                addPhotosCell.bookImageViews[item].image = UIImage(systemName: "text.book.closed")
+                
+            }
+            
             for item in 0..<contentImages.count {
                 
                 addPhotosCell.bookImageViews[item].image = contentImages[item]
                 
+                for button in addPhotosCell.deleteButtons where button.tag == item {
+                    button.isHidden = false
+                }
+                
             }
+            
             return addPhotosCell
         }
     }
@@ -261,6 +274,12 @@ extension AddNoteViewController: UITableViewDelegate {
 // MARK: UIIMagePicker Delegate
 extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    func deleteImage(_ index: Int) {
+        self.contentImages.remove(at: index)
+        addNoteTableView.reloadData()
+    }
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if  picker == imagePickerController {
@@ -289,6 +308,11 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         picker.dismiss(animated: true)
         
+    }
+    
+    func deleteButtonDidSelect() {
+        self.coverImage = UIImage(systemName: "magazine")
+        self.addNoteTableView.reloadData()
     }
     
     func buttonDidSelect() {

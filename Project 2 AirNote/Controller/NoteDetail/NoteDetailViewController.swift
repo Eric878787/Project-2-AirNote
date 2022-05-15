@@ -199,6 +199,9 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
             self.blockUser()
         }
         controller.addAction(action)
+        
+        
+        
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
         
@@ -214,6 +217,24 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
     }
     
     private func blockUser() {
+        
+        guard userToBeBlocked != currentUser?.uid else {
+            
+            let controller = UIAlertController(title: "無法封鎖本人帳號", message: nil, preferredStyle: .alert)
+            let action = UIAlertAction(title: "確認", style: .default)
+            controller.addAction(action)
+            self.present(controller, animated: true)
+            
+            return
+        }
+        
+        guard let followers = self.currentUser?.followers else { return }
+        
+        guard let followings = self.currentUser?.followings else { return }
+        
+        self.currentUser?.followers = followers.filter{ $0 != userToBeBlocked}
+        
+        self.currentUser?.followings = followings.filter{ $0 != userToBeBlocked}
         
         currentUser?.blockUsers.append(userToBeBlocked)
         
@@ -316,7 +337,7 @@ extension NoteDetailViewController {
             vc.userInThisPage = self.aurthor
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            self.tabBarController?.selectedIndex = 4
+            self.tabBarController?.selectedIndex = 3
         }
     }
     
@@ -513,12 +534,26 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             cell.addGestureRecognizer(longPress)
             
             // querying users' name & avatar
+            var commentUser: User?
             for user in users where user.uid == comments[indexPath.item].uid {
                 cell.nameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.avatarImageView.kf.indicatorType = .activity
                 cell.avatarImageView.kf.setImage(with: url)
+                commentUser = user
             }
+            
+            cell.commentTouchHandler = { [weak self] in
+                if self?.comments[indexPath.item].uid != self?.currentUser?.uid {
+                    let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
+                    guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+                    vc.userInThisPage = commentUser
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    self?.tabBarController?.selectedIndex = 3
+                }
+            }
+            
             return cell
         default:
             return UICollectionViewCell()
