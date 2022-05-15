@@ -71,6 +71,42 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="sc9-RO-otr"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="Vbb-lq-Fft"/>
                     </scrollView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gou-lV-fcC" userLabel="DeleteButton1">
+                        <rect key="frame" x="213" y="58" width="20" height="22"/>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="xmark.circle" catalog="system"/>
+                        <connections>
+                            <action selector="deleteImage:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="b78-un-TdV"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fU5-05-RJJ" userLabel="DeleteButton2">
+                        <rect key="frame" x="453" y="58" width="20" height="22"/>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="xmark.circle" catalog="system"/>
+                        <connections>
+                            <action selector="deleteImage:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="AYH-zz-ugU"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yiO-Rq-rdB" userLabel="DeleteButton3">
+                        <rect key="frame" x="693" y="58" width="20" height="22"/>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="xmark.circle" catalog="system"/>
+                        <connections>
+                            <action selector="deleteImage:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TjV-jT-cbV"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBm-LE-Fbq" userLabel="DeleteButton4">
+                        <rect key="frame" x="933" y="58" width="20" height="22"/>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="xmark.circle" catalog="system"/>
+                        <connections>
+                            <action selector="deleteImage:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ejh-km-BlO"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9U0-4x-VSe">
                         <rect key="frame" x="164.5" y="466" width="67" height="30"/>
                         <constraints>
@@ -97,17 +133,25 @@
                 <constraints>
                     <constraint firstItem="6Dr-1v-N6E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="0eI-f6-gPh"/>
                     <constraint firstItem="79m-Nd-Rp8" firstAttribute="centerX" secondItem="9U0-4x-VSe" secondAttribute="centerX" id="0gP-6r-h3c"/>
+                    <constraint firstItem="fU5-05-RJJ" firstAttribute="trailing" secondItem="Kuz-n3-ySj" secondAttribute="trailing" constant="-8" id="0gi-gU-iAV"/>
                     <constraint firstAttribute="trailing" secondItem="6Dr-1v-N6E" secondAttribute="trailing" constant="16" id="0sm-iJ-nxb"/>
+                    <constraint firstItem="gou-lV-fcC" firstAttribute="top" secondItem="jxG-dt-s95" secondAttribute="top" constant="8" id="4YT-F1-muE"/>
+                    <constraint firstItem="yiO-Rq-rdB" firstAttribute="top" secondItem="b5G-zZ-krc" secondAttribute="top" constant="8" id="5zE-8U-CYU"/>
                     <constraint firstItem="jdl-3a-hzW" firstAttribute="top" secondItem="6Dr-1v-N6E" secondAttribute="bottom" constant="8" id="Blb-fT-Q5W"/>
+                    <constraint firstItem="yiO-Rq-rdB" firstAttribute="trailing" secondItem="b5G-zZ-krc" secondAttribute="trailing" constant="-8" id="Cfh-te-ZP7"/>
                     <constraint firstItem="jdl-3a-hzW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Ft8-Ff-4hh"/>
                     <constraint firstItem="9U0-4x-VSe" firstAttribute="centerX" secondItem="jdl-3a-hzW" secondAttribute="centerX" id="Gg3-GB-Rj7"/>
                     <constraint firstItem="9U0-4x-VSe" firstAttribute="top" secondItem="jdl-3a-hzW" secondAttribute="bottom" constant="16" id="RJf-rf-Hen"/>
                     <constraint firstAttribute="bottom" secondItem="79m-Nd-Rp8" secondAttribute="bottom" constant="16" id="XTq-m8-NWE"/>
+                    <constraint firstItem="gBm-LE-Fbq" firstAttribute="top" secondItem="PbF-lo-fHB" secondAttribute="top" constant="8" id="a4w-af-O6W"/>
                     <constraint firstItem="79m-Nd-Rp8" firstAttribute="top" secondItem="9U0-4x-VSe" secondAttribute="bottom" constant="16" id="bB2-ZK-7xN"/>
                     <constraint firstItem="79m-Nd-Rp8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="eO3-zD-P3m"/>
+                    <constraint firstItem="gou-lV-fcC" firstAttribute="trailing" secondItem="jxG-dt-s95" secondAttribute="trailing" constant="-8" id="ePt-PU-dfY"/>
+                    <constraint firstItem="gBm-LE-Fbq" firstAttribute="trailing" secondItem="PbF-lo-fHB" secondAttribute="trailing" constant="-8" id="hQK-8y-AHm"/>
                     <constraint firstItem="6Dr-1v-N6E" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="hez-LD-Qrn"/>
                     <constraint firstAttribute="trailing" secondItem="jdl-3a-hzW" secondAttribute="trailing" constant="16" id="iQH-IP-4wN"/>
                     <constraint firstAttribute="trailing" secondItem="79m-Nd-Rp8" secondAttribute="trailing" constant="16" id="ljf-ec-vQO"/>
+                    <constraint firstItem="fU5-05-RJJ" firstAttribute="top" secondItem="Kuz-n3-ySj" secondAttribute="top" constant="8" id="rYy-i5-0gJ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -119,11 +163,16 @@
                 <outletCollection property="bookImageViews" destination="Kuz-n3-ySj" collectionClass="NSMutableArray" id="usx-3i-KL2"/>
                 <outletCollection property="bookImageViews" destination="b5G-zZ-krc" collectionClass="NSMutableArray" id="72b-X9-3e5"/>
                 <outletCollection property="bookImageViews" destination="PbF-lo-fHB" collectionClass="NSMutableArray" id="iR4-CK-Cfo"/>
+                <outletCollection property="deleteButtons" destination="yiO-Rq-rdB" collectionClass="NSMutableArray" id="Sj7-zD-ZK4"/>
+                <outletCollection property="deleteButtons" destination="gou-lV-fcC" collectionClass="NSMutableArray" id="r8Q-Pe-lEb"/>
+                <outletCollection property="deleteButtons" destination="fU5-05-RJJ" collectionClass="NSMutableArray" id="Zak-zM-1bM"/>
+                <outletCollection property="deleteButtons" destination="gBm-LE-Fbq" collectionClass="NSMutableArray" id="NnY-ep-qpm"/>
             </connections>
             <point key="canvasLocation" x="82.608695652173921" y="182.14285714285714"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="text.book.closed" catalog="system" width="115" height="128"/>
+        <image name="xmark.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>

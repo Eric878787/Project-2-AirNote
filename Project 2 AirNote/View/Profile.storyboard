@@ -9,6 +9,36 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Follwer Following List View Controller-->
+        <scene sceneID="KN7-kz-eqy">
+            <objects>
+                <viewController storyboardIdentifier="FollwerFollowingListViewController" id="hZG-Ci-luE" customClass="FollwerFollowingListViewController" customModule="AirNote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cH0-KA-Ozw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="iO9-vx-wVP">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="zSy-IJ-bwd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="iO9-vx-wVP" firstAttribute="leading" secondItem="zSy-IJ-bwd" secondAttribute="leading" id="KbA-6s-1bh"/>
+                            <constraint firstItem="zSy-IJ-bwd" firstAttribute="trailing" secondItem="iO9-vx-wVP" secondAttribute="trailing" id="pTV-8P-D6K"/>
+                            <constraint firstItem="zSy-IJ-bwd" firstAttribute="bottom" secondItem="iO9-vx-wVP" secondAttribute="bottom" id="q9O-cx-Gzf"/>
+                            <constraint firstItem="iO9-vx-wVP" firstAttribute="top" secondItem="zSy-IJ-bwd" secondAttribute="top" id="qek-d9-YVW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="iO9-vx-wVP" id="r59-rw-kse"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uG1-dE-z4f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1894" y="808"/>
+        </scene>
         <!--Profile View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
@@ -95,7 +125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2765" y="885"/>
+            <point key="canvasLocation" x="3733" y="834"/>
         </scene>
         <!--Block List View Controller-->
         <scene sceneID="NcO-AA-5ro">
@@ -157,6 +187,9 @@
                                                 <rect key="frame" x="0.0" y="36" width="109.5" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="10"/>
+                                                <connections>
+                                                    <action selector="followerTouched:" destination="s2h-34-Z95" eventType="touchUpInside" id="ypQ-4g-rbt"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -173,6 +206,9 @@
                                                 <rect key="frame" x="0.0" y="36" width="109.5" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="100"/>
+                                                <connections>
+                                                    <action selector="followingToched:" destination="s2h-34-Z95" eventType="touchUpInside" id="eJc-RV-IqG"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -279,8 +315,8 @@
                                     <action selector="cameraTapped:" destination="NH5-8q-8BS" eventType="touchUpInside" id="dUj-2C-aMe"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="namenamename" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3j-bz-3hI">
-                                <rect key="frame" x="15" y="218" width="126.5" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" text="namenamenamenamenamenamenamenamenamenamenamename" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3j-bz-3hI">
+                                <rect key="frame" x="15" y="218" width="370.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -301,6 +337,9 @@
                                                 <rect key="frame" x="0.0" y="36" width="109.5" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="10"/>
+                                                <connections>
+                                                    <action selector="followerTouched:" destination="NH5-8q-8BS" eventType="touchUpInside" id="jtu-UT-95m"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -317,6 +356,9 @@
                                                 <rect key="frame" x="0.0" y="36" width="109.5" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="100"/>
+                                                <connections>
+                                                    <action selector="followingToched:" destination="NH5-8q-8BS" eventType="touchUpInside" id="wb4-TC-dJ1"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -327,7 +369,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdi-2M-YM6">
-                                <rect key="frame" x="146.5" y="219" width="18.5" height="18.5"/>
+                                <rect key="frame" x="390.5" y="219" width="18.5" height="18.5"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="pencil" catalog="system"/>
                                 <connections>
@@ -344,7 +386,7 @@
                             <constraint firstItem="em2-km-0Tn" firstAttribute="height" secondItem="a3t-Mo-lD1" secondAttribute="height" multiplier="0.67" id="7IR-P6-f9g"/>
                             <constraint firstItem="h3j-bz-3hI" firstAttribute="leading" secondItem="a3t-Mo-lD1" secondAttribute="leading" id="7q6-uG-QzW"/>
                             <constraint firstItem="em2-km-0Tn" firstAttribute="centerY" secondItem="a3t-Mo-lD1" secondAttribute="centerY" id="AhC-L4-Efu"/>
-                            <constraint firstItem="xdi-2M-YM6" firstAttribute="leading" secondItem="h3j-bz-3hI" secondAttribute="trailing" constant="5" id="Hch-Go-Mx7"/>
+                            <constraint firstItem="xdi-2M-YM6" firstAttribute="leading" secondItem="h3j-bz-3hI" secondAttribute="trailing" constant="5" id="CCX-9J-nZB"/>
                             <constraint firstItem="h3j-bz-3hI" firstAttribute="top" secondItem="a3t-Mo-lD1" secondAttribute="bottom" constant="15" id="IDz-Od-NOx"/>
                             <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" secondItem="gsY-j5-zbP" secondAttribute="trailing" constant="15" id="Idn-JC-m6Z"/>
                             <constraint firstItem="gsY-j5-zbP" firstAttribute="top" secondItem="xdi-2M-YM6" secondAttribute="bottom" constant="5" id="Ipz-Dr-8Ac"/>
@@ -353,6 +395,7 @@
                             <constraint firstItem="NHf-NV-cbu" firstAttribute="centerX" secondItem="a3t-Mo-lD1" secondAttribute="centerX" constant="30" id="RQ8-1D-nTq"/>
                             <constraint firstItem="a3t-Mo-lD1" firstAttribute="width" secondItem="a3t-Mo-lD1" secondAttribute="height" multiplier="1:1" id="RQi-dV-j7D"/>
                             <constraint firstItem="a3t-Mo-lD1" firstAttribute="leading" secondItem="Tij-aZ-U52" secondAttribute="leading" constant="15" id="ejq-bi-RNA"/>
+                            <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xdi-2M-YM6" secondAttribute="trailing" constant="5" id="jDo-7w-1s3"/>
                             <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" secondItem="em2-km-0Tn" secondAttribute="trailing" constant="15" id="vRY-lV-zhc"/>
                             <constraint firstItem="xdi-2M-YM6" firstAttribute="centerY" secondItem="h3j-bz-3hI" secondAttribute="centerY" id="vUx-Qp-11K"/>
                         </constraints>

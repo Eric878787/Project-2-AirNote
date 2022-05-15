@@ -7,7 +7,8 @@
 import UIKit
 
 protocol CoverDelegate {
-    func buttonDidSelect ()
+    func buttonDidSelect()
+    func deleteButtonDidSelect()
 }
 
 class AddCoverTableViewCell: UITableViewCell {
@@ -17,6 +18,8 @@ class AddCoverTableViewCell: UITableViewCell {
     @IBOutlet weak var coverImageView: UIImageView!
     
     @IBOutlet weak var selectButton: UIButton!
+    
+    @IBOutlet weak var deleteButton: UIButton!
     
     var delegate: CoverDelegate?
     
@@ -46,5 +49,12 @@ class AddCoverTableViewCell: UITableViewCell {
     @IBAction func addCover(_ sender: Any) {
         delegate?.buttonDidSelect()
     }
+    
+    
+    @IBAction func deleteCover(_ sender: Any) {
+        delegate?.deleteButtonDidSelect()
+    }
+    
+    
 
 }

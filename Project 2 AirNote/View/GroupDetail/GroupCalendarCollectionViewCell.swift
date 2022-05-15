@@ -19,7 +19,7 @@ class GroupCalendarCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifer = "GroupCalendarCollectionViewCell"
     
-    override class func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
     }
     

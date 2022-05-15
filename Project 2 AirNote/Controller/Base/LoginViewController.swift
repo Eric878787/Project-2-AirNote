@@ -35,6 +35,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         configureSignInWithAppleButton()
         configureAsVisitorButton()
         configureNativeSignIn()
@@ -65,23 +67,23 @@ class LoginViewController: UIViewController {
         
         guard let password = passwordTextField.text else { return }
         
-        if email == "" {
-            
-            showAlert(emailTextField)
-            
-        } else {
-            
-            if password.count < 6 {
-                
-                showAlert(passwordTextField)
-                
-            } else {
-                
+//        if email == "" {
+//
+//            showAlert(emailTextField)
+//
+//        } else {
+//
+//            if password.count < 6 {
+//
+//                showAlert(passwordTextField)
+//
+//            } else {
+//
                 FirebaseManager.shared.nativeSignUp(email, password)
-                
-            }
-            
-        }
+//
+//            }
+//
+//        }
         
         FirebaseManager.shared.signUpSuccess = {
             self.checkIfItsNew()
@@ -95,9 +97,9 @@ class LoginViewController: UIViewController {
             self.present(controller, animated: true)
         }
         
-        FirebaseManager.shared.signUpFailure = {
+        FirebaseManager.shared.signUpFailure = { errorMessage in
             self.checkIfItsNew()
-            let controller = UIAlertController(title: "註冊失敗", message: "請重新輸入帳號密碼", preferredStyle: .alert)
+            let controller = UIAlertController(title: "註冊失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
             action.setValue(UIColor.black, forKey: "titleTextColor")
@@ -114,21 +116,21 @@ class LoginViewController: UIViewController {
         
         guard let password = passwordTextField.text else { return }
         
-        if email == "" {
-            
-            showAlert(emailTextField)
-            
-        } else {
-            
-            if password.count < 6 {
-                
-                showAlert(passwordTextField)
-                
-            } else {
+//        if email == "" {
+//
+//            showAlert(emailTextField)
+//
+//        } else {
+//
+//            if password.count < 6 {
+//
+//                showAlert(passwordTextField)
+//
+//            } else {
                 FirebaseManager.shared.nativeLogIn(email, password)
-            }
-            
-        }
+//            }
+//
+//        }
         
         FirebaseManager.shared.loginSuccess = {
             self.emailTextField.text = ""
@@ -143,8 +145,8 @@ class LoginViewController: UIViewController {
             self.present(controller, animated: true)
         }
         
-        FirebaseManager.shared.logInFailure = {
-            let controller = UIAlertController(title: "登入失敗", message: "", preferredStyle: .alert)
+        FirebaseManager.shared.logInFailure = { errorMessage in
+            let controller = UIAlertController(title: "登入失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive)
             action.setValue(UIColor.black, forKey: "titleTextColor")
@@ -173,7 +175,25 @@ class LoginViewController: UIViewController {
 }
 
 // MARK: Configure Layouts
-extension LoginViewController {
+extension LoginViewController: UITextFieldDelegate {
+    
+    private func handlingErrorMessage(_ errorMessage: String) -> String {
+        switch errorMessage {
+        case "There is no user record corresponding to this identifier. The user may have been deleted." :
+            return "用戶不存在"
+        case "The email address is badly formatted." :
+            return "請輸入正確Email密碼錯誤"
+        case "The password is invalid or the user does not have a password.":
+            return "密碼錯誤"
+        case "The password must be 6 characters long or more.":
+            return "密碼不得少於6個字元"
+        case "The email address is already in use by another account.":
+            return "此Email已被註冊"
+            
+        default:
+            return "未知的錯誤"
+        }
+    }
     
     private func layoutingSubviews () {
         
@@ -193,11 +213,13 @@ extension LoginViewController {
         
         // Log In Button
         logInButton.setTitle("登入", for: .normal)
+        logInButton.setTitleColor(.systemGray2, for: .disabled)
         logInButton.setTitleColor(.black, for: .normal)
         logInButton.titleLabel?.font =  UIFont(name: "PingFangTC-Regular", size: 16)
-        logInButton.backgroundColor = .white
+        logInButton.backgroundColor = .systemGray6
         logInButton.layer.cornerRadius = 5
         logInButton.clipsToBounds = true
+        logInButton.isEnabled = false
         
     }
     
@@ -246,6 +268,16 @@ extension LoginViewController {
             signInWithAppleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             signInWithAppleButton.bottomAnchor.constraint(equalTo: termsAndConditionsStackView.topAnchor, constant: -10)
         ])
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if emailTextField.text?.count != 0 && passwordTextField.text?.count != 0 {
+            logInButton.backgroundColor = .white
+            logInButton.isEnabled = true
+        } else {
+            logInButton.backgroundColor = .systemGray6
+            logInButton.isEnabled = false
+        }
     }
     
 }
@@ -308,7 +340,7 @@ extension LoginViewController {
     
     @objc private func accessAsVisitor() {
         
-        presentOrDismissVC ()
+        presentOrDismissVC()
         
     }
     
@@ -345,12 +377,22 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             let controller = UIAlertController(title: "登入成功", message: "", preferredStyle: .alert)
             controller.view.tintColor = UIColor.gray
             let action = UIAlertAction(title: "確認", style: .destructive) { _ in
-                self.presentOrDismissVC ()
+                self.presentOrDismissVC()
             }
             action.setValue(UIColor.black, forKey: "titleTextColor")
             controller.addAction(action)
             self.present(controller, animated: true)
         }
+        
+        FirebaseManager.shared.logInFailure = { errorMessage in
+            let controller = UIAlertController(title: "登入失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
+            controller.view.tintColor = UIColor.gray
+            let action = UIAlertAction(title: "確認", style: .destructive)
+            action.setValue(UIColor.black, forKey: "titleTextColor")
+            controller.addAction(action)
+            self.present(controller, animated: true)
+        }
+        
         
     }
     

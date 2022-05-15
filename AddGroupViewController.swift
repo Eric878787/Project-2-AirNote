@@ -359,6 +359,11 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
         
     }
     
+    func deleteButtonDidSelect() {
+        coverImage = UIImage(systemName: "magazine")
+        addGroupTableView.reloadData()
+    }
+    
     func buttonDidSelect() {
         
         let controller = UIAlertController(title: "請上傳封面", message: "", preferredStyle: .alert)

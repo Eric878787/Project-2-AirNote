@@ -200,9 +200,21 @@ extension EditNoteViewController: UITableViewDataSource, CoverDelegate, SelectIm
             guard let addPhotosCell = cell as? AddPhotosTableViewCell else { return cell }
             addPhotosCell.delegate = self
             
+            addPhotosCell.hideDeleteButton()
+            
+            for item in 0...3 {
+                
+                addPhotosCell.bookImageViews[item].image = UIImage(systemName: "text.book.closed")
+                
+            }
+            
             for item in 0..<contentImages.count {
                 
                 addPhotosCell.bookImageViews[item].image = contentImages[item]
+                
+                for button in addPhotosCell.deleteButtons where button.tag == item {
+                    button.isHidden = false
+                }
                 
             }
             return addPhotosCell
@@ -266,6 +278,17 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
         
     }
     
+    func deleteImage(_ index: Int) {
+        self.contentImages.remove(at: index)
+        addNoteTableView.reloadData()
+    }
+    
+    
+    func deleteButtonDidSelect() {
+        coverImage = nil
+        addNoteTableView.reloadData()
+    }
+    
     func buttonDidSelect() {
         
         let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
@@ -320,7 +343,7 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
         guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
         self.navigationController?.pushViewController(vc, animated: true)
         vc.imageProvider = { [weak self] image in
-            self?.coverImage = image
+            self?.coverImage = UIImage(systemName: "magazine")
             self?.addNoteTableView.reloadData()
         }
     }
