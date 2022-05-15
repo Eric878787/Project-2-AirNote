@@ -9,6 +9,7 @@ import UIKit
 
 protocol SelectImagesDelegate {
     func selectMultiImages()
+    func deleteImage(_ index: Int)
     func uploadNote()
 }
 
@@ -22,6 +23,8 @@ class AddPhotosTableViewCell: UITableViewCell {
     
     @IBOutlet weak var uploadButton: UIButton!
     
+    @IBOutlet var deleteButtons: [UIButton]!
+    
     var delegate: SelectImagesDelegate?
 
     override func awakeFromNib() {
@@ -31,6 +34,13 @@ class AddPhotosTableViewCell: UITableViewCell {
         titleLabel.font = UIFont(name: "PingFangTC-Semibold", size: 20)
         for imageView in bookImageViews {
             imageView.tintColor = .myDarkGreen
+        }
+    }
+    
+    func hideDeleteButton() {
+        
+        for deleteButton in deleteButtons {
+            deleteButton.isHidden = true
         }
         
     }
@@ -67,4 +77,8 @@ class AddPhotosTableViewCell: UITableViewCell {
         delegate?.selectMultiImages()
     }
     
+    @IBAction func deleteImage(_ sender: UIButton) {
+        delegate?.deleteImage(sender.tag)
+    }
+
 }

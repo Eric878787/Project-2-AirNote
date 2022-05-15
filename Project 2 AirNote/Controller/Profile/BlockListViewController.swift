@@ -25,6 +25,8 @@ class BlockListViewController: UIViewController {
         
         blockListTableView.delegate = self
         
+        self.navigationItem.title = "封鎖用戶"
+        
         blockListTableView.registerCellWithNib(identifier: String(describing: BlockListTableViewCell.self), bundle: nil)
         
         self.tabBarController?.tabBar.isHidden = true

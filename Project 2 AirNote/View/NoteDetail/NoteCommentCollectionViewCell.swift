@@ -9,7 +9,6 @@ import UIKit
 
 class NoteCommentCollectionViewCell: UICollectionViewCell {
     
-    
     @IBOutlet weak var avatarImageView: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -18,10 +17,13 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var commentTimeLabel: UILabel!
     
+    var commentTouchHandler: (() -> Void)?
+    
     static let reuseIdentifer = "NoteCommentCollectionViewCell"
     
-    override class func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
+        addTapGesture()
     }
     
     override func layoutSubviews() {
@@ -31,4 +33,21 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
     }
+    
+    func addTapGesture() {
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        let tapImageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(tapImageGestureRecognizer)
+        nameLabel.isUserInteractionEnabled = true
+        nameLabel.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        print("1111111")
+        commentTouchHandler?()
+    }
+    
 }

@@ -206,6 +206,19 @@ extension DiscoverNotesViewController {
 extension DiscoverNotesViewController {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        
+        guard let currentUser = self.currentUser else {
+            
+            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            self.tabBarController?.present(vc, animated: false, completion: nil)
+            
+            return
+            
+        }
+        
         if sender.state == .began {
             let touchPoint = sender.location(in: notesCollectionView)
             if let indexPath = notesCollectionView.indexPathForItem(at: touchPoint) {
@@ -241,9 +254,28 @@ extension DiscoverNotesViewController {
     
     private func blockUser() {
         
+        guard userToBeBlocked != currentUser?.uid else {
+            
+            let controller = UIAlertController(title: "無法封鎖本人帳號", message: nil, preferredStyle: .alert)
+            let action = UIAlertAction(title: "確認", style: .default)
+            controller.addAction(action)
+            self.present(controller, animated: true)
+            
+            return
+        }
+        
         currentUser?.blockUsers.append(userToBeBlocked)
         
-        guard let currentUser = currentUser else { return }
+        guard let followers = self.currentUser?.followers else { return }
+        
+        guard let followings = self.currentUser?.followings else { return }
+        
+        self.currentUser?.followers = followers.filter{ $0 != userToBeBlocked}
+        
+        self.currentUser?.followings = followings.filter{ $0 != userToBeBlocked}
+        
+        guard let currentUser = self.currentUser else { return }
+        
         
         UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
             

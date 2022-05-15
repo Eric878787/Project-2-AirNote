@@ -108,6 +108,23 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
     
     private func blockUser() {
         
+        guard userToBeBlocked != user?.uid else {
+            
+            let controller = UIAlertController(title: "無法封鎖本人帳號", message: nil, preferredStyle: .alert)
+            let action = UIAlertAction(title: "確認", style: .default)
+            controller.addAction(action)
+            self.present(controller, animated: true)
+            
+            return
+        }
+        guard let followers = self.user?.followers else { return }
+        
+        guard let followings = self.user?.followings else { return }
+        
+        self.user?.followers = followers.filter{ $0 != userToBeBlocked}
+        
+        self.user?.followings = followings.filter{ $0 != userToBeBlocked}
+        
         user?.blockUsers.append(userToBeBlocked)
         
         guard let currentUser = user else { return }
@@ -209,7 +226,7 @@ extension GroupDetailViewController: NoteTitleDelegate {
             vc.userInThisPage = self.owner
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            self.tabBarController?.selectedIndex = 4
+            self.tabBarController?.selectedIndex = 3
         }
     }
     

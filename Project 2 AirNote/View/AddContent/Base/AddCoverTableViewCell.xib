@@ -30,6 +30,15 @@
                             <constraint firstAttribute="width" secondItem="oRD-oa-KME" secondAttribute="height" multiplier="1:1" id="KHi-Hm-p2S"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6a-St-MFb">
+                        <rect key="frame" x="388" y="137" width="20" height="22"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="xmark.circle" catalog="system"/>
+                        <connections>
+                            <action selector="deleteCover:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tSm-ap-YdF"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVZ-4t-yYu">
                         <rect key="frame" x="182.5" y="545" width="67" height="30"/>
                         <constraints>
@@ -46,8 +55,10 @@
                     <constraint firstItem="qVZ-4t-yYu" firstAttribute="top" secondItem="oRD-oa-KME" secondAttribute="bottom" constant="16" id="JBr-OC-2SI"/>
                     <constraint firstItem="oRD-oa-KME" firstAttribute="top" secondItem="sVL-JC-Pp7" secondAttribute="bottom" constant="8" id="OGS-h1-tOA"/>
                     <constraint firstAttribute="trailing" secondItem="oRD-oa-KME" secondAttribute="trailing" constant="16" id="VsY-l2-c62"/>
+                    <constraint firstItem="D6a-St-MFb" firstAttribute="top" secondItem="oRD-oa-KME" secondAttribute="top" constant="8" id="Whi-Q4-dc6"/>
                     <constraint firstItem="sVL-JC-Pp7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Y01-RQ-lZK"/>
                     <constraint firstAttribute="bottom" secondItem="qVZ-4t-yYu" secondAttribute="bottom" constant="16" id="Z2W-7S-cWW"/>
+                    <constraint firstItem="oRD-oa-KME" firstAttribute="trailing" secondItem="D6a-St-MFb" secondAttribute="trailing" constant="8" id="gtK-uC-hrB"/>
                     <constraint firstItem="sVL-JC-Pp7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="iCb-4O-EbW"/>
                     <constraint firstItem="qVZ-4t-yYu" firstAttribute="centerX" secondItem="oRD-oa-KME" secondAttribute="centerX" id="osB-NO-iYZ"/>
                     <constraint firstItem="oRD-oa-KME" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="vaE-jV-qx6"/>
@@ -57,6 +68,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="coverImageView" destination="oRD-oa-KME" id="pGM-IX-nJD"/>
+                <outlet property="deleteButton" destination="D6a-St-MFb" id="CrY-l0-dcr"/>
                 <outlet property="selectButton" destination="qVZ-4t-yYu" id="6hM-uZ-LmW"/>
                 <outlet property="titleLabel" destination="sVL-JC-Pp7" id="9DI-Dt-Iu3"/>
             </connections>
@@ -65,5 +77,6 @@
     </objects>
     <resources>
         <image name="magazine" catalog="system" width="113" height="128"/>
+        <image name="xmark.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>

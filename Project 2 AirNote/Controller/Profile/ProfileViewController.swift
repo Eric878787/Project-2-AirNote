@@ -28,7 +28,6 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var cameraButton: UIButton!
     
-    
     // Select Image
     private let imagePickerController = UIImagePickerController()
     
@@ -40,6 +39,10 @@ class ProfileViewController: UIViewController {
     var user: User?
     
     var blockedUsers: [User] = []
+    
+    var follwings: [User] = []
+    
+    var follwers: [User] = []
     
     // Note Data
     var notes: [Note] = []
@@ -145,6 +148,20 @@ class ProfileViewController: UIViewController {
         
         self.present(controller, animated: true, completion: nil)
         
+    }
+    
+    @IBAction func followerTouched(_ sender: Any) {
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwers
+        vc.navItemTitle = "粉絲名單"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func followingToched(_ sender: Any) {
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwings
+        vc.navItemTitle = "追蹤名單"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -341,7 +358,6 @@ extension ProfileViewController {
     }
     
     @objc func toBlockList() {
-        
         guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController") as? BlockListViewController else { return }
         vc.user = self.user
         vc.blockList = self.blockedUsers
@@ -359,7 +375,6 @@ extension ProfileViewController {
             case .success(let existingUser):
                 
                 self.users = existingUser
-                
                 for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid {
                     self.user = user
                 }
@@ -372,19 +387,32 @@ extension ProfileViewController {
                 self.blockedUsers = []
                 
                 for blockedUid in blockedUids {
-                    
                     self.blockedUsers += allUsers.filter{$0.uid == blockedUid}
-                    
+                }
+                
+                // Filter Follwings
+                guard let followingsUids = self.user?.followings else { return }
+                
+                self.follwings = []
+                
+                for followingsUid in followingsUids {
+                    self.follwings += allUsers.filter{$0.uid == followingsUid}
+                }
+                
+                // Filter Follwers
+                guard let followerUids = self.user?.followers else { return }
+                
+                self.follwers = []
+                
+                for followerUid in followerUids {
+                    self.follwers += allUsers.filter{$0.uid == followerUid}
                 }
                 
                 DispatchQueue.main.async {
-                    
                     self.fetchNotes()
-                    
                 }
                 
             case .failure(let error):
-                
                 print("fetchData.failure: \(error)")
             }
         }
@@ -426,7 +454,6 @@ extension ProfileViewController {
                         controller.addAction(cancelAction)
                         self.present(controller, animated: true, completion: nil)
                     }
-                    
                 case .failure:
                     print(result)
                 }
@@ -455,7 +482,6 @@ extension ProfileViewController {
                     controller.addAction(cancelAction)
                     self.present(controller, animated: true, completion: nil)
                 }
-                
             case .failure:
                 print(result)
             }
@@ -471,45 +497,31 @@ extension ProfileViewController {
             case .success(let notes):
                 
                 self.savedNotes = []
-                
                 for savedNote in self.user?.savedNotes ?? [] {
-                    
                     self.savedNotes += notes.filter{ $0.noteId == savedNote }
-                    
                 }
                 
                 self.ownedNotes = []
                 
                 for userNote in self.user?.userNotes ?? [] {
-                    
                     self.ownedNotes += notes.filter{ $0.noteId == userNote }
-                    
                 }
                 
                 // Filter Blocked Users
                 guard let blockedUids = self.user?.blockUsers else { return }
-                
                 for blockedUid in blockedUids {
-                    
                     self.users = self.users.filter{$0.uid != blockedUid}
-                    
                 }
                 
                 // Filter Blocked Users Content
-                
                 for blockedUid in blockedUids {
-                    
                     self.savedNotes = self.savedNotes.filter{$0.authorId != blockedUid}
-                    
                 }
                 
                 // Default datasource of notesOnTableView
                 self.wrappingNotes(self.selectedNoteIndex)
-                
                 self.fetchGroups()
-                
             case .failure(let error):
-                
                 print("fetchData.failure: \(error)")
             }
         }
@@ -524,39 +536,27 @@ extension ProfileViewController {
             case .success(let groups):
                 
                 self.savedGroups = []
-                
                 for joinedGroup in self.user?.joinedGroups ?? [] {
-                    
                     self.savedGroups += groups.filter{ $0.groupId == joinedGroup }
-                    
                 }
                 
                 self.ownedGroups = []
-                
                 for userGroup in self.user?.userGroups ?? [] {
-                    
                     self.ownedGroups += groups.filter{ $0.groupId == userGroup }
-                    
                 }
                 
                 
                 // Filter Blocked Users Content
                 guard let blockedUids = self.user?.blockUsers else { return }
                 for blockedUid in blockedUids {
-                    
                     self.savedGroups = self.savedGroups.filter{ $0.groupOwner != blockedUid} ?? []
-                    
                 }
                 
                 // Default datasource of notesOnTableView
                 self.wrappingGroups(self.selectedGroupIndex)
-                
                 self.profilePageTableView.reloadData()
-                
                 self.layoutLabel()
-                
             case .failure(let error):
-                
                 print("fetchData.failure: \(error)")
             }
         }
@@ -574,7 +574,6 @@ extension ProfileViewController {
         controller.addAction(confirmAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
-        
         self.present(controller, animated: true, completion: nil)
         
     }
@@ -590,19 +589,12 @@ extension ProfileViewController {
                     let controller = UIAlertController(title: "刪除帳號成功", message: "請重新註冊", preferredStyle: .alert)
                     controller.view.tintColor = UIColor.gray
                     let action = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        
                         if self.presentingViewController == nil {
-                            
                             guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
-                            
                             vc.modalPresentationStyle = .fullScreen
-                            
                             self.present(vc, animated: true)
-                            
                         } else {
-                            
                             self.dismiss(animated: true)
-                            
                         }
                     }
                     
@@ -628,33 +620,20 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     func wrappingNotes(_ selectedIndex: Int ) {
-        
         if selectedIndex == 0 {
-            
             notesOnTableView = ownedNotes
-            
         } else {
-            
             notesOnTableView = savedNotes
-            
         }
-        
     }
     
     func wrappingGroups(_ selectedIndex: Int ) {
-        
         if selectedIndex == 0 {
-            
             groupsOnTableView = ownedGroups
-            
         } else {
-            
             groupsOnTableView = savedGroups
-            
         }
-        
     }
-    
 }
 
 // Set Up Table View delegate & datasource
@@ -776,13 +755,13 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
                     vc.note = noteToPass
                     vc.comments = noteToPass.comments
                     vc.users = self?.users ?? []
+                    vc.currentUser = self?.user
                     self?.navigationController?.pushViewController(vc, animated: true)
                     
                 case .failure(let error):
                     print("fetchData.failure: \(error)")
                 }
             }
-            
         } else if indexPath.section == 1{
             
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
@@ -791,10 +770,8 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
             vc.users = users
             vc.user = user
             self.navigationController?.pushViewController(vc, animated: true)
-            
         } else {
             return
         }
-        
     }
 }

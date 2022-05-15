@@ -33,6 +33,8 @@ class OtherProfileViewController: UIViewController {
     var userInThisPage: User?
     var users: [User] = []
     var isFollowing = false
+    var follwings: [User] = []
+    var follwers: [User] = []
     
     // Note Data Source
     var notes: [Note] = []
@@ -147,6 +149,20 @@ class OtherProfileViewController: UIViewController {
         
     }
     
+    @IBAction func followerTouched(_ sender: Any) {
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwers
+        vc.navItemTitle = "粉絲名單"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func followingToched(_ sender: Any) {
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwings
+        vc.navItemTitle = "追蹤名單"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 extension OtherProfileViewController {
@@ -180,7 +196,7 @@ extension OtherProfileViewController {
     func configureTableView() {
         
         contentTableView.dataSource = self
-//        contentTableView.delegate = self
+        contentTableView.delegate = self
         contentTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
         contentTableView.registerCellWithNib(identifier: String(describing: PersonalGroupTableViewCell.self), bundle: nil)
         
@@ -241,6 +257,14 @@ extension OtherProfileViewController {
         
         currentUser?.blockUsers.append(userInThisPage?.uid ?? "")
         
+        guard let followers = self.currentUser?.followers else { return }
+        
+        guard let followings = self.currentUser?.followings else { return }
+        
+        self.currentUser?.followers = followers.filter{ $0 != userInThisPage?.uid}
+        
+        self.currentUser?.followings = followings.filter{ $0 != userInThisPage?.uid}
+        
         guard let currentUser = currentUser else { return }
         
         UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
@@ -274,7 +298,6 @@ extension OtherProfileViewController {
             case .success(let existingUser):
                 
                 self.users = existingUser
-                
                 for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid {
                     self.currentUser = user
                 }
@@ -283,6 +306,25 @@ extension OtherProfileViewController {
                 self.isFollowing = false
                 for following in followings where following == self.userInThisPage?.uid {
                     self.isFollowing = true
+                }
+                
+                // Filter Follwings
+                let allUsers = self.users
+                guard let followingsUids = self.currentUser?.followings else { return }
+                
+                self.follwings = []
+                
+                for followingsUid in followingsUids {
+                    self.follwings += allUsers.filter{$0.uid == followingsUid}
+                }
+                
+                // Filter Follwers
+                guard let followerUids = self.currentUser?.followers else { return }
+                
+                self.follwers = []
+                
+                for followerUid in followerUids {
+                    self.follwers += allUsers.filter{$0.uid == followerUid}
                 }
                 
                 self.fetchNotes()
@@ -298,7 +340,6 @@ extension OtherProfileViewController {
                 print("fetchData.failure: \(error)")
             }
         }
-        
     }
     
     private func fetchNotes() {
@@ -308,9 +349,11 @@ extension OtherProfileViewController {
                 
             case .success(let notes):
                 
+                self.notes = []
+                
                 for userNote in self.userInThisPage?.userNotes ?? [] {
                     
-                    self.notes = notes.filter{ $0.noteId == userNote }
+                    self.notes += notes.filter{ $0.noteId == userNote }
                     
                 }
                 
@@ -326,6 +369,8 @@ extension OtherProfileViewController {
     
     private func fetchGroups() {
         
+        self.groups = []
+        
         GroupManager.shared.fetchGroups { result in
             switch result {
                 
@@ -333,7 +378,7 @@ extension OtherProfileViewController {
                 
                 for userGroup in self.userInThisPage?.userGroups ?? [] {
                     
-                    self.groups = groups.filter{ $0.groupId == userGroup }
+                    self.groups += groups.filter{ $0.groupId == userGroup }
                     
                 }
                 
@@ -354,7 +399,7 @@ extension OtherProfileViewController {
 }
 
 // Tableview Data Source
-extension OtherProfileViewController: UITableViewDataSource {
+extension OtherProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentControl.selectedSegmentIndex == 0 {
@@ -409,6 +454,40 @@ extension OtherProfileViewController: UITableViewDataSource {
             cell.titleLabel.text = groups[indexPath.row].groupTitle
             cell.memberCountsLabel.text = "\(groups[indexPath.row].groupMembers.count)"
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if segmentControl.selectedSegmentIndex == 0 {
+            
+            let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
+            notes[indexPath.row].clicks.append(FirebaseManager.shared.currentUser?.uid ?? "")
+            NoteManager.shared.updateNote(note: notes[indexPath.row], noteId: notes[indexPath.row].noteId) { [weak self] result in
+                switch result {
+                case .success:
+                    guard let noteToPass = self?.notes[indexPath.row] else { return }
+                    vc.note = noteToPass
+                    vc.comments = noteToPass.comments
+                    vc.users = self?.users ?? []
+                    vc.currentUser = self?.currentUser
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                    
+                case .failure(let error):
+                    print("fetchData.failure: \(error)")
+                }
+            }
+        } else if  segmentControl.selectedSegmentIndex == 1 {
+            
+            let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+            vc.group = groups[indexPath.row]
+            vc.users = users
+            vc.user = self.currentUser
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            return
         }
     }
     
