@@ -302,7 +302,7 @@ extension OtherProfileViewController {
                     self.currentUser = user
                 }
                 
-                guard let followings = self.currentUser?.followings else { return }
+                guard let followings = self.userInThisPage?.followings else { return }
                 self.isFollowing = false
                 for following in followings where following == self.userInThisPage?.uid {
                     self.isFollowing = true
@@ -319,7 +319,7 @@ extension OtherProfileViewController {
                 }
                 
                 // Filter Follwers
-                guard let followerUids = self.currentUser?.followers else { return }
+                guard let followerUids = self.userInThisPage?.followers else { return }
                 
                 self.follwers = []
                 
