@@ -762,7 +762,7 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
                     print("fetchData.failure: \(error)")
                 }
             }
-        } else if indexPath.section == 1{
+        } else if indexPath.section == 1 {
             
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
             guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }

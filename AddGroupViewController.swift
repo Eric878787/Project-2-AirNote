@@ -433,8 +433,7 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
         addGroupTableView.reloadData()
         
     }
-    
-    
+        
     func searchCafe() {
         
         let storyBoard = UIStoryboard(name: "AddContent", bundle: nil)
@@ -443,7 +442,6 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
-    
     
     func selectButton() {
         
