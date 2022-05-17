@@ -290,6 +290,30 @@ extension OtherProfileViewController {
         
     }
     
+    private func getFollowersFollowings() {
+        
+        // Filter Follwings
+        let allUsers = self.users
+        
+        let followingsUids = self.userInThisPage?.followings ?? []
+        self.follwings = []
+        
+        for followingsUid in followingsUids {
+            self.follwings += allUsers.filter{$0.uid == followingsUid}
+        }
+        
+        // Filter Follwers
+        let followerUids = self.userInThisPage?.followers ?? []
+        
+        self.follwers = []
+        
+        for followerUid in followerUids {
+            self.follwers += allUsers.filter{$0.uid == followerUid}
+        }
+        
+    }
+    
+    
     private func fetchUsers() {
         
         UserManager.shared.fetchUsers { result in
@@ -302,30 +326,13 @@ extension OtherProfileViewController {
                     self.currentUser = user
                 }
                 
-                guard let followings = self.userInThisPage?.followings else { return }
+                guard let followings = self.currentUser?.followings else { return }
                 self.isFollowing = false
                 for following in followings where following == self.userInThisPage?.uid {
                     self.isFollowing = true
                 }
                 
-                // Filter Follwings
-                let allUsers = self.users
-                guard let followingsUids = self.currentUser?.followings else { return }
-                
-                self.follwings = []
-                
-                for followingsUid in followingsUids {
-                    self.follwings += allUsers.filter{$0.uid == followingsUid}
-                }
-                
-                // Filter Follwers
-                guard let followerUids = self.userInThisPage?.followers else { return }
-                
-                self.follwers = []
-                
-                for followerUid in followerUids {
-                    self.follwers += allUsers.filter{$0.uid == followerUid}
-                }
+                self.getFollowersFollowings()
                 
                 self.fetchNotes()
                 
