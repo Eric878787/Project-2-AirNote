@@ -270,7 +270,6 @@ extension AddNoteViewController: UITableViewDelegate {
     }
 }
 
-
 // MARK: UIIMagePicker Delegate
 extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -286,7 +285,6 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
             
             if let image = info[.editedImage] as? UIImage {
                 coverImage = image
-                
                 LKProgressHUD.show()
                 self.detectLabels(image: coverImage, shouldUseCustomModel: false)
             }
@@ -422,9 +420,11 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
                             // 判斷是否超過4張
                             if self.contentImages.count < 4 {
                                 self.contentImages.insert(image, at: 0)
+                                self.detectLabels(image: image, shouldUseCustomModel: false)
                             }  else {
                                 self.contentImages.remove(at: 3)
                                 self.contentImages.insert(image, at: 0)
+                                self.detectLabels(image: image, shouldUseCustomModel: false)
                             }
                             self.addNoteTableView.reloadData()
                         }
