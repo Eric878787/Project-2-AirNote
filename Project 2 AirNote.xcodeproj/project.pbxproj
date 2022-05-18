@@ -50,6 +50,10 @@
 		4246EBD92822835A00C5D183 /* UISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBD82822835A00C5D183 /* UISegmentedControl.swift */; };
 		4246EBDB2822A99100C5D183 /* BlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBDA2822A99100C5D183 /* BlockListViewController.swift */; };
 		4246EBDE2822AA3C00C5D183 /* BlockListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */; };
+		42A65E1F2833A6BA00D038BB /* ContentCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E1E2833A6BA00D038BB /* ContentCategory.swift */; };
+		42A65E212834B66100D038BB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E202834B66100D038BB /* BaseViewController.swift */; };
+		42A65E232834B7E100D038BB /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E222834B7E100D038BB /* UIAlertController+Extension.swift */; };
+		42A65E252834FA4800D038BB /* UIAlertAction+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E242834FA4800D038BB /* UIAlertAction+Extension.swift */; };
 		42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD5C632814122000DA7990 /* EditNoteViewController.swift */; };
 		42B432C22822D4D100D158EC /* BlockListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */; };
 		42B7FA9D2817E48100E68DE6 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B7FA9C2817E48100E68DE6 /* Auth.storyboard */; };
@@ -178,6 +182,10 @@
 		4246EBD82822835A00C5D183 /* UISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentedControl.swift; sourceTree = "<group>"; };
 		4246EBDA2822A99100C5D183 /* BlockListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListViewController.swift; sourceTree = "<group>"; };
 		4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListTableViewCell.swift; sourceTree = "<group>"; };
+		42A65E1E2833A6BA00D038BB /* ContentCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCategory.swift; sourceTree = "<group>"; };
+		42A65E202834B66100D038BB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		42A65E222834B7E100D038BB /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
+		42A65E242834FA4800D038BB /* UIAlertAction+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Extension.swift"; sourceTree = "<group>"; };
 		42AD5C632814122000DA7990 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockListTableViewCell.xib; sourceTree = "<group>"; };
 		42B7FA9C2817E48100E68DE6 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
@@ -495,6 +503,7 @@
 		42DE58722801772C00D764F7 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				42A65E202834B66100D038BB /* BaseViewController.swift */,
 				42405B242817873D00A12777 /* LoginViewController.swift */,
 				421D5C7A2829461800F5747C /* WebViewController.swift */,
 				42DE585A28005A7200D764F7 /* TabBarViewController.swift */,
@@ -512,6 +521,8 @@
 				42F936452805B2AA0058EB07 /* UICollectionView+Extension.swift */,
 				42F936472805B44E0058EB07 /* UITableView+Extension.swift */,
 				42D2C1FE2820197F004CD0CC /* UIColor+Extension.swift */,
+				42A65E222834B7E100D038BB /* UIAlertController+Extension.swift */,
+				42A65E242834FA4800D038BB /* UIAlertAction+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -702,6 +713,7 @@
 				42F93637280573A30058EB07 /* UserManager.swift */,
 				42F93639280573E40058EB07 /* UserDataModel.swift */,
 				42B7FA9E2817E6DB00E68DE6 /* FirebaseManager.swift */,
+				42A65E1E2833A6BA00D038BB /* ContentCategory.swift */,
 			);
 			name = Users;
 			sourceTree = "<group>";
@@ -952,9 +964,11 @@
 				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
 				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
 				42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */,
+				42A65E252834FA4800D038BB /* UIAlertAction+Extension.swift in Sources */,
 				42B7FAA12819664500E68DE6 /* AuthViewController.swift in Sources */,
 				42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */,
 				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,
+				42A65E212834B66100D038BB /* BaseViewController.swift in Sources */,
 				42DD04C9280FE414007C4A9F /* ChatRoomViewController.swift in Sources */,
 				42DE585B28005A7200D764F7 /* TabBarViewController.swift in Sources */,
 				42E2B66A280C039E00B51D9F /* NoteResultTableViewCell.swift in Sources */,
@@ -1001,9 +1015,11 @@
 				42DD04D5281130A1007C4A9F /* NoteDetailViewController.swift in Sources */,
 				4235C5C3281D388C00DEF3E6 /* PersonalGroupTableViewCell.swift in Sources */,
 				4246EBD92822835A00C5D183 /* UISegmentedControl.swift in Sources */,
+				42A65E1F2833A6BA00D038BB /* ContentCategory.swift in Sources */,
 				4246EBDE2822AA3C00C5D183 /* BlockListTableViewCell.swift in Sources */,
 				42405B252817873D00A12777 /* LoginViewController.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
+				42A65E232834B7E100D038BB /* UIAlertController+Extension.swift in Sources */,
 				4226EFD328311D2200D07F3E /* FollwerFollowingListViewController.swift in Sources */,
 				423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */,
 				42E2B699280EEA6700B51D9F /* ChatRoomListTableViewCell.swift in Sources */,
