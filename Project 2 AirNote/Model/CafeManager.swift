@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class CafeManager {
     
     func fetchCafeInfo(_ completion: @escaping ([Cafe]) -> Void) {
@@ -24,7 +23,7 @@ class CafeManager {
                           completion(cafes)
                       }
                   } catch let error {
-                      completion(error)
+                      return
                   }
                }
            }.resume()

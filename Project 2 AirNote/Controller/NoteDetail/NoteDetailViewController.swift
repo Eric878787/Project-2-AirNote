@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class NoteDetailViewController: UIViewController, UITextFieldDelegate {
+class NoteDetailViewController: BaseViewController, UITextFieldDelegate {
     
     @IBOutlet weak var noteDetailCollectionView: UICollectionView!
     
@@ -245,22 +245,19 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
             switch result {
                 
             case .success:
-                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "確認", style: .default) { action in
+                
+                self.initBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     if self.userToBeBlocked == self.note.authorId {
                         self.navigationController?.popToRootViewController(animated: true)
                     } else {
                         self.fetchUser()
                     }
                 }
-                controller.addAction(action)
-                self.present(controller, animated: true)
                 
-                print("封鎖成功")
                 
             case .failure:
                 
-                print("封鎖失敗")
+                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }

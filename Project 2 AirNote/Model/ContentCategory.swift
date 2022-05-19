@@ -29,7 +29,7 @@ enum ContentCategory: String {
         }
     }
     
-    func cellForIndexPath(_ indexPath: IndexPath, _ tableView: UITableView, _ notes: [Note], _ groups: [Group], _ users: [User]) -> UITableViewCell {
+    func cellForIndexPath(_ indexPath: IndexPath, _ tableView: UITableView, _ notes: [Note] = [], _ groups: [Group] = [], _ users: [User] = []) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier(), for: indexPath)
         

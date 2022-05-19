@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchGroupsViewController: UIViewController {
+class SearchGroupsViewController: BaseViewController {
     
     // Search result tableview
     private var searchGroupsTableView = UITableView(frame: .zero)
@@ -122,22 +122,9 @@ extension SearchGroupsViewController {
     
     @objc private func openActionList() {
         
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "封鎖用戶", style: .default) { _ in
+        self.initBlockUserAlert {
             self.blockUser()
         }
-        controller.addAction(action)
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        controller.addAction(cancelAction)
-        
-        // iPad Situation
-        if let popoverController = controller.popoverPresentationController {
-          popoverController.sourceView = self.view
-          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-          popoverController.permittedArrowDirections = []
-        }
-        
-        self.present(controller, animated: true)
         
     }
     
@@ -170,18 +157,14 @@ extension SearchGroupsViewController {
             switch result {
                 
             case .success:
-                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "確認", style: .default) { _ in
+                
+                self.initBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     self.fetchGroups()
                 }
-                controller.addAction(action)
-                self.present(controller, animated: true)
-                
-                print("封鎖成功")
                 
             case .failure:
                 
-                print("封鎖失敗")
+                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }

@@ -11,80 +11,50 @@ import Kingfisher
 class ProfileViewController: BaseViewController {
     
     // MARK: Properties
-    @IBOutlet weak var avatar: UIImageView!
-    
+    @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    
     @IBOutlet weak var renameButton: UIButton!
-    
     @IBOutlet weak var followersButton: UIButton!
-    
     @IBOutlet weak var followersLabel: UILabel!
-    
     @IBOutlet weak var followingsButton: UIButton!
-    
     @IBOutlet weak var followingsLabel: UILabel!
-    
     @IBOutlet weak var cameraButton: UIButton!
-    
     @IBOutlet weak var noteTableView: UITableView!
-    
     @IBOutlet weak var groupTableView: UITableView!
-    
-    @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var categorySegmentControl: UISegmentedControl!
     
     // Select Image
     private let imagePickerController = UIImagePickerController()
-    
-    private var avatarImage: UIImage?
+    private var avatarImage: UIImage? // ?
     
     // User Data
-    private var users: [User] = []
-    
-    private var user: User?
-    
+    private var users: [User] = [] //
+    private var currentUser: User?
     private var blockedUsers: [User] = []
-    
     private var followings: [User] = []
-    
     private var followers: [User] = []
     
     // Note Data
     private var notes: [Note] = []
-    
     private var savedNotes: [Note] = []
-    
     private var ownedNotes: [Note] = []
-    
     private let noteCategories: [ContentCategory] = [.ownedNote, .savedNote]
     
     // Group Data
     private var groups: [Group] = []
-    
     private var savedGroups: [Group] = []
-    
     private var ownedGroups: [Group] = []
-    
     private let groupCategories: [ContentCategory] = [.ownedGroup, .savedGroup]
+    
+//    let dict: [ContentCategory: [Group]]
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Avatar Image Picker
         addTapGesture()
         imagePickerController.delegate = self
-        
-        // Configure Nav Bar
         configureNavigationBar()
-        
-        // Configure Table View
         configureTableView()
-        
-        // Default segment
-        noteTableView.isHidden = false
-        groupTableView.isHidden = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,20 +64,19 @@ class ProfileViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        // Configure Components
         configureComponents()
-        
     }
     
     // MARK: Methods
     func configureNavigationBar() {
-        // Log out Button
-        let logOutButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"), style: .plain, target: self, action: #selector(signOut))
+        let logOutButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"),
+                                           style: .plain,
+                                           target: self, action: #selector(signOut))
         self.navigationItem.leftBarButtonItem = logOutButton
         
-        // Block List
-        let blockListButton = UIBarButtonItem(image: UIImage(systemName: "person.fill.badge.minus"), style: .plain, target: self, action: #selector(toBlockList))
+        let blockListButton = UIBarButtonItem(image: UIImage(systemName: "person.fill.badge.minus"),
+                                              style: .plain, target: self,
+                                              action: #selector(toBlockList))
         self.navigationItem.rightBarButtonItem =  blockListButton
     }
     
@@ -118,9 +87,9 @@ class ProfileViewController: BaseViewController {
             textField.placeholder = "暱稱"
         }
         
-        let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in
+        let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in // ?
             
-            self.user?.userName = controller.textFields?[0].text ?? ""
+            self.currentUser?.userName = controller.textFields?[0].text ?? ""
             LKProgressHUD.show()
             self.updateUserName()
             
@@ -132,20 +101,22 @@ class ProfileViewController: BaseViewController {
         
     }
     
-    @IBAction func cameraTapped(_ sender: Any) {
+    @IBAction func cameraTapped(_ sender: Any) { // didTappedCamera // Any -> UIButton
         initChoosePhotoAlert(imagePickerController)
     }
     
-    @IBAction func followerTouched(_ sender: Any) {
-        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
+    @IBAction func followerTouched(_ sender: Any) { //
+        guard let viewController =
+                UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
                 as? FollwerFollowingListViewController else { return }
         viewController.userList = self.followers
         viewController.navItemTitle = "粉絲名單"
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func followingToched(_ sender: Any) {
-        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
+    @IBAction func followingToched(_ sender: Any) { //
+        guard let viewController =
+                UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
                 as? FollwerFollowingListViewController else { return }
         viewController.userList = self.followings
         viewController.navItemTitle = "追蹤名單"
@@ -154,13 +125,17 @@ class ProfileViewController: BaseViewController {
     
     @IBAction func changeSegment(_ sender: UISegmentedControl) {
         
-        if sender.selectedSegmentIndex == 0 {
-            noteTableView.isHidden = false
-            groupTableView.isHidden = true
-        } else {
-            noteTableView.isHidden = true
-            groupTableView.isHidden = false
-        }
+//        if sender.selectedSegmentIndex == 0 {
+//            noteTableView.isHidden = false
+//            groupTableView.isHidden = true
+//        } else {
+//            noteTableView.isHidden = true
+//            groupTableView.isHidden = false
+//        }
+        
+        let didSelectNote = sender.selectedSegmentIndex == 0
+        noteTableView.isHidden = !didSelectNote
+        groupTableView.isHidden = didSelectNote
         
     }
     
@@ -173,29 +148,29 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                           action: #selector(imageTapped(tapGestureRecognizer:)))
-        avatar.isUserInteractionEnabled = true
-        avatar.addGestureRecognizer(tapGestureRecognizer)
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(tapGestureRecognizer)
         
     }
     
     @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         
-        guard let tappedImage = tapGestureRecognizer.view
-                as? UIImageView else { return }
+        guard tapGestureRecognizer.view
+                as? UIImageView != nil else { return }
         
-        initChoosePhotoAlert(imagePickerController)
+        initChoosePhotoAlert(imagePickerController) //
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                               didFinishPickingMediaWithInfo info: [ UIImagePickerController.InfoKey: Any ]) {
         
         if let image = info[.originalImage] as? UIImage {
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { //
                 LKProgressHUD.show()
             }
             avatarImage = image
-            avatar.image = avatarImage
+            avatarImageView.image = avatarImage //
             updateUserAvatar()
         }
         
@@ -214,7 +189,7 @@ extension ProfileViewController {
         noteTableView.delegate = self
         noteTableView.separatorStyle = .none
         noteTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
-        noteTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
+        noteTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil) //
         noteTableView.register(DeleteAccountTableViewCell.self,
                                forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
         
@@ -234,32 +209,32 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     func refreshUserInfo() {
-        
+        // user?
         // Profile Avatar
-        let url = URL(string: user?.userAvatar ?? "")
-        avatar.kf.indicatorType = .activity
-        avatar.kf.setImage(with: url)
+        let url = URL(string: currentUser?.userAvatar ?? "")
+        avatarImageView.kf.indicatorType = .activity
+        avatarImageView.kf.setImage(with: url)
         
         // User Name
-        if user?.userName != "" {
-            nameLabel.text = user?.userName
+        if currentUser?.userName != "" {
+            nameLabel.text = currentUser?.userName
         } else {
-            nameLabel.text = user?.email
+            nameLabel.text = currentUser?.email
         }
         
         // User Followers
-        followersButton.setTitle("\(user?.followers.count ?? 0)", for: .normal)
+        followersButton.setTitle("\(currentUser?.followers.count ?? 0)", for: .normal)
         
         // User Followings
-        followingsButton.setTitle("\(user?.followings.count ?? 0)", for: .normal)
+        followingsButton.setTitle("\(currentUser?.followings.count ?? 0)", for: .normal)
         
     }
     
     func configureComponents() {
         
         // Avatar Image View
-        avatar.layer.cornerRadius = avatar.frame.height / 2
-        avatar.clipsToBounds = true
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
+        avatarImageView.clipsToBounds = true
         
         // Plus Image
         cameraButton.layer.cornerRadius = cameraButton.frame.height / 2
@@ -275,7 +250,7 @@ extension ProfileViewController {
         setUpBasicLabel(followersLabel)
         
         // Configure Followers Button
-        followersButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16)
+        followersButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16) // constant
         followersButton.tintColor = .black
         
         // Configure Followings Label
@@ -286,7 +261,7 @@ extension ProfileViewController {
         followingsButton.tintColor = .black
         
         // Configure Segment Control
-        setUpBasicSegmentControl(segmentControl)
+        setUpBasicSegmentControl(categorySegmentControl)
 
     }
     
@@ -297,13 +272,13 @@ extension ProfileViewController {
     
     @objc func signOut() {
         initAlternativeAlert("是否要登出", nil, {
-            self.conformToSignOut()
+            self.confirmToSignOut()
         }, {
             return
         })
     }
     
-    private func conformToSignOut() {
+    private func confirmToSignOut() {
         self.initBasicConfirmationAlert("登出成功", "將返回登入頁面") {
             FirebaseManager.shared.signout()
             if self.presentingViewController == nil {
@@ -317,50 +292,48 @@ extension ProfileViewController {
     }
     
     @objc func toBlockList() {
-        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController")
+        guard let viewController =
+                UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController")
                 as? BlockListViewController else { return }
-        viewController.user = self.user
+        viewController.user = self.currentUser
         viewController.blockList = self.blockedUsers
         self.navigationController?.pushViewController(viewController, animated: true)
         
     }
     
     private func fetchUsers() {
-        
         LKProgressHUD.show()
-        
         UserManager.shared.fetchUsers { result in
             switch result {
                 
             case .success(let existingUser):
-                
                 self.users = existingUser
                 for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid {
-                    self.user = user
+                    self.currentUser = user
                 }
                 
                 // Filter Blocked Users
-                guard let blockedUids = self.user?.blockUsers else { return }
+                guard let blockedUids = self.currentUser?.blockUsers else { return }
                 
                 let allUsers = self.users
                 
                 self.blockedUsers = []
                 for blockedUid in blockedUids {
-                    self.blockedUsers += allUsers.filter { $0.uid == blockedUid}
+                    self.blockedUsers += allUsers.filter { $0.uid == blockedUid }
                 }
                 
                 // Filter Follwings
-                guard let followingsUids = self.user?.followings else { return }
+                guard let followingsUids = self.currentUser?.followings else { return }
                 self.followings = []
                 for followingsUid in followingsUids {
-                    self.followings += allUsers.filter { $0.uid == followingsUid}
+                    self.followings += allUsers.filter { $0.uid == followingsUid }
                 }
                 
                 // Filter Follwers
-                guard let followerUids = self.user?.followers else { return }
+                guard let followerUids = self.currentUser?.followers else { return }
                 self.followers = []
                 for followerUid in followerUids {
-                    self.followers += allUsers.filter { $0.uid == followerUid}
+                    self.followers += allUsers.filter { $0.uid == followerUid }
                 }
                 
                 DispatchQueue.main.async {
@@ -373,26 +346,24 @@ extension ProfileViewController {
                 self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
-        
     }
     
-    private func updateUserAvatar() {
-        
+    private func updateUserAvatar() { //
         let group = DispatchGroup()
         group.enter()
-        guard let image =  avatarImage else { return }
+        guard let image = avatarImage else { return }
         UserManager.shared.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
-                self.user?.userAvatar = "\(url)"
+                self.currentUser?.userAvatar = "\(url)"
             case .failure:
                 self.initBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
             }
+            //
             group.leave()
         }
-        
         group.notify(queue: DispatchQueue.global()) {
-            guard let user = self.user else { return }
+            guard let user = self.currentUser else { return }
             UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
                 switch result {
                 case .success:
@@ -404,11 +375,10 @@ extension ProfileViewController {
                 }
             }
         }
-        
     }
     
     private func updateUserName() {
-        guard let user = self.user else { return }
+        guard let user = self.currentUser else { return }
         LKProgressHUD.show()
         UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
             switch result {
@@ -422,8 +392,7 @@ extension ProfileViewController {
         }
     }
     
-    private func fetchContent() {
-        
+    private func fetchContent() { //
         let group = DispatchGroup()
         group.enter()
         fetchNotes {
@@ -438,28 +407,26 @@ extension ProfileViewController {
             self.noteTableView.reloadData()
             self.groupTableView.reloadData()
         }
-        
     }
     
     private func fetchNotes(_ completion: @escaping () -> Void) {
-        
         NoteManager.shared.fetchNotes { result in
             switch result {
                 
             case .success(let notes):
                 
                 self.savedNotes = []
-                for savedNote in self.user?.savedNotes ?? [] {
+                for savedNote in self.currentUser?.savedNotes ?? [] {
                     self.savedNotes += notes.filter { $0.noteId == savedNote }
                 }
                 
                 self.ownedNotes = []
-                for userNote in self.user?.userNotes ?? [] {
+                for userNote in self.currentUser?.userNotes ?? [] {
                     self.ownedNotes += notes.filter { $0.noteId == userNote }
                 }
                 
                 // Filter Blocked Users
-                guard let blockedUids = self.user?.blockUsers else { return }
+                guard let blockedUids = self.currentUser?.blockUsers else { return }
                 for blockedUid in blockedUids {
                     self.users = self.users.filter { $0.uid != blockedUid }
                 }
@@ -473,30 +440,29 @@ extension ProfileViewController {
                 
             case .failure:
                 self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                //
             }
         }
-        
     }
     
     private func fetchGroups(_ completion: @escaping () -> Void) {
-        
         GroupManager.shared.fetchGroups { result in
             switch result {
                 
             case .success(let groups):
                 
                 self.savedGroups = []
-                for joinedGroup in self.user?.joinedGroups ?? [] {
+                for joinedGroup in self.currentUser?.joinedGroups ?? [] {
                     self.savedGroups += groups.filter { $0.groupId == joinedGroup }
                 }
                 
                 self.ownedGroups = []
-                for userGroup in self.user?.userGroups ?? [] {
+                for userGroup in self.currentUser?.userGroups ?? [] {
                     self.ownedGroups += groups.filter { $0.groupId == userGroup }
                 }
                 
                 // Filter Blocked Users Content
-                guard let blockedUids = self.user?.blockUsers else { return }
+                guard let blockedUids = self.currentUser?.blockUsers else { return }
                 for blockedUid in blockedUids {
                     self.savedGroups = self.savedGroups.filter { $0.groupOwner != blockedUid }
                 }
@@ -505,12 +471,12 @@ extension ProfileViewController {
                 
             case .failure:
                 self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                //
             }
         }
-        
     }
     
-    private func deleteAccount() {
+    private func deleteAccount() { //
         initAlternativeAlert("是否要刪除帳號", "刪除後將清除所有帳戶資料", {
             self.confirmDeletion()
         }, {
@@ -519,7 +485,7 @@ extension ProfileViewController {
     }
     
     private func confirmDeletion() {
-        FirebaseManager.shared.delete()
+        FirebaseManager.shared.delete() // completion
         FirebaseManager.shared.deleteAccountSuccess = {
             guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
             UserManager.shared.deleteUser(uid: uid) { result in
@@ -527,8 +493,11 @@ extension ProfileViewController {
                 case .success:
                     self.initBasicConfirmationAlert("刪除帳號成功", "請重新註冊") {
                         if self.presentingViewController == nil {
-                            guard let viewController = UIStoryboard.auth.instantiateInitialViewController() else
-                            { return }
+                            guard let viewController =
+                                    UIStoryboard.auth.instantiateInitialViewController()
+                            else {
+                                return
+                            }
                             viewController.modalPresentationStyle = .fullScreen
                             self.present(viewController, animated: true)
                         } else {
@@ -542,6 +511,7 @@ extension ProfileViewController {
         }
     }
     
+    //
 }
 
 // Set Up Table View delegate & datasource
@@ -552,9 +522,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        3 // [].count
     }
     
+    // enum Gasoline
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == noteTableView {
             if section == 0 {
@@ -576,7 +547,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if tableView == noteTableView {
             if indexPath.section == 0 {
                 return noteCategories[indexPath.section].cellForIndexPath(indexPath,
@@ -591,15 +561,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
                                                                           [],
                                                                           users)
             } else {
-                let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
-                                                                               for: indexPath)
+                let deleteAccountTableViewCell =
+                tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
+                                              for: indexPath)
                 guard let cell = deleteAccountTableViewCell
                         as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
                 
                 cell.delegate = self
                 return cell
             }
-            
         } else {
             if indexPath.section == 0 {
                 return groupCategories[indexPath.section].cellForIndexPath(indexPath,
@@ -614,11 +584,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
                                                                            savedGroups,
                                                                            users)
             } else {
-                let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
-                                                                               for: indexPath)
+                let deleteAccountTableViewCell =
+                tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
+                                              for: indexPath)
                 guard let cell = deleteAccountTableViewCell
                         as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
-                
                 cell.delegate = self
                 return cell
             }
@@ -631,7 +601,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
             
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NoteHeader.reuseIdentifier)
                     as? NoteHeader else { return nil }
-            
             if section == 0 {
                 header.title.text = ContentCategory.ownedNote.rawValue
                 return header
@@ -646,7 +615,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
             
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier)
                     as? GroupHeader else { return nil }
-            
             if section == 0 {
                 header.title.text = ContentCategory.ownedGroup.rawValue
                 return header
@@ -660,7 +628,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if tableView == noteTableView {
             let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController")
@@ -683,9 +650,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
                     viewController.note = note
                     viewController.comments = note.comments
                     viewController.users = self?.users ?? []
-                    viewController.currentUser = self?.user
+                    viewController.currentUser = self?.currentUser
                     self?.navigationController?.pushViewController(viewController, animated: true)
-                    
                 case .failure:
                     self?.initBasicConfirmationAlert("更新資料失敗", "請檢查網路連線")
                 }
@@ -706,10 +672,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
             guard let group = group else { return }
             viewController.group = group
             viewController.users = users
-            viewController.user = user
+            viewController.user = currentUser
             self.navigationController?.pushViewController(viewController, animated: true)
-        } else {
-            return
         }
     }
 }

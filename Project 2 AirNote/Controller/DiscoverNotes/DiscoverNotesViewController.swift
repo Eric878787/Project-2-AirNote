@@ -269,7 +269,7 @@ extension DiscoverNotesViewController {
                 
             case .success:
                 
-                self.initBasicConfirmationAlert("封鎖成功", nil) {
+                self.initBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     self.fetchNotes()
                 }
                 

@@ -330,18 +330,16 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
                         
                         self.searchNotesTableView.reloadData()
                         
-                        print("收藏成功")
-                        
                     case .failure:
                         
-                        print("收藏失敗")
+                        self.initBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
                         
                     }
                 }
                 
             case .failure:
                 
-                print("收藏失敗")
+                self.initBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
             }
         }
     }
