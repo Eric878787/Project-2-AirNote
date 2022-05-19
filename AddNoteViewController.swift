@@ -9,7 +9,7 @@ import UIKit
 import PhotosUI
 import MLKit
 
-class AddNoteViewController: UIViewController {
+class AddNoteViewController: BaseViewController {
     
     // MARK: Table View
     private var addNoteTableView = UITableView(frame: .zero)
@@ -84,7 +84,7 @@ extension AddNoteViewController {
         // [START detect_label]
         weak var weakSelf = self
         onDeviceLabeler.process(visionImage) { labels, error in
-            guard let strongSelf = weakSelf else {
+            guard weakSelf != nil else {
                 print("Self is nil!")
                 return
             }
@@ -127,7 +127,7 @@ extension AddNoteViewController {
         
         textRecognizer?.process(visionImage) { text, error in
             
-            guard let strongSelf = weakSelf else {
+            guard weakSelf != nil else {
                 
                 print("Self is nil!")
                 
@@ -148,9 +148,9 @@ extension AddNoteViewController {
 }
 
 private enum Constants {
-  static let images = ["image_has_text.jpg"]
-  static let detectionNoResultsMessage = "No results returned."
-  static let failedToDetectObjectsMessage = "Failed to detect objects in image."
+    static let images = ["image_has_text.jpg"]
+    static let detectionNoResultsMessage = "No results returned."
+    static let failedToDetectObjectsMessage = "Failed to detect objects in image."
 }
 
 // MARK: Configure Add Note Tableview
@@ -278,7 +278,6 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
         addNoteTableView.reloadData()
     }
     
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if  picker == imagePickerController {
@@ -294,7 +293,7 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
             if let image = info[.originalImage] as? UIImage {
                 if self.contentImages.count < 4 {
                     self.contentImages.insert(image, at: 0)
-                }  else {
+                } else {
                     self.contentImages.remove(at: 3)
                     self.contentImages.insert(image, at: 0)
                 }
@@ -364,9 +363,9 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     // 開啟手繪版
     func openDrawingPad() {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.imageProvider = { [weak self] image in
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.imageProvider = { [weak self] image in
             self?.coverImage = image
             self?.addNoteTableView.reloadData()
         }
@@ -421,7 +420,7 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
                             if self.contentImages.count < 4 {
                                 self.contentImages.insert(image, at: 0)
                                 self.detectLabels(image: image, shouldUseCustomModel: false)
-                            }  else {
+                            } else {
                                 self.contentImages.remove(at: 3)
                                 self.contentImages.insert(image, at: 0)
                                 self.detectLabels(image: image, shouldUseCustomModel: false)
@@ -461,14 +460,14 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
     // 開啟手繪版
     func openDrawingPadForMulti() {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.imageProvider = { [weak self] image in
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.imageProvider = { [weak self] image in
             if let image = image as? UIImage {
                 // 判斷是否超過4張
                 if self?.contentImages.count ?? 0 < 4 {
                     self?.contentImages.insert(image, at: 0)
-                }  else {
+                } else {
                     self?.contentImages.remove(at: 3)
                     self?.contentImages.insert(image, at: 0)
                 }
@@ -568,15 +567,15 @@ extension AddNoteViewController {
                                         self.present(controller, animated: true, completion: nil)
                                     }
                                 case .failure(let error):
-                                    print(error)
+                                    self.initBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
                                 }
                             }
                         case .failure(let error):
-                            print (error)
+                            self.initBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
                         }
                     }
                 case.failure:
-                    print(result)
+                    self.initBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
                 }
             }
         }

@@ -30,8 +30,6 @@ class ChatRoomViewController: UIViewController {
     
     var indexOfMessageToBeDeleted: Int?
     
-    private var chatRoomManager = ChatRoomManager()
-    
     // Selected Image
     private var selectedImage = UIImage()
     
@@ -80,7 +78,7 @@ extension ChatRoomViewController {
             case .success(let group):
                     
                     self?.group = group
-                    self?.group?.messages.sort{
+                    self?.group?.messages.sort {
                         ( $0.createdTime ) < ( $1.createdTime )
                     }
                     
@@ -111,7 +109,7 @@ extension ChatRoomViewController {
                 
                 for blockedUid in blockedUids {
                     
-                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    self?.users = self?.users.filter { $0.uid != blockedUid } ?? []
                     
                 }
                 
@@ -121,7 +119,7 @@ extension ChatRoomViewController {
                 
                 for blockedUid in blockedUids {
                     
-                    self?.group?.messages = messages.filter{ $0.sender != blockedUid} ?? []
+                    self?.group?.messages = messages.filter { $0.sender != blockedUid }
                     
                 }
                 
@@ -166,7 +164,7 @@ extension ChatRoomViewController {
     @objc private func openActionList() {
         
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "刪除訊息", style: .default) { action in
+        let action = UIAlertAction(title: "刪除訊息", style: .default) { _ in
             LKProgressHUD.show()
             self.deleteMessage()
         }
@@ -192,7 +190,7 @@ extension ChatRoomViewController {
         guard let indexPathForRow = indexOfMessageToBeDeleted else { return }
         self.group?.messages.remove(at: indexPathForRow)
         guard let group = self.group else { return }
-        GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { [weak self] result in
+        GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
@@ -205,7 +203,6 @@ extension ChatRoomViewController {
     }
     
 }
-
 
 // MARK: Configure Layouts
 extension ChatRoomViewController {
@@ -327,7 +324,7 @@ extension ChatRoomViewController: UIImagePickerControllerDelegate, UINavigationC
                     let message = Message(sender: uid, createdTime: Date(), image: "\(url)")
                     self?.group?.messages.append(message)
                     guard let group = self?.group else { return }
-                    GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { [weak self] result in
+                    GroupManager.shared.updateGroup(group: group, groupId: group.groupId) { result in
                         switch result {
                         case .success:
                             print("\(result)")
@@ -382,11 +379,11 @@ extension ChatRoomViewController: UITableViewDataSource {
                 
                 cell.imageHandler = {
                     
-                    let vc = ImageViewerViewController()
+                    let viewController = ImageViewerViewController()
                     guard let image = group.messages[indexPath.row].image else { return }
-                    vc.images.append(image)
-                    vc.currentPage = 0
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    viewController.images.append(image)
+                    viewController.currentPage = 0
+                    self.navigationController?.pushViewController(viewController, animated: true)
                     
                 }
                 
@@ -418,15 +415,14 @@ extension ChatRoomViewController: UITableViewDataSource {
                     
                     if group.messages[indexPath.row].sender != uid {
                         let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
-                        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
-                        vc.userInThisPage = sender
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+                        viewController.userInThisPage = sender
+                        self.navigationController?.pushViewController(viewController, animated: true)
                     } else {
                         self.tabBarController?.selectedIndex = 4
                     }
                     
                 }
-
                 
                 return cell
               
@@ -452,11 +448,11 @@ extension ChatRoomViewController: UITableViewDataSource {
                 
                 cell.imageHandler = {
                     
-                    let vc = ImageViewerViewController()
+                    let viewController = ImageViewerViewController()
                     guard let image = group.messages[indexPath.row].image else { return }
-                    vc.images.append(image)
-                    vc.currentPage = 0
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    viewController.images.append(image)
+                    viewController.currentPage = 0
+                    self.navigationController?.pushViewController(viewController, animated: true)
                     
                 }
                 
@@ -464,9 +460,9 @@ extension ChatRoomViewController: UITableViewDataSource {
                     
                     if group.messages[indexPath.row].sender != uid {
                         let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
-                        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
-                        vc.userInThisPage = sender
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+                        viewController.userInThisPage = sender
+                        self.navigationController?.pushViewController(viewController, animated: true)
                     } else {
                         self.tabBarController?.selectedIndex = 4
                     }

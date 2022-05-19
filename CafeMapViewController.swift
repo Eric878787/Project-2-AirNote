@@ -131,7 +131,8 @@ extension CafeMapViewController: MKMapViewDelegate {
     
     func layoutGroup() {
         for cafe in cafes {
-            let coordinate = CLLocationCoordinate2D(latitude: Double(cafe.latitude) ?? 0, longitude: Double(cafe.longitude) ?? 0)
+            let coordinate = CLLocationCoordinate2D(latitude: Double(cafe.latitude) ?? 0,
+                                                    longitude: Double(cafe.longitude) ?? 0)
             let title = cafe.name
             let subtitle = cafe.address
                     
@@ -144,7 +145,9 @@ extension CafeMapViewController: MKMapViewDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView,
+                 annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as? Annotation
         let cafe = cafes.filter { $0.name == annotation?.title}
         delegate?.passAddress(cafe[0])
@@ -152,4 +155,3 @@ extension CafeMapViewController: MKMapViewDelegate {
     }
     
 }
-

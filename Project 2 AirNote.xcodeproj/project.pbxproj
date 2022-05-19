@@ -52,8 +52,6 @@
 		4246EBDE2822AA3C00C5D183 /* BlockListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */; };
 		42A65E1F2833A6BA00D038BB /* ContentCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E1E2833A6BA00D038BB /* ContentCategory.swift */; };
 		42A65E212834B66100D038BB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E202834B66100D038BB /* BaseViewController.swift */; };
-		42A65E232834B7E100D038BB /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E222834B7E100D038BB /* UIAlertController+Extension.swift */; };
-		42A65E252834FA4800D038BB /* UIAlertAction+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A65E242834FA4800D038BB /* UIAlertAction+Extension.swift */; };
 		42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD5C632814122000DA7990 /* EditNoteViewController.swift */; };
 		42B432C22822D4D100D158EC /* BlockListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */; };
 		42B7FA9D2817E48100E68DE6 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B7FA9C2817E48100E68DE6 /* Auth.storyboard */; };
@@ -63,8 +61,6 @@
 		42D2C1FD2820012D004CD0CC /* GroupHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2C1FC2820012D004CD0CC /* GroupHeader.swift */; };
 		42D2C1FF2820197F004CD0CC /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2C1FE2820197F004CD0CC /* UIColor+Extension.swift */; };
 		42DD04C2280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */; };
-		42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */; };
-		42DD04C7280FA5DA007C4A9F /* ChatRoomDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04C6280FA5DA007C4A9F /* ChatRoomDataModel.swift */; };
 		42DD04C9280FE414007C4A9F /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04C8280FE414007C4A9F /* ChatRoomViewController.swift */; };
 		42DD04CC280FE4B4007C4A9F /* LeftChatRoomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD04CA280FE4B4007C4A9F /* LeftChatRoomTableViewCell.swift */; };
 		42DD04CD280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42DD04CB280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib */; };
@@ -184,8 +180,6 @@
 		4246EBDC2822AA3C00C5D183 /* BlockListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListTableViewCell.swift; sourceTree = "<group>"; };
 		42A65E1E2833A6BA00D038BB /* ContentCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCategory.swift; sourceTree = "<group>"; };
 		42A65E202834B66100D038BB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		42A65E222834B7E100D038BB /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
-		42A65E242834FA4800D038BB /* UIAlertAction+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Extension.swift"; sourceTree = "<group>"; };
 		42AD5C632814122000DA7990 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		42B432C12822D4D100D158EC /* BlockListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockListTableViewCell.xib; sourceTree = "<group>"; };
 		42B7FA9C2817E48100E68DE6 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
@@ -195,8 +189,6 @@
 		42D2C1FC2820012D004CD0CC /* GroupHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupHeader.swift; sourceTree = "<group>"; };
 		42D2C1FE2820197F004CD0CC /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		42DD04C1280EF6A0007C4A9F /* ChatRoomListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatRoomListTableViewCell.xib; sourceTree = "<group>"; };
-		42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomManager.swift; sourceTree = "<group>"; };
-		42DD04C6280FA5DA007C4A9F /* ChatRoomDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDataModel.swift; sourceTree = "<group>"; };
 		42DD04C8280FE414007C4A9F /* ChatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
 		42DD04CA280FE4B4007C4A9F /* LeftChatRoomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftChatRoomTableViewCell.swift; sourceTree = "<group>"; };
 		42DD04CB280FE4B4007C4A9F /* RightChatRoomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightChatRoomTableViewCell.xib; sourceTree = "<group>"; };
@@ -357,15 +349,6 @@
 			name = Cafe;
 			sourceTree = "<group>";
 		};
-		42DD04C3280F9E16007C4A9F /* ChatRooms */ = {
-			isa = PBXGroup;
-			children = (
-				42DD04C4280F9E63007C4A9F /* ChatRoomManager.swift */,
-				42DD04C6280FA5DA007C4A9F /* ChatRoomDataModel.swift */,
-			);
-			path = ChatRooms;
-			sourceTree = "<group>";
-		};
 		42DD04D228112FDA007C4A9F /* NoteDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,7 +451,6 @@
 				42F93635280554B30058EB07 /* Notes */,
 				42E2B676280D6D0900B51D9F /* Groups */,
 				42405B1D2816D3E200A12777 /* Cafe */,
-				42DD04C3280F9E16007C4A9F /* ChatRooms */,
 				42F936362805737E0058EB07 /* Users */,
 				42E2B6612809736300B51D9F /* ColorOfPen */,
 			);
@@ -521,8 +503,6 @@
 				42F936452805B2AA0058EB07 /* UICollectionView+Extension.swift */,
 				42F936472805B44E0058EB07 /* UITableView+Extension.swift */,
 				42D2C1FE2820197F004CD0CC /* UIColor+Extension.swift */,
-				42A65E222834B7E100D038BB /* UIAlertController+Extension.swift */,
-				42A65E242834FA4800D038BB /* UIAlertAction+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -964,7 +944,6 @@
 				42DE587728017B1C00D764F7 /* DiscoverNotesViewController.swift in Sources */,
 				42F936432805B0000058EB07 /* AddTitleTableViewCell.swift in Sources */,
 				42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */,
-				42A65E252834FA4800D038BB /* UIAlertAction+Extension.swift in Sources */,
 				42B7FAA12819664500E68DE6 /* AuthViewController.swift in Sources */,
 				42AD5C642814122000DA7990 /* EditNoteViewController.swift in Sources */,
 				42F9362B2802BBB70058EB07 /* NotesCollectionViewCell.swift in Sources */,
@@ -991,7 +970,6 @@
 				42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */,
 				42E2B67E280D95E400B51D9F /* AddGroupViewController.swift in Sources */,
 				42E2B6602809735200B51D9F /* ColorOfPen.swift in Sources */,
-				42DD04C5280F9E63007C4A9F /* ChatRoomManager.swift in Sources */,
 				423A12702813F30F0075B34F /* GroupCoverCollectionViewCell.swift in Sources */,
 				423A12582812AAC20075B34F /* NoteTitleCollectionViewCell.swift in Sources */,
 				42E2B68C280EBBF700B51D9F /* SearchGroupsViewController.swift in Sources */,
@@ -1008,7 +986,6 @@
 				423A12692813F1620075B34F /* GroupDetailViewController.swift in Sources */,
 				42405B1F2816D53200A12777 /* CafeManager.swift in Sources */,
 				4235C5C0281BD2A600DEF3E6 /* NoteHeader.swift in Sources */,
-				42DD04C7280FA5DA007C4A9F /* ChatRoomDataModel.swift in Sources */,
 				42E2B693280ED7C700B51D9F /* ChatRoomViewLobbyController.swift in Sources */,
 				42DE585928005A7200D764F7 /* SceneDelegate.swift in Sources */,
 				423A125A2812AB130075B34F /* NoteContentCollectionViewCell.swift in Sources */,
@@ -1019,7 +996,6 @@
 				4246EBDE2822AA3C00C5D183 /* BlockListTableViewCell.swift in Sources */,
 				42405B252817873D00A12777 /* LoginViewController.swift in Sources */,
 				42E2B664280ACFB400B51D9F /* SearchContentViewController.swift in Sources */,
-				42A65E232834B7E100D038BB /* UIAlertController+Extension.swift in Sources */,
 				4226EFD328311D2200D07F3E /* FollwerFollowingListViewController.swift in Sources */,
 				423A127A2813F37F0075B34F /* GroupCalendarCollectionViewCell.swift in Sources */,
 				42E2B699280EEA6700B51D9F /* ChatRoomListTableViewCell.swift in Sources */,

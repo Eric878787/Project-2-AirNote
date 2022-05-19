@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController,WKUIDelegate {
+class WebViewController: UIViewController, WKUIDelegate {
     
     var webView: WKWebView!
     var urlString = ""
@@ -23,7 +23,7 @@ class WebViewController: UIViewController,WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let myURL = URL(string:urlString)
+        let myURL = URL(string: urlString)
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }}

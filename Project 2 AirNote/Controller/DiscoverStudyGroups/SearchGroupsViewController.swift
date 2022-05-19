@@ -104,7 +104,7 @@ extension SearchGroupsViewController {
 }
 
 // MARK: Block User
-extension SearchGroupsViewController  {
+extension SearchGroupsViewController {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         
@@ -123,7 +123,7 @@ extension SearchGroupsViewController  {
     @objc private func openActionList() {
         
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { _ in
             self.blockUser()
         }
         controller.addAction(action)
@@ -157,9 +157,9 @@ extension SearchGroupsViewController  {
         
         guard let followings = self.user?.followings else { return }
         
-        self.user?.followers = followers.filter{ $0 != userToBeBlocked}
+        self.user?.followers = followers.filter { $0 != userToBeBlocked}
         
-        self.user?.followings = followings.filter{ $0 != userToBeBlocked}
+        self.user?.followings = followings.filter { $0 != userToBeBlocked}
         
         user?.blockUsers.append(userToBeBlocked)
         
@@ -171,7 +171,7 @@ extension SearchGroupsViewController  {
                 
             case .success:
                 let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "確認", style: .default) { action in
+                let action = UIAlertAction(title: "確認", style: .default) { _ in
                     self.fetchGroups()
                 }
                 controller.addAction(action)
@@ -231,7 +231,7 @@ extension SearchGroupsViewController {
                 
                 for blockedUid in blockedUids {
                     
-                    self?.users = self?.users.filter{ $0.uid != blockedUid} ?? []
+                    self?.users = self?.users.filter { $0.uid != blockedUid} ?? []
                     
                 }
                 
@@ -239,9 +239,9 @@ extension SearchGroupsViewController {
                 
                 for blockedUid in blockedUids {
                     
-                    self?.filteredgroups = self?.filteredgroups.filter{ $0.groupOwner != blockedUid} ?? []
+                    self?.filteredgroups = self?.filteredgroups.filter { $0.groupOwner != blockedUid} ?? []
                     
-                    self?.groups = self?.groups.filter{ $0.groupOwner != blockedUid} ?? []
+                    self?.groups = self?.groups.filter { $0.groupOwner != blockedUid} ?? []
                     
                 }
                 
@@ -297,11 +297,11 @@ extension SearchGroupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
-        vc.group = filteredgroups[indexPath.row]
-        vc.users = users
-        vc.user = user
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+        viewController.group = filteredgroups[indexPath.row]
+        viewController.users = users
+        viewController.user = user
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
 }

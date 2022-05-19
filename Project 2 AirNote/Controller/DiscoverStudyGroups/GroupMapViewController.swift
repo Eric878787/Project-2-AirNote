@@ -17,7 +17,6 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     
-    
     // MARK: Groups Data
     var groups: [Group] = []
     
@@ -39,7 +38,6 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 20.0
-        
         
         // Set up group annotation
         groupMapView.delegate = self
@@ -120,8 +118,6 @@ extension GroupMapViewController: MKMapViewDelegate {
     
     func layoutGroup() {
         
-        var tag = 0
-        
         for group in groups {
             let coordinate = CLLocationCoordinate2D(latitude: group.location.latitude, longitude: group.location.longitude)
             let title = group.groupTitle
@@ -143,11 +139,11 @@ extension GroupMapViewController: MKMapViewDelegate {
         let group = groups.filter { $0.groupId == annotation?.groupId}
         
         let storyBoard = UIStoryboard(name: "GroupDetail", bundle: nil)
-        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
-        vc.group = group[0]
-        vc.users = users
-        vc.user = user
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+        viewController.group = group[0]
+        viewController.users = users
+        viewController.user = user
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
 }

@@ -147,12 +147,10 @@ class GroupManager {
         
         let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
-                print("upload failed")
                 return
             }
             riversRef.downloadURL { (url, error) in
                 guard let downloadURL = url else {
-                    print("download url failed")
                     return
                 }
                 completion(.success(downloadURL))

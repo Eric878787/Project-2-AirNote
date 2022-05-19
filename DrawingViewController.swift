@@ -22,11 +22,14 @@ class DrawingPadViewController: UIViewController {
     var opacity: CGFloat = 1.0
     var swiped = false
     
-    var imageProvider: ( (UIImage) -> ())?
+    var imageProvider: ( (UIImage) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName:"checkmark"), style: .plain, target: self, action: #selector(backToPreviousPage))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark"),
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(backToPreviousPage))
         // Configure Buttons
         configButtons()
         
@@ -78,19 +81,20 @@ class DrawingPadViewController: UIViewController {
     
     @IBAction func setUpPencil(_ sender: Any) {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "SetUpPadViewController") as? SetUpPadViewController else { return }
-        vc.delegate = self
-        vc.brush = brushWidth
-        vc.opacity = opacity
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "SetUpPadViewController")
+                as? SetUpPadViewController else { return }
+        viewController.delegate = self
+        viewController.brush = brushWidth
+        viewController.opacity = opacity
         
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: nil)
-        vc.red = red
-        vc.green = green
-        vc.blue = blue
-        self.navigationController?.present(vc, animated: true)
+        viewController.red = red
+        viewController.green = green
+        viewController.blue = blue
+        self.navigationController?.present(viewController, animated: true)
     }
     
     @IBAction func resetPressed(_ sender: Any) {

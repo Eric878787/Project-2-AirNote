@@ -10,7 +10,7 @@ import PhotosUI
 import CoreLocation
 import MLKit
 
-class AddGroupViewController: UIViewController {
+class AddGroupViewController: BaseViewController {
     
     // MARK: Table View
     private var addGroupTableView = UITableView(frame: .zero)
@@ -100,7 +100,7 @@ extension AddGroupViewController: UITableViewDataSource, CoverDelegate, AddCalen
         if section == 3 {
             header.delegate = self
             
-            var count = group.schedules.count
+            let count = group.schedules.count
             
             if  count >= 5 {
                 header.addButton.isEnabled = false
@@ -271,7 +271,7 @@ extension AddGroupViewController {
         // [START detect_label]
         weak var weakSelf = self
         onDeviceLabeler.process(visionImage) { labels, error in
-            guard let strongSelf = weakSelf else {
+            guard weakSelf != nil else {
                 print("Self is nil!")
                 return
             }
@@ -314,7 +314,7 @@ extension AddGroupViewController {
         
         textRecognizer?.process(visionImage) { text, error in
             
-            guard let strongSelf = weakSelf else {
+            guard weakSelf != nil else {
                 
                 print("Self is nil!")
                 
@@ -415,9 +415,9 @@ extension AddGroupViewController: UIImagePickerControllerDelegate, UINavigationC
     // 開啟手繪版
     func openDrawingPad() {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.imageProvider = { [weak self] image in
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.imageProvider = { [weak self] image in
             self?.coverImage = image
             self?.addGroupTableView.reloadData()
         }
@@ -437,9 +437,9 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
     func searchCafe() {
         
         let storyBoard = UIStoryboard(name: "AddContent", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "CafeMapViewController") as? CafeMapViewController else { return }
-        vc.delegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "CafeMapViewController") as? CafeMapViewController else { return }
+        viewController.delegate = self
+        self.navigationController?.pushViewController(viewController, animated: true)
         
     }
     
@@ -451,7 +451,6 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
             && group.location.latitude != 0 && group.location.longitude != 0
             && group.location.address != ""
         {
-            
             upload()
             
         } else {
@@ -526,10 +525,8 @@ extension AddGroupViewController {
                     }
                 }
             case .failure(let error):
-                print (error)
+                self.initBasicConfirmationAlert("上傳失敗", "請檢查網路連線")
             }
         }
-        
     }
-    
 }

@@ -53,11 +53,9 @@ class AddCalendarHeaderView: UITableViewHeaderFooterView {
         super.layoutSubviews()
     }
     
-    
     @IBAction func addCalendar(_ sender: Any) {
         
         delegate?.addCalendar(self)
-        
         
     }
     

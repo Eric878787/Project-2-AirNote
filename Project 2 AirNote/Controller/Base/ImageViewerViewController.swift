@@ -54,7 +54,7 @@ extension ImageViewerViewController: UIScrollViewDelegate {
             scView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            scView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
+            scView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor)
             
         ])
         
@@ -104,7 +104,7 @@ extension ImageViewerViewController: UIScrollViewDelegate {
         
         NSLayoutConstraint.activate([
             pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
-            pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         
     }

@@ -105,7 +105,7 @@ class NoteManager {
     
     func updateNote(note: Note, noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
         let msgRef = db.collection("Notes").document(noteId)
-        var note = note
+        let note = note
         do {
             try msgRef.setData(from: note, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
@@ -126,7 +126,6 @@ class NoteManager {
         }
     }
     
-    
     func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
         
         let riversRef = Storage.storage().reference().child(UUID().uuidString + ".jpg")
@@ -135,12 +134,12 @@ class NoteManager {
         
         let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
-                print("upload failed")
+                completion(.failure(error!))
                 return
             }
             riversRef.downloadURL { (url, error) in
                 guard let downloadURL = url else {
-                    print("download url failed")
+                    completion(.failure(error!))
                     return
                 }
                 completion(.success(downloadURL))

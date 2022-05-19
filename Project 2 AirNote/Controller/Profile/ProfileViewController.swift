@@ -137,17 +137,19 @@ class ProfileViewController: BaseViewController {
     }
     
     @IBAction func followerTouched(_ sender: Any) {
-        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
-        vc.userList = self.followers
-        vc.navItemTitle = "粉絲名單"
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
+                as? FollwerFollowingListViewController else { return }
+        viewController.userList = self.followers
+        viewController.navItemTitle = "粉絲名單"
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func followingToched(_ sender: Any) {
-        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
-        vc.userList = self.followings
-        vc.navItemTitle = "追蹤名單"
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
+                as? FollwerFollowingListViewController else { return }
+        viewController.userList = self.followings
+        viewController.navItemTitle = "追蹤名單"
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func changeSegment(_ sender: UISegmentedControl) {
@@ -169,7 +171,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     private func addTapGesture() {
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                          action: #selector(imageTapped(tapGestureRecognizer:)))
         avatar.isUserInteractionEnabled = true
         avatar.addGestureRecognizer(tapGestureRecognizer)
         
@@ -177,12 +180,14 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         
-        guard let tappedImage = tapGestureRecognizer.view as? UIImageView else { return }
+        guard let tappedImage = tapGestureRecognizer.view
+                as? UIImageView else { return }
         
         initChoosePhotoAlert(imagePickerController)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
             
@@ -210,14 +215,16 @@ extension ProfileViewController {
         noteTableView.separatorStyle = .none
         noteTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
         noteTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
-        noteTableView.register(DeleteAccountTableViewCell.self, forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
+        noteTableView.register(DeleteAccountTableViewCell.self,
+                               forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
         
         groupTableView.dataSource = self
         groupTableView.delegate = self
         groupTableView.separatorStyle = .none
         groupTableView.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: GroupHeader.reuseIdentifier)
         groupTableView.registerCellWithNib(identifier: String(describing: PersonalGroupTableViewCell.self), bundle: nil)
-        groupTableView.register(DeleteAccountTableViewCell.self, forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
+        groupTableView.register(DeleteAccountTableViewCell.self,
+                                forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
         
     }
     
@@ -300,9 +307,9 @@ extension ProfileViewController {
         self.initBasicConfirmationAlert("登出成功", "將返回登入頁面") {
             FirebaseManager.shared.signout()
             if self.presentingViewController == nil {
-                guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+                guard let viewController = UIStoryboard.auth.instantiateInitialViewController() else { return }
+                viewController.modalPresentationStyle = .fullScreen
+                self.present(viewController, animated: true)
             } else {
                 self.dismiss(animated: true)
             }
@@ -310,10 +317,11 @@ extension ProfileViewController {
     }
     
     @objc func toBlockList() {
-        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController") as? BlockListViewController else { return }
-        vc.user = self.user
-        vc.blockList = self.blockedUsers
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController")
+                as? BlockListViewController else { return }
+        viewController.user = self.user
+        viewController.blockList = self.blockedUsers
+        self.navigationController?.pushViewController(viewController, animated: true)
         
     }
     
@@ -338,21 +346,21 @@ extension ProfileViewController {
                 
                 self.blockedUsers = []
                 for blockedUid in blockedUids {
-                    self.blockedUsers += allUsers.filter{$0.uid == blockedUid}
+                    self.blockedUsers += allUsers.filter { $0.uid == blockedUid}
                 }
                 
                 // Filter Follwings
                 guard let followingsUids = self.user?.followings else { return }
                 self.followings = []
                 for followingsUid in followingsUids {
-                    self.followings += allUsers.filter{$0.uid == followingsUid}
+                    self.followings += allUsers.filter { $0.uid == followingsUid}
                 }
                 
                 // Filter Follwers
                 guard let followerUids = self.user?.followers else { return }
                 self.followers = []
                 for followerUid in followerUids {
-                    self.followers += allUsers.filter{$0.uid == followerUid}
+                    self.followers += allUsers.filter { $0.uid == followerUid}
                 }
                 
                 DispatchQueue.main.async {
@@ -361,8 +369,8 @@ extension ProfileViewController {
                     LKProgressHUD.dismiss()
                 }
                 
-            case .failure(let error):
-                print("fetchData.failure: \(error)")
+            case .failure:
+                self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
         
@@ -377,9 +385,8 @@ extension ProfileViewController {
             switch result {
             case .success(let url):
                 self.user?.userAvatar = "\(url)"
-                print("\(url)")
-            case .failure(let error):
-                print("\(error)")
+            case .failure:
+                self.initBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
             }
             group.leave()
         }
@@ -389,11 +396,11 @@ extension ProfileViewController {
             UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
                 switch result {
                 case .success:
-                    self.initBasicConfirmationAlert("上傳頭貼成功", "") {
+                    self.initBasicConfirmationAlert("上傳頭貼成功", nil) {
                         self.fetchUsers()
                     }
                 case .failure:
-                    print(result)
+                    self.initBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
                 }
             }
         }
@@ -410,7 +417,7 @@ extension ProfileViewController {
                     self.fetchUsers()
                 }
             case .failure:
-                print(result)
+                self.initBasicConfirmationAlert("更新暱稱失敗", "請檢查網路連線")
             }
         }
     }
@@ -434,7 +441,7 @@ extension ProfileViewController {
         
     }
     
-    private func fetchNotes(_ completion: @escaping ()-> Void) {
+    private func fetchNotes(_ completion: @escaping () -> Void) {
         
         NoteManager.shared.fetchNotes { result in
             switch result {
@@ -443,35 +450,35 @@ extension ProfileViewController {
                 
                 self.savedNotes = []
                 for savedNote in self.user?.savedNotes ?? [] {
-                    self.savedNotes += notes.filter{ $0.noteId == savedNote }
+                    self.savedNotes += notes.filter { $0.noteId == savedNote }
                 }
                 
                 self.ownedNotes = []
                 for userNote in self.user?.userNotes ?? [] {
-                    self.ownedNotes += notes.filter{ $0.noteId == userNote }
+                    self.ownedNotes += notes.filter { $0.noteId == userNote }
                 }
                 
                 // Filter Blocked Users
                 guard let blockedUids = self.user?.blockUsers else { return }
                 for blockedUid in blockedUids {
-                    self.users = self.users.filter{$0.uid != blockedUid}
+                    self.users = self.users.filter { $0.uid != blockedUid }
                 }
                 
                 // Filter Blocked Users Content
                 for blockedUid in blockedUids {
-                    self.savedNotes = self.savedNotes.filter{$0.authorId != blockedUid}
+                    self.savedNotes = self.savedNotes.filter { $0.authorId != blockedUid }
                 }
                 
                 completion()
                 
-            case .failure(let error):
-                print("fetchData.failure: \(error)")
+            case .failure:
+                self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
         
     }
     
-    private func fetchGroups(_ completion: @escaping ()-> Void) {
+    private func fetchGroups(_ completion: @escaping () -> Void) {
         
         GroupManager.shared.fetchGroups { result in
             switch result {
@@ -480,24 +487,24 @@ extension ProfileViewController {
                 
                 self.savedGroups = []
                 for joinedGroup in self.user?.joinedGroups ?? [] {
-                    self.savedGroups += groups.filter{ $0.groupId == joinedGroup }
+                    self.savedGroups += groups.filter { $0.groupId == joinedGroup }
                 }
                 
                 self.ownedGroups = []
                 for userGroup in self.user?.userGroups ?? [] {
-                    self.ownedGroups += groups.filter{ $0.groupId == userGroup }
+                    self.ownedGroups += groups.filter { $0.groupId == userGroup }
                 }
                 
                 // Filter Blocked Users Content
                 guard let blockedUids = self.user?.blockUsers else { return }
                 for blockedUid in blockedUids {
-                    self.savedGroups = self.savedGroups.filter{ $0.groupOwner != blockedUid} ?? []
+                    self.savedGroups = self.savedGroups.filter { $0.groupOwner != blockedUid }
                 }
                 
                 completion()
                 
-            case .failure(let error):
-                print("fetchData.failure: \(error)")
+            case .failure:
+                self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
         
@@ -520,9 +527,10 @@ extension ProfileViewController {
                 case .success:
                     self.initBasicConfirmationAlert("刪除帳號成功", "請重新註冊") {
                         if self.presentingViewController == nil {
-                            guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                            guard let viewController = UIStoryboard.auth.instantiateInitialViewController() else
+                            { return }
+                            viewController.modalPresentationStyle = .fullScreen
+                            self.present(viewController, animated: true)
                         } else {
                             self.dismiss(animated: true)
                         }
@@ -537,12 +545,11 @@ extension ProfileViewController {
 }
 
 // Set Up Table View delegate & datasource
-extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, DeleteAccountDelegate {
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, DeleteAccountDelegate {
     
     func tapDeleteAccountButton() {
         deleteAccount()
     }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         3
@@ -572,24 +579,46 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
         
         if tableView == noteTableView {
             if indexPath.section == 0 {
-                return noteCategories[indexPath.section].cellForIndexPath(indexPath, noteTableView, ownedNotes, [], users)
+                return noteCategories[indexPath.section].cellForIndexPath(indexPath,
+                                                                          noteTableView,
+                                                                          ownedNotes,
+                                                                          [],
+                                                                          users)
             } else if indexPath.section == 1 {
-                return noteCategories[indexPath.section].cellForIndexPath(indexPath, noteTableView, savedNotes, [], users)
+                return noteCategories[indexPath.section].cellForIndexPath(indexPath,
+                                                                          noteTableView,
+                                                                          savedNotes,
+                                                                          [],
+                                                                          users)
             } else {
-                let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier, for: indexPath)
-                guard let cell = deleteAccountTableViewCell as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
+                let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
+                                                                               for: indexPath)
+                guard let cell = deleteAccountTableViewCell
+                        as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
+                
                 cell.delegate = self
                 return cell
             }
             
         } else {
             if indexPath.section == 0 {
-                return groupCategories[indexPath.section].cellForIndexPath(indexPath, groupTableView, [], ownedGroups, users)
+                return groupCategories[indexPath.section].cellForIndexPath(indexPath,
+                                                                           groupTableView,
+                                                                           [],
+                                                                           ownedGroups,
+                                                                           users)
             } else if indexPath.section == 1 {
-                return groupCategories[indexPath.section].cellForIndexPath(indexPath, groupTableView, [], savedGroups, users)
+                return groupCategories[indexPath.section].cellForIndexPath(indexPath,
+                                                                           groupTableView,
+                                                                           [],
+                                                                           savedGroups,
+                                                                           users)
             } else {
-                let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier, for: indexPath)
-                guard let cell = deleteAccountTableViewCell as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
+                let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
+                                                                               for: indexPath)
+                guard let cell = deleteAccountTableViewCell
+                        as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
+                
                 cell.delegate = self
                 return cell
             }
@@ -599,7 +628,10 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if tableView == noteTableView {
-            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NoteHeader.reuseIdentifier) as? NoteHeader else { return nil }
+            
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NoteHeader.reuseIdentifier)
+                    as? NoteHeader else { return nil }
+            
             if section == 0 {
                 header.title.text = ContentCategory.ownedNote.rawValue
                 return header
@@ -612,7 +644,9 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
             
         } else {
             
-            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier) as? GroupHeader else { return nil }
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier)
+                    as? GroupHeader else { return nil }
+            
             if section == 0 {
                 header.title.text = ContentCategory.ownedGroup.rawValue
                 return header
@@ -629,7 +663,8 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
         
         if tableView == noteTableView {
             let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
-            guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController")
+                    as? NoteDetailViewController else { return }
             let note: Note?
             if indexPath.section == 0 {
                 ownedNotes[indexPath.row].clicks.append(FirebaseManager.shared.currentUser?.uid ?? "")
@@ -645,19 +680,20 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
             NoteManager.shared.updateNote(note: note, noteId: note.noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    vc.note = note
-                    vc.comments = note.comments
-                    vc.users = self?.users ?? []
-                    vc.currentUser = self?.user
-                    self?.navigationController?.pushViewController(vc, animated: true)
+                    viewController.note = note
+                    viewController.comments = note.comments
+                    viewController.users = self?.users ?? []
+                    viewController.currentUser = self?.user
+                    self?.navigationController?.pushViewController(viewController, animated: true)
                     
-                case .failure(let error):
-                    print("fetchData.failure: \(error)")
+                case .failure:
+                    self?.initBasicConfirmationAlert("更新資料失敗", "請檢查網路連線")
                 }
             }
         } else if tableView == groupTableView {
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
-            guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController")
+                    as? GroupDetailViewController else { return }
             let group: Group?
             if indexPath.section == 0 {
                 group = ownedGroups[indexPath.row]
@@ -668,10 +704,10 @@ extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, De
                 return
             }
             guard let group = group else { return }
-            vc.group = group
-            vc.users = users
-            vc.user = user
-            self.navigationController?.pushViewController(vc, animated: true)
+            viewController.group = group
+            viewController.users = users
+            viewController.user = user
+            self.navigationController?.pushViewController(viewController, animated: true)
         } else {
             return
         }

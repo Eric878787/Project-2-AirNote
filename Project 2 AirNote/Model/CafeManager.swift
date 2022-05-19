@@ -24,7 +24,7 @@ class CafeManager {
                           completion(cafes)
                       }
                   } catch let error {
-                     print(error)
+                      completion(error)
                   }
                }
            }.resume()

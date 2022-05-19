@@ -90,7 +90,7 @@ extension EditNoteViewController {
 extension EditNoteViewController {
     @objc private func deleteNote() {
         
-        var controller = UIAlertController(title: "是否要刪除筆記", message: "刪除後即無法回復內容", preferredStyle: .alert)
+        let controller = UIAlertController(title: "是否要刪除筆記", message: "刪除後即無法回復內容", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
             self.confirmDeletion()
         }
@@ -273,7 +273,7 @@ extension EditNoteViewController {
         // [START detect_label]
         weak var weakSelf = self
         onDeviceLabeler.process(visionImage) { labels, error in
-            guard let strongSelf = weakSelf else {
+            guard weakSelf != nil else {
                 print("Self is nil!")
                 return
             }
@@ -316,7 +316,7 @@ extension EditNoteViewController {
         
         textRecognizer?.process(visionImage) { text, error in
             
-            guard let strongSelf = weakSelf else {
+            guard weakSelf != nil else {
                 
                 print("Self is nil!")
                 
@@ -436,9 +436,9 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
     // 開啟手繪版
     func openDrawingPad() {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.imageProvider = { [weak self] image in
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.imageProvider = { [weak self] image in
             self?.coverImage = image
             self?.addNoteTableView.reloadData()
         }
@@ -533,9 +533,9 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
     // 開啟手繪版
     func openDrawingPadForMulti() {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.imageProvider = { [weak self] image in
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
+        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.imageProvider = { [weak self] image in
             if let image = image as? UIImage {
                 // 判斷是否超過4張
                 if self?.contentImages.count ?? 0 < 4 {

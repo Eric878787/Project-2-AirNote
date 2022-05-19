@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class GroupDetailViewController: UIViewController {
+class GroupDetailViewController: BaseViewController {
     
     @IBOutlet weak var groupDetailCollectionView: UICollectionView!
     
@@ -17,7 +17,6 @@ class GroupDetailViewController: UIViewController {
     // Data
     var group: Group?
     var owner: User?
-    var room: ChatRoom?
     var users: [User] = []
     var user: User?
     var userToBeBlocked = ""
@@ -25,7 +24,6 @@ class GroupDetailViewController: UIViewController {
     // Data Manager
     private var groupManager = GroupManager()
     private var userManager = UserManager()
-    private var chatRoomManager = ChatRoomManager()
     
     // DeleteButton
     private var deleteButton = UIBarButtonItem()
@@ -86,25 +84,11 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
     
     @objc private func openActionList() {
         
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
+        initBlockUserAlert {
             self.blockUser()
         }
-        controller.addAction(action)
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        controller.addAction(cancelAction)
-        
-        // iPad Situation
-        if let popoverController = controller.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        self.present(controller, animated: true)
         
     }
-    
     
     private func blockUser() {
         
@@ -121,9 +105,9 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
         
         guard let followings = self.user?.followings else { return }
         
-        self.user?.followers = followers.filter{ $0 != userToBeBlocked}
+        self.user?.followers = followers.filter { $0 != userToBeBlocked}
         
-        self.user?.followings = followings.filter{ $0 != userToBeBlocked}
+        self.user?.followings = followings.filter { $0 != userToBeBlocked}
         
         user?.blockUsers.append(userToBeBlocked)
         
@@ -134,18 +118,14 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
             switch result {
                 
             case .success:
-                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "確認", style: .default) { action in
+                
+                self.initBasicConfirmationAlert("封鎖成功", "確認") {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
-                controller.addAction(action)
-                self.present(controller, animated: true)
-                
-                print("封鎖成功")
                 
             case .failure:
                 
-                print("封鎖失敗")
+                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }
@@ -158,7 +138,7 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
 extension GroupDetailViewController {
     @objc private func deleteGroup() {
         
-        var controller = UIAlertController(title: "是否要刪除讀書會", message: "刪除後即無法回復內容", preferredStyle: .alert)
+        let controller = UIAlertController(title: "是否要刪除讀書會", message: "刪除後即無法回復內容", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
             guard let groupToBeDeleted = self.group?.groupId else { return }
             self.groupManager.deleteGroup(groupId: groupToBeDeleted) { result in
@@ -222,9 +202,9 @@ extension GroupDetailViewController: NoteTitleDelegate {
         
         if owner?.uid != FirebaseManager.shared.currentUser?.uid {
             let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
-            guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
-            vc.userInThisPage = self.owner
-            self.navigationController?.pushViewController(vc, animated: true)
+            guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+            viewController.userInThisPage = self.owner
+            self.navigationController?.pushViewController(viewController, animated: true)
         } else {
             self.tabBarController?.selectedIndex = 3
         }
@@ -272,7 +252,7 @@ extension GroupDetailViewController: GroupTitleDelegate {
         controller.view.tintColor = UIColor.gray
         
         guard let joinedGroups = self.user?.joinedGroups else { return }
-        self.user?.joinedGroups = joinedGroups.filter { $0 != self.group?.groupId } ?? []
+        self.user?.joinedGroups = joinedGroups.filter { $0 != self.group?.groupId } 
         
         guard let userToBeUpdated = self.user else { return }
         
@@ -280,7 +260,7 @@ extension GroupDetailViewController: GroupTitleDelegate {
             switch result {
             case .success:
                 guard let groupMembers = self?.group?.groupMembers else { return }
-                self?.group?.groupMembers = groupMembers.filter { $0 != self?.user?.uid } ?? []
+                self?.group?.groupMembers = groupMembers.filter { $0 != self?.user?.uid } 
                 self?.updateGroup(controller)
             case .failure(let error):
                 print(error)
@@ -625,10 +605,10 @@ extension GroupDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
-            let vc = ImageViewerViewController()
-            vc.images.append(self.group?.groupCover ?? "")
-            vc.currentPage = indexPath.item
-            self.navigationController?.pushViewController(vc, animated: true)
+            let viewController = ImageViewerViewController()
+            viewController.images.append(self.group?.groupCover ?? "")
+            viewController.currentPage = indexPath.item
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     

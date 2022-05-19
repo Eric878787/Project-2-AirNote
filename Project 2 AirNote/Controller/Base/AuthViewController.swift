@@ -30,11 +30,11 @@ class AuthViewController: UIViewController {
     
     @IBAction func toLogInPage(_ sender: Any) {
         
-        guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+        guard let viewController = UIStoryboard.auth.instantiateInitialViewController() else { return }
         
-        vc.modalPresentationStyle = .fullScreen
+        viewController.modalPresentationStyle = .fullScreen
 
-        present(vc, animated: true, completion: nil)
+        present(viewController, animated: true, completion: nil)
         
     }
 }

@@ -73,11 +73,11 @@ extension AddContentViewController {
 extension  AddContentViewController {
     @objc func pushToNextPage(_ sender: UIButton) {
         if sender == addNoteButton {
-            guard let vc = storyboard?.instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController else { return }
-            self.navigationController?.pushViewController(vc, animated: true)
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController else { return }
+            self.navigationController?.pushViewController(viewController, animated: true)
         } else {
-            guard let vc = storyboard?.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
-            self.navigationController?.pushViewController(vc, animated: true)
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }

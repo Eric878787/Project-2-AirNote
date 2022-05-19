@@ -8,7 +8,7 @@
 import UIKit
 import AuthenticationServices
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     
     // UI Properties
     private var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
@@ -28,7 +28,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var mainTitle: UILabel!
     
     @IBOutlet weak var termsAndConditionsStackView: UIStackView!
-    
     
     // User Manager
     private var existingUsers: [User] = []
@@ -67,44 +66,19 @@ class LoginViewController: UIViewController {
         
         guard let password = passwordTextField.text else { return }
         
-//        if email == "" {
-//
-//            showAlert(emailTextField)
-//
-//        } else {
-//
-//            if password.count < 6 {
-//
-//                showAlert(passwordTextField)
-//
-//            } else {
-//
-                FirebaseManager.shared.nativeSignUp(email, password)
-//
-//            }
-//
-//        }
-        
+        FirebaseManager.shared.nativeSignUp(email, password)
+
         FirebaseManager.shared.signUpSuccess = {
             self.checkIfItsNew()
             self.emailTextField.text = ""
             self.passwordTextField.text = ""
-            let controller = UIAlertController(title: "註冊成功", message: "請重新登入", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.initBasicConfirmationAlert("註冊成功", "請重新登入")
+            
         }
         
         FirebaseManager.shared.signUpFailure = { errorMessage in
             self.checkIfItsNew()
-            let controller = UIAlertController(title: "註冊失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.initBasicConfirmationAlert("註冊失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
         
     }
@@ -116,60 +90,34 @@ class LoginViewController: UIViewController {
         
         guard let password = passwordTextField.text else { return }
         
-//        if email == "" {
-//
-//            showAlert(emailTextField)
-//
-//        } else {
-//
-//            if password.count < 6 {
-//
-//                showAlert(passwordTextField)
-//
-//            } else {
-                FirebaseManager.shared.nativeLogIn(email, password)
-//            }
-//
-//        }
+        FirebaseManager.shared.nativeLogIn(email, password)
         
         FirebaseManager.shared.loginSuccess = {
             self.emailTextField.text = ""
             self.passwordTextField.text = ""
-            let controller = UIAlertController(title: "登入成功", message: "", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive) { _ in
+            self.initBasicConfirmationAlert("登入成功", "") {
                 self.presentOrDismissVC()
             }
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
         }
         
         FirebaseManager.shared.logInFailure = { errorMessage in
-            let controller = UIAlertController(title: "登入失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.initBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
         
     }
     
-    
     @IBAction func openPrivacy(_ sender: Any) {
         
-        let vc = WebViewController()
-        vc.urlString = "https://pages.flycricket.io/airnote/privacy.html"
-        self.present(vc, animated: true)
+        let viewController = WebViewController()
+        viewController.urlString = "https://pages.flycricket.io/airnote/privacy.html"
+        self.present(viewController, animated: true)
         
     }
     
-    
     @IBAction func openEULA(_ sender: Any) {
-        let vc = WebViewController()
-        vc.urlString = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
-        self.present(vc, animated: true)
+        let viewController = WebViewController()
+        viewController.urlString = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+        self.present(viewController, animated: true)
     }
     
 }
@@ -346,7 +294,6 @@ extension LoginViewController {
     
 }
 
-
 // MARK: Sign in with Apple
 extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     
@@ -363,7 +310,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
         
     }
     
-    
     @objc private func signInWithApple() {
         
         let request = FirebaseManager.shared.signInWithApple()
@@ -374,26 +320,15 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
         
         FirebaseManager.shared.loginSuccess = {
             self.checkIfItsNew()
-            let controller = UIAlertController(title: "登入成功", message: "", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive) { _ in
+            self.initBasicConfirmationAlert("登入成功", "") {
                 self.presentOrDismissVC()
             }
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
         }
         
         FirebaseManager.shared.logInFailure = { errorMessage in
-            let controller = UIAlertController(title: "登入失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.initBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
-        
-        
+
     }
     
 }
@@ -403,11 +338,11 @@ extension LoginViewController {
     
     func presentOrDismissVC () {
         
-        guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
+        guard let viewController = UIStoryboard.main.instantiateInitialViewController() else { return }
         
-        vc.modalPresentationStyle = .fullScreen
+        viewController.modalPresentationStyle = .fullScreen
         
-        self.present(vc, animated: true)
+        self.present(viewController, animated: true)
         
     }
     

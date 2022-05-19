@@ -23,37 +23,37 @@ class BaseViewController: UIViewController {
         let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
-        // 相機
+        // Camera
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             takePicture()
         }
         cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
-        // 相薄
+        // Album
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             openPhotosAlbum()
         }
         savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
         
-        // 取消
+        // Cancel
         let cancelAction = UIAlertAction(title: "取消", style: .default)
         controller.addAction(cancelAction)
         
-        // 開啟相機
+        // Present Camera View
         func takePicture() {
             imagePickerController.sourceType = .camera
             self.present(imagePickerController, animated: true)
         }
         
-        // 開啟相簿
+        // Present Album View
         func openPhotosAlbum() {
             imagePickerController.sourceType = .savedPhotosAlbum
             self.present(imagePickerController, animated: true)
         }
         
-        // 取消選取
+        // Cancel Selection
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             picker.dismiss(animated: true)
         }
@@ -64,7 +64,7 @@ class BaseViewController: UIViewController {
         
     }
     
-    func initBasicConfirmationAlert(_ title: String, _ message: String, _ completion: (() -> Void)? = nil) {
+    func initBasicConfirmationAlert(_ title: String, _ message: String?, _ completion: (() -> Void)? = nil) {
         let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         let action = UIAlertAction(title: "確認", style: .default) { _ in
@@ -77,7 +77,9 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func initAlternativeAlert(_ title: String, _ message: String?, _ confirmation: (() -> Void)? = nil, _ cancelation: (() -> Void)? = nil ) {
+    func initAlternativeAlert(_ title: String, _ message: String?,
+                              _ confirmation: (() -> Void)? = nil,
+                              _ cancelation: (() -> Void)? = nil ) {
         let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
        
@@ -96,6 +98,32 @@ class BaseViewController: UIViewController {
         DispatchQueue.main.async {
             self.present(controller, animated: true)
         }
+    }
+    
+    func initBlockUserAlert(_ completion: @escaping () -> Void) {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { _ in
+            completion()
+        }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        // iPad Situation
+        if let popoverController = controller.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX,
+                                                  y: self.view.bounds.midY,
+                                                  width: 0,
+                                                  height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        
+        self.present(controller, animated: true)
     }
     
     func setUpBasicLabel(_ label: UILabel) {

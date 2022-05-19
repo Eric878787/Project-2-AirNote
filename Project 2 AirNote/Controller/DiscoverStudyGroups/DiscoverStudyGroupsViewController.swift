@@ -129,20 +129,20 @@ extension DiscoverStudyGroupsViewController {
     
     @objc func pushToNextPage() {
         
-        guard let currentUser = self.currentUser else {
+        guard self.currentUser != nil else {
             
-            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
-            vc.modalPresentationStyle = .overCurrentContext
+            viewController.modalPresentationStyle = .overCurrentContext
             
-            self.tabBarController?.present(vc, animated: false, completion: nil)
+            self.tabBarController?.present(viewController, animated: false, completion: nil)
             
             return
             
         }
         
-        guard let vc = UIStoryboard.addContent.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController = UIStoryboard.addContent.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
 }
@@ -153,24 +153,24 @@ extension DiscoverStudyGroupsViewController {
     
     @objc private func toMapPage() {
         
-        guard let currentUser = self.currentUser else {
+        guard self.currentUser != nil else {
             
-            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
-            vc.modalPresentationStyle = .overCurrentContext
+            viewController.modalPresentationStyle = .overCurrentContext
             
-            self.tabBarController?.present(vc, animated: false, completion: nil)
+            self.tabBarController?.present(viewController, animated: false, completion: nil)
             
             return
             
         }
         
         let storyBoard = UIStoryboard(name: "DiscoverStudyGroups", bundle: nil)
-        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "GroupMapViewController") as? GroupMapViewController else { return }
-        vc.groups = self.groups
-        vc.user = self.user
-        vc.users = self.users
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "GroupMapViewController") as? GroupMapViewController else { return }
+        viewController.groups = self.groups
+        viewController.user = self.user
+        viewController.users = self.users
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
 }
@@ -181,21 +181,21 @@ extension DiscoverStudyGroupsViewController {
     
     @objc private func toSearchPage() {
         
-        guard let currentUser = self.currentUser else {
+        guard self.currentUser != nil else {
             
-            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
-            vc.modalPresentationStyle = .overCurrentContext
+            viewController.modalPresentationStyle = .overCurrentContext
             
-            self.tabBarController?.present(vc, animated: false, completion: nil)
+            self.tabBarController?.present(viewController, animated: false, completion: nil)
             
             return
             
         }
         
         let storyBoard = UIStoryboard(name: "SearchContent", bundle: nil)
-        guard let vc =  storyBoard.instantiateViewController(withIdentifier: "SearchGroupsViewController") as? SearchGroupsViewController else { return }
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "SearchGroupsViewController") as? SearchGroupsViewController else { return }
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -204,13 +204,13 @@ extension DiscoverStudyGroupsViewController {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         
-        guard let currentUser = self.currentUser else {
+        guard self.currentUser != nil else {
             
-            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
-            vc.modalPresentationStyle = .overCurrentContext
+            viewController.modalPresentationStyle = .overCurrentContext
             
-            self.tabBarController?.present(vc, animated: false, completion: nil)
+            self.tabBarController?.present(viewController, animated: false, completion: nil)
             
             return
             
@@ -473,24 +473,24 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
             
         } else {
             
-            guard let currentUser = self.currentUser else {
+            guard self.currentUser != nil else {
                 
-                guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+                guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
                 
-                vc.modalPresentationStyle = .overCurrentContext
+                viewController.modalPresentationStyle = .overCurrentContext
                 
-                self.tabBarController?.present(vc, animated: false, completion: nil)
+                self.tabBarController?.present(viewController, animated: false, completion: nil)
                 
                 return
                 
             }
             
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
-            guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
-            vc.group = filterGroups[indexPath.item]
-            vc.users = users
-            vc.user = user
-            self.navigationController?.pushViewController(vc, animated: true)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+            viewController.group = filterGroups[indexPath.item]
+            viewController.users = users
+            viewController.user = user
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }
