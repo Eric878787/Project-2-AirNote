@@ -56,6 +56,43 @@ class UserManager {
         }
     }
     
+    func fetchBlockedUsers(_ blockedUids: [String], completion: @escaping (Result<[User], Error>) -> Void) {
+        
+        var fetchedUsers: [User] = []
+        
+        for blockedUid in blockedUids {
+            
+            dataBase.collection("Users").document(blockedUid).getDocument { (document, error) in
+                
+                if let error = error {
+                    
+                    completion(.failure(error))
+                    
+                } else {
+                    
+                    do {
+                        
+                        if let user = try document?.data(as: User.self, decoder: Firestore.Decoder()) {
+                            
+                            fetchedUsers.append(user)
+                            
+                        }
+                        
+                    } catch {
+                        
+                        completion(.failure(error))
+                    }
+                }
+                
+                if fetchedUsers.count == blockedUids.count {
+                
+                completion(.success(fetchedUsers))
+                    
+                }
+            }
+        }
+    }
+    
     func fetchUser(_ uid: String, completion: @escaping (Result<User?, Error>) -> Void) {
         
         dataBase.collection("Users").document(uid).getDocument { (document, error) in

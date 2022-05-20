@@ -28,23 +28,23 @@ class ProfileViewController: BaseViewController {
     private var avatarImage: UIImage? // ?
     
     // User Data
-    private var users: [User] = [] //
-    private var currentUser: User?
-    private var blockedUsers: [User] = []
-    private var followings: [User] = []
-    private var followers: [User] = []
+    var users: [User] = [] //
+    var currentUser: User?
+    var blockedUsers: [User] = []
+    var followings: [User] = []
+    var followers: [User] = []
     
     // Note Data
-    private var notes: [Note] = []
-    private var savedNotes: [Note] = []
-    private var ownedNotes: [Note] = []
-    private let noteCategories: [ContentCategory] = [.ownedNote, .savedNote]
+    var notes: [Note] = []
+    var savedNotes: [Note] = []
+    var ownedNotes: [Note] = []
+    let noteCategories: [ContentCategory] = [.ownedNote, .savedNote]
     
     // Group Data
-    private var groups: [Group] = []
-    private var savedGroups: [Group] = []
-    private var ownedGroups: [Group] = []
-    private let groupCategories: [ContentCategory] = [.ownedGroup, .savedGroup]
+    var groups: [Group] = []
+    var savedGroups: [Group] = []
+    var ownedGroups: [Group] = []
+    let groupCategories: [ContentCategory] = [.ownedGroup, .savedGroup]
     
 //    let dict: [ContentCategory: [Group]]
     
@@ -312,29 +312,17 @@ extension ProfileViewController {
                     self.currentUser = user
                 }
                 
-                // Filter Blocked Users
-                guard let blockedUids = self.currentUser?.blockUsers else { return }
-                
                 let allUsers = self.users
-                
-                self.blockedUsers = []
-                for blockedUid in blockedUids {
-                    self.blockedUsers += allUsers.filter { $0.uid == blockedUid }
-                }
+                guard let blockedUids = self.currentUser?.blockUsers else { return }
+                self.filterBlockedUsers(blockedUids, allUsers)
                 
                 // Filter Follwings
                 guard let followingsUids = self.currentUser?.followings else { return }
-                self.followings = []
-                for followingsUid in followingsUids {
-                    self.followings += allUsers.filter { $0.uid == followingsUid }
-                }
+                self.filterFollwings(followingsUids, allUsers)
                 
                 // Filter Follwers
                 guard let followerUids = self.currentUser?.followers else { return }
-                self.followers = []
-                for followerUid in followerUids {
-                    self.followers += allUsers.filter { $0.uid == followerUid }
-                }
+                self.filterFollwers(followerUids, allUsers)
                 
                 DispatchQueue.main.async {
                     self.fetchContent()
@@ -347,6 +335,29 @@ extension ProfileViewController {
             }
         }
     }
+    
+    func filterBlockedUsers(_ blockedUids: [String], _ allUsers: [User]) {
+        self.blockedUsers = []
+        for blockedUid in blockedUids {
+            self.blockedUsers += allUsers.filter { $0.uid == blockedUid }
+        }
+    }
+    
+    func filterFollwings(_ followingsUids: [String], _ allUsers: [User]) {
+        self.followings = []
+        for followingsUid in followingsUids {
+            self.followings += allUsers.filter { $0.uid == followingsUid }
+        }
+    }
+    
+    func filterFollwers(_ followerUids: [String], _ allUsers: [User]) {
+        self.followers = []
+        for followerUid in followerUids {
+            self.followers += allUsers.filter { $0.uid == followerUid }
+        }
+    }
+    
+    
     
     private func updateUserAvatar() { //
         let group = DispatchGroup()

@@ -71,9 +71,14 @@ class GroupManager {
                     
                 }
                 
+                if fetchedGroups.count == groupIds.count {
+                
                 completion(.success(fetchedGroups))
+                    
+                }
                 
             }
+            
         }
         
     }

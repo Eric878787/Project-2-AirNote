@@ -20,6 +20,7 @@
 		42383E0328237474005CF4B4 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0228237474005CF4B4 /* ImageViewerViewController.swift */; };
 		42383E0628255D06005CF4B4 /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */; };
 		42383E0A28280B14005CF4B4 /* DeleteAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */; };
+		42392F76283738ED004FB225 /* AirNoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42392F75283738ED004FB225 /* AirNoteTests.swift */; };
 		423A1252281246340075B34F /* NotesDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 423A1251281246340075B34F /* NotesDetail.storyboard */; };
 		423A125428125B6F0075B34F /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125328125B6F0075B34F /* TitleHeaderView.swift */; };
 		423A125628125DA30075B34F /* NoteCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */; };
@@ -129,8 +130,19 @@
 		42F936572806BE5D0058EB07 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936562806BE5D0058EB07 /* AddNoteViewController.swift */; };
 		42F9365A2807B60F0058EB07 /* AddCoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */; };
 		42F9365B2807B60F0058EB07 /* AddCoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */; };
+		64C5CBBE6FC11DE1043B5E26 /* Pods_AirNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB388EE5A2FB2BA5FB7064A6 /* Pods_AirNoteTests.framework */; };
 		F5D103571B0B6068FB6E2E94 /* Pods_Project_2_AirNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		42392F77283738ED004FB225 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42DE584B28005A7200D764F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42DE585228005A7200D764F7;
+			remoteInfo = "Project 2 AirNote";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.debug.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.debug.xcconfig"; sourceTree = "<group>"; };
@@ -147,6 +159,8 @@
 		42383E0228237474005CF4B4 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
 		42383E0928280B14005CF4B4 /* DeleteAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountTableViewCell.swift; sourceTree = "<group>"; };
+		42392F73283738ED004FB225 /* AirNoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirNoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		42392F75283738ED004FB225 /* AirNoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirNoteTests.swift; sourceTree = "<group>"; };
 		423A1251281246340075B34F /* NotesDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotesDetail.storyboard; sourceTree = "<group>"; };
 		423A125328125B6F0075B34F /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
 		423A125528125DA30075B34F /* NoteCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -259,11 +273,22 @@
 		42F936562806BE5D0058EB07 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
 		42F936582807B60F0058EB07 /* AddCoverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoverTableViewCell.swift; sourceTree = "<group>"; };
 		42F936592807B60F0058EB07 /* AddCoverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCoverTableViewCell.xib; sourceTree = "<group>"; };
+		436C0C6A9858045FB6B1118F /* Pods-AirNoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirNoteTests.debug.xcconfig"; path = "Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests.debug.xcconfig"; sourceTree = "<group>"; };
+		54FF3ED3B295D1FD25555131 /* Pods-AirNoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirNoteTests.release.xcconfig"; path = "Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_2_AirNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB388EE5A2FB2BA5FB7064A6 /* Pods_AirNoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirNoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project 2 AirNote.release.xcconfig"; path = "Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		42392F70283738ED004FB225 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64C5CBBE6FC11DE1043B5E26 /* Pods_AirNoteTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		42DE585028005A7200D764F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -280,6 +305,8 @@
 			children = (
 				345158E05412BAAE03BAF997 /* Pods-Project 2 AirNote.debug.xcconfig */,
 				ED980FE3A30D82DDD6B1C0C2 /* Pods-Project 2 AirNote.release.xcconfig */,
+				436C0C6A9858045FB6B1118F /* Pods-AirNoteTests.debug.xcconfig */,
+				54FF3ED3B295D1FD25555131 /* Pods-AirNoteTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -290,6 +317,14 @@
 				42383E0528255D06005CF4B4 /* JGProgressHUDWrapper.swift */,
 			);
 			path = "Third Party Wrapper";
+			sourceTree = "<group>";
+		};
+		42392F74283738ED004FB225 /* AirNoteTests */ = {
+			isa = PBXGroup;
+			children = (
+				42392F75283738ED004FB225 /* AirNoteTests.swift */,
+			);
+			path = AirNoteTests;
 			sourceTree = "<group>";
 		};
 		423A12672813F1390075B34F /* GroupDetail */ = {
@@ -386,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				42DE585528005A7200D764F7 /* Project 2 AirNote */,
+				42392F74283738ED004FB225 /* AirNoteTests */,
 				42DE585428005A7200D764F7 /* Products */,
 				174931A29B62A1A1E9066F0A /* Pods */,
 				489FDFB4AFF8981481B9B72D /* Frameworks */,
@@ -396,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				42DE585328005A7200D764F7 /* AirNote.app */,
+				42392F73283738ED004FB225 /* AirNoteTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -723,6 +760,7 @@
 			isa = PBXGroup;
 			children = (
 				73E5ECB3854F742C38BDFD11 /* Pods_Project_2_AirNote.framework */,
+				EB388EE5A2FB2BA5FB7064A6 /* Pods_AirNoteTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -730,6 +768,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		42392F72283738ED004FB225 /* AirNoteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42392F7B283738ED004FB225 /* Build configuration list for PBXNativeTarget "AirNoteTests" */;
+			buildPhases = (
+				DF8D2133663012885E53BBC5 /* [CP] Check Pods Manifest.lock */,
+				42392F6F283738ED004FB225 /* Sources */,
+				42392F70283738ED004FB225 /* Frameworks */,
+				42392F71283738ED004FB225 /* Resources */,
+				7338BE9B1DA06625E645FDAB /* [CP] Embed Pods Frameworks */,
+				BE8E5F6A89182AD3CDD6716B /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				42392F78283738ED004FB225 /* PBXTargetDependency */,
+			);
+			name = AirNoteTests;
+			productName = AirNoteTests;
+			productReference = 42392F73283738ED004FB225 /* AirNoteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		42DE585228005A7200D764F7 /* Project 2 AirNote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42DE586728005A7600D764F7 /* Build configuration list for PBXNativeTarget "Project 2 AirNote" */;
@@ -762,6 +821,10 @@
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
+					42392F72283738ED004FB225 = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = 42DE585228005A7200D764F7;
+					};
 					42DE585228005A7200D764F7 = {
 						CreatedOnToolsVersion = 13.3;
 					};
@@ -781,11 +844,19 @@
 			projectRoot = "";
 			targets = (
 				42DE585228005A7200D764F7 /* Project 2 AirNote */,
+				42392F72283738ED004FB225 /* AirNoteTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		42392F71283738ED004FB225 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		42DE585128005A7200D764F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -892,6 +963,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
+		7338BE9B1DA06625E645FDAB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		76A97E03F5BE181010DE8695 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -931,9 +1019,56 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Project 2 AirNote/Pods-Project 2 AirNote-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BE8E5F6A89182AD3CDD6716B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AirNoteTests/Pods-AirNoteTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF8D2133663012885E53BBC5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AirNoteTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		42392F6F283738ED004FB225 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42392F76283738ED004FB225 /* AirNoteTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		42DE584F28005A7200D764F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1023,6 +1158,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		42392F78283738ED004FB225 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42DE585228005A7200D764F7 /* Project 2 AirNote */;
+			targetProxy = 42392F77283738ED004FB225 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		42DE585C28005A7200D764F7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1043,6 +1186,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		42392F79283738ED004FB225 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 436C0C6A9858045FB6B1118F /* Pods-AirNoteTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6S28UJ4A7B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ec.AirNoteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AirNote.app/AirNote";
+			};
+			name = Debug;
+		};
+		42392F7A283738ED004FB225 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54FF3ED3B295D1FD25555131 /* Pods-AirNoteTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6S28UJ4A7B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ec.AirNoteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AirNote.app/AirNote";
+			};
+			name = Release;
+		};
 		42DE586528005A7600D764F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1231,6 +1414,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		42392F7B283738ED004FB225 /* Build configuration list for PBXNativeTarget "AirNoteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42392F79283738ED004FB225 /* Debug */,
+				42392F7A283738ED004FB225 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		42DE584E28005A7200D764F7 /* Build configuration list for PBXProject "Project 2 AirNote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

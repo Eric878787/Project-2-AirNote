@@ -156,6 +156,7 @@ class DrawingPadViewController: UIViewController {
         lastPoint = touch.location(in: view)
     }
     
+    // The timing when user start to move the touch point
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -197,3 +198,5 @@ extension DrawingPadViewController: SetUpPadViewControllerDelegate {
         dismiss(animated: true)
     }
 }
+
+
