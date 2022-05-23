@@ -25,25 +25,24 @@ class ProfileViewController: BaseViewController {
     
     // Select Image
     private let imagePickerController = UIImagePickerController()
-    private var avatarImage: UIImage? // ?
     
     // User Data
-    var users: [User] = [] //
-    var currentUser: User?
-    var blockedUsers: [User] = []
-    var followings: [User] = []
-    var followers: [User] = []
+    private (set) var users: [User] = [] // Getter?
+    private (set) var currentUser: User?
+    private (set) var blockedUsers: [User] = []
+    private (set) var followings: [User] = []
+    private (set) var followers: [User] = []
     
     // Note Data
-    var notes: [Note] = []
-    var savedNotes: [Note] = []
-    var ownedNotes: [Note] = []
+    private (set) var notes: [Note] = []
+    private (set) var savedNotes: [Note] = []
+    private (set) var ownedNotes: [Note] = []
     let noteCategories: [ContentCategory] = [.ownedNote, .savedNote]
     
     // Group Data
-    var groups: [Group] = []
-    var savedGroups: [Group] = []
-    var ownedGroups: [Group] = []
+    private (set) var groups: [Group] = []
+    private (set) var savedGroups: [Group] = []
+    private (set) var ownedGroups: [Group] = []
     let groupCategories: [ContentCategory] = [.ownedGroup, .savedGroup]
     
 //    let dict: [ContentCategory: [Group]]
@@ -169,8 +168,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             DispatchQueue.main.async { //
                 LKProgressHUD.show()
             }
-            avatarImage = image
-            avatarImageView.image = avatarImage //
+            avatarImageView.image = image
             updateUserAvatar()
         }
         
@@ -336,7 +334,7 @@ extension ProfileViewController {
         }
     }
     
-    func filterBlockedUsers(_ blockedUids: [String], _ allUsers: [User]) {
+    func filterBlockedUsers(_ blockedUids: [String], _ allUsers: [User]) { // Using Map Function
         self.blockedUsers = []
         for blockedUid in blockedUids {
             self.blockedUsers += allUsers.filter { $0.uid == blockedUid }
@@ -357,12 +355,10 @@ extension ProfileViewController {
         }
     }
     
-    
-    
     private func updateUserAvatar() { //
         let group = DispatchGroup()
         group.enter()
-        guard let image = avatarImage else { return }
+        guard let image = avatarImageView.image else { return }
         UserManager.shared.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
