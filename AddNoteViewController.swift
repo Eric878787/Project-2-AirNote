@@ -567,15 +567,15 @@ extension AddNoteViewController {
                                         self.present(controller, animated: true, completion: nil)
                                     }
                                 case .failure(let error):
-                                    self.initBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
+                                    self.showBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
                                 }
                             }
                         case .failure(let error):
-                            self.initBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
+                            self.showBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
                         }
                     }
                 case.failure:
-                    self.initBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
+                    self.showBasicConfirmationAlert("上傳筆記失敗", "請檢查網路連線")
                 }
             }
         }

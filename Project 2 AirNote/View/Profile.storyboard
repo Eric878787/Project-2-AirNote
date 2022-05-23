@@ -312,7 +312,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="13"/>
                                 </state>
                                 <connections>
-                                    <action selector="cameraTapped:" destination="NH5-8q-8BS" eventType="touchUpInside" id="dUj-2C-aMe"/>
+                                    <action selector="didTapCamera:" destination="NH5-8q-8BS" eventType="touchUpInside" id="95b-Kz-uF7"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" text="namenamenamenamenamenamenamenamenamenamenamename" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3j-bz-3hI">

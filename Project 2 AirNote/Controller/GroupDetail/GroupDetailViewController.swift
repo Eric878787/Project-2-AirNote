@@ -84,7 +84,7 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
     
     @objc private func openActionList() {
         
-        initBlockUserAlert {
+        showBlockUserAlert {
             self.blockUser()
         }
         
@@ -119,13 +119,13 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
                 
             case .success:
                 
-                self.initBasicConfirmationAlert("封鎖成功", "確認") {
+                self.showBasicConfirmationAlert("封鎖成功", "確認") {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }

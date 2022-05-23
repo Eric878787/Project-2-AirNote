@@ -134,14 +134,14 @@ class OtherProfileViewController: BaseViewController {
                         
                     case .failure:
                         
-                        self.initBasicConfirmationAlert("追蹤失敗", "請檢查網路連線")
+                        self.showBasicConfirmationAlert("追蹤失敗", "請檢查網路連線")
                         
                     }
                 }
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("追蹤失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("追蹤失敗", "請檢查網路連線")
                 
             }
         }
@@ -168,7 +168,7 @@ extension OtherProfileViewController {
     
     @objc private func openActionList() {
         
-        self.initBlockUserAlert {
+        self.showBlockUserAlert {
             self.blockUser()
         }
         
@@ -266,7 +266,7 @@ extension OtherProfileViewController {
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }

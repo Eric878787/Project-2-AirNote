@@ -80,7 +80,7 @@ extension BlockListViewController: BlockListDelegate {
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("解除封鎖失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("解除封鎖失敗", "請檢查網路連線")
                 
             }
         }

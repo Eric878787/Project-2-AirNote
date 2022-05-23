@@ -24,10 +24,10 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var categorySegmentControl: UISegmentedControl!
     
     // Select Image
-    private let imagePickerController = UIImagePickerController()
+    let imagePickerController = UIImagePickerController()
     
     // User Data
-    private (set) var users: [User] = [] // Getter?
+    private (set) var users: [User] = []
     private (set) var currentUser: User?
     private (set) var blockedUsers: [User] = []
     private (set) var followings: [User] = []
@@ -45,7 +45,7 @@ class ProfileViewController: BaseViewController {
     private (set) var ownedGroups: [Group] = []
     let groupCategories: [ContentCategory] = [.ownedGroup, .savedGroup]
     
-//    let dict: [ContentCategory: [Group]]
+    //    let dict: [ContentCategory: [Group]]
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -100,11 +100,11 @@ class ProfileViewController: BaseViewController {
         
     }
     
-    @IBAction func cameraTapped(_ sender: Any) { // didTappedCamera // Any -> UIButton
-        initChoosePhotoAlert(imagePickerController)
+    @IBAction func didTapCamera(_ sender: UIButton) {
+        showChoosePhotoAlert(imagePickerController)
     }
     
-    @IBAction func followerTouched(_ sender: Any) { //
+    @IBAction func didTouchFollowerButton(_ sender: UIButton) {
         guard let viewController =
                 UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
                 as? FollwerFollowingListViewController else { return }
@@ -113,7 +113,7 @@ class ProfileViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func followingToched(_ sender: Any) { //
+    @IBAction func didTouchFollowingButton(_ sender: UIButton) {
         guard let viewController =
                 UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
                 as? FollwerFollowingListViewController else { return }
@@ -122,15 +122,7 @@ class ProfileViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func changeSegment(_ sender: UISegmentedControl) {
-        
-//        if sender.selectedSegmentIndex == 0 {
-//            noteTableView.isHidden = false
-//            groupTableView.isHidden = true
-//        } else {
-//            noteTableView.isHidden = true
-//            groupTableView.isHidden = false
-//        }
+    @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
         
         let didSelectNote = sender.selectedSegmentIndex == 0
         noteTableView.isHidden = !didSelectNote
@@ -157,7 +149,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         guard tapGestureRecognizer.view
                 as? UIImageView != nil else { return }
         
-        initChoosePhotoAlert(imagePickerController) //
+        showChoosePhotoAlert(imagePickerController)
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
@@ -165,11 +157,11 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         if let image = info[.originalImage] as? UIImage {
             
-            DispatchQueue.main.async { //
+            DispatchQueue.main.async {
                 LKProgressHUD.show()
+                self.avatarImageView.image = image
             }
-            avatarImageView.image = image
-            updateUserAvatar()
+            uploadUserAvatar()
         }
         
         picker.dismiss(animated: true)
@@ -187,7 +179,7 @@ extension ProfileViewController {
         noteTableView.delegate = self
         noteTableView.separatorStyle = .none
         noteTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
-        noteTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil) //
+        noteTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
         noteTableView.register(DeleteAccountTableViewCell.self,
                                forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
         
@@ -207,7 +199,6 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     func refreshUserInfo() {
-        // user?
         // Profile Avatar
         let url = URL(string: currentUser?.userAvatar ?? "")
         avatarImageView.kf.indicatorType = .activity
@@ -260,7 +251,7 @@ extension ProfileViewController {
         
         // Configure Segment Control
         setUpBasicSegmentControl(categorySegmentControl)
-
+        
     }
     
 }
@@ -269,7 +260,7 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     @objc func signOut() {
-        initAlternativeAlert("是否要登出", nil, {
+        showAlternativeAlert("是否要登出", nil, {
             self.confirmToSignOut()
         }, {
             return
@@ -277,7 +268,7 @@ extension ProfileViewController {
     }
     
     private func confirmToSignOut() {
-        self.initBasicConfirmationAlert("登出成功", "將返回登入頁面") {
+        self.showBasicConfirmationAlert("登出成功", "將返回登入頁面") {
             FirebaseManager.shared.signout()
             if self.presentingViewController == nil {
                 guard let viewController = UIStoryboard.auth.instantiateInitialViewController() else { return }
@@ -323,13 +314,13 @@ extension ProfileViewController {
                 self.filterFollwers(followerUids, allUsers)
                 
                 DispatchQueue.main.async {
-                    self.fetchContent()
+                    self.fetchNotesAndGroups()
                     self.refreshUserInfo()
                     LKProgressHUD.dismiss()
                 }
                 
             case .failure:
-                self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
     }
@@ -355,31 +346,29 @@ extension ProfileViewController {
         }
     }
     
-    private func updateUserAvatar() { //
-        let group = DispatchGroup()
-        group.enter()
+    private func uploadUserAvatar() {
         guard let image = avatarImageView.image else { return }
         UserManager.shared.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
                 self.currentUser?.userAvatar = "\(url)"
+                self.uploadUserAvatar()
             case .failure:
-                self.initBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
             }
-            //
-            group.leave()
         }
-        group.notify(queue: DispatchQueue.global()) {
-            guard let user = self.currentUser else { return }
-            UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
-                switch result {
-                case .success:
-                    self.initBasicConfirmationAlert("上傳頭貼成功", nil) {
-                        self.fetchUsers()
-                    }
-                case .failure:
-                    self.initBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
+    }
+    
+    private func updateUserAvatar() {
+        guard let user = self.currentUser else { return }
+        UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
+            switch result {
+            case .success:
+                self.showBasicConfirmationAlert("上傳頭貼成功", nil) {
+                    self.fetchUsers()
                 }
+            case .failure:
+                self.showBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
             }
         }
     }
@@ -390,33 +379,40 @@ extension ProfileViewController {
         UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
             switch result {
             case .success:
-                self.initBasicConfirmationAlert("更新暱稱成功", "") {
+                self.showBasicConfirmationAlert("更新暱稱成功", "") {
                     self.fetchUsers()
                 }
             case .failure:
-                self.initBasicConfirmationAlert("更新暱稱失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("更新暱稱失敗", "請檢查網路連線")
             }
         }
     }
     
-    private func fetchContent() { //
+    private func fetchNotesAndGroups() {
         let group = DispatchGroup()
+        var didFetchSuccess: [Bool] = []
         group.enter()
-        fetchNotes {
+        fetchNotes() { result in
+            didFetchSuccess.append(result)
             group.leave()
         }
         group.enter()
-        fetchGroups {
+        fetchGroups() { result in
+            didFetchSuccess.append(result)
             group.leave()
         }
         
         group.notify(queue: DispatchQueue.main) {
-            self.noteTableView.reloadData()
-            self.groupTableView.reloadData()
+            if didFetchSuccess.contains(false) {
+                return
+            } else {
+                self.noteTableView.reloadData()
+                self.groupTableView.reloadData()
+            }
         }
     }
     
-    private func fetchNotes(_ completion: @escaping () -> Void) {
+    private func fetchNotes(_ completion: @escaping (Bool) -> Void) {
         NoteManager.shared.fetchNotes { result in
             switch result {
                 
@@ -432,27 +428,23 @@ extension ProfileViewController {
                     self.ownedNotes += notes.filter { $0.noteId == userNote }
                 }
                 
-                // Filter Blocked Users
-                guard let blockedUids = self.currentUser?.blockUsers else { return }
-                for blockedUid in blockedUids {
-                    self.users = self.users.filter { $0.uid != blockedUid }
-                }
-                
                 // Filter Blocked Users Content
+                guard let blockedUids = self.currentUser?.blockUsers else { return }
                 for blockedUid in blockedUids {
                     self.savedNotes = self.savedNotes.filter { $0.authorId != blockedUid }
                 }
                 
-                completion()
+                completion(true)
                 
             case .failure:
-                self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
-                //
+                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                
+                completion(false)
             }
         }
     }
     
-    private func fetchGroups(_ completion: @escaping () -> Void) {
+    private func fetchGroups(_ completion: @escaping (Bool) -> Void) {
         GroupManager.shared.fetchGroups { result in
             switch result {
                 
@@ -474,17 +466,18 @@ extension ProfileViewController {
                     self.savedGroups = self.savedGroups.filter { $0.groupOwner != blockedUid }
                 }
                 
-                completion()
+                completion(true)
                 
             case .failure:
-                self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
-                //
+                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                
+                completion(false)
             }
         }
     }
     
     private func deleteAccount() { //
-        initAlternativeAlert("是否要刪除帳號", "刪除後將清除所有帳戶資料", {
+        showAlternativeAlert("是否要刪除帳號", "刪除後將清除所有帳戶資料", {
             self.confirmDeletion()
         }, {
             return
@@ -498,7 +491,7 @@ extension ProfileViewController {
             UserManager.shared.deleteUser(uid: uid) { result in
                 switch result {
                 case .success:
-                    self.initBasicConfirmationAlert("刪除帳號成功", "請重新註冊") {
+                    self.showBasicConfirmationAlert("刪除帳號成功", "請重新註冊") {
                         if self.presentingViewController == nil {
                             guard let viewController =
                                     UIStoryboard.auth.instantiateInitialViewController()
@@ -512,7 +505,7 @@ extension ProfileViewController {
                         }
                     }
                 case .failure:
-                    self.initBasicConfirmationAlert("刪除帳號失敗", "請再次嘗試", nil)
+                    self.showBasicConfirmationAlert("刪除帳號失敗", "請再次嘗試", nil)
                 }
             }
         }
@@ -660,7 +653,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
                     viewController.currentUser = self?.currentUser
                     self?.navigationController?.pushViewController(viewController, animated: true)
                 case .failure:
-                    self?.initBasicConfirmationAlert("更新資料失敗", "請檢查網路連線")
+                    self?.showBasicConfirmationAlert("更新資料失敗", "請檢查網路連線")
                 }
             }
         } else if tableView == groupTableView {

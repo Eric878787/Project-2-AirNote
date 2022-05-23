@@ -72,13 +72,13 @@ class LoginViewController: BaseViewController {
             self.checkIfItsNew()
             self.emailTextField.text = ""
             self.passwordTextField.text = ""
-            self.initBasicConfirmationAlert("註冊成功", "請重新登入")
+            self.showBasicConfirmationAlert("註冊成功", "請重新登入")
             
         }
         
         FirebaseManager.shared.signUpFailure = { errorMessage in
             self.checkIfItsNew()
-            self.initBasicConfirmationAlert("註冊失敗", "\(self.handlingErrorMessage(errorMessage))")
+            self.showBasicConfirmationAlert("註冊失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
         
     }
@@ -95,13 +95,13 @@ class LoginViewController: BaseViewController {
         FirebaseManager.shared.loginSuccess = {
             self.emailTextField.text = ""
             self.passwordTextField.text = ""
-            self.initBasicConfirmationAlert("登入成功", "") {
+            self.showBasicConfirmationAlert("登入成功", "") {
                 self.presentOrDismissVC()
             }
         }
         
         FirebaseManager.shared.logInFailure = { errorMessage in
-            self.initBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
+            self.showBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
         
     }
@@ -320,13 +320,13 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
         
         FirebaseManager.shared.loginSuccess = {
             self.checkIfItsNew()
-            self.initBasicConfirmationAlert("登入成功", "") {
+            self.showBasicConfirmationAlert("登入成功", "") {
                 self.presentOrDismissVC()
             }
         }
         
         FirebaseManager.shared.logInFailure = { errorMessage in
-            self.initBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
+            self.showBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
 
     }

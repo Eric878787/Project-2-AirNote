@@ -53,7 +53,7 @@ extension ChatRoomViewLobbyController {
                 self.fetchGroups()
                 
             case .failure:
-                self.initBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
     }

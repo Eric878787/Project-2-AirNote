@@ -238,7 +238,7 @@ extension DiscoverNotesViewController {
     
     @objc private func openActionList() {
         
-        initBlockUserAlert(self.blockUser)
+        showBlockUserAlert(self.blockUser)
         
     }
     
@@ -246,7 +246,7 @@ extension DiscoverNotesViewController {
         
         guard userToBeBlocked != currentUser?.uid else {
             
-            initBasicConfirmationAlert("無法封鎖本人帳號", "確認")
+            showBasicConfirmationAlert("無法封鎖本人帳號", "確認")
             
             return
         }
@@ -269,13 +269,13 @@ extension DiscoverNotesViewController {
                 
             case .success:
                 
-                self.initBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
+                self.showBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     self.fetchNotes()
                 }
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }
@@ -458,14 +458,14 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                         
                     case .failure:
                         
-                        self.initBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
+                        self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
                         
                     }
                 }
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
             }
             
         }

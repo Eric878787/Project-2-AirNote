@@ -122,7 +122,7 @@ extension SearchGroupsViewController {
     
     @objc private func openActionList() {
         
-        self.initBlockUserAlert {
+        self.showBlockUserAlert {
             self.blockUser()
         }
         
@@ -158,13 +158,13 @@ extension SearchGroupsViewController {
                 
             case .success:
                 
-                self.initBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
+                self.showBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     self.fetchGroups()
                 }
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }

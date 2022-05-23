@@ -19,7 +19,7 @@ class BaseViewController: UIViewController {
 
     // MARK: Methods
     
-    func initChoosePhotoAlert(_ imagePickerController: UIImagePickerController) {
+    func showChoosePhotoAlert(_ imagePickerController: UIImagePickerController) {
         let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
@@ -64,7 +64,7 @@ class BaseViewController: UIViewController {
         
     }
     
-    func initBasicConfirmationAlert(_ title: String, _ message: String?, _ completion: (() -> Void)? = nil) {
+    func showBasicConfirmationAlert(_ title: String, _ message: String?, _ completion: (() -> Void)? = nil) {
         let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         let action = UIAlertAction(title: "確認", style: .default) { _ in
@@ -77,7 +77,7 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func initAlternativeAlert(_ title: String, _ message: String?,
+    func showAlternativeAlert(_ title: String, _ message: String?,
                               _ confirmation: (() -> Void)? = nil,
                               _ cancelation: (() -> Void)? = nil ) {
         let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -100,7 +100,7 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func initBlockUserAlert(_ completion: @escaping () -> Void) {
+    func showBlockUserAlert(_ completion: @escaping () -> Void) {
         
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "封鎖用戶", style: .default) { _ in

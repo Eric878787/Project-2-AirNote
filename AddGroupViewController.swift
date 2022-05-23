@@ -525,7 +525,7 @@ extension AddGroupViewController {
                     }
                 }
             case .failure(let error):
-                self.initBasicConfirmationAlert("上傳失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("上傳失敗", "請檢查網路連線")
             }
         }
     }

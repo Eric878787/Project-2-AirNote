@@ -246,7 +246,7 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
                 
             case .success:
                 
-                self.initBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
+                self.showBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     if self.userToBeBlocked == self.note.authorId {
                         self.navigationController?.popToRootViewController(animated: true)
                     } else {
@@ -257,7 +257,7 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }

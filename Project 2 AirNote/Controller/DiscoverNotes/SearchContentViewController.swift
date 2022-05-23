@@ -201,7 +201,7 @@ extension SearchContentViewController {
     
     @objc private func openActionList() {
         
-        self.initBlockUserAlert {
+        self.showBlockUserAlert {
             self.blockUser()
         }
         
@@ -211,7 +211,7 @@ extension SearchContentViewController {
         
         guard userToBeBlocked != currentUser?.uid else {
             
-            self.initBasicConfirmationAlert("無法封鎖本人帳號", "確認")
+            self.showBasicConfirmationAlert("無法封鎖本人帳號", "確認")
             
             return
         }
@@ -234,13 +234,13 @@ extension SearchContentViewController {
                 
             case .success:
                 
-                self.initBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
+                self.showBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     self.fetchNotes()
                 }
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }
@@ -332,14 +332,14 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
                         
                     case .failure:
                         
-                        self.initBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
+                        self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
                         
                     }
                 }
                 
             case .failure:
                 
-                self.initBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
+                self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
             }
         }
     }
