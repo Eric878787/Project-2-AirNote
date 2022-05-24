@@ -37,13 +37,14 @@ class ProfileViewController: BaseViewController {
     private (set) var notes: [Note] = []
     private (set) var savedNotes: [Note] = []
     private (set) var ownedNotes: [Note] = []
-    let noteCategories: [ContentCategory] = [.ownedNote, .savedNote]
+    let noteCategories: [NoteCategory] = [.ownedNote, .savedNote]
+    
     
     // Group Data
     private (set) var groups: [Group] = []
     private (set) var savedGroups: [Group] = []
     private (set) var ownedGroups: [Group] = []
-    let groupCategories: [ContentCategory] = [.ownedGroup, .savedGroup]
+    let groupCategories: [GroupCategory] = [.ownedGroup, .savedGroup]
     
     //    let dict: [ContentCategory: [Group]]
     
@@ -123,7 +124,6 @@ class ProfileViewController: BaseViewController {
     }
     
     @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
-        
         let didSelectNote = sender.selectedSegmentIndex == 0
         noteTableView.isHidden = !didSelectNote
         groupTableView.isHidden = didSelectNote
@@ -522,7 +522,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        3 // [].count
+        if tableView == noteTableView {
+            return noteCategories.count + 1
+        } else {
+            return groupCategories.count + 1
+        }
     }
     
     // enum Gasoline
@@ -547,79 +551,48 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == noteTableView {
-            if indexPath.section == 0 {
+        if indexPath.section != 2 {
+            if tableView == noteTableView {
+                let notesData = [ownedNotes, savedNotes]
                 return noteCategories[indexPath.section].cellForIndexPath(indexPath,
                                                                           noteTableView,
-                                                                          ownedNotes,
-                                                                          [],
-                                                                          users)
-            } else if indexPath.section == 1 {
-                return noteCategories[indexPath.section].cellForIndexPath(indexPath,
-                                                                          noteTableView,
-                                                                          savedNotes,
-                                                                          [],
+                                                                          notesData[indexPath.section],
                                                                           users)
             } else {
-                let deleteAccountTableViewCell =
-                tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
-                                              for: indexPath)
-                guard let cell = deleteAccountTableViewCell
-                        as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
-                
-                cell.delegate = self
-                return cell
+                let groupsData = [ownedGroups, savedGroups]
+                return groupCategories[indexPath.section].cellForIndexPath(indexPath,
+                                                                           groupTableView,
+                                                                           groupsData[indexPath.section],
+                                                                           users)
             }
         } else {
-            if indexPath.section == 0 {
-                return groupCategories[indexPath.section].cellForIndexPath(indexPath,
-                                                                           groupTableView,
-                                                                           [],
-                                                                           ownedGroups,
-                                                                           users)
-            } else if indexPath.section == 1 {
-                return groupCategories[indexPath.section].cellForIndexPath(indexPath,
-                                                                           groupTableView,
-                                                                           [],
-                                                                           savedGroups,
-                                                                           users)
-            } else {
-                let deleteAccountTableViewCell =
-                tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
-                                              for: indexPath)
-                guard let cell = deleteAccountTableViewCell
-                        as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
-                cell.delegate = self
-                return cell
-            }
+            let deleteAccountTableViewCell =
+            tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
+                                          for: indexPath)
+            guard let cell = deleteAccountTableViewCell
+                    as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
+            cell.delegate = self
+            return cell
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if tableView == noteTableView {
-            
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NoteHeader.reuseIdentifier)
                     as? NoteHeader else { return nil }
-            if section == 0 {
-                header.title.text = ContentCategory.ownedNote.rawValue
-                return header
-            } else if section == 1 {
-                header.title.text = ContentCategory.savedNote.rawValue
+            if section != 2 {
+                header.title.text = noteCategories[section].title()
                 return header
             } else {
                 return nil
             }
             
         } else {
-            
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier)
                     as? GroupHeader else { return nil }
-            if section == 0 {
-                header.title.text = ContentCategory.ownedGroup.rawValue
-                return header
-            } else if section == 1 {
-                header.title.text = ContentCategory.savedGroup.rawValue
+            if section != 2 {
+                header.title.text = groupCategories[section].title()
                 return header
             } else {
                 return nil
@@ -656,6 +629,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Del
                     self?.showBasicConfirmationAlert("更新資料失敗", "請檢查網路連線")
                 }
             }
+            // wrap to be a function
         } else if tableView == groupTableView {
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController")
