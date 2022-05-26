@@ -10,8 +10,8 @@ import Kingfisher
 
 class DiscoverNotesViewController: BaseViewController {
     
-    // MARK: CollecitonView Properties
-    var categoryCollectionView: UICollectionView = {
+    // MARK: Properties
+    private var categoryCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         var categoryCollecitonView = UICollectionView(
@@ -41,31 +41,27 @@ class DiscoverNotesViewController: BaseViewController {
         return notesCollectionView
     }()
     
-    // MARK: Add Note Button
     private var addNoteButton = UIButton()
     
-    // MARK: Category
+    // Category
     private var selectedCategoryIndex = 0
-    var category: [String] = ["所有筆記", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
+    private var categories: [GeneralCategory] = [.all, .finance, .sport, .language, .communication, .marketing, .lifestyle, .entertainment]
     
-    // MARK: Data Provider
-    private var noteManager = NoteManager()
-    var userManager = UserManager()
-    var userToBeBlocked = ""
-    
-    // MARK: Notes Data
+    // Notes' Data
     private var notes: [Note] = []
-    private var filterNotes: [Note] = []
+    private var filteredNotes: [Note] = []
     
-    // MARK: Users Data
-    var users: [User] = []
-    var currentUser: User?
+    // Users' Data
+    private var users: [User] = []
+    private var currentUser: User?
+    private var userToBeBlocked = ""
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "探索筆記"
+        navigationItem.title = NavigationItemTitle.discoverNotes.rawValue
         
         // Set Up Category CollectionView
         configureCategoryCollectionView()
@@ -96,7 +92,7 @@ class DiscoverNotesViewController: BaseViewController {
         
         // Fetch Notes Data
         LKProgressHUD.show()
-        fetchNotes()
+        fetchUsers()
         
     }
     
@@ -111,53 +107,16 @@ class DiscoverNotesViewController: BaseViewController {
 extension DiscoverNotesViewController {
     
     private func fetchNotes() {
-        self.noteManager.fetchNotes { [weak self] result in
+        NoteManager.shared.fetchNotes { [weak self] result in
             
             switch result {
                 
-            case .success(let existingNote):
+            case .success(let existingNotes):
                 
-                self?.notes = existingNote
-                self?.filterNotes = self?.notes ?? existingNote
-                self?.fetchUsers()
-                
-            case .failure(let error):
-                
-                print("fetchData.failure: \(error)")
-            }
-        }
-    }
-    
-    private func fetchUsers() {
-        self.userManager.fetchUsers { [weak self] result in
-            
-            switch result {
-                
-            case .success(let existingUser):
-                
-                self?.users = existingUser
-                
-                // Store Current User
-                self?.storeCurrentUser()
-                
-                // Filter Blocked Users
                 if let blockedUids = self?.currentUser?.blockUsers {
-                    
-                    for blockedUid in blockedUids {
-                        
-                        self?.users = self?.users.filter { $0.uid != blockedUid} ?? []
-                        
-                    }
-                    
-                    // Filter Blocked Users Content
-                    
-                    for blockedUid in blockedUids {
-                        
-                        self?.filterNotes = self?.filterNotes.filter { $0.authorId != blockedUid} ?? []
-                        
-                        self?.notes = self?.notes.filter { $0.authorId != blockedUid} ?? []
-                        
-                    }
+                    let notesWithoutBlockedContent = existingNotes.filter { !blockedUids.contains($0.authorId) }
+                    self?.notes = notesWithoutBlockedContent
+                    self?.filteredNotes = notesWithoutBlockedContent
                 }
                 
                 DispatchQueue.main.async {
@@ -172,7 +131,35 @@ extension DiscoverNotesViewController {
         }
     }
     
-    private func storeCurrentUser() {
+    private func fetchUsers() {
+        UserManager.shared.fetchUsers { [weak self] result in
+            
+            switch result {
+                
+            case .success(let existingUsers):
+                
+                // Store Current User
+                self?.storeCurrentUser(existingUsers)
+                
+                // Filter Blocked Users
+                if let blockedUids = self?.currentUser?.blockUsers {
+                    
+                    let filteredUsers = existingUsers.filter { !blockedUids.contains($0.uid) }
+                    
+                    self?.users = filteredUsers
+    
+                }
+                
+                self?.fetchNotes()
+                
+            case .failure(let error):
+                
+                print("fetchData.failure: \(error)")
+            }
+        }
+    }
+    
+    private func storeCurrentUser(_ users: [User]) {
         
         for user in users where user.uid == FirebaseManager.shared.currentUser?.uid {
             
@@ -230,7 +217,7 @@ extension DiscoverNotesViewController {
         if sender.state == .began {
             let touchPoint = sender.location(in: notesCollectionView)
             if let indexPath = notesCollectionView.indexPathForItem(at: touchPoint) {
-                userToBeBlocked = filterNotes[indexPath.item].authorId
+                userToBeBlocked = filteredNotes[indexPath.item].authorId
                 openActionList()
             }
         }
@@ -382,7 +369,9 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             
             viewController.modalPresentationStyle = .overCurrentContext
             
-            self.tabBarController?.present(viewController, animated: false, completion: nil)
+            self.tabBarController?.present(viewController,
+                                           animated: false,
+                                           completion: nil)
             
             return
             
@@ -420,7 +409,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
             
         }
         
-        noteManager.updateNote(note: selectedNote, noteId: selectedNote.noteId) { result in
+        NoteManager.shared.updateNote(note: selectedNote, noteId: selectedNote.noteId) { result in
             
             switch result {
                 
@@ -446,7 +435,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                     return
                 }
                 
-                self.userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
+                UserManager.shared.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
                     
                     switch result {
                         
@@ -474,9 +463,9 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == categoryCollectionView {
-            return category.count
+            return categories.count
         } else {
-            return filterNotes.count
+            return filteredNotes.count
         }
     }
     
@@ -488,7 +477,7 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                 for: indexPath)
             guard let cell = categoryCollectionViewCell as? CategoryCollectionViewCell
             else { return categoryCollectionViewCell }
-            cell.categoryLabel.text = category[indexPath.item]
+            cell.categoryLabel.text = categories[indexPath.item].rawValue
             if selectedCategoryIndex == indexPath.item {
                 cell.categoryLabel.textColor = .white
                 cell.categoryView.backgroundColor = .myDarkGreen
@@ -503,21 +492,21 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
                 withReuseIdentifier: "NotesCollectionViewCell",
                 for: indexPath)
             guard let cell = notesCollectionViewCell as? NotesCollectionViewCell else {return notesCollectionViewCell}
-            let url = URL(string: filterNotes[indexPath.item].cover)
+            let url = URL(string: filteredNotes[indexPath.item].cover)
             cell.delegate = self
             cell.coverImage.kf.indicatorType = .activity
             cell.coverImage.kf.setImage(with: url)
-            cell.titleLabel.text = filterNotes[indexPath.item].title
+            cell.titleLabel.text = filteredNotes[indexPath.item].title
             
             // Highlight saved note
             cell.heartButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
             
-            for like in filterNotes[indexPath.item].likes where like == FirebaseManager.shared.currentUser?.uid {
+            for like in filteredNotes[indexPath.item].likes where like == FirebaseManager.shared.currentUser?.uid {
                 cell.heartButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
             }
             
             // querying users' name & avatar
-            for user in users where user.uid == filterNotes[indexPath.item].authorId {
+            for user in users where user.uid == filteredNotes[indexPath.item].authorId {
                 cell.authorNameLabel.text = user.userName
                 let url = URL(string: user.userAvatar)
                 cell.userAvatarImage.kf.indicatorType = .activity
@@ -531,32 +520,26 @@ extension DiscoverNotesViewController: UICollectionViewDataSource, NoteCollectio
 // MARK: CollectionView Delegate
 extension DiscoverNotesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if collectionView == categoryCollectionView {
             guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {return}
             selectedCategoryIndex = indexPath.item
             collectionView.reloadData()
-            
-            if cell.categoryLabel.text != "所有筆記" {
-                filterNotes = notes.filter { $0.category == cell.categoryLabel.text }
+            if cell.categoryLabel.text != GeneralCategory.all.rawValue {
+                filteredNotes = notes.filter { $0.category == cell.categoryLabel.text }
             } else {
-                filterNotes = notes
+                filteredNotes = notes
             }
             notesCollectionView.reloadData()
             
         } else {
             
             guard self.currentUser != nil else {
-                
                 guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController")
                         as? AuthViewController else { return }
-                
                 viewController.modalPresentationStyle = .overCurrentContext
-                
                 self.tabBarController?.present(viewController, animated: false, completion: nil)
                 
                 return
-                
             }
             
             let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
@@ -564,12 +547,12 @@ extension DiscoverNotesViewController: UICollectionViewDelegate {
                     as? NoteDetailViewController else { return }
             
             guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
-            filterNotes[indexPath.item].clicks.append(uid)
-            noteManager.updateNote(note: filterNotes[indexPath.item],
-                                   noteId: filterNotes[indexPath.item].noteId) { [weak self] result in
+            filteredNotes[indexPath.item].clicks.append(uid)
+            NoteManager.shared.updateNote(note: filteredNotes[indexPath.item],
+                                   noteId: filteredNotes[indexPath.item].noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    guard let noteToPass = self?.filterNotes[indexPath.item] else { return }
+                    guard let noteToPass = self?.filteredNotes[indexPath.item] else { return }
                     viewController.note = noteToPass
                     viewController.comments = noteToPass.comments
                     viewController.users = self?.users ?? []
@@ -623,14 +606,4 @@ extension DiscoverNotesViewController: UICollectionViewDelegateFlowLayout {
                 return 10
             }
         }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == categoryCollectionView {
-            return 0
-        } else {
-            return 0
-        }
-    }
 }

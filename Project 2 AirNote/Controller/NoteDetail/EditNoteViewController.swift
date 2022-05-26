@@ -38,7 +38,7 @@ class EditNoteViewController: UIViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "修改筆記"
+        navigationItem.title = NavigationItemTitle.editNote.rawValue
         
         // Init addNoteTableView
         configureAddNoteTableView()

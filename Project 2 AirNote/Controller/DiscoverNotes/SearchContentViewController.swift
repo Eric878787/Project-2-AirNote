@@ -9,21 +9,20 @@ import UIKit
 
 class SearchContentViewController: BaseViewController {
     
-    // Search result tableview
+   // MARK: Properties
     private var searchNotesTableView = UITableView(frame: .zero)
-    
-    // Search Controller
     private var searchController = UISearchController()
     
-    // Search Result datasource
-    private var noteManager = NoteManager()
-    private var userManager = UserManager()
+    // Notes' Data
     private var notes: [Note] = []
     private lazy var filteredNotes: [Note] = []
+    
+    // Users' Data
     private var users: [User] = []
     private var currentUser: User?
     private var userToBeBlocked = ""
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +41,6 @@ class SearchContentViewController: BaseViewController {
         // Fetch notes
         LKProgressHUD.show()
         fetchNotes()
-//        searchNotesTableView.reloadData()
         
     }
 }
@@ -117,7 +115,7 @@ extension SearchContentViewController {
 extension SearchContentViewController {
     
     private func fetchNotes() {
-        self.noteManager.fetchNotes { [weak self] result in
+        NoteManager.shared.fetchNotes { [weak self] result in
             
             switch result {
                 
@@ -136,7 +134,7 @@ extension SearchContentViewController {
     
     private func fetchUsers() {
         
-        self.userManager.fetchUsers { [weak self] result in
+        UserManager.shared.fetchUsers { [weak self] result in
             
             switch result {
                 
@@ -296,7 +294,7 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
             
         }
         
-        noteManager.updateNote(note: selectedNote, noteId: selectedNote.noteId) { result in
+        NoteManager.shared.updateNote(note: selectedNote, noteId: selectedNote.noteId) { result in
             
             switch result {
                 
@@ -322,7 +320,7 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
                     return
                 }
                 
-                self.userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
+                UserManager.shared.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
                     
                     switch result {
                         
@@ -413,7 +411,7 @@ extension SearchContentViewController: UITableViewDelegate {
         let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
         filteredNotes[indexPath.row].clicks.append(currentUser.uid)
-        noteManager.updateNote(note: filteredNotes[indexPath.row], noteId: filteredNotes[indexPath.row].noteId) { [weak self] result in
+        NoteManager.shared.updateNote(note: filteredNotes[indexPath.row], noteId: filteredNotes[indexPath.row].noteId) { [weak self] result in
             switch result {
             case .success:
                 guard let noteToPass = self?.filteredNotes[indexPath.row] else { return }

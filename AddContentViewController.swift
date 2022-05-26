@@ -16,7 +16,7 @@ class AddContentViewController: UIViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "新增內容"
+        navigationItem.title = NavigationItemTitle.createNote.rawValue
         
         // Init Buttons
         configureAddNoteButton()

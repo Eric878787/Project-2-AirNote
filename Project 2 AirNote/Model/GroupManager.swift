@@ -13,13 +13,13 @@ import UIKit
 
 class GroupManager {
     
-    lazy var db = Firestore.firestore()
+    lazy var dataBase = Firestore.firestore()
     
     static let shared = GroupManager()
     
     func fetchGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
         
-        db.collection("Groups").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
+        dataBase.collection("Groups").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in
             
             if let error = error {
                 
@@ -48,7 +48,7 @@ class GroupManager {
         
         for groupId in groupIds {
             
-            db.collection("Groups").document(groupId).getDocument { (document, error) in
+            dataBase.collection("Groups").document(groupId).getDocument { (document, error) in
                 
                 if let error = error {
                     
@@ -99,7 +99,7 @@ class GroupManager {
     }
     
     func updateGroup(group: Group, groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let msgRef = db.collection("Groups").document(groupId)
+        let msgRef = dataBase.collection("Groups").document(groupId)
         do {
             try msgRef.setData(from: group, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
@@ -111,7 +111,7 @@ class GroupManager {
     
     func createGroup(group: Group, completion: @escaping (Result<String, Error>) -> Void) {
         
-        let document = db.collection("Groups").document()
+        let document = dataBase.collection("Groups").document()
         
         var group = group
         
@@ -134,7 +134,7 @@ class GroupManager {
     }
     
     func deleteGroup(groupId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let msgRef = db.collection("Groups").document(groupId)
+        let msgRef = dataBase.collection("Groups").document(groupId)
         do {
             try msgRef.delete()
             completion(.success("刪除成功"))

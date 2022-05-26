@@ -22,7 +22,7 @@ class ChatRoomViewLobbyController: BaseViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "聊天室"
+        navigationItem.title = NavigationItemTitle.chatRoom.rawValue
         
         // Confirure Chat Room List TableView
         configureChatRoomListTableView()

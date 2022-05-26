@@ -43,7 +43,7 @@ class DiscoverStudyGroupsViewController: BaseViewController {
     
     // MARK: Category
     private var selectedCategoryIndex = 0
-    var category: [String] = ["所有讀書會", "投資理財", "運動健身", "語言學習", "人際溝通", "廣告行銷", "生活風格", "藝文娛樂"]
+    var categories: [GeneralCategory] = [.all, .finance, .sport, .language, .communication, .marketing, .lifestyle, .entertainment]
     
     // MARK: Data Provider
     private var groupManager = GroupManager()
@@ -63,7 +63,7 @@ class DiscoverStudyGroupsViewController: BaseViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "探索讀書會"
+        navigationItem.title = NavigationItemTitle.discoverGroups.rawValue
         
         // Set Up Category CollectionView
         configureCategoryCollectionView()
@@ -394,7 +394,7 @@ extension DiscoverStudyGroupsViewController {
 extension DiscoverStudyGroupsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == categoryCollectionView {
-            return category.count
+            return categories.count
         } else {
             return filterGroups.count
         }
@@ -404,7 +404,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDataSource {
         if collectionView == categoryCollectionView {
             let categoryCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath)
             guard let cell = categoryCollectionViewCell as? CategoryCollectionViewCell else {return categoryCollectionViewCell}
-            cell.categoryLabel.text = category[indexPath.item]
+            cell.categoryLabel.text = categories[indexPath.item].rawValue
             if selectedCategoryIndex == indexPath.item {
                 cell.categoryLabel.textColor = .white
                 cell.categoryView.backgroundColor = .myDarkGreen
@@ -447,7 +447,7 @@ extension DiscoverStudyGroupsViewController: UICollectionViewDelegate {
             selectedCategoryIndex = indexPath.item
             collectionView.reloadData()
             
-            if cell.categoryLabel.text != "所有讀書會" {
+            if cell.categoryLabel.text != GeneralCategory.all.rawValue {
                 filterGroups = groups.filter { $0.groupCategory == cell.categoryLabel.text }
             } else {
                 filterGroups = groups

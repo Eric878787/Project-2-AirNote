@@ -39,7 +39,7 @@ class AddGroupViewController: BaseViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "新增讀書會"
+        navigationItem.title = NavigationItemTitle.createGroup.rawValue
         
         // Image Picker
         imagePickerController.delegate = self

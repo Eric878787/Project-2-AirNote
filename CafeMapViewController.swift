@@ -15,7 +15,7 @@ protocol CafeAddressDelegate {
     
 }
 
-class CafeMapViewController: UIViewController, CLLocationManagerDelegate {
+class CafeMapViewController: BaseViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var cafeMapView: MKMapView!
     
@@ -35,12 +35,18 @@ class CafeMapViewController: UIViewController, CLLocationManagerDelegate {
         
         // Fetch cafes
         cafeManager.fetchCafeInfo { result in
-            self.cafes = result
-            self.layoutGroup()
+            switch result {
+            case .success(let cafes):
+                self.cafes = cafes
+    
+            case .failure(let error):
+                self.showBasicConfirmationAlert("讀取錯誤", "\(error)")
+                
+            }
         }
         
         // Set Up Navigation Item
-        navigationItem.title = "推薦的咖啡廳"
+        navigationItem.title = NavigationItemTitle.recommendedCafe.rawValue
         
         // Set Up Map View
         locationManager.delegate = self
@@ -68,7 +74,7 @@ extension CafeMapViewController {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if cafeMapView.userLocation.coordinate.latitude != 0.0 || cafeMapView.userLocation.coordinate.longitude != 0.0 {
-        bringToUserLocation()
+            bringToUserLocation()
         } else {
             return
         }
@@ -135,7 +141,7 @@ extension CafeMapViewController: MKMapViewDelegate {
                                                     longitude: Double(cafe.longitude) ?? 0)
             let title = cafe.name
             let subtitle = cafe.address
-                    
+            
             let annotation = Annotation(
                 coordinate: coordinate,
                 title: title,

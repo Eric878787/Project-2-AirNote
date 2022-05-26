@@ -46,7 +46,7 @@ class AddNoteViewController: BaseViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "新增筆記"
+        navigationItem.title = NavigationItemTitle.createNote.rawValue
         
         // Init addNoteTableView
         configureAddNoteTableView()

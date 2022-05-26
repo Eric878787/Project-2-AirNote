@@ -30,7 +30,7 @@ class GroupMapViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = "附近的讀書會"
+        navigationItem.title = NavigationItemTitle.nearbyGroups.rawValue
         
         // Set Up Map View
         locationManager.delegate = self

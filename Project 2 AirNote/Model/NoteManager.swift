@@ -9,17 +9,16 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
-import UIKit
 
 class NoteManager {
     
     static let shared = NoteManager()
     
-    lazy var db = Firestore.firestore()
+    lazy var dataBase = Firestore.firestore()
     
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
         
-        db.collection("Notes").order(by: "createdTime", descending: true).getDocuments { (querySnapshot, error) in
+        dataBase.collection("Notes").order(by: "createdTime", descending: true).getDocuments { (querySnapshot, error) in
                 
             guard let querySnapshot = querySnapshot else {
                 
@@ -46,7 +45,7 @@ class NoteManager {
     
     func fetchNote(_ noteId: String, completion: @escaping (Result<Note, Error>) -> Void) {
         
-        db.collection("Note").document(noteId).getDocument { (document, error) in
+        dataBase.collection("Note").document(noteId).getDocument { (document, error) in
             
             if let error = error {
                 
@@ -81,7 +80,7 @@ class NoteManager {
     
     func createNote(note: inout Note, completion: @escaping (Result<String, Error>) -> Void) {
         
-        let document = db.collection("Notes").document()
+        let document = dataBase.collection("Notes").document()
         
         guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
         
@@ -104,7 +103,7 @@ class NoteManager {
     }
     
     func updateNote(note: Note, noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let msgRef = db.collection("Notes").document(noteId)
+        let msgRef = dataBase.collection("Notes").document(noteId)
         let note = note
         do {
             try msgRef.setData(from: note, encoder: Firestore.Encoder())
@@ -116,7 +115,7 @@ class NoteManager {
     }
     
     func deleteNote(noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let msgRef = db.collection("Notes").document(noteId)
+        let msgRef = dataBase.collection("Notes").document(noteId)
         do {
             try msgRef.delete()
             completion(.success("刪除成功"))
