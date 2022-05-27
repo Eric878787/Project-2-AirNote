@@ -10,55 +10,30 @@ import MapKit
 import CoreLocation
 
 protocol CafeAddressDelegate {
-    
     func passAddress(_ cafe: Cafe)
-    
 }
 
 class CafeMapViewController: BaseViewController, CLLocationManagerDelegate {
     
+    // MARK: Properties
     @IBOutlet weak var cafeMapView: MKMapView!
-    
     @IBOutlet weak var bringToUserLocationButton: UIButton!
-    
     let locationManager = CLLocationManager()
-    
     private var cafeManager = CafeManager()
-    
     var cafes: [Cafe] = []
-    
-    // Data Handler
     var delegate: CafeAddressDelegate?
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Fetch cafes
-        cafeManager.fetchCafeInfo { result in
-            switch result {
-            case .success(let cafes):
-                self.cafes = cafes
-    
-            case .failure(let error):
-                self.showBasicConfirmationAlert("讀取錯誤", "\(error)")
-                
-            }
-        }
-        
-        // Set Up Navigation Item
+        fetchCafesInfo()
         navigationItem.title = NavigationItemTitle.recommendedCafe.rawValue
-        
-        // Set Up Map View
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 20.0
-        
-        // Set up group annotation
         cafeMapView.delegate = self
-        
-        // Config Button
         configButton()
     }
     
@@ -69,7 +44,6 @@ class CafeMapViewController: BaseViewController, CLLocationManagerDelegate {
     
 }
 
-// MARK: User's Location
 extension CafeMapViewController {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -89,9 +63,19 @@ extension CafeMapViewController {
         locationManager.stopUpdatingLocation()
     }
     
+    func fetchCafesInfo() {
+        cafeManager.fetchCafeInfo { result in
+            switch result {
+            case .success(let cafes):
+                self.cafes = cafes
+    
+            case .failure(let error):
+                self.showBasicConfirmationAlert("讀取錯誤", "\(error)")
+            }
+        }
+    }
+    
     func configButton() {
-        
-        //  Button
         bringToUserLocationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
         bringToUserLocationButton.tintColor = .myDarkGreen
         bringToUserLocationButton.backgroundColor = .white
@@ -109,14 +93,11 @@ extension CafeMapViewController: MKMapViewDelegate {
         _ mapView: MKMapView,
         viewFor annotation: MKAnnotation
     ) -> MKAnnotationView? {
-        
         guard let annotation = annotation as? Annotation else {
             return nil
         }
-        
         let identifier = "cafe"
         var view: MKMarkerAnnotationView
-        
         if let dequeuedView = mapView.dequeueReusableAnnotationView(
             withIdentifier: identifier) as? MKMarkerAnnotationView {
             dequeuedView.annotation = annotation
@@ -141,7 +122,6 @@ extension CafeMapViewController: MKMapViewDelegate {
                                                     longitude: Double(cafe.longitude) ?? 0)
             let title = cafe.name
             let subtitle = cafe.address
-            
             let annotation = Annotation(
                 coordinate: coordinate,
                 title: title,

@@ -25,11 +25,7 @@ class SearchContentViewController: BaseViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Configure search result tableview
         configureSearchNoteTableview()
-        
-        // Configure search controller
         self.navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -37,11 +33,8 @@ class SearchContentViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Fetch notes
         LKProgressHUD.show()
         fetchNotes()
-        
     }
 }
     
@@ -92,21 +85,17 @@ extension SearchContentViewController {
     private func configureSearchNoteTableview() {
         
         self.searchNotesTableView.separatorColor = .clear
-        
         searchNotesTableView.registerCellWithNib(identifier: String(describing: NoteResultTableViewCell.self), bundle: nil)
         searchNotesTableView.dataSource = self
         searchNotesTableView.delegate = self
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         searchNotesTableView.addGestureRecognizer(longPress)
-        
         view.addSubview(searchNotesTableView)
-        
         searchNotesTableView.translatesAutoresizingMaskIntoConstraints = false
         searchNotesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         searchNotesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         searchNotesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         searchNotesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        
     }
     
 }
@@ -116,55 +105,36 @@ extension SearchContentViewController {
     
     private func fetchNotes() {
         NoteManager.shared.fetchNotes { [weak self] result in
-            
             switch result {
-                
             case .success(let existingNote):
-    
                     self?.notes = existingNote
                     self?.filteredNotes = self?.notes ?? existingNote
                     self?.fetchUsers()
-                
             case .failure(let error):
-                
                 print("fetchData.failure: \(error)")
             }
         }
     }
     
     private func fetchUsers() {
-        
         UserManager.shared.fetchUsers { [weak self] result in
-            
             switch result {
-                
             case .success(let existingUser):
-                
                 self?.users = existingUser
-                
                 for user in existingUser where user.uid == FirebaseManager.shared.currentUser?.uid {
-                    
                     self?.currentUser = user
-                    
                 }
                 
                 // Filter Blocked Users
                 guard let blockedUids = self?.currentUser?.blockUsers else { return }
-                
                 for blockedUid in blockedUids {
-                    
                     self?.users = self?.users.filter { $0.uid != blockedUid} ?? []
-                    
                 }
                 
                 // Filter Blocked Users Content
-                
                 for blockedUid in blockedUids {
-                    
                     self?.filteredNotes = self?.filteredNotes.filter { $0.authorId != blockedUid} ?? []
-                    
                     self?.notes = self?.notes.filter { $0.authorId != blockedUid} ?? []
-                    
                 }
                 
                 DispatchQueue.main.async {
@@ -173,7 +143,6 @@ extension SearchContentViewController {
                 }
                 
             case .failure(let error):
-                
                 print("fetchData.failure: \(error)")
             }
         }
@@ -184,10 +153,8 @@ extension SearchContentViewController {
 extension SearchContentViewController {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
-        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
-        
         if sender.state == .began {
             let touchPoint = sender.location(in: searchNotesTableView)
             if let indexPath = searchNotesTableView.indexPathForRow(at: touchPoint) {
@@ -198,51 +165,32 @@ extension SearchContentViewController {
     }
     
     @objc private func openActionList() {
-        
         self.showBlockUserAlert {
             self.blockUser()
         }
-        
     }
     
     private func blockUser() {
-        
         guard userToBeBlocked != currentUser?.uid else {
-            
             self.showBasicConfirmationAlert("無法封鎖本人帳號", "確認")
-            
             return
         }
-        
         currentUser?.blockUsers.append(userToBeBlocked)
-        
         guard let followers = self.currentUser?.followers else { return }
-        
         guard let followings = self.currentUser?.followings else { return }
-        
         self.currentUser?.followers = followers.filter { $0 != userToBeBlocked}
-        
         self.currentUser?.followings = followings.filter { $0 != userToBeBlocked}
-        
         guard let currentUser = currentUser else { return }
-        
         UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
-            
             switch result {
-                
             case .success:
-                
                 self.showBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     self.fetchNotes()
                 }
-                
             case .failure:
-                
                 self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
-                
             }
         }
-        
     }
     
 }
@@ -251,26 +199,16 @@ extension SearchContentViewController {
 extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate {
     
     func saveNote(_ selectedCell: NoteResultTableViewCell) {
-        
         guard let currentUser = FirebaseManager.shared.currentUser else {
-            
             guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
-            
             viewController.modalPresentationStyle = .overCurrentContext
-
             self.tabBarController?.present(viewController, animated: false, completion: nil)
-            
             return
-            
         }
-        
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
-        
         let selectedIndexPathItem = searchNotesTableView.indexPath(for: selectedCell)?.row
-        
         guard let item = selectedIndexPathItem else { return }
-        
         var selectedNote = Note(authorId: notes[item].authorId,
                                 comments: notes[item].comments,
                                 createdTime: notes[item].createdTime,
@@ -285,58 +223,34 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
                                 title: notes[item].title)
         
         if selectedCell.likeButton.imageView?.image == UIImage(systemName: "suit.heart") {
-            
             selectedNote.likes.append(currentUser.uid)
-            
         } else {
-            
             selectedNote.likes = selectedNote.likes.filter { $0 != currentUser.uid }
-            
         }
-        
         NoteManager.shared.updateNote(note: selectedNote, noteId: selectedNote.noteId) { result in
-            
             switch result {
-                
             case .success:
-                
                 self.fetchNotes()
-                
                 var userToBeUpdated = self.currentUser
-                
                 if selectedCell.likeButton.imageView?.image == UIImage(systemName: "suit.heart") {
-                    
                     userToBeUpdated?.savedNotes.append(selectedNote.noteId)
-                    
                 } else {
-                    
                     let user = userToBeUpdated
-                    
                     userToBeUpdated?.savedNotes =  user?.savedNotes.filter { $0 != "\(selectedNote.noteId)" } ?? []
-                    
                 }
-                
                 guard let userToBeUpdated = userToBeUpdated else {
                     return
                 }
                 
                 UserManager.shared.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
-                    
                     switch result {
-                        
                     case .success:
-                        
                         self.searchNotesTableView.reloadData()
-                        
                     case .failure:
-                        
                         self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
-                        
                     }
                 }
-                
             case .failure:
-                
                 self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
             }
         }
@@ -369,7 +283,6 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
             cell.avatarImageView.kf.indicatorType = .activity
             cell.avatarImageView.kf.setImage(with: avatarUrl)
         }
-        
         return cell
     }
     
@@ -378,34 +291,19 @@ extension SearchContentViewController: UITableViewDataSource, NoteResultDelegate
 // MARK: Search result tableview delegate
 extension SearchContentViewController: UITableViewDelegate {
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         guard FirebaseManager.shared.currentUser != nil else {
-            
             guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
-            
             viewController.modalPresentationStyle = .overCurrentContext
-
             self.tabBarController?.present(viewController, animated: false, completion: nil)
-            
             return
-            
         }
         
         guard let currentUser = FirebaseManager.shared.currentUser else {
-            
             guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
-            
             viewController.modalPresentationStyle = .overCurrentContext
-
             self.tabBarController?.present(viewController, animated: false, completion: nil)
-            
             return
-            
         }
         
         let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
@@ -420,10 +318,10 @@ extension SearchContentViewController: UITableViewDelegate {
                 viewController.users = self?.users ?? []
                 viewController.currentUser = self?.currentUser
                 self?.navigationController?.pushViewController(viewController, animated: true)
-                
             case .failure(let error):
                 print("fetchData.failure: \(error)")
             }
         }
     }
+    
 }

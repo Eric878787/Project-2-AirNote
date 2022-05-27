@@ -9,8 +9,6 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
-    // MARK: Propertities
-    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +16,6 @@ class BaseViewController: UIViewController {
     }
 
     // MARK: Methods
-    
     func showChoosePhotoAlert(_ imagePickerController: UIImagePickerController) {
         let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
@@ -101,7 +98,6 @@ class BaseViewController: UIViewController {
     }
     
     func showBlockUserAlert(_ completion: @escaping () -> Void) {
-        
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "封鎖用戶", style: .default) { _ in
             completion()
@@ -119,10 +115,8 @@ class BaseViewController: UIViewController {
                                                   height: 0)
             popoverController.permittedArrowDirections = []
         }
-        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
-        
         self.present(controller, animated: true)
     }
     
@@ -137,5 +131,4 @@ class BaseViewController: UIViewController {
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.myDarkGreen], for: .normal)
         segmentControl.selectedSegmentTintColor = .myDarkGreen
     }
-    
 }

@@ -9,33 +9,22 @@ import UIKit
 
 class ChatRoomViewLobbyController: BaseViewController {
     
-    // Chat room List TableView
+    // MARK: Properties
     private var chatRoomListTableView = UITableView(frame: .zero)
-    
-    // Chat Rooms
     private var groups: [Group] = []
-    
-    // User
     private var user: User?
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set Up Navigation Item
         navigationItem.title = NavigationItemTitle.chatRoom.rawValue
-        
-        // Confirure Chat Room List TableView
         configureChatRoomListTableView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        // fetch Data
         LKProgressHUD.show()
         fetchuser()
-        
     }
     
 }
@@ -44,14 +33,12 @@ class ChatRoomViewLobbyController: BaseViewController {
 extension ChatRoomViewLobbyController {
     
     private func fetchuser() {
-        
         guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
         UserManager.shared.fetchUser(uid) { result in
             switch result {
             case .success(let user):
                 self.user = user
                 self.fetchGroups()
-                
             case .failure:
                 self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
@@ -59,59 +46,44 @@ extension ChatRoomViewLobbyController {
     }
     
     private func fetchGroups() {
-        
         if self.user?.joinedGroups == [] {
             LKProgressHUD.dismiss()
         }
-        
         if let groupIds = self.user?.joinedGroups {
-            
             GroupManager.shared.fetchSpecificGroups(groupIds: groupIds) { result in
-                
                 switch result {
-                    
                 case .success(let groups):
-                    
                     self.groups = groups
-                    
                     self.groups.sort {
                         ( $0.createdTime ) > ( $1.createdTime )
                     }
-                    
                     LKProgressHUD.dismiss()
                     self.chatRoomListTableView.reloadData()
-                    
-                case .failure(let error):
-                    print("\(error)")
+                case .failure:
+                    LKProgressHUD.dismiss()
                 }
             }
-            
         } else {
-            
             return
-            
         }
     }
+    
 }
 
 // MARK: Configure Chat Room List TableView
 extension ChatRoomViewLobbyController {
     
     private func configureChatRoomListTableView() {
-        
         chatRoomListTableView.registerCellWithNib(identifier: String(describing: ChatRoomListTableViewCell.self), bundle: nil)
         chatRoomListTableView.dataSource = self
         chatRoomListTableView.delegate = self
         chatRoomListTableView.separatorStyle = .none
-        
         view.addSubview(chatRoomListTableView)
-        
         chatRoomListTableView.translatesAutoresizingMaskIntoConstraints = false
         chatRoomListTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5).isActive = true
         chatRoomListTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         chatRoomListTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         chatRoomListTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5).isActive = true
-        
     }
     
 }
@@ -135,7 +107,7 @@ extension ChatRoomViewLobbyController: UITableViewDataSource {
 
 // MARK: Chatroom List TableView Datasource
 extension ChatRoomViewLobbyController: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height * 0.08
     }

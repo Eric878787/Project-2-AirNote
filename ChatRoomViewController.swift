@@ -8,58 +8,34 @@
 import UIKit
 import Kingfisher
 
-class ChatRoomViewController: UIViewController {
+class ChatRoomViewController: BaseViewController {
     
-    // Chat Room TableView
+    // MARK: Properties
     private var chatRoomTableView = UITableView(frame: .zero)
-    
-    // Message TextView
     private var messageTextView = UITextView(frame: .zero)
-    
-    // Send Button
     private var sendButton = UIButton(frame: .zero)
-    
-    // Pick Image Button
     private var imageButton = UIButton(frame: .zero)
-    
-    // Image Picker
     private let imagePickerController = UIImagePickerController()
     
-    // Chat Room DataSource
+    // data
     var group: Group?
-    
     var indexOfMessageToBeDeleted: Int?
-    
-    // Selected Image
     private var selectedImage = UIImage()
-    
-    // Image To Show
     private var imageToShow = UIImageView()
-    
-    // Users DataSource
     private var users: [User] = []
     private var user: User?
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Hide Tab Bar
         self.tabBarController?.tabBar.isHidden = true
-        
-        // Set Up Navigation Item
-        
-        // Configure Layouts
+        navigationItem.title = group?.groupTitle
         configureChatRoomTableView()
         configureImageButton()
         configureTextView()
         configureSendButton()
-        
-        // Datasource
         checkMessagesChange()
-        
-        // Image Picker
         imagePickerController.delegate = self
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -74,53 +50,37 @@ extension ChatRoomViewController {
     private func checkMessagesChange() {
         GroupManager.shared.checkMessageChange(groupId: self.group?.groupId ?? "") { [weak self] result in
             switch result {
-                
             case .success(let group):
-                    
                     self?.group = group
                     self?.group?.messages.sort {
                         ( $0.createdTime ) < ( $1.createdTime )
                     }
-                    
                     self?.fetchUsers()
-                
-            case .failure(let error):
-                
-                print("\(error)")
+            case .failure:
+                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
     }
     
     private func fetchUsers() {
         UserManager.shared.fetchUsers { [weak self] result in
-            
             switch result {
-                
             case .success(let existingUser):
-                
                 self?.users = existingUser
-                
                 for user in existingUser where user.uid == FirebaseManager.shared.currentUser?.uid {
                     self?.user = user
                 }
                 
                 // Filter Blocked Users
                 guard let blockedUids = self?.user?.blockUsers else { return }
-                
                 for blockedUid in blockedUids {
-                    
                     self?.users = self?.users.filter { $0.uid != blockedUid } ?? []
-                    
                 }
                 
                 // Filter Blocked Users Content
-                
                 guard let messages = self?.group?.messages else { return }
-                
                 for blockedUid in blockedUids {
-                    
                     self?.group?.messages = messages.filter { $0.sender != blockedUid }
-                    
                 }
                 
                 DispatchQueue.main.async {
@@ -130,39 +90,32 @@ extension ChatRoomViewController {
                     }
                 }
                 
-            case .failure(let error):
-                
-                print("fetchData.failure: \(error)")
+            case .failure:
+                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
     }
+    
 }
 
 // MARK: Delete Message
 extension ChatRoomViewController {
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
-        
         if sender.state == .began {
             let touchPoint = sender.location(in: chatRoomTableView)
             if let indexPath = chatRoomTableView.indexPathForRow(at: touchPoint) {
                 indexOfMessageToBeDeleted = indexPath.row
-                
                 if group?.messages[indexPath.row].sender == FirebaseManager.shared.currentUser?.uid {
-                
                 openActionList()
-                    
                 } else {
-                    
                     return
-                    
                 }
             }
         }
     }
     
     @objc private func openActionList() {
-        
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "刪除訊息", style: .default) { _ in
             LKProgressHUD.show()
@@ -178,12 +131,9 @@ extension ChatRoomViewController {
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
         }
-        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
-        
         self.present(controller, animated: true)
-        
     }
     
     private func deleteMessage() {
@@ -208,28 +158,22 @@ extension ChatRoomViewController {
 extension ChatRoomViewController {
     
     private func configureChatRoomTableView() {
-        
         chatRoomTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         chatRoomTableView.registerCellWithNib(identifier: String(describing: LeftChatRoomTableViewCell.self), bundle: nil)
         chatRoomTableView.registerCellWithNib(identifier: String(describing: RightChatRoomTableViewCell.self), bundle: nil)
         chatRoomTableView.registerCellWithNib(identifier: String(describing: LeftImageTableViewCell.self), bundle: nil)
         chatRoomTableView.registerCellWithNib(identifier: String(describing: RightImageTableViewCell.self), bundle: nil)
         chatRoomTableView.dataSource = self
-        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         chatRoomTableView.addGestureRecognizer(longPress)
-        
         view.addSubview(chatRoomTableView)
-        
         chatRoomTableView.translatesAutoresizingMaskIntoConstraints = false
         chatRoomTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5).isActive = true
         chatRoomTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         chatRoomTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5).isActive = true
-        
     }
     
     private func configureImageButton() {
-        
         imageButton.layer.borderWidth = 1
         imageButton.layer.borderColor = UIColor.systemGray6.cgColor
         imageButton.layer.cornerRadius = 10
@@ -237,33 +181,27 @@ extension ChatRoomViewController {
         imageButton.tintColor = .myDarkGreen
         imageButton.addTarget(self, action: #selector(sendImageMessage), for: .touchUpInside)
         view.addSubview(imageButton)
-        
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
         imageButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         imageButton.widthAnchor.constraint(equalTo: imageButton.heightAnchor).isActive = true
         imageButton.topAnchor.constraint(equalTo: chatRoomTableView.bottomAnchor, constant: 10).isActive = true
         imageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
-        
     }
     
     private func configureTextView() {
-        
         messageTextView.layer.borderWidth = 1
         messageTextView.layer.borderColor = UIColor.systemGray6.cgColor
         messageTextView.layer.cornerRadius = 10
         messageTextView.font = UIFont(name: "PingFangTC-Regular", size: 14)
         view.addSubview(messageTextView)
-        
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
         messageTextView.leadingAnchor.constraint(equalTo: imageButton.trailingAnchor, constant: 10).isActive = true
         messageTextView.topAnchor.constraint(equalTo: imageButton.topAnchor).isActive = true
         messageTextView.bottomAnchor.constraint(equalTo: imageButton.bottomAnchor).isActive = true
-        
     }
     
     private func configureSendButton() {
-        
         sendButton.layer.borderWidth = 1
         sendButton.layer.borderColor = UIColor.systemGray6.cgColor
         sendButton.layer.cornerRadius = 10
@@ -271,14 +209,12 @@ extension ChatRoomViewController {
         sendButton.tintColor = .myDarkGreen
         sendButton.addTarget(self, action: #selector(sendTextMessage), for: .touchUpInside)
         view.addSubview(sendButton)
-        
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.leadingAnchor.constraint(equalTo: messageTextView.trailingAnchor, constant: 10).isActive = true
         sendButton.topAnchor.constraint(equalTo: messageTextView.topAnchor).isActive = true
         sendButton.bottomAnchor.constraint(equalTo: messageTextView.bottomAnchor).isActive = true
         sendButton.widthAnchor.constraint(equalTo: sendButton.heightAnchor).isActive = true
         sendButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
-        
     }
     
 }
