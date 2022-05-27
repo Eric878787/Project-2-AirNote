@@ -6,7 +6,7 @@
 
 <p align="left">
     <img src="https://img.shields.io/badge/platform-iOS-lightgray">
-    <img src="https://img.shields.io/badge/release-v1.0.2-green">
+    <img src="https://img.shields.io/badge/release-v1.0.1-green">
 </p>
 
 # AirNote - Make it an easier way to learn, to create personal learning materials’ collections.
