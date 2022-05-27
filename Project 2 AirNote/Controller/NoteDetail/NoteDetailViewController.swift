@@ -10,13 +10,10 @@ import Kingfisher
 
 class NoteDetailViewController: BaseViewController, UITextFieldDelegate {
     
+    // MARK: Properties
     @IBOutlet weak var noteDetailCollectionView: UICollectionView!
-    
     @IBOutlet weak var commentTextFiled: UITextField!
-    
     @IBOutlet weak var sendButton: UIButton!
-    
-    // Data
     var note = Note(authorId: "",
                     comments: [],
                     createdTime: Date(),
@@ -31,221 +28,129 @@ class NoteDetailViewController: BaseViewController, UITextFieldDelegate {
                     title: "")
     
     var users: [User] = []
-    
     var currentUser: User?
-    
     var aurthor: User?
-    
     var editButton = UIBarButtonItem()
-    
     var comments: [Comment] = []
-    
     var userToBeBlocked = ""
     
-    // Data Manager
-    private var noteManager = NoteManager()
-    private var userManager = UserManager()
-    
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Register Cell
         registerCell()
-        
-        // CollectionView DataSource & Delegate
         noteDetailCollectionView.dataSource = self
         noteDetailCollectionView.delegate = self
-        
-        // Textfield Delegate
         commentTextFiled.delegate = self
-        
-        // Send Button Color
         sendButton.tintColor = .myDarkGreen
-        
-        // CollectionView Layout
         noteDetailCollectionView.collectionViewLayout = configureLayout()
-        
-        // Edit Button
-        editButton  = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(toEditPage))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //  Edit Button Enable
-        if note.authorId == currentUser?.uid {
-            self.navigationItem.rightBarButtonItem = editButton
-        } else {
-            self.navigationItem.rightBarButtonItem = nil
-        }
-        
+        configEditButton()
         // Filter Author
         for user in users where user.uid == note.authorId {
             aurthor = user
         }
-        
-        // Filter Blocked User's Note
         filterBlockedUsersComment()
-        
     }
     
+    // MARK: Methods
     @IBAction func sendComment(_ sender: Any) {
-        
         guard let content = commentTextFiled.text else {
             sendButton.isEnabled = false
             return
         }
-        
         if content.count <= 15 && content.count >= 1 {
-            
-            let newComment = Comment(content: content, createdTime: Date(), uid: FirebaseManager.shared.currentUser?.uid ?? "")
+            let newComment = Comment(content: content, createdTime: Date(),
+                                     uid: FirebaseManager.shared.currentUser?.uid ?? "")
             note.comments.append(newComment)
             comments.append(newComment)
-            note.comments.sort{
+            note.comments.sort {
                 ( $0.createdTime ) < ( $1.createdTime )
             }
             comments.sort {
                 ( $0.createdTime ) < ( $1.createdTime )
             }
             
-            noteManager.updateNote(note: self.note, noteId: self.note.noteId) { [weak self] result in
+            NoteManager.shared.updateNote(note: self.note, noteId: self.note.noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    
-                    let controller = UIAlertController(title: "評論成功", message: nil, preferredStyle: .alert)
-                    controller.view.tintColor = UIColor.gray
-                    let action = UIAlertAction(title: "確認", style: .destructive)
-                    action.setValue(UIColor.black, forKey: "titleTextColor")
-                    controller.addAction(action)
-                    self?.present(controller, animated: true)
-                    
-                    DispatchQueue.main.async {
-                        
-                        self?.commentTextFiled.text = ""
-                        
-                        self?.noteDetailCollectionView.reloadData()
-                        if self?.note.comments != [] {
-                            self?.noteDetailCollectionView.scrollToItem(at: [3, (self?.note.comments.count ?? 1) - 1], at: .bottom, animated: true)
+                    self?.showBasicConfirmationAlert("評論成功", nil) {
+                        DispatchQueue.main.async {
+                            self?.commentTextFiled.text = ""
+                            self?.noteDetailCollectionView.reloadData()
+                            if self?.note.comments != [] {
+                                self?.noteDetailCollectionView.scrollToItem(at: [3,(self?.note.comments.count ?? 1) - 1], at: .bottom, animated: true)}
                         }
                     }
-                case .failure(let error):
-                    print("fetchData.failure: \(error)")
+                case .failure:
+                    self?.showBasicConfirmationAlert("評論失敗", "請檢查網路連線")
                 }
             }
         } else {
-            let controller = UIAlertController(title: "評論失敗", message: "評論字數應介於1-15", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.showBasicConfirmationAlert("評論失敗", "評論字數應介於1-15")
         }
     }
+    
 }
 
 // MARK: Block User
 extension NoteDetailViewController: TitleSupplementaryViewDelegate {
-    
-    func didTouchellipsis() {
-        
-        userToBeBlocked = note.authorId
-        openActionList()
-        
+    func configEditButton() {
+        editButton  = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(toEditPage))
+        if note.authorId == currentUser?.uid {
+            self.navigationItem.rightBarButtonItem = editButton
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
     
+    func didTouchellipsis() {
+        userToBeBlocked = note.authorId
+        openActionList()
+    }
     
     private func filterBlockedUsersComment() {
-        
-        // Filter Blocked Users
         if let blockedUids = self.currentUser?.blockUsers {
-            
-            // Filter Blocked Users Content
-            
             for blockedUid in blockedUids {
-                
-                self.comments = self.comments.filter{ $0.uid != blockedUid}
-                
-                
+                self.comments = self.comments.filter { $0.uid != blockedUid }
             }
         }
-        
         noteDetailCollectionView.reloadData()
-        
     }
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
-        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
-        
-        if (sender.state == UIGestureRecognizer.State.ended) {
-            
+        if sender.state == UIGestureRecognizer.State.ended {
             let touchPoint = sender.location(in: noteDetailCollectionView)
-            
             if let indexPath = self.noteDetailCollectionView.indexPathForItem(at: touchPoint) {
-                
                 userToBeBlocked = comments[indexPath.item].uid
                 openActionList()
-                
             }
-            
         }
     }
     
     @objc private func openActionList() {
-        
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
-            self.blockUser()
-        }
-        controller.addAction(action)
-        
-        
-        
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        controller.addAction(cancelAction)
-        
-        // iPad Situation
-        if let popoverController = controller.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        self.present(controller, animated: true)
-        
+        showBlockUserAlert(self.blockUser)
     }
     
     private func blockUser() {
-        
         guard userToBeBlocked != currentUser?.uid else {
-            
-            let controller = UIAlertController(title: "無法封鎖本人帳號", message: nil, preferredStyle: .alert)
-            let action = UIAlertAction(title: "確認", style: .default)
-            controller.addAction(action)
-            self.present(controller, animated: true)
-            
+            self.showBasicConfirmationAlert("無法封鎖本人帳號", nil)
             return
         }
-        
         guard let followers = self.currentUser?.followers else { return }
-        
         guard let followings = self.currentUser?.followings else { return }
-        
-        self.currentUser?.followers = followers.filter{ $0 != userToBeBlocked}
-        
-        self.currentUser?.followings = followings.filter{ $0 != userToBeBlocked}
-        
+        self.currentUser?.followers = followers.filter { $0 != userToBeBlocked }
+        self.currentUser?.followings = followings.filter { $0 != userToBeBlocked }
         currentUser?.blockUsers.append(userToBeBlocked)
-        
         guard let currentUser = currentUser else { return }
         
         UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
-            
             switch result {
-                
             case .success:
-                
                 self.showBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     if self.userToBeBlocked == self.note.authorId {
                         self.navigationController?.popToRootViewController(animated: true)
@@ -253,33 +158,21 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
                         self.fetchUser()
                     }
                 }
-                
-                
             case .failure:
-                
                 self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
-                
             }
         }
-        
     }
     
     func fetchUser() {
-        
         UserManager.shared.fetchUser(currentUser?.uid ?? "") { [weak self] result in
-            
             switch result {
             case .success (let user):
-                
                 self?.currentUser = user
-                
                 self?.filterBlockedUsersComment()
-                
             case .failure (let error):
-                
                 print(error)
             }
-            
         }
     }
     
@@ -287,7 +180,6 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
 
 // MARK: Textfield Delegate
 extension NoteDetailViewController {
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let textFieldText = textField.text,
               let rangeOfTextToReplace = Range(range, in: textFieldText) else {
@@ -327,7 +219,6 @@ extension NoteDetailViewController {
 extension NoteDetailViewController {
     
     func toProfilePage() {
-        
         if aurthor?.uid != currentUser?.uid {
             let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
             guard let viewController = storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
@@ -342,113 +233,66 @@ extension NoteDetailViewController {
 
 // MARK: Save Note
 extension NoteDetailViewController: NoteTitleDelegate {
-    
     func saveNote(_ selectedCell: NoteTitleCollectionViewCell) {
-        
         guard let currentUser = FirebaseManager.shared.currentUser else {
-            
             guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
-            
             viewController.modalPresentationStyle = .overCurrentContext
-            
             self.tabBarController?.present(viewController, animated: false, completion: nil)
-            
             return
-            
         }
         
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
-        
         if selectedCell.saveButton.imageView?.image == UIImage(systemName: "suit.heart") {
-            
             self.note.likes.append(currentUser.uid)
-            
         } else {
-            
             self.note.likes = self.note.likes.filter{ $0 != currentUser.uid }
-            
         }
         
         NoteManager.shared.updateNote(note: note, noteId: note.noteId) { result in
-            
             switch result {
-                
             case .success:
-                
                 self.fetchNote()
-                
                 var userToBeUpdated: User?
-                
                 for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid{
-                    
                     userToBeUpdated = user
-                    
                 }
                 
                 if selectedCell.saveButton.imageView?.image == UIImage(systemName: "suit.heart") {
-                    
                     let user = userToBeUpdated
-                    
-                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter{ $0 != "\(self.note.noteId)" } ?? []
-                    
+                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter { $0 != "\(self.note.noteId)" } ?? []
                     userToBeUpdated?.savedNotes.append(self.note.noteId)
-                    
                 } else {
-                    
                     let user = userToBeUpdated
-                    
-                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter{ $0 != "\(self.note.noteId)" } ?? []
-                    
+                    userToBeUpdated?.savedNotes =  user?.savedNotes.filter { $0 != "\(self.note.noteId)" } ?? []
                 }
-                
                 guard let userToBeUpdated = userToBeUpdated else {
                     return
                 }
                 
-                self.userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
-                    
+                UserManager.shared.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
                     switch result {
-                        
                     case .success:
-                        
                         self.noteDetailCollectionView.reloadData()
-                        
-                        print("收藏成功")
-                        
                     case .failure:
-                        
-                        print("收藏失敗")
-                        
+                        self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
                     }
                 }
-                
             case .failure:
-                
-                print("收藏失敗")
+                self.showBasicConfirmationAlert("收藏失敗", "請檢查網路連線")
             }
-            
         }
-        
     }
     
     func fetchNote() {
-        
         NoteManager.shared.fetchNote(self.note.noteId) { result in
-            
             switch result {
-                
-            case .success(let note):
-                
+            case .success( let note ):
                 self.note = note
-                
-            case .failure(let error):
-                
-                print("fetchData.failure: \(error)")
+            case .failure:
+                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
-            
         }
-        
     }
     
 }
@@ -476,25 +320,19 @@ extension NoteDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteCarouselCollectionViewCell.reuseIdentifer, for: indexPath)
                     as? NoteCarouselCollectionViewCell else { return UICollectionViewCell()}
             if indexPath.item == 0 {
-                
                 let url = URL(string: note.cover)
                 cell.photoView.kf.indicatorType = .activity
                 cell.photoView.kf.setImage(with: url)
-                
             } else {
-                
                 let url = URL(string: note.images[indexPath.item - 1])
                 cell.photoView.kf.indicatorType = .activity
                 cell.photoView.kf.setImage(with: url)
-                
             }
-            
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: NoteTitleCollectionViewCell.self), for: indexPath)
@@ -502,15 +340,12 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             cell.delegate = self
             cell.viewsLabel.text = "\(note.clicks.count)"
             cell.commentCountsLabel.text = "\(note.comments.count)"
-            
-            // Highlight saved note
             cell.saveButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
             for like in note.likes {
                 if like == FirebaseManager.shared.currentUser?.uid {
                     cell.saveButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
                 }
             }
-            
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteContentCollectionViewCell.reuseIdentifer, for: indexPath)
@@ -527,8 +362,6 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             cell.commentTimeLabel.text = date.timeAgoDisplay()
             let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
             cell.addGestureRecognizer(longPress)
-            
-            // querying users' name & avatar
             var commentUser: User?
             for user in users where user.uid == comments[indexPath.item].uid {
                 cell.nameLabel.text = user.userName
@@ -537,7 +370,6 @@ extension NoteDetailViewController: UICollectionViewDataSource {
                 cell.avatarImageView.kf.setImage(with: url)
                 commentUser = user
             }
-            
             cell.commentTouchHandler = { [weak self] in
                 if self?.comments[indexPath.item].uid != self?.currentUser?.uid {
                     let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
@@ -548,7 +380,6 @@ extension NoteDetailViewController: UICollectionViewDataSource {
                     self?.tabBarController?.selectedIndex = 3
                 }
             }
-            
             return cell
         default:
             return UICollectionViewCell()
@@ -556,7 +387,6 @@ extension NoteDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath)
                 as? TitleSupplementaryView else { return UICollectionReusableView() }
         header.delegate = self
@@ -616,7 +446,6 @@ extension NoteDetailViewController: UICollectionViewDataSource {
 extension NoteDetailViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if indexPath.section == 0 {
             let viewController = ImageViewerViewController()
             viewController.images = self.note.images
@@ -633,7 +462,6 @@ extension NoteDetailViewController {
     
     private func configureLayout() -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
             switch sectionIndex {
             case 0:
                 return self.configSection0()
@@ -652,80 +480,60 @@ extension NoteDetailViewController {
     }
     
     private func configSection0() -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
         let groupHeight = NSCollectionLayoutDimension.fractionalWidth(0.8)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: groupHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
         section.boundarySupplementaryItems = [sectionHeader]
-        
         return section
     }
     
     private func configSection1() -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5)
-        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(30))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-        
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         section.boundarySupplementaryItems = [sectionHeader]
-        
         return section
     }
     
     private func configSection2() -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5)
-        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-        
         return section
     }
     
     private func configSection3() -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(45))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         section.boundarySupplementaryItems = [sectionHeader]
-        
         return section
     }
     
@@ -735,7 +543,6 @@ extension Date {
     func timeAgoDisplay() -> String {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .full
-        
         return formatter.localizedString(for: self, relativeTo: Date())
     }
 }
