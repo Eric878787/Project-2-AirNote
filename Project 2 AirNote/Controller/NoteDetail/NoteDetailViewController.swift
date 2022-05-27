@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class NoteDetailViewController: UIViewController, UITextFieldDelegate {
+class NoteDetailViewController: BaseViewController, UITextFieldDelegate {
     
     @IBOutlet weak var noteDetailCollectionView: UICollectionView!
     
@@ -245,22 +245,19 @@ extension NoteDetailViewController: TitleSupplementaryViewDelegate {
             switch result {
                 
             case .success:
-                let controller = UIAlertController(title: "封鎖成功", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "確認", style: .default) { action in
+                
+                self.showBasicConfirmationAlert("封鎖成功", "你將不會再看到此用戶的內容") {
                     if self.userToBeBlocked == self.note.authorId {
                         self.navigationController?.popToRootViewController(animated: true)
                     } else {
                         self.fetchUser()
                     }
                 }
-                controller.addAction(action)
-                self.present(controller, animated: true)
                 
-                print("封鎖成功")
                 
             case .failure:
                 
-                print("封鎖失敗")
+                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
                 
             }
         }
@@ -307,9 +304,9 @@ extension NoteDetailViewController {
 extension NoteDetailViewController {
     @objc private func toEditPage() {
         let storyBoard = UIStoryboard(name: "AddContent", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "EditNoteViewController") as? EditNoteViewController else { return }
-        vc.note = self.note
-        self.navigationController?.pushViewController(vc, animated: true)
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "EditNoteViewController") as? EditNoteViewController else { return }
+        viewController.note = self.note
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -333,9 +330,9 @@ extension NoteDetailViewController {
         
         if aurthor?.uid != currentUser?.uid {
             let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
-            guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
-            vc.userInThisPage = self.aurthor
-            self.navigationController?.pushViewController(vc, animated: true)
+            guard let viewController = storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+            viewController.userInThisPage = self.aurthor
+            self.navigationController?.pushViewController(viewController, animated: true)
         } else {
             self.tabBarController?.selectedIndex = 3
         }
@@ -350,11 +347,11 @@ extension NoteDetailViewController: NoteTitleDelegate {
         
         guard let currentUser = FirebaseManager.shared.currentUser else {
             
-            guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
             
-            vc.modalPresentationStyle = .overCurrentContext
+            viewController.modalPresentationStyle = .overCurrentContext
             
-            self.tabBarController?.present(vc, animated: false, completion: nil)
+            self.tabBarController?.present(viewController, animated: false, completion: nil)
             
             return
             
@@ -456,7 +453,6 @@ extension NoteDetailViewController: NoteTitleDelegate {
     
 }
 
-
 // MARK: CollectionView DataSource
 extension NoteDetailViewController: UICollectionViewDataSource {
     
@@ -467,13 +463,13 @@ extension NoteDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return note.images.count + 1 ?? 0
+            return note.images.count + 1
         case 1:
             return 1
         case 2:
             return 1
         case 3:
-            return comments.count ?? 0
+            return comments.count
         default:
             return 0
         }
@@ -526,7 +522,6 @@ extension NoteDetailViewController: UICollectionViewDataSource {
                     as? NoteCommentCollectionViewCell else { return UICollectionViewCell()}
             cell.commentLabel.text = comments[indexPath.item].content
             let date = comments[indexPath.item].createdTime
-            let locoalDate = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd"
             cell.commentTimeLabel.text = date.timeAgoDisplay()
@@ -546,9 +541,9 @@ extension NoteDetailViewController: UICollectionViewDataSource {
             cell.commentTouchHandler = { [weak self] in
                 if self?.comments[indexPath.item].uid != self?.currentUser?.uid {
                     let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
-                    guard let vc =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
-                    vc.userInThisPage = commentUser
-                    self?.navigationController?.pushViewController(vc, animated: true)
+                    guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+                    viewController.userInThisPage = commentUser
+                    self?.navigationController?.pushViewController(viewController, animated: true)
                 } else {
                     self?.tabBarController?.selectedIndex = 3
                 }
@@ -623,11 +618,11 @@ extension NoteDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
-            let vc = ImageViewerViewController()
-            vc.images = self.note.images
-            vc.images.insert(self.note.cover, at: 0)
-            vc.currentPage = indexPath.item
-            self.navigationController?.pushViewController(vc, animated: true)
+            let viewController = ImageViewerViewController()
+            viewController.images = self.note.images
+            viewController.images.insert(self.note.cover, at: 0)
+            viewController.currentPage = indexPath.item
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     

@@ -13,34 +13,29 @@ protocol SetUpPadViewControllerDelegate: AnyObject {
 
 class SetUpPadViewController: UIViewController {
     
+    // MARK: Properties
     @IBOutlet weak var sliderBrush: UISlider!
     @IBOutlet weak var sliderOpacity: UISlider!
     @IBOutlet weak var previewImageView: UIImageView!
-    
     @IBOutlet weak var labelBrush: UILabel!
     @IBOutlet weak var labelOpacity: UILabel!
-    
     @IBOutlet weak var sliderRed: UISlider!
     @IBOutlet weak var sliderGreen: UISlider!
     @IBOutlet weak var sliderBlue: UISlider!
-    
     @IBOutlet weak var labelRed: UILabel!
     @IBOutlet weak var labelGreen: UILabel!
     @IBOutlet weak var labelBlue: UILabel!
-    
     @IBOutlet weak var closeButton: UIButton!
-    
     var brush: CGFloat = 10.0
     var opacity: CGFloat = 1.0
     var red: CGFloat = 0.0
     var green: CGFloat = 0.0
     var blue: CGFloat = 0.0
-    
     weak var delegate: SetUpPadViewControllerDelegate?
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         sliderBrush.value = Float(brush)
         labelBrush.text = String(format: "%.1f", brush)
         sliderOpacity.value = Float(opacity)
@@ -51,14 +46,11 @@ class SetUpPadViewController: UIViewController {
         labelGreen.text = Int(sliderGreen.value).description
         sliderBlue.value = Float(blue * 255.0)
         labelBlue.text = Int(sliderBlue.value).description
-        
         drawPreview()
-        
         closeButton.tintColor = .myDarkGreen
     }
     
-    // MARK: - Actions
-    
+    // MARK: Methods
     @IBAction func closePressed(_ sender: Any) {
         delegate?.settingsViewControllerFinished(self)
         self.dismiss(animated: true, completion: nil)
@@ -83,7 +75,6 @@ class SetUpPadViewController: UIViewController {
         labelGreen.text = Int(sliderGreen.value).description
         blue = CGFloat(sliderBlue.value / 255.0)
         labelBlue.text = Int(sliderBlue.value).description
-        
         drawPreview()
     }
     
@@ -92,7 +83,6 @@ class SetUpPadViewController: UIViewController {
         guard let context = UIGraphicsGetCurrentContext() else {
             return
         }
-        
         context.setLineCap(.round)
         context.setLineWidth(brush)
         context.setStrokeColor(UIColor(red: red, green: green, blue: blue, alpha: opacity).cgColor)
@@ -104,4 +94,5 @@ class SetUpPadViewController: UIViewController {
         previewImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
     }
+    
 }
