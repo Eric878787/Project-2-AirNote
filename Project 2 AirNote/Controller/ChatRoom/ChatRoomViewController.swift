@@ -57,7 +57,7 @@ extension ChatRoomViewController {
                     }
                     self?.fetchUsers()
             case .failure:
-                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                self?.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
     }
@@ -91,7 +91,7 @@ extension ChatRoomViewController {
                 }
                 
             case .failure:
-                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                self?.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
             }
         }
     }
