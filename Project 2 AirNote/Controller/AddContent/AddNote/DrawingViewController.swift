@@ -9,27 +9,28 @@ import UIKit
 
 class DrawingPadViewController: UIViewController {
     
+    // MARK: Properties
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var tempImageView: UIImageView!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var sharedButton: UIButton!
     @IBOutlet weak var setUpButton: UIButton!
     @IBOutlet var pencils: [UIButton]!
+    private var lastPoint = CGPoint.zero
+    private var color = UIColor.black
+    private var brushWidth: CGFloat = 10.0
+    private var opacity: CGFloat = 1.0
+    private var swiped = false
+    var imageProvider: ( (UIImage) -> Void)?
     
-    var lastPoint = CGPoint.zero
-    var color = UIColor.black
-    var brushWidth: CGFloat = 10.0
-    var opacity: CGFloat = 1.0
-    var swiped = false
-    
-    var imageProvider: ( (UIImage) -> ())?
-    
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName:"checkmark"), style: .plain, target: self, action: #selector(backToPreviousPage))
-        // Configure Buttons
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark"),
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(backToPreviousPage))
         configButtons()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,8 +42,7 @@ class DrawingPadViewController: UIViewController {
         }
     }
     
-    // MARK: - Actions
-    
+    // MARK: Methods
     private func configButtons() {
         
         // Reset Button
@@ -78,30 +78,31 @@ class DrawingPadViewController: UIViewController {
     
     @IBAction func setUpPencil(_ sender: Any) {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "SetUpPadViewController") as? SetUpPadViewController else { return }
-        vc.delegate = self
-        vc.brush = brushWidth
-        vc.opacity = opacity
-        
+        guard let viewController = storyBoard.instantiateViewController(withIdentifier: "SetUpPadViewController")
+                as? SetUpPadViewController else { return }
+        viewController.delegate = self
+        viewController.brush = brushWidth
+        viewController.opacity = opacity
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: nil)
-        vc.red = red
-        vc.green = green
-        vc.blue = blue
-        self.navigationController?.present(vc, animated: true)
+        viewController.red = red
+        viewController.green = green
+        viewController.blue = blue
+        self.navigationController?.present(viewController, animated: true)
     }
     
     @IBAction func resetPressed(_ sender: Any) {
         mainImageView.image = nil
     }
     
-    @IBAction func sharePressed(_ sender: Any) {
+    @IBAction func sharePressed(_ sender: UIButton) {
         guard let image = mainImageView.image else {
             return
         }
         let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        activity.popoverPresentationController?.sourceView = sender
         present(activity, animated: true)
     }
     
@@ -127,20 +128,15 @@ class DrawingPadViewController: UIViewController {
             return
         }
         tempImageView.image?.draw(in: view.bounds)
-        
         context.move(to: fromPoint)
         context.addLine(to: toPoint)
-        
         context.setLineCap(.round)
         context.setBlendMode(.normal)
         context.setLineWidth(brushWidth)
         context.setStrokeColor(color.cgColor)
-        
         context.strokePath()
-        
         tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         tempImageView.alpha = opacity
-        
         UIGraphicsEndImageContext()
     }
     
@@ -152,6 +148,7 @@ class DrawingPadViewController: UIViewController {
         lastPoint = touch.location(in: view)
     }
     
+    // The timing when user start to move the touch point
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -175,13 +172,11 @@ class DrawingPadViewController: UIViewController {
         tempImageView?.image?.draw(in: view.bounds, blendMode: .normal, alpha: opacity)
         mainImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
         tempImageView.image = nil
     }
 }
 
 // MARK: - SettingsViewControllerDelegate
-
 extension DrawingPadViewController: SetUpPadViewControllerDelegate {
     func settingsViewControllerFinished(_ settingsViewController: SetUpPadViewController) {
         brushWidth = settingsViewController.brush

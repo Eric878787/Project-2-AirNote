@@ -33,7 +33,6 @@ class FirebaseManager {
     
 }
 
-
 // MARK: Native Sign In & Out
 extension FirebaseManager {
     
@@ -41,7 +40,6 @@ extension FirebaseManager {
         authenticator.createUser(withEmail: email, password: password) { result, error in
             guard let user = result?.user, error == nil
             else {
-                print("======\(error?.localizedDescription)")
                 self.signUpFailure?(error?.localizedDescription ?? "unknowned failure")
                 return
             }
@@ -53,7 +51,6 @@ extension FirebaseManager {
         authenticator.signIn(withEmail: email, password: password) { result, error in
             guard let user = result?.user,
                   error == nil else {
-                print("========\(error?.localizedDescription)")
                 self.logInFailure?(error?.localizedDescription ?? "unknowned failure")
                 return
             }
@@ -116,7 +113,7 @@ extension FirebaseManager {
                                                       rawNonce: nonce)
             // Sign in with Apple.
             Auth.auth().signIn(with: credential) { (authResult, error) in
-                if let user = authResult?.user {
+                if authResult?.user != nil {
                     self.loginSuccess?()
                     return
                 }

@@ -8,31 +8,21 @@
 import UIKit
 import AuthenticationServices
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     
-    // UI Properties
+    // MARK: Propertires
     private var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
-    
     private var asVisitorButton = UIButton()
-    
     @IBOutlet weak var emailTextField: UITextField!
-    
     @IBOutlet weak var passwordTextField: UITextField!
-    
     @IBOutlet weak var signUpButton: UIButton!
-    
     @IBOutlet weak var logInButton: UIButton!
-    
     @IBOutlet weak var backgroundView: UIView!
-    
     @IBOutlet weak var mainTitle: UILabel!
-    
     @IBOutlet weak var termsAndConditionsStackView: UIStackView!
-    
-    
-    // User Manager
     private var existingUsers: [User] = []
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.delegate = self
@@ -44,12 +34,8 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // refresh textfield border
-        
         emailTextField.layer.cornerRadius = 5
         emailTextField.clipsToBounds = true
-        
         passwordTextField.layer.cornerRadius = 5
         passwordTextField.clipsToBounds = true
     }
@@ -60,121 +46,56 @@ class LoginViewController: UIViewController {
         
     }
     
-    // MARK: Native Sign up
+    // MARK: Methods
     @IBAction func nativeSignUp(_ sender: Any) {
-        
         guard let email = emailTextField.text else { return }
-        
         guard let password = passwordTextField.text else { return }
-        
-//        if email == "" {
-//
-//            showAlert(emailTextField)
-//
-//        } else {
-//
-//            if password.count < 6 {
-//
-//                showAlert(passwordTextField)
-//
-//            } else {
-//
-                FirebaseManager.shared.nativeSignUp(email, password)
-//
-//            }
-//
-//        }
-        
+        FirebaseManager.shared.nativeSignUp(email, password)
         FirebaseManager.shared.signUpSuccess = {
             self.checkIfItsNew()
             self.emailTextField.text = ""
             self.passwordTextField.text = ""
-            let controller = UIAlertController(title: "註冊成功", message: "請重新登入", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.showBasicConfirmationAlert("註冊成功", "請重新登入")
         }
         
         FirebaseManager.shared.signUpFailure = { errorMessage in
             self.checkIfItsNew()
-            let controller = UIAlertController(title: "註冊失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.showBasicConfirmationAlert("註冊失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
-        
     }
     
-    // MARK: Native Log In
     @IBAction func nativeLogIn(_ sender: Any) {
-        
         guard let email = emailTextField.text else { return }
-        
         guard let password = passwordTextField.text else { return }
-        
-//        if email == "" {
-//
-//            showAlert(emailTextField)
-//
-//        } else {
-//
-//            if password.count < 6 {
-//
-//                showAlert(passwordTextField)
-//
-//            } else {
-                FirebaseManager.shared.nativeLogIn(email, password)
-//            }
-//
-//        }
-        
+        FirebaseManager.shared.nativeLogIn(email, password)
         FirebaseManager.shared.loginSuccess = {
             self.emailTextField.text = ""
             self.passwordTextField.text = ""
-            let controller = UIAlertController(title: "登入成功", message: "", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive) { _ in
+            self.showBasicConfirmationAlert("登入成功", "") {
                 self.presentOrDismissVC()
             }
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
         }
         
         FirebaseManager.shared.logInFailure = { errorMessage in
-            let controller = UIAlertController(title: "登入失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.showBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
         
     }
     
-    
     @IBAction func openPrivacy(_ sender: Any) {
-        
-        let vc = WebViewController()
-        vc.urlString = "https://pages.flycricket.io/airnote/privacy.html"
-        self.present(vc, animated: true)
-        
+        let viewController = WebViewController()
+        viewController.urlString = "https://pages.flycricket.io/airnote/privacy.html"
+        self.present(viewController, animated: true)
     }
     
-    
     @IBAction func openEULA(_ sender: Any) {
-        let vc = WebViewController()
-        vc.urlString = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
-        self.present(vc, animated: true)
+        let viewController = WebViewController()
+        viewController.urlString = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+        self.present(viewController, animated: true)
     }
     
 }
 
-// MARK: Configure Layouts
 extension LoginViewController: UITextFieldDelegate {
     
     private func handlingErrorMessage(_ errorMessage: String) -> String {
@@ -189,14 +110,12 @@ extension LoginViewController: UITextFieldDelegate {
             return "密碼不得少於6個字元"
         case "The email address is already in use by another account.":
             return "此Email已被註冊"
-            
         default:
             return "未知的錯誤"
         }
     }
     
     private func layoutingSubviews () {
-        
         // BackGround View
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = backgroundView.bounds
@@ -220,24 +139,19 @@ extension LoginViewController: UITextFieldDelegate {
         logInButton.layer.cornerRadius = 5
         logInButton.clipsToBounds = true
         logInButton.isEnabled = false
-        
     }
     
     func showAlert(_ textfiled: UITextField) {
-        
         textfiled.layer.borderColor = UIColor.red.cgColor
         textfiled.layer.borderWidth = 1
-        
     }
     
     func configureNativeSignIn() {
         signUpButton.setTitle("註冊", for: .normal)
         logInButton.setTitle("登入", for: .normal)
-        
     }
     
     func configureAsVisitorButton() {
-        
         asVisitorButton.translatesAutoresizingMaskIntoConstraints = false
         asVisitorButton.layer.cornerRadius = 5
         asVisitorButton.clipsToBounds = true
@@ -247,7 +161,6 @@ extension LoginViewController: UITextFieldDelegate {
         asVisitorButton.setTitleColor(.black, for: .normal)
         asVisitorButton.addTarget(self, action: #selector(accessAsVisitor), for: .touchUpInside)
         view.addSubview(asVisitorButton)
-        
         NSLayoutConstraint.activate([
             asVisitorButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             asVisitorButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
@@ -257,16 +170,17 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
     func configureSignInWithAppleButton() {
-        
         signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
         signInWithAppleButton.cornerRadius = 5
         signInWithAppleButton.addTarget(self, action: #selector(signInWithApple), for: .touchUpInside)
         view.addSubview(signInWithAppleButton)
-        
         NSLayoutConstraint.activate([
-            signInWithAppleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            signInWithAppleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            signInWithAppleButton.bottomAnchor.constraint(equalTo: termsAndConditionsStackView.topAnchor, constant: -10)
+            signInWithAppleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                                                           constant: 30),
+            signInWithAppleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                            constant: -30),
+            signInWithAppleButton.bottomAnchor.constraint(equalTo: termsAndConditionsStackView.topAnchor,
+                                                          constant: -10)
         ])
     }
     
@@ -286,11 +200,8 @@ extension LoginViewController: UITextFieldDelegate {
 extension LoginViewController {
     
     private func checkIfItsNew() {
-        
         guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
-        
         var isNew = true
-        
         UserManager.shared.fetchUsers { result in
             switch result {
             case .success(let users):
@@ -298,9 +209,7 @@ extension LoginViewController {
                 for user in self.existingUsers where user.uid == uid {
                     isNew = false
                 }
-                
                 if isNew == true {
-                    
                     var user = User(followers: [],
                                     followings: [],
                                     joinedGroups: [],
@@ -312,7 +221,6 @@ extension LoginViewController {
                                     email: FirebaseManager.shared.currentUser?.email,
                                     uid: uid,
                                     blockUsers: [])
-                    
                     UserManager.shared.createUser( &user, uid) { result in
                         switch result {
                         case .success(let success):
@@ -321,94 +229,61 @@ extension LoginViewController {
                             print(failure)
                         }
                     }
-                    
                 } else {
                     return
                 }
-                
             case.failure(let error):
                 print(error)
             }
         }
-        
     }
     
 }
 
-// MARK: As Visitor
 extension LoginViewController {
     
     @objc private func accessAsVisitor() {
-        
         presentOrDismissVC()
-        
+    }
+    
+    func presentOrDismissVC () {
+        guard let viewController = UIStoryboard.main.instantiateInitialViewController() else { return }
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
     }
     
 }
 
-
 // MARK: Sign in with Apple
-extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewController: ASAuthorizationControllerDelegate,
+                               ASAuthorizationControllerPresentationContextProviding {
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        
         return view.window!
-        
     }
     
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization) {
         // To trigger the function defined in class FirebaseManager
-        FirebaseManager.shared.authorizationController(controller: controller, didCompleteWithAuthorization: authorization)
-        
+        FirebaseManager.shared.authorizationController(controller: controller,
+                                                       didCompleteWithAuthorization: authorization)
     }
-    
     
     @objc private func signInWithApple() {
-        
         let request = FirebaseManager.shared.signInWithApple()
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
-        
         FirebaseManager.shared.loginSuccess = {
             self.checkIfItsNew()
-            let controller = UIAlertController(title: "登入成功", message: "", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive) { _ in
+            self.showBasicConfirmationAlert("登入成功", "") {
                 self.presentOrDismissVC()
             }
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
         }
-        
         FirebaseManager.shared.logInFailure = { errorMessage in
-            let controller = UIAlertController(title: "登入失敗", message: "\(self.handlingErrorMessage(errorMessage))", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let action = UIAlertAction(title: "確認", style: .destructive)
-            action.setValue(UIColor.black, forKey: "titleTextColor")
-            controller.addAction(action)
-            self.present(controller, animated: true)
+            self.showBasicConfirmationAlert("登入失敗", "\(self.handlingErrorMessage(errorMessage))")
         }
-        
-        
-    }
-    
-}
-
-// MARK: Presenting or dismissing vc
-extension LoginViewController {
-    
-    func presentOrDismissVC () {
-        
-        guard let vc = UIStoryboard.main.instantiateInitialViewController() else { return }
-        
-        vc.modalPresentationStyle = .fullScreen
-        
-        self.present(vc, animated: true)
-        
     }
     
 }

@@ -11,10 +11,8 @@ class NoteHeader: UITableViewHeaderFooterView {
     
     static let reuseIdentifier = String(describing: NoteHeader.self)
     
-    var firstSegmentController = UISegmentedControl(items: ["Owned", "Saved"])
+    var title = UILabel()
     
-    var firstSegmentHandler: ((Int) -> Void)?
-
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         configureNoteHeader()
@@ -29,31 +27,19 @@ class NoteHeader: UITableViewHeaderFooterView {
     }
     
     private func configureNoteHeader() {
-        firstSegmentController.selectedSegmentIndex = 0
-        firstSegmentController.selectedSegmentTintColor = .myDarkGreen
-        firstSegmentController.backgroundColor = .white
-        firstSegmentController.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        firstSegmentController.setTitleTextAttributes([.foregroundColor: UIColor.myDarkGreen], for: .normal)
-        firstSegmentController.layer.cornerRadius = 10
-        firstSegmentController.clipsToBounds = true
-        firstSegmentController.addTarget(self, action: #selector(changeNotes), for: .valueChanged)
-        addSubview(firstSegmentController)
-        firstSegmentController.translatesAutoresizingMaskIntoConstraints = false
+        title.textColor = .black
+        title.font = UIFont(name: "PingFangTC-Semibold", size: 16)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(title)
         
         let inset: CGFloat = 5
         
         NSLayoutConstraint.activate([
-            firstSegmentController.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            firstSegmentController.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            firstSegmentController.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-            firstSegmentController.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
+            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
+            title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
+            title.topAnchor.constraint(equalTo: topAnchor, constant: inset),
+            title.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
         ])
-    }
-    
-    @objc private func changeNotes(sender: UISegmentedControl) {
-        
-        firstSegmentHandler?(sender.selectedSegmentIndex)
-        
     }
     
 }
