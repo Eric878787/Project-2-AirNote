@@ -12,13 +12,34 @@ AirNote is an app provides user a platform to create, share and discuss notes.
 <br>
 
 <p align="left">
-    <a href="https://apps.apple.com/tw/app/airnote/id1619738706"><img src="https://user-images.githubusercontent.com/94897201/170625575-ea8bcba8-323c-4999-973d-bd97a329e132.png"></a>
+    <a href="https://apps.apple.com/tw/app/airnote/id1619738706"><img src="https://i.imgur.com/NKyvGNy.png"></a>
 </p>
 
 ## Table of Contents
+* [Features](#Features)
+* [Highlights](#Highlights)
+* [Techniques](#Techniques)
+* [Libraries](#Libraries)
+* [Requirement](#Requirement)
+* [Release Notes](#Release-Notes)
+* [Author](#Author)
+
 
 ## Features
 
+### Browsing Notes
+
+
 ## Highlights
 
-## 
+## Techniques
+
+## Libraries
+
+## Requirement
+
+## Version
+
+## Release Notes
+
+## Author
