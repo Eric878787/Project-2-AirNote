@@ -349,6 +349,83 @@
 			name = HTTP;
 			sourceTree = "<group>";
 		};
+		42392F8528409683004FB225 /* AddGroup */ = {
+			isa = PBXGroup;
+			children = (
+				421D5C7C282B65E500F5747C /* AddCalendarHeaderView.swift */,
+				421D5C7E282B68C100F5747C /* AddCalendarHeaderView.xib */,
+				42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */,
+				42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */,
+				42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */,
+				42E2B687280DA4E500B51D9F /* AddAddressTableViewCell.xib */,
+			);
+			path = AddGroup;
+			sourceTree = "<group>";
+		};
+		42392F862840971F004FB225 /* SearchContent */ = {
+			isa = PBXGroup;
+			children = (
+				42392F8828409754004FB225 /* NoteResult */,
+				42392F8728409741004FB225 /* GroupResult */,
+			);
+			path = SearchContent;
+			sourceTree = "<group>";
+		};
+		42392F8728409741004FB225 /* GroupResult */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B68D280EBFA300B51D9F /* GroupResultTableViewCell.swift */,
+				42E2B68E280EBFA300B51D9F /* GroupResultTableViewCell.xib */,
+			);
+			path = GroupResult;
+			sourceTree = "<group>";
+		};
+		42392F8828409754004FB225 /* NoteResult */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */,
+				42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */,
+			);
+			path = NoteResult;
+			sourceTree = "<group>";
+		};
+		42392F89284097AF004FB225 /* AddContent */ = {
+			isa = PBXGroup;
+			children = (
+				42392F8A284097C0004FB225 /* AddNote */,
+				42392F8B284097C9004FB225 /* AddGroup */,
+			);
+			path = AddContent;
+			sourceTree = "<group>";
+		};
+		42392F8A284097C0004FB225 /* AddNote */ = {
+			isa = PBXGroup;
+			children = (
+				42F936562806BE5D0058EB07 /* AddNoteViewController.swift */,
+				42E2B6572809179F00B51D9F /* DrawingViewController.swift */,
+				42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */,
+			);
+			path = AddNote;
+			sourceTree = "<group>";
+		};
+		42392F8B284097C9004FB225 /* AddGroup */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */,
+				42405B222816DCEA00A12777 /* CafeMapViewController.swift */,
+			);
+			path = AddGroup;
+			sourceTree = "<group>";
+		};
+		42392F8C2840982C004FB225 /* ChatRoom */ = {
+			isa = PBXGroup;
+			children = (
+				42E2B692280ED7C700B51D9F /* ChatRoomViewLobbyController.swift */,
+				42DD04C8280FE414007C4A9F /* ChatRoomViewController.swift */,
+			);
+			path = ChatRoom;
+			sourceTree = "<group>";
+		};
 		423A12672813F1390075B34F /* GroupDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,7 +559,7 @@
 			children = (
 				42F936282802BB850058EB07 /* DiscoverNotes */,
 				42E2B66D280CFC6D00B51D9F /* DiscoverGroups */,
-				42E2B66C280C03A600B51D9F /* SearchContent */,
+				42392F862840971F004FB225 /* SearchContent */,
 				42F936402805AFB60058EB07 /* AddContent */,
 				42E2B696280EE97400B51D9F /* Chatroom */,
 				42DD04D228112FDA007C4A9F /* NoteDetail */,
@@ -524,8 +601,8 @@
 				42DE58722801772C00D764F7 /* Base */,
 				42DE587828017FAD00D764F7 /* DiscoverNotes */,
 				42DE587B2801809100D764F7 /* DiscoverStudyGroups */,
-				42F9363B28058B6E0058EB07 /* Add Content */,
-				42E2B66F280D034F00B51D9F /* ChatRoom */,
+				42392F89284097AF004FB225 /* AddContent */,
+				42392F8C2840982C004FB225 /* ChatRoom */,
 				42DD04D328112FF3007C4A9F /* NoteDetail */,
 				423A12672813F1390075B34F /* GroupDetail */,
 				42405B0B2815A04500A12777 /* Profile */,
@@ -595,15 +672,6 @@
 			name = ColorOfPen;
 			sourceTree = "<group>";
 		};
-		42E2B66C280C03A600B51D9F /* SearchContent */ = {
-			isa = PBXGroup;
-			children = (
-				42E2B670280D039600B51D9F /* NoteResult */,
-				42E2B671280D03E100B51D9F /* GroupResult */,
-			);
-			path = SearchContent;
-			sourceTree = "<group>";
-		};
 		42E2B66D280CFC6D00B51D9F /* DiscoverGroups */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,46 +679,6 @@
 				42E2B673280D666500B51D9F /* GroupsCollectionViewCell.xib */,
 			);
 			path = DiscoverGroups;
-			sourceTree = "<group>";
-		};
-		42E2B66E280D032400B51D9F /* AddNote */ = {
-			isa = PBXGroup;
-			children = (
-				42F936562806BE5D0058EB07 /* AddNoteViewController.swift */,
-				42E2B6572809179F00B51D9F /* DrawingViewController.swift */,
-				42E2B65D28096BD200B51D9F /* SetUpPadViewController.swift */,
-			);
-			name = AddNote;
-			sourceTree = "<group>";
-		};
-		42E2B66F280D034F00B51D9F /* ChatRoom */ = {
-			isa = PBXGroup;
-			children = (
-				42E2B692280ED7C700B51D9F /* ChatRoomViewLobbyController.swift */,
-				42DD04C8280FE414007C4A9F /* ChatRoomViewController.swift */,
-			);
-			name = ChatRoom;
-			path = ../..;
-			sourceTree = "<group>";
-		};
-		42E2B670280D039600B51D9F /* NoteResult */ = {
-			isa = PBXGroup;
-			children = (
-				42E2B668280C039E00B51D9F /* NoteResultTableViewCell.swift */,
-				42E2B669280C039E00B51D9F /* NoteResultTableViewCell.xib */,
-			);
-			name = NoteResult;
-			path = ../../..;
-			sourceTree = "<group>";
-		};
-		42E2B671280D03E100B51D9F /* GroupResult */ = {
-			isa = PBXGroup;
-			children = (
-				42E2B68D280EBFA300B51D9F /* GroupResultTableViewCell.swift */,
-				42E2B68E280EBFA300B51D9F /* GroupResultTableViewCell.xib */,
-			);
-			name = GroupResult;
-			path = ../../..;
 			sourceTree = "<group>";
 		};
 		42E2B676280D6D0900B51D9F /* Groups */ = {
@@ -686,29 +714,6 @@
 				42DD04D828116FED007C4A9F /* Animation.swift */,
 			);
 			path = AddNote;
-			sourceTree = "<group>";
-		};
-		42E2B681280DA41600B51D9F /* AddGroup */ = {
-			isa = PBXGroup;
-			children = (
-				421D5C7C282B65E500F5747C /* AddCalendarHeaderView.swift */,
-				421D5C7E282B68C100F5747C /* AddCalendarHeaderView.xib */,
-				42E2B682280DA4BE00B51D9F /* AddCalendarTableViewCell.swift */,
-				42E2B683280DA4BE00B51D9F /* AddCalendarTableViewCell.xib */,
-				42E2B686280DA4E500B51D9F /* AddAddressTableViewCell.swift */,
-				42E2B687280DA4E500B51D9F /* AddAddressTableViewCell.xib */,
-			);
-			name = AddGroup;
-			path = ../../..;
-			sourceTree = "<group>";
-		};
-		42E2B691280ED78500B51D9F /* AddGroup */ = {
-			isa = PBXGroup;
-			children = (
-				42E2B67D280D95E400B51D9F /* AddGroupViewController.swift */,
-				42405B222816DCEA00A12777 /* CafeMapViewController.swift */,
-			);
-			name = AddGroup;
 			sourceTree = "<group>";
 		};
 		42E2B696280EE97400B51D9F /* Chatroom */ = {
@@ -758,22 +763,12 @@
 			name = Users;
 			sourceTree = "<group>";
 		};
-		42F9363B28058B6E0058EB07 /* Add Content */ = {
-			isa = PBXGroup;
-			children = (
-				42E2B66E280D032400B51D9F /* AddNote */,
-				42E2B691280ED78500B51D9F /* AddGroup */,
-			);
-			name = "Add Content";
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		42F936402805AFB60058EB07 /* AddContent */ = {
 			isa = PBXGroup;
 			children = (
 				42E2B67F280DA3E000B51D9F /* Base */,
 				42E2B680280DA3F400B51D9F /* AddNote */,
-				42E2B681280DA41600B51D9F /* AddGroup */,
+				42392F8528409683004FB225 /* AddGroup */,
 			);
 			path = AddContent;
 			sourceTree = "<group>";
