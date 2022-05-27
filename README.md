@@ -25,10 +25,28 @@ AirNote is an app provides user a platform to create, share and discuss notes.
 * [Author](#Author)
 
 
+
 ## Features
 
 ### Browsing Notes
+Easily browse and save your favorites notes with categories or keywords.
+<p align="left">
 
+ <img src="https://user-images.githubusercontent.com/94897201/170640226-75fc8f82-9831-46ca-a2cd-ec54347c2d2a.png" width="500" height="500">
+
+</p>
+
+### Exploring Study Groups
+Explore nearby study groups you interested in with map.
+
+### Create Content
+Create your own notes and groups with texts, images or even drawing pad.
+
+### Chat Room
+Pick up a topic, disscuss with other members in your study group.
+
+### Following
+Follow creators with contents catch your eyes.
 
 ## Highlights
 
