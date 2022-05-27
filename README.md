@@ -102,7 +102,7 @@ Follow creators with contents catch your eyes.
 ## Release Notes
 | Version | Date | Notes |
 | -------- | -------- | -------- |
-| 1.0.1   | 2021.11.20     | New features of following users & delete messages   |
+| 1.0.1   | 2021.05.20     | New features of following users & delete messages   |
 | 1.0.0   | 2022.05.13     | Released in App Store   |
 
 ## Author
