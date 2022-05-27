@@ -312,7 +312,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="13"/>
                                 </state>
                                 <connections>
-                                    <action selector="didTapCamera:" destination="NH5-8q-8BS" eventType="touchUpInside" id="95b-Kz-uF7"/>
+                                    <action selector="cameraTapped:" destination="NH5-8q-8BS" eventType="touchUpInside" id="dUj-2C-aMe"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" text="namenamenamenamenamenamenamenamenamenamenamename" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3j-bz-3hI">
@@ -364,23 +364,8 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NuK-Pn-8DV">
-                                <rect key="frame" x="15" y="253.5" width="384" height="32"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <segments>
-                                    <segment title="筆記"/>
-                                    <segment title="讀書會"/>
-                                </segments>
-                                <connections>
-                                    <action selector="didChangeSegment:" destination="NH5-8q-8BS" eventType="valueChanged" id="5vP-jl-pNU"/>
-                                </connections>
-                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gsY-j5-zbP">
-                                <rect key="frame" x="15" y="284.5" width="384" height="577.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tYj-hn-2ny">
-                                <rect key="frame" x="15" y="299.5" width="384" height="562.5"/>
+                                <rect key="frame" x="15" y="242.5" width="384" height="619.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdi-2M-YM6">
@@ -402,39 +387,30 @@
                             <constraint firstItem="h3j-bz-3hI" firstAttribute="leading" secondItem="a3t-Mo-lD1" secondAttribute="leading" id="7q6-uG-QzW"/>
                             <constraint firstItem="em2-km-0Tn" firstAttribute="centerY" secondItem="a3t-Mo-lD1" secondAttribute="centerY" id="AhC-L4-Efu"/>
                             <constraint firstItem="xdi-2M-YM6" firstAttribute="leading" secondItem="h3j-bz-3hI" secondAttribute="trailing" constant="5" id="CCX-9J-nZB"/>
-                            <constraint firstItem="gsY-j5-zbP" firstAttribute="top" secondItem="NuK-Pn-8DV" secondAttribute="bottom" id="Db2-lj-dRG"/>
-                            <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" secondItem="tYj-hn-2ny" secondAttribute="trailing" constant="15" id="Gmp-xa-21t"/>
                             <constraint firstItem="h3j-bz-3hI" firstAttribute="top" secondItem="a3t-Mo-lD1" secondAttribute="bottom" constant="15" id="IDz-Od-NOx"/>
                             <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" secondItem="gsY-j5-zbP" secondAttribute="trailing" constant="15" id="Idn-JC-m6Z"/>
+                            <constraint firstItem="gsY-j5-zbP" firstAttribute="top" secondItem="xdi-2M-YM6" secondAttribute="bottom" constant="5" id="Ipz-Dr-8Ac"/>
                             <constraint firstItem="em2-km-0Tn" firstAttribute="leading" secondItem="a3t-Mo-lD1" secondAttribute="trailing" constant="15" id="JOI-l4-UIF"/>
-                            <constraint firstItem="Tij-aZ-U52" firstAttribute="bottom" secondItem="tYj-hn-2ny" secondAttribute="bottom" id="LuG-oS-yIW"/>
                             <constraint firstItem="a3t-Mo-lD1" firstAttribute="top" secondItem="Tij-aZ-U52" secondAttribute="top" constant="15" id="Owk-fd-mfd"/>
                             <constraint firstItem="NHf-NV-cbu" firstAttribute="centerX" secondItem="a3t-Mo-lD1" secondAttribute="centerX" constant="30" id="RQ8-1D-nTq"/>
                             <constraint firstItem="a3t-Mo-lD1" firstAttribute="width" secondItem="a3t-Mo-lD1" secondAttribute="height" multiplier="1:1" id="RQi-dV-j7D"/>
                             <constraint firstItem="a3t-Mo-lD1" firstAttribute="leading" secondItem="Tij-aZ-U52" secondAttribute="leading" constant="15" id="ejq-bi-RNA"/>
-                            <constraint firstItem="NuK-Pn-8DV" firstAttribute="top" secondItem="h3j-bz-3hI" secondAttribute="bottom" constant="15" id="f6V-pm-Hka"/>
-                            <constraint firstItem="tYj-hn-2ny" firstAttribute="leading" secondItem="Tij-aZ-U52" secondAttribute="leading" constant="15" id="fLN-x0-Rjc"/>
-                            <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" secondItem="NuK-Pn-8DV" secondAttribute="trailing" constant="15" id="ixp-ID-wKr"/>
                             <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xdi-2M-YM6" secondAttribute="trailing" constant="5" id="jDo-7w-1s3"/>
-                            <constraint firstItem="tYj-hn-2ny" firstAttribute="top" secondItem="NuK-Pn-8DV" secondAttribute="bottom" constant="15" id="lqP-fM-F7G"/>
                             <constraint firstItem="Tij-aZ-U52" firstAttribute="trailing" secondItem="em2-km-0Tn" secondAttribute="trailing" constant="15" id="vRY-lV-zhc"/>
                             <constraint firstItem="xdi-2M-YM6" firstAttribute="centerY" secondItem="h3j-bz-3hI" secondAttribute="centerY" id="vUx-Qp-11K"/>
-                            <constraint firstItem="NuK-Pn-8DV" firstAttribute="leading" secondItem="Tij-aZ-U52" secondAttribute="leading" constant="15" id="zlj-eD-mnP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7Ic-c1-IPe"/>
                     <connections>
-                        <outlet property="avatarImageView" destination="a3t-Mo-lD1" id="GnM-yY-zOV"/>
                         <outlet property="cameraButton" destination="NHf-NV-cbu" id="fuO-xO-4Qk"/>
-                        <outlet property="categorySegmentControl" destination="NuK-Pn-8DV" id="1iN-ts-tIT"/>
-                        <outlet property="followersButton" destination="VDT-Oo-hMf" id="Vet-ca-h94"/>
-                        <outlet property="followersLabel" destination="x7f-ex-Sh7" id="J8K-ZY-E4h"/>
-                        <outlet property="followingsButton" destination="Px6-q5-872" id="ZdG-jH-LSB"/>
-                        <outlet property="followingsLabel" destination="1UK-11-BNr" id="fwo-eZ-m4x"/>
-                        <outlet property="groupTableView" destination="tYj-hn-2ny" id="D2o-5B-y4Y"/>
-                        <outlet property="nameLabel" destination="h3j-bz-3hI" id="8D0-dI-BI2"/>
-                        <outlet property="noteTableView" destination="gsY-j5-zbP" id="Eaa-x4-Ygu"/>
-                        <outlet property="renameButton" destination="xdi-2M-YM6" id="InK-dy-UEP"/>
+                        <outlet property="profileAvatar" destination="a3t-Mo-lD1" id="GnM-yY-zOV"/>
+                        <outlet property="profilePageTableView" destination="gsY-j5-zbP" id="Eaa-x4-Ygu"/>
+                        <outlet property="settingNameButton" destination="xdi-2M-YM6" id="InK-dy-UEP"/>
+                        <outlet property="userFollowersButton" destination="VDT-Oo-hMf" id="Vet-ca-h94"/>
+                        <outlet property="userFollowersLabel" destination="x7f-ex-Sh7" id="J8K-ZY-E4h"/>
+                        <outlet property="userFollowingsButton" destination="Px6-q5-872" id="ZdG-jH-LSB"/>
+                        <outlet property="userFollowingsLabel" destination="1UK-11-BNr" id="fwo-eZ-m4x"/>
+                        <outlet property="userNameLabel" destination="h3j-bz-3hI" id="8D0-dI-BI2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uNd-UT-J0d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -66,9 +66,9 @@ extension FollwerFollowingListViewController: UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
-        viewController.userInThisPage = userList[indexPath.row]
-        self.navigationController?.pushViewController(viewController, animated: true)
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
+        vc.userInThisPage = userList[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

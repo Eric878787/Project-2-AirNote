@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BlockListViewController: BaseViewController {
+class BlockListViewController: UIViewController {
     
     @IBOutlet weak var blockListTableView: UITableView!
     
@@ -78,9 +78,11 @@ extension BlockListViewController: BlockListDelegate {
                 
                 self.blockListTableView.reloadData()
                 
+                print("解封鎖成功")
+                
             case .failure:
                 
-                self.showBasicConfirmationAlert("解除封鎖失敗", "請檢查網路連線")
+                print("解封鎖失敗")
                 
             }
         }

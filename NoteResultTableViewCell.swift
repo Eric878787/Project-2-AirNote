@@ -15,6 +15,7 @@ protocol NoteResultDelegate {
 
 class NoteResultTableViewCell: UITableViewCell {
     
+    
     @IBOutlet weak var mainImageView: UIImageView!
     
     @IBOutlet weak var avatarImageView: UIImageView!

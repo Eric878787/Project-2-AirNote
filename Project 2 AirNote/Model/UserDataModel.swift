@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable, Equatable {
+struct User: Codable {
     var followers: [String]
     var followings: [String]
     var joinedGroups: [String]

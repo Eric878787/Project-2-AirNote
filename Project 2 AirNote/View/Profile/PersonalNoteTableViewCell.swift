@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class PersonalNoteTableViewCell: UITableViewCell {
     
@@ -28,10 +27,10 @@ class PersonalNoteTableViewCell: UITableViewCell {
         contentView.backgroundColor = .myBeige
         configLayout()
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         // Configure the view for the selected state
     }
     
@@ -57,24 +56,6 @@ class PersonalNoteTableViewCell: UITableViewCell {
         categoryButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 12)
         categoryButton.layer.cornerRadius = 10
         categoryButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-    }
-    
-    func layoutCell(_ notes: [Note], _ users: [User], _ indexPath: IndexPath) {
-        
-        let url = URL(string: notes[indexPath.row].cover)
-        mainImageView.kf.indicatorType = .activity
-        mainImageView.kf.setImage(with: url)
-        
-        // querying users' name & avatar
-        for user in users where user.uid == notes[indexPath.row].authorId {
-            nameLabel.text = user.userName
-            let url = URL(string: user.userAvatar)
-            avatarImageView.kf.indicatorType = .activity
-            avatarImageView.kf.setImage(with: url)
-        }
-        
-        titleLabel.text = notes[indexPath.row].title
-        categoryButton.setTitle("\(notes[indexPath.row].category)", for: .normal)
     }
     
 }

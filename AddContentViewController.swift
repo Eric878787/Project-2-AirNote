@@ -16,7 +16,7 @@ class AddContentViewController: UIViewController {
         super.viewDidLoad()
         
         // Set Up Navigation Item
-        navigationItem.title = NavigationItemTitle.createNote.rawValue
+        navigationItem.title = "新增內容"
         
         // Init Buttons
         configureAddNoteButton()
@@ -73,11 +73,11 @@ extension AddContentViewController {
 extension  AddContentViewController {
     @objc func pushToNextPage(_ sender: UIButton) {
         if sender == addNoteButton {
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController else { return }
-            self.navigationController?.pushViewController(viewController, animated: true)
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController else { return }
+            self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
-            self.navigationController?.pushViewController(viewController, animated: true)
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "AddGroupViewController") as? AddGroupViewController else { return }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

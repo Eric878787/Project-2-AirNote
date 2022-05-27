@@ -8,53 +8,85 @@
 import UIKit
 import Kingfisher
 
-class ProfileViewController: BaseViewController {
+class ProfileViewController: UIViewController {
     
-    // MARK: Properties
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var renameButton: UIButton!
-    @IBOutlet weak var followersButton: UIButton!
-    @IBOutlet weak var followersLabel: UILabel!
-    @IBOutlet weak var followingsButton: UIButton!
-    @IBOutlet weak var followingsLabel: UILabel!
+    @IBOutlet weak var profilePageTableView: UITableView!
+    
+    @IBOutlet weak var profileAvatar: UIImageView!
+    
+    @IBOutlet weak var userNameLabel: UILabel!
+    
+    @IBOutlet weak var settingNameButton: UIButton!
+    
+    @IBOutlet weak var userFollowersButton: UIButton!
+    
+    @IBOutlet weak var userFollowersLabel: UILabel!
+    
+    @IBOutlet weak var userFollowingsButton: UIButton!
+    
+    @IBOutlet weak var userFollowingsLabel: UILabel!
+    
     @IBOutlet weak var cameraButton: UIButton!
-    @IBOutlet weak var noteTableView: UITableView!
-    @IBOutlet weak var groupTableView: UITableView!
-    @IBOutlet weak var categorySegmentControl: UISegmentedControl!
     
     // Select Image
-    let imagePickerController = UIImagePickerController()
+    private let imagePickerController = UIImagePickerController()
+    
+    private var avatarImage: UIImage?
     
     // User Data
-    private (set) var users: [User] = []
-    private (set) var currentUser: User?
-    private (set) var blockedUsers: [User] = []
-    private (set) var followings: [User] = []
-    private (set) var followers: [User] = []
+    var users: [User] = []
+    
+    var user: User?
+    
+    var blockedUsers: [User] = []
+    
+    var follwings: [User] = []
+    
+    var follwers: [User] = []
     
     // Note Data
-    private (set) var notes: [Note] = []
-    private (set) var savedNotes: [Note] = []
-    private (set) var ownedNotes: [Note] = []
-    let noteCategories: [NoteCategory] = [.ownedNote, .savedNote]
+    var notes: [Note] = []
     
+    var savedNotes: [Note] = []
+    
+    var ownedNotes: [Note] = []
+    
+    var notesOnTableView: [Note] = []
+    
+    var selectedNoteIndex = 0
     
     // Group Data
-    private (set) var groups: [Group] = []
-    private (set) var savedGroups: [Group] = []
-    private (set) var ownedGroups: [Group] = []
-    let groupCategories: [GroupCategory] = [.ownedGroup, .savedGroup]
+    var groups: [Group] = []
     
-    //    let dict: [ContentCategory: [Group]]
+    var savedGroups: [Group] = []
     
-    // MARK: Life Cycle
+    var ownedGroups: [Group] = []
+    
+    var groupsOnTableView: [Group] = []
+    
+    var selectedGroupIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Avatar Image Picker
         addTapGesture()
         imagePickerController.delegate = self
-        configureNavigationBar()
+        
+        // Log out Button
+        let logOutButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"), style: .plain, target: self, action: #selector(signOut))
+        self.navigationItem.leftBarButtonItem = logOutButton
+        
+        // Block List
+        let blockListButton = UIBarButtonItem(image: UIImage(systemName: "person.fill.badge.minus"), style: .plain, target: self, action: #selector(toBlockList))
+        self.navigationItem.rightBarButtonItem =  blockListButton
+        
+        // Configure Table View
         configureTableView()
+        
+        // Layout Buttons
+        layoutButton()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,20 +96,8 @@ class ProfileViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        configureComponents()
-    }
-    
-    // MARK: Methods
-    func configureNavigationBar() {
-        let logOutButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward.fill"),
-                                           style: .plain,
-                                           target: self, action: #selector(signOut))
-        self.navigationItem.leftBarButtonItem = logOutButton
-        
-        let blockListButton = UIBarButtonItem(image: UIImage(systemName: "person.fill.badge.minus"),
-                                              style: .plain, target: self,
-                                              action: #selector(toBlockList))
-        self.navigationItem.rightBarButtonItem =  blockListButton
+        profileAvatar.layer.cornerRadius = profileAvatar.frame.height / 2
+        cameraButton.layer.cornerRadius = cameraButton.frame.height / 2
     }
     
     @IBAction func settingName(_ sender: Any) {
@@ -87,9 +107,9 @@ class ProfileViewController: BaseViewController {
             textField.placeholder = "暱稱"
         }
         
-        let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in // ?
+        let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in
             
-            self.currentUser?.userName = controller.textFields?[0].text ?? ""
+            self.user?.userName = controller.textFields?[0].text ?? ""
             LKProgressHUD.show()
             self.updateUserName()
             
@@ -100,34 +120,48 @@ class ProfileViewController: BaseViewController {
         self.present(controller, animated: true, completion: nil)
         
     }
-    
-    @IBAction func didTapCamera(_ sender: UIButton) {
-        showChoosePhotoAlert(imagePickerController)
-    }
-    
-    @IBAction func didTouchFollowerButton(_ sender: UIButton) {
-        guard let viewController =
-                UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
-                as? FollwerFollowingListViewController else { return }
-        viewController.userList = self.followers
-        viewController.navItemTitle = "粉絲名單"
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @IBAction func didTouchFollowingButton(_ sender: UIButton) {
-        guard let viewController =
-                UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController")
-                as? FollwerFollowingListViewController else { return }
-        viewController.userList = self.followings
-        viewController.navItemTitle = "追蹤名單"
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
-        let didSelectNote = sender.selectedSegmentIndex == 0
-        noteTableView.isHidden = !didSelectNote
-        groupTableView.isHidden = didSelectNote
+
+    @IBAction func cameraTapped(_ sender: Any) {
         
+        let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        // 相機
+        let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
+            self.takePicture()
+        }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(cameraAction)
+        
+        // 相薄
+        let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
+            self.openPhotosAlbum()
+        }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(savedPhotosAlbumAction)
+        
+        // 取消
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive) { _ in
+            self.profilePageTableView.reloadData()
+        }
+        controller.addAction(cancelAction)
+        
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func followerTouched(_ sender: Any) {
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwers
+        vc.navItemTitle = "粉絲名單"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func followingToched(_ sender: Any) {
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwings
+        vc.navItemTitle = "追蹤名單"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -137,31 +171,76 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     private func addTapGesture() {
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                          action: #selector(imageTapped(tapGestureRecognizer:)))
-        avatarImageView.isUserInteractionEnabled = true
-        avatarImageView.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        profileAvatar.isUserInteractionEnabled = true
+        profileAvatar.addGestureRecognizer(tapGestureRecognizer)
         
     }
     
     @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         
-        guard tapGestureRecognizer.view
-                as? UIImageView != nil else { return }
+        guard let tappedImage = tapGestureRecognizer.view as? UIImageView else { return }
         
-        showChoosePhotoAlert(imagePickerController)
+        let controller = UIAlertController(title: "請上傳頭貼", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        // 相機
+        let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
+            self.takePicture()
+        }
+        cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(cameraAction)
+        
+        // 相薄
+        let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
+            self.openPhotosAlbum()
+        }
+        savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
+        controller.addAction(savedPhotosAlbumAction)
+        
+        // 取消
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive) { _ in
+            self.profilePageTableView.reloadData()
+        }
+        controller.addAction(cancelAction)
+        
+        self.present(controller, animated: true, completion: nil)
+        
     }
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [ UIImagePickerController.InfoKey: Any ]) {
+    // 開啟相機
+    func takePicture() {
+        imagePickerController.sourceType = .camera
+        self.present(imagePickerController, animated: true)
+    }
+    
+    // 開啟相簿
+    func openPhotosAlbum() {
+        imagePickerController.sourceType = .savedPhotosAlbum
+        self.present(imagePickerController, animated: true)
+    }
+    
+    // 取消選取
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true) {
+            self.profilePageTableView.reloadData()
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
             
             DispatchQueue.main.async {
                 LKProgressHUD.show()
-                self.avatarImageView.image = image
             }
-            uploadUserAvatar()
+            
+            avatarImage = image
+            
+            profileAvatar.image = avatarImage
+            
+            updateUserAvatar()
+            
         }
         
         picker.dismiss(animated: true)
@@ -175,21 +254,13 @@ extension ProfileViewController {
     
     func configureTableView() {
         
-        noteTableView.dataSource = self
-        noteTableView.delegate = self
-        noteTableView.separatorStyle = .none
-        noteTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
-        noteTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
-        noteTableView.register(DeleteAccountTableViewCell.self,
-                               forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
-        
-        groupTableView.dataSource = self
-        groupTableView.delegate = self
-        groupTableView.separatorStyle = .none
-        groupTableView.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: GroupHeader.reuseIdentifier)
-        groupTableView.registerCellWithNib(identifier: String(describing: PersonalGroupTableViewCell.self), bundle: nil)
-        groupTableView.register(DeleteAccountTableViewCell.self,
-                                forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
+        profilePageTableView.dataSource = self
+        profilePageTableView.delegate = self
+        profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalNoteTableViewCell.self), bundle: nil)
+        profilePageTableView.registerCellWithNib(identifier: String(describing: PersonalGroupTableViewCell.self), bundle: nil)
+        profilePageTableView.register(DeleteAccountTableViewCell.self, forCellReuseIdentifier: DeleteAccountTableViewCell.reuseIdentifier)
+        profilePageTableView.register(NoteHeader.self, forHeaderFooterViewReuseIdentifier: NoteHeader.reuseIdentifier)
+        profilePageTableView.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: GroupHeader.reuseIdentifier)
         
     }
     
@@ -198,59 +269,58 @@ extension ProfileViewController {
 // Layouting Label & Button
 extension ProfileViewController {
     
-    func refreshUserInfo() {
+    func layoutLabel() {
+        
         // Profile Avatar
-        let url = URL(string: currentUser?.userAvatar ?? "")
-        avatarImageView.kf.indicatorType = .activity
-        avatarImageView.kf.setImage(with: url)
-        
-        // User Name
-        if currentUser?.userName != "" {
-            nameLabel.text = currentUser?.userName
+        if user?.userAvatar != "" {
+            let url = URL(string: user?.userAvatar ?? "")
+            profileAvatar.kf.indicatorType = .activity
+            profileAvatar.kf.setImage(with: url)
+            
         } else {
-            nameLabel.text = currentUser?.email
+            
+            profileAvatar.image = UIImage(systemName: "person.circle")
+            
         }
-        
-        // User Followers
-        followersButton.setTitle("\(currentUser?.followers.count ?? 0)", for: .normal)
-        
-        // User Followings
-        followingsButton.setTitle("\(currentUser?.followings.count ?? 0)", for: .normal)
-        
-    }
-    
-    func configureComponents() {
-        
-        // Avatar Image View
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
-        avatarImageView.clipsToBounds = true
+        profileAvatar.clipsToBounds = true
         
         // Plus Image
-        cameraButton.layer.cornerRadius = cameraButton.frame.height / 2
         cameraButton.tintColor = .white
         cameraButton.layer.borderColor = UIColor.white.cgColor
         cameraButton.layer.borderWidth = 1
         cameraButton.backgroundColor = .myDarkGreen
         
-        // Configure Rename Button
-        renameButton.tintColor = .myDarkGreen
+        // User Name
+        if user?.userName != "" {
+            
+            userNameLabel.text = user?.userName
+            
+        } else {
+            
+            userNameLabel.text = user?.email
+            
+        }
         
-        // Configure Followers Label
-        setUpBasicLabel(followersLabel)
+        // User Followers
+        userFollowersButton.setTitle("\(user?.followers.count ?? 0)", for: .normal)
         
-        // Configure Followers Button
-        followersButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16) // constant
-        followersButton.tintColor = .black
+        // User Followings
+        userFollowingsButton.setTitle("\(user?.followings.count ?? 0)", for: .normal)
         
-        // Configure Followings Label
-        setUpBasicLabel(followingsLabel)
+        LKProgressHUD.dismiss()
         
-        // Configure Followings Button
-        followingsButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16)
-        followingsButton.tintColor = .black
+    }
+    
+    func layoutButton() {
         
-        // Configure Segment Control
-        setUpBasicSegmentControl(categorySegmentControl)
+        // Setting Name Button
+        settingNameButton.tintColor = .myDarkGreen
+        userFollowersButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16)
+        userFollowersButton.tintColor = .black
+        userFollowersLabel.font = UIFont(name: "PingFangTC-Regular", size: 16)
+        userFollowingsButton.titleLabel?.font = UIFont(name: "PingFangTC-Semibold", size: 16)
+        userFollowingsButton.tintColor = .black
+        userFollowingsLabel.font = UIFont(name: "PingFangTC-Regular", size: 16)
         
     }
     
@@ -260,394 +330,448 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     @objc func signOut() {
-        showAlternativeAlert("是否要登出", nil, {
-            self.confirmToSignOut()
-        }, {
-            return
-        })
-    }
-    
-    private func confirmToSignOut() {
-        self.showBasicConfirmationAlert("登出成功", "將返回登入頁面") {
+        
+        let controller = UIAlertController(title: "登出成功", message: "將返回登入頁面", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        let action = UIAlertAction(title: "確認", style: .destructive) { _ in
+            
             FirebaseManager.shared.signout()
+            
             if self.presentingViewController == nil {
-                guard let viewController = UIStoryboard.auth.instantiateInitialViewController() else { return }
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true)
+                
+                guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+                
+                vc.modalPresentationStyle = .fullScreen
+                
+                self.present(vc, animated: true)
+                
             } else {
+                
                 self.dismiss(animated: true)
+                
             }
         }
+        
+        controller.addAction(action)
+        self.present(controller, animated: true)
+        
     }
     
     @objc func toBlockList() {
-        guard let viewController =
-                UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController")
-                as? BlockListViewController else { return }
-        viewController.user = self.currentUser
-        viewController.blockList = self.blockedUsers
-        self.navigationController?.pushViewController(viewController, animated: true)
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "BlockListViewController") as? BlockListViewController else { return }
+        vc.user = self.user
+        vc.blockList = self.blockedUsers
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
     private func fetchUsers() {
+        
         LKProgressHUD.show()
+        
         UserManager.shared.fetchUsers { result in
             switch result {
                 
             case .success(let existingUser):
+                
                 self.users = existingUser
                 for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid {
-                    self.currentUser = user
+                    self.user = user
                 }
+                
+                // Filter Blocked Users
+                guard let blockedUids = self.user?.blockUsers else { return }
                 
                 let allUsers = self.users
-                guard let blockedUids = self.currentUser?.blockUsers else { return }
-                self.filterBlockedUsers(blockedUids, allUsers)
                 
-                // Filter Follwings
-                guard let followingsUids = self.currentUser?.followings else { return }
-                self.filterFollwings(followingsUids, allUsers)
+                self.blockedUsers = []
                 
-                // Filter Follwers
-                guard let followerUids = self.currentUser?.followers else { return }
-                self.filterFollwers(followerUids, allUsers)
-                
-                DispatchQueue.main.async {
-                    self.fetchNotesAndGroups()
-                    self.refreshUserInfo()
-                    LKProgressHUD.dismiss()
+                for blockedUid in blockedUids {
+                    self.blockedUsers += allUsers.filter{$0.uid == blockedUid}
                 }
                 
-            case .failure:
-                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
+                // Filter Follwings
+                guard let followingsUids = self.user?.followings else { return }
+                
+                self.follwings = []
+                
+                for followingsUid in followingsUids {
+                    self.follwings += allUsers.filter{$0.uid == followingsUid}
+                }
+                
+                // Filter Follwers
+                guard let followerUids = self.user?.followers else { return }
+                
+                self.follwers = []
+                
+                for followerUid in followerUids {
+                    self.follwers += allUsers.filter{$0.uid == followerUid}
+                }
+                
+                DispatchQueue.main.async {
+                    self.fetchNotes()
+                }
+                
+            case .failure(let error):
+                print("fetchData.failure: \(error)")
             }
         }
-    }
-    
-    func filterBlockedUsers(_ blockedUids: [String], _ allUsers: [User]) { // Using Map Function
-        self.blockedUsers = []
-        for blockedUid in blockedUids {
-            self.blockedUsers += allUsers.filter { $0.uid == blockedUid }
-        }
-    }
-    
-    func filterFollwings(_ followingsUids: [String], _ allUsers: [User]) {
-        self.followings = []
-        for followingsUid in followingsUids {
-            self.followings += allUsers.filter { $0.uid == followingsUid }
-        }
-    }
-    
-    func filterFollwers(_ followerUids: [String], _ allUsers: [User]) {
-        self.followers = []
-        for followerUid in followerUids {
-            self.followers += allUsers.filter { $0.uid == followerUid }
-        }
-    }
-    
-    private func uploadUserAvatar() {
-        guard let image = avatarImageView.image else { return }
-        UserManager.shared.uploadPhoto(image: image) { result in
-            switch result {
-            case .success(let url):
-                self.currentUser?.userAvatar = "\(url)"
-                self.uploadUserAvatar()
-            case .failure:
-                self.showBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
-            }
-        }
+        
     }
     
     private func updateUserAvatar() {
-        guard let user = self.currentUser else { return }
-        UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
+        
+        let group = DispatchGroup()
+        let controller = UIAlertController(title: "上傳頭貼成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        group.enter()
+        guard let image =  avatarImage else { return }
+        UserManager.shared.uploadPhoto(image: image) { result in
             switch result {
-            case .success:
-                self.showBasicConfirmationAlert("上傳頭貼成功", nil) {
-                    self.fetchUsers()
+            case .success(let url):
+                self.user?.userAvatar = "\(url)"
+                print("\(url)")
+            case .failure(let error):
+                print("\(error)")
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: DispatchQueue.global()) {
+            guard let user = self.user else { return }
+            UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
+                switch result {
+                case .success:
+                    
+                    LKProgressHUD.dismiss()
+                    DispatchQueue.main.async {
+                        let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                            self.navigationController?.popViewController(animated: true)
+                            self.fetchUsers()
+                        }
+                        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+                        controller.addAction(cancelAction)
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                case .failure:
+                    print(result)
                 }
-            case .failure:
-                self.showBasicConfirmationAlert("上傳頭貼失敗", "請檢查網路連線")
             }
         }
+        
     }
     
     private func updateUserName() {
-        guard let user = self.currentUser else { return }
+        let controller = UIAlertController(title: "更新暱稱成功", message: "", preferredStyle: .alert)
+        controller.view.tintColor = UIColor.gray
+        
+        guard let user = self.user else { return }
         LKProgressHUD.show()
         UserManager.shared.updateUser(user: user, uid: FirebaseManager.shared.currentUser?.uid ?? "") { result in
             switch result {
             case .success:
-                self.showBasicConfirmationAlert("更新暱稱成功", "") {
-                    self.fetchUsers()
+                
+                LKProgressHUD.dismiss()
+                DispatchQueue.main.async {
+                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
+                        self.navigationController?.popViewController(animated: true)
+                        self.fetchUsers()
+                    }
+                    cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+                    controller.addAction(cancelAction)
+                    self.present(controller, animated: true, completion: nil)
                 }
             case .failure:
-                self.showBasicConfirmationAlert("更新暱稱失敗", "請檢查網路連線")
+                print(result)
             }
-        }
-    }
-    
-    private func fetchNotesAndGroups() {
-        let group = DispatchGroup()
-        var didFetchSuccess: [Bool] = []
-        group.enter()
-        fetchNotes() { result in
-            didFetchSuccess.append(result)
-            group.leave()
-        }
-        group.enter()
-        fetchGroups() { result in
-            didFetchSuccess.append(result)
-            group.leave()
         }
         
-        group.notify(queue: DispatchQueue.main) {
-            if didFetchSuccess.contains(false) {
-                return
-            } else {
-                self.noteTableView.reloadData()
-                self.groupTableView.reloadData()
-            }
-        }
     }
     
-    private func fetchNotes(_ completion: @escaping (Bool) -> Void) {
+    private func fetchNotes() {
+        
         NoteManager.shared.fetchNotes { result in
             switch result {
                 
             case .success(let notes):
                 
                 self.savedNotes = []
-                for savedNote in self.currentUser?.savedNotes ?? [] {
-                    self.savedNotes += notes.filter { $0.noteId == savedNote }
+                for savedNote in self.user?.savedNotes ?? [] {
+                    self.savedNotes += notes.filter{ $0.noteId == savedNote }
                 }
                 
                 self.ownedNotes = []
-                for userNote in self.currentUser?.userNotes ?? [] {
-                    self.ownedNotes += notes.filter { $0.noteId == userNote }
+                
+                for userNote in self.user?.userNotes ?? [] {
+                    self.ownedNotes += notes.filter{ $0.noteId == userNote }
+                }
+                
+                // Filter Blocked Users
+                guard let blockedUids = self.user?.blockUsers else { return }
+                for blockedUid in blockedUids {
+                    self.users = self.users.filter{$0.uid != blockedUid}
                 }
                 
                 // Filter Blocked Users Content
-                guard let blockedUids = self.currentUser?.blockUsers else { return }
                 for blockedUid in blockedUids {
-                    self.savedNotes = self.savedNotes.filter { $0.authorId != blockedUid }
+                    self.savedNotes = self.savedNotes.filter{$0.authorId != blockedUid}
                 }
                 
-                completion(true)
-                
-            case .failure:
-                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
-                
-                completion(false)
+                // Default datasource of notesOnTableView
+                self.wrappingNotes(self.selectedNoteIndex)
+                self.fetchGroups()
+            case .failure(let error):
+                print("fetchData.failure: \(error)")
             }
         }
+        
     }
     
-    private func fetchGroups(_ completion: @escaping (Bool) -> Void) {
+    private func fetchGroups() {
+        
         GroupManager.shared.fetchGroups { result in
             switch result {
                 
             case .success(let groups):
                 
                 self.savedGroups = []
-                for joinedGroup in self.currentUser?.joinedGroups ?? [] {
-                    self.savedGroups += groups.filter { $0.groupId == joinedGroup }
+                for joinedGroup in self.user?.joinedGroups ?? [] {
+                    self.savedGroups += groups.filter{ $0.groupId == joinedGroup }
                 }
                 
                 self.ownedGroups = []
-                for userGroup in self.currentUser?.userGroups ?? [] {
-                    self.ownedGroups += groups.filter { $0.groupId == userGroup }
+                for userGroup in self.user?.userGroups ?? [] {
+                    self.ownedGroups += groups.filter{ $0.groupId == userGroup }
                 }
+                
                 
                 // Filter Blocked Users Content
-                guard let blockedUids = self.currentUser?.blockUsers else { return }
+                guard let blockedUids = self.user?.blockUsers else { return }
                 for blockedUid in blockedUids {
-                    self.savedGroups = self.savedGroups.filter { $0.groupOwner != blockedUid }
+                    self.savedGroups = self.savedGroups.filter{ $0.groupOwner != blockedUid} ?? []
                 }
                 
-                completion(true)
-                
-            case .failure:
-                self.showBasicConfirmationAlert("獲取資料失敗", "請檢查網路連線")
-                
-                completion(false)
+                // Default datasource of notesOnTableView
+                self.wrappingGroups(self.selectedGroupIndex)
+                self.profilePageTableView.reloadData()
+                self.layoutLabel()
+            case .failure(let error):
+                print("fetchData.failure: \(error)")
             }
         }
+        
     }
     
-    private func deleteAccount() { //
-        showAlternativeAlert("是否要刪除帳號", "刪除後將清除所有帳戶資料", {
+    
+    private func deleteAccount() {
+        
+        var controller = UIAlertController(title: "是否要刪除帳號", message: "刪除後將清除所有帳戶資料", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
             self.confirmDeletion()
-        }, {
-            return
-        })
+        }
+        confirmAction.setValue(UIColor.red, forKey: "titleTextColor")
+        controller.addAction(confirmAction)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        self.present(controller, animated: true, completion: nil)
+        
     }
     
     private func confirmDeletion() {
-        FirebaseManager.shared.delete() // completion
+        
+        FirebaseManager.shared.delete()
         FirebaseManager.shared.deleteAccountSuccess = {
             guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
             UserManager.shared.deleteUser(uid: uid) { result in
                 switch result {
                 case .success:
-                    self.showBasicConfirmationAlert("刪除帳號成功", "請重新註冊") {
+                    let controller = UIAlertController(title: "刪除帳號成功", message: "請重新註冊", preferredStyle: .alert)
+                    controller.view.tintColor = UIColor.gray
+                    let action = UIAlertAction(title: "確認", style: .destructive) { _ in
                         if self.presentingViewController == nil {
-                            guard let viewController =
-                                    UIStoryboard.auth.instantiateInitialViewController()
-                            else {
-                                return
-                            }
-                            viewController.modalPresentationStyle = .fullScreen
-                            self.present(viewController, animated: true)
+                            guard let vc = UIStoryboard.auth.instantiateInitialViewController() else { return }
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         } else {
                             self.dismiss(animated: true)
                         }
                     }
+                    
+                    controller.addAction(action)
+                    self.present(controller, animated: true)
+                    
                 case .failure:
-                    self.showBasicConfirmationAlert("刪除帳號失敗", "請再次嘗試", nil)
+                    let controller = UIAlertController(title: "刪除帳號失敗", message: "請再次嘗試", preferredStyle: .alert)
+                    controller.view.tintColor = UIColor.gray
+                    let action = UIAlertAction(title: "確認", style: .destructive)
+                    controller.addAction(action)
+                    self.present(controller, animated: true)
                 }
             }
         }
+        
     }
     
-    //
+}
+
+// Wrapped Data
+
+extension ProfileViewController {
+    
+    func wrappingNotes(_ selectedIndex: Int ) {
+        if selectedIndex == 0 {
+            notesOnTableView = ownedNotes
+        } else {
+            notesOnTableView = savedNotes
+        }
+    }
+    
+    func wrappingGroups(_ selectedIndex: Int ) {
+        if selectedIndex == 0 {
+            groupsOnTableView = ownedGroups
+        } else {
+            groupsOnTableView = savedGroups
+        }
+    }
 }
 
 // Set Up Table View delegate & datasource
-extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, DeleteAccountDelegate {
+extension ProfileViewController:  UITableViewDataSource, UITableViewDelegate, DeleteAccountDelegate {
     
     func tapDeleteAccountButton() {
         deleteAccount()
     }
     
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == noteTableView {
-            return noteCategories.count + 1
-        } else {
-            return groupCategories.count + 1
-        }
+        3
     }
     
-    // enum Gasoline
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == noteTableView {
-            if section == 0 {
-                return ownedNotes.count
-            } else if section == 1 {
-                return savedNotes.count
-            } else {
-                return 1
-            }
+        if section == 0 {
+            return notesOnTableView.count
+        } else if section == 1 {
+            return groupsOnTableView.count
         } else {
-            if section == 0 {
-                return ownedGroups.count
-            } else if section == 1 {
-                return savedGroups.count
-            } else {
-                return 1
-            }
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section != 2 {
-            if tableView == noteTableView {
-                let notesData = [ownedNotes, savedNotes]
-                return noteCategories[indexPath.section].cellForIndexPath(indexPath,
-                                                                          noteTableView,
-                                                                          notesData[indexPath.section],
-                                                                          users)
-            } else {
-                let groupsData = [ownedGroups, savedGroups]
-                return groupCategories[indexPath.section].cellForIndexPath(indexPath,
-                                                                           groupTableView,
-                                                                           groupsData[indexPath.section],
-                                                                           users)
+        
+        if indexPath.section == 0 {
+            
+            let personalNoteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalNoteTableViewCell", for: indexPath)
+            guard let cell = personalNoteTableViewCell as? PersonalNoteTableViewCell else { return personalNoteTableViewCell }
+            let url = URL(string: notesOnTableView[indexPath.row].cover)
+            cell.mainImageView.kf.indicatorType = .activity
+            cell.mainImageView.kf.setImage(with: url)
+            
+            // querying users' name & avatar
+            for user in users where user.uid == notesOnTableView[indexPath.row].authorId {
+                cell.nameLabel.text = user.userName
+                let url = URL(string: user.userAvatar)
+                cell.avatarImageView.kf.indicatorType = .activity
+                cell.avatarImageView.kf.setImage(with: url)
             }
+            
+            cell.titleLabel.text = notesOnTableView[indexPath.row].title
+            cell.categoryButton.setTitle("\(notesOnTableView[indexPath.row].category)", for: .normal)
+            return cell
+            
+        } else if indexPath.section == 1 {
+            
+            let personalGroupTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PersonalGroupTableViewCell", for: indexPath)
+            guard let cell = personalGroupTableViewCell as? PersonalGroupTableViewCell else { return personalGroupTableViewCell }
+            let url = URL(string: groupsOnTableView[indexPath.row].groupCover)
+            cell.coverImage.kf.indicatorType = .activity
+            cell.coverImage.kf.setImage(with: url)
+            
+            // querying users' name & avatar
+            for user in users where user.uid == groupsOnTableView[indexPath.row].groupOwner {
+                cell.nameLabel.text = user.userName
+                let url = URL(string: user.userAvatar)
+                cell.avatarImage.kf.indicatorType = .activity
+                cell.avatarImage.kf.setImage(with: url)
+            }
+            let date = groupsOnTableView[indexPath.row].createdTime
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM/dd"
+            cell.dateLabel.text = formatter.string(from: date)
+            cell.titleLabel.text = groupsOnTableView[indexPath.row].groupTitle
+            cell.categoryButton.setTitle("\( groupsOnTableView[indexPath.row].groupCategory)", for: .normal)
+            cell.memberCountsLabel.text = "\(groupsOnTableView[indexPath.row].groupMembers.count)"
+            return cell
         } else {
-            let deleteAccountTableViewCell =
-            tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier,
-                                          for: indexPath)
-            guard let cell = deleteAccountTableViewCell
-                    as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
+            let deleteAccountTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeleteAccountTableViewCell.reuseIdentifier, for: indexPath)
+            guard let cell = deleteAccountTableViewCell as? DeleteAccountTableViewCell else { return deleteAccountTableViewCell }
             cell.delegate = self
             return cell
         }
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if tableView == noteTableView {
-            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NoteHeader.reuseIdentifier)
-                    as? NoteHeader else { return nil }
-            if section != 2 {
-                header.title.text = noteCategories[section].title()
-                return header
-            } else {
-                return nil
-            }
+        if section == 0 {
             
-        } else {
-            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier)
-                    as? GroupHeader else { return nil }
-            if section != 2 {
-                header.title.text = groupCategories[section].title()
-                return header
-            } else {
-                return nil
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NoteHeader.reuseIdentifier) as? NoteHeader else { return nil }
+            header.firstSegmentController.setTitle("我的筆記", forSegmentAt: 0)
+            header.firstSegmentController.setTitle("收藏筆記", forSegmentAt: 1)
+            header.firstSegmentHandler = { [weak self] index in
+                self?.selectedNoteIndex = index
+                self?.wrappingNotes(self?.selectedNoteIndex ?? 0)
+                self?.profilePageTableView.reloadData()
             }
+            return header
+        } else if section == 1 {
+            
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: GroupHeader.reuseIdentifier) as? GroupHeader else { return nil }
+            header.firstSegmentController.setTitle("我的讀書會", forSegmentAt: 0)
+            header.firstSegmentController.setTitle("加入的讀書會", forSegmentAt: 1)
+            header.firstSegmentHandler = { [weak self] index in
+                self?.selectedGroupIndex = index
+                self?.wrappingGroups(self?.selectedGroupIndex ?? 0)
+                self?.profilePageTableView.reloadData()
+            }
+            return header
+        } else {
+            return nil
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == noteTableView {
+        
+        if indexPath.section == 0 {
+            
             let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController")
-                    as? NoteDetailViewController else { return }
-            let note: Note?
-            if indexPath.section == 0 {
-                ownedNotes[indexPath.row].clicks.append(FirebaseManager.shared.currentUser?.uid ?? "")
-                note = ownedNotes[indexPath.row]
-            } else if indexPath.section == 1 {
-                savedNotes[indexPath.row].clicks.append(FirebaseManager.shared.currentUser?.uid ?? "")
-                note = savedNotes[indexPath.row]
-                
-            } else {
-                return
-            }
-            guard let note = note else { return }
-            NoteManager.shared.updateNote(note: note, noteId: note.noteId) { [weak self] result in
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
+            notesOnTableView[indexPath.row].clicks.append(FirebaseManager.shared.currentUser?.uid ?? "")
+            NoteManager.shared.updateNote(note: notesOnTableView[indexPath.row], noteId: notesOnTableView[indexPath.row].noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    viewController.note = note
-                    viewController.comments = note.comments
-                    viewController.users = self?.users ?? []
-                    viewController.currentUser = self?.currentUser
-                    self?.navigationController?.pushViewController(viewController, animated: true)
-                case .failure:
-                    self?.showBasicConfirmationAlert("更新資料失敗", "請檢查網路連線")
+                    guard let noteToPass = self?.notesOnTableView[indexPath.row] else { return }
+                    vc.note = noteToPass
+                    vc.comments = noteToPass.comments
+                    vc.users = self?.users ?? []
+                    vc.currentUser = self?.user
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                    
+                case .failure(let error):
+                    print("fetchData.failure: \(error)")
                 }
             }
-            // wrap to be a function
-        } else if tableView == groupTableView {
+        } else if indexPath.section == 1 {
+            
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController")
-                    as? GroupDetailViewController else { return }
-            let group: Group?
-            if indexPath.section == 0 {
-                group = ownedGroups[indexPath.row]
-            } else if indexPath.section == 1 {
-                group = savedGroups[indexPath.row]
-                
-            } else {
-                return
-            }
-            guard let group = group else { return }
-            viewController.group = group
-            viewController.users = users
-            viewController.user = currentUser
-            self.navigationController?.pushViewController(viewController, animated: true)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+            vc.group = groupsOnTableView[indexPath.row]
+            vc.users = users
+            vc.user = user
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            return
         }
     }
 }

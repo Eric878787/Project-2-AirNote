@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class OtherProfileViewController: BaseViewController {
+class OtherProfileViewController: UIViewController {
     
     @IBOutlet weak var userAvatar: UIImageView!
     
@@ -46,10 +46,7 @@ class OtherProfileViewController: BaseViewController {
         super.viewDidLoad()
         
         // Block User Button
-        let ellipsisButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(openActionList))
+        let ellipsisButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(openActionList))
         self.navigationItem.rightBarButtonItem = ellipsisButton
     }
     
@@ -132,16 +129,20 @@ class OtherProfileViewController: BaseViewController {
                         
                         self.fetchUsers()
                         
+                        print("被追蹤成功")
+                        
                     case .failure:
                         
-                        self.showBasicConfirmationAlert("追蹤失敗", "請檢查網路連線")
+                        print("被追蹤失敗")
                         
                     }
                 }
                 
+                print("追蹤成功")
+                
             case .failure:
                 
-                self.showBasicConfirmationAlert("追蹤失敗", "請檢查網路連線")
+                print("追蹤失敗")
                 
             }
         }
@@ -149,17 +150,17 @@ class OtherProfileViewController: BaseViewController {
     }
     
     @IBAction func followerTouched(_ sender: Any) {
-        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
-        viewController.userList = self.follwers
-        viewController.navItemTitle = "粉絲名單"
-        self.navigationController?.pushViewController(viewController, animated: true)
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwers
+        vc.navItemTitle = "粉絲名單"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func followingToched(_ sender: Any) {
-        guard let viewController = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
-        viewController.userList = self.follwings
-        viewController.navItemTitle = "追蹤名單"
-        self.navigationController?.pushViewController(viewController, animated: true)
+        guard let vc = UIStoryboard.profile.instantiateViewController(withIdentifier: "FollwerFollowingListViewController") as? FollwerFollowingListViewController else { return }
+        vc.userList = self.follwings
+        vc.navItemTitle = "追蹤名單"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -168,9 +169,22 @@ extension OtherProfileViewController {
     
     @objc private func openActionList() {
         
-        self.showBlockUserAlert {
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "封鎖用戶", style: .default) { action in
             self.blockUser()
         }
+        controller.addAction(action)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        // iPad Situation
+        if let popoverController = controller.popoverPresentationController {
+          popoverController.sourceView = self.view
+          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+          popoverController.permittedArrowDirections = []
+        }
+        
+        self.present(controller, animated: true)
         
     }
     
@@ -233,6 +247,7 @@ extension OtherProfileViewController {
         }
         
     }
+    
 }
 
 // Firebase functions
@@ -246,9 +261,9 @@ extension OtherProfileViewController {
         
         guard let followings = self.currentUser?.followings else { return }
         
-        self.currentUser?.followers = followers.filter { $0 != userInThisPage?.uid }
+        self.currentUser?.followers = followers.filter{ $0 != userInThisPage?.uid}
         
-        self.currentUser?.followings = followings.filter { $0 != userInThisPage?.uid }
+        self.currentUser?.followings = followings.filter{ $0 != userInThisPage?.uid}
         
         guard let currentUser = currentUser else { return }
         
@@ -264,9 +279,11 @@ extension OtherProfileViewController {
                 controller.addAction(action)
                 self.present(controller, animated: true)
                 
+                print("封鎖成功")
+                
             case .failure:
                 
-                self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
+                print("封鎖失敗")
                 
             }
         }
@@ -282,7 +299,7 @@ extension OtherProfileViewController {
         self.follwings = []
         
         for followingsUid in followingsUids {
-            self.follwings += allUsers.filter { $0.uid == followingsUid}
+            self.follwings += allUsers.filter{$0.uid == followingsUid}
         }
         
         // Filter Follwers
@@ -291,10 +308,11 @@ extension OtherProfileViewController {
         self.follwers = []
         
         for followerUid in followerUids {
-            self.follwers += allUsers.filter { $0.uid == followerUid}
+            self.follwers += allUsers.filter{$0.uid == followerUid}
         }
         
     }
+    
     
     private func fetchUsers() {
         
@@ -342,7 +360,7 @@ extension OtherProfileViewController {
                 
                 for userNote in self.userInThisPage?.userNotes ?? [] {
                     
-                    self.notes += notes.filter { $0.noteId == userNote }
+                    self.notes += notes.filter{ $0.noteId == userNote }
                     
                 }
                 
@@ -367,7 +385,7 @@ extension OtherProfileViewController {
                 
                 for userGroup in self.userInThisPage?.userGroups ?? [] {
                     
-                    self.groups += groups.filter { $0.groupId == userGroup }
+                    self.groups += groups.filter{ $0.groupId == userGroup }
                     
                 }
                 
@@ -451,17 +469,17 @@ extension OtherProfileViewController: UITableViewDataSource, UITableViewDelegate
         if segmentControl.selectedSegmentIndex == 0 {
             
             let storyboard = UIStoryboard(name: "NotesDetail", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "NoteDetailViewController") as? NoteDetailViewController else { return }
             notes[indexPath.row].clicks.append(FirebaseManager.shared.currentUser?.uid ?? "")
             NoteManager.shared.updateNote(note: notes[indexPath.row], noteId: notes[indexPath.row].noteId) { [weak self] result in
                 switch result {
                 case .success:
                     guard let noteToPass = self?.notes[indexPath.row] else { return }
-                    viewController.note = noteToPass
-                    viewController.comments = noteToPass.comments
-                    viewController.users = self?.users ?? []
-                    viewController.currentUser = self?.currentUser
-                    self?.navigationController?.pushViewController(viewController, animated: true)
+                    vc.note = noteToPass
+                    vc.comments = noteToPass.comments
+                    vc.users = self?.users ?? []
+                    vc.currentUser = self?.currentUser
+                    self?.navigationController?.pushViewController(vc, animated: true)
                     
                 case .failure(let error):
                     print("fetchData.failure: \(error)")
@@ -470,13 +488,14 @@ extension OtherProfileViewController: UITableViewDataSource, UITableViewDelegate
         } else if  segmentControl.selectedSegmentIndex == 1 {
             
             let storyboard = UIStoryboard(name: "GroupDetail", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
-            viewController.group = groups[indexPath.row]
-            viewController.users = users
-            viewController.user = self.currentUser
-            self.navigationController?.pushViewController(viewController, animated: true)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else { return }
+            vc.group = groups[indexPath.row]
+            vc.users = users
+            vc.user = self.currentUser
+            self.navigationController?.pushViewController(vc, animated: true)
         } else {
             return
         }
     }
+    
 }

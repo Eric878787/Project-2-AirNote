@@ -13,6 +13,8 @@ private enum Tab {
     
     case discoverStudyGroups
     
+//    case addContent
+    
     case chatroomLobby
     
     case profile
@@ -26,6 +28,8 @@ private enum Tab {
         case .discoverNotes: controller = UIStoryboard.discoverNotes.instantiateInitialViewController()!
             
         case .discoverStudyGroups: controller = UIStoryboard.discoverStudyGroups.instantiateInitialViewController()!
+            
+//        case.addContent: controller = UIStoryboard.addContent.instantiateInitialViewController()!
             
         case.chatroomLobby: controller = UIStoryboard.chatroomLobby.instantiateInitialViewController()!
             
@@ -57,7 +61,14 @@ private enum Tab {
                 image: UIImage(systemName: "person.2.fill"),
                 selectedImage: nil
             )
-
+            
+//        case .addContent:
+//            return UITabBarItem(
+//                title: "新增內容",
+//                image: UIImage(systemName: "plus"),
+//                selectedImage: nil
+//            )
+            
         case.chatroomLobby:
             return UITabBarItem(
                 title: "聊天室",
@@ -78,10 +89,8 @@ private enum Tab {
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
-    // MARK: Properties
     private let tabs: [Tab] = [.discoverNotes, .discoverStudyGroups, .chatroomLobby, .profile]
     
-    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,21 +100,29 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
     }
     
-    // MARK: Methods
-    func tabBarController(_ tabBarController: UITabBarController,
-                          shouldSelect viewController: UIViewController) -> Bool {
-        if FirebaseManager.shared.currentUser == nil {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        if FirebaseManager.shared.currentUser == nil  {
+            
             if let viewControllers = tabBarController.viewControllers {
                 if viewController == viewControllers[2] || viewController == viewControllers[3] {
-                    guard let viewController = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return false }
-                    viewController.modalPresentationStyle = .overCurrentContext
-                    present(viewController, animated: false, completion: nil)
+                    
+                    guard let vc = UIStoryboard.auth.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return false }
+                    
+                    vc.modalPresentationStyle = .overCurrentContext
+
+                    present(vc, animated: false, completion: nil)
+                    
                     return false
                 }
             }
+            
             return true
+            
         } else {
+            
             return true
+            
         }
     }
     

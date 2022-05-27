@@ -23,13 +23,4 @@ target 'Project 2 AirNote' do
   pod 'GoogleMLKit/TextRecognitionChinese', '3.0.0'
   pod 'Firebase'
 
-    target 'AirNoteTests' do
-        inherit! :search_paths
-        pod 'Firebase'
-        pod 'GoogleMLKit/ImageLabeling', '3.0.0'
-        pod 'GoogleMLKit/TextRecognition', '3.0.0'
-        pod 'GoogleMLKit/TextRecognitionChinese', '3.0.0'
-    end
-
-
 end

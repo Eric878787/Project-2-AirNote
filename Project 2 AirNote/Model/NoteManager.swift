@@ -9,16 +9,17 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
+import UIKit
 
 class NoteManager {
     
     static let shared = NoteManager()
     
-    lazy var dataBase = Firestore.firestore()
+    lazy var db = Firestore.firestore()
     
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
         
-        dataBase.collection("Notes").order(by: "createdTime", descending: true).getDocuments { (querySnapshot, error) in
+        db.collection("Notes").order(by: "createdTime", descending: true).getDocuments { (querySnapshot, error) in
                 
             guard let querySnapshot = querySnapshot else {
                 
@@ -45,7 +46,7 @@ class NoteManager {
     
     func fetchNote(_ noteId: String, completion: @escaping (Result<Note, Error>) -> Void) {
         
-        dataBase.collection("Note").document(noteId).getDocument { (document, error) in
+        db.collection("Note").document(noteId).getDocument { (document, error) in
             
             if let error = error {
                 
@@ -80,7 +81,7 @@ class NoteManager {
     
     func createNote(note: inout Note, completion: @escaping (Result<String, Error>) -> Void) {
         
-        let document = dataBase.collection("Notes").document()
+        let document = db.collection("Notes").document()
         
         guard let uid = FirebaseManager.shared.currentUser?.uid else { return }
         
@@ -103,8 +104,8 @@ class NoteManager {
     }
     
     func updateNote(note: Note, noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let msgRef = dataBase.collection("Notes").document(noteId)
-        let note = note
+        let msgRef = db.collection("Notes").document(noteId)
+        var note = note
         do {
             try msgRef.setData(from: note, encoder: Firestore.Encoder())
             completion(.success("上傳成功"))
@@ -115,7 +116,7 @@ class NoteManager {
     }
     
     func deleteNote(noteId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let msgRef = dataBase.collection("Notes").document(noteId)
+        let msgRef = db.collection("Notes").document(noteId)
         do {
             try msgRef.delete()
             completion(.success("刪除成功"))
@@ -125,6 +126,7 @@ class NoteManager {
         }
     }
     
+    
     func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
         
         let riversRef = Storage.storage().reference().child(UUID().uuidString + ".jpg")
@@ -133,12 +135,12 @@ class NoteManager {
         
         let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
-                completion(.failure(error!))
+                print("upload failed")
                 return
             }
             riversRef.downloadURL { (url, error) in
                 guard let downloadURL = url else {
-                    completion(.failure(error!))
+                    print("download url failed")
                     return
                 }
                 completion(.success(downloadURL))
