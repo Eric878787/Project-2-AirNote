@@ -39,7 +39,6 @@ class ProfileViewController: BaseViewController {
     private (set) var ownedNotes: [Note] = []
     let noteCategories: [NoteCategory] = [.ownedNote, .savedNote]
     
-    
     // Group Data
     private (set) var groups: [Group] = []
     private (set) var savedGroups: [Group] = []
@@ -392,12 +391,12 @@ extension ProfileViewController {
         let group = DispatchGroup()
         var didFetchSuccess: [Bool] = []
         group.enter()
-        fetchNotes() { result in
+        fetchNotes { result in
             didFetchSuccess.append(result)
             group.leave()
         }
         group.enter()
-        fetchGroups() { result in
+        fetchGroups { result in
             didFetchSuccess.append(result)
             group.leave()
         }

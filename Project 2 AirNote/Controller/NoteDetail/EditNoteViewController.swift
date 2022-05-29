@@ -10,68 +10,39 @@ import PhotosUI
 import Kingfisher
 import MLKit
 
-class EditNoteViewController: UIViewController {
-    
-    // MARK: Table View
-    private var addNoteTableView = UITableView(frame: .zero)
+class EditNoteViewController: BaseViewController {
     
     // MARK: Properties
+    private var addNoteTableView = UITableView(frame: .zero)
     var note: Note?
-    
-    // MARK: Cover Image
     private let imagePickerController = UIImagePickerController()
-    
     private var coverImage = UIImage(systemName: "magazine")
-    
-    // MARK: Content Images
     private let multiImagePickerController = UIImagePickerController()
-    
     private var contentImages: [UIImage] = []
     
-    // MARK: Data Manager
-    private var noteManager = NoteManager()
-    
-    // MARK: Loading Animation
-    private var loadingAnimation = LottieAnimation()
-    
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set Up Navigation Item
         navigationItem.title = NavigationItemTitle.editNote.rawValue
-        
-        // Init addNoteTableView
         configureAddNoteTableView()
-        
-        // Image Picker Delegate
         imagePickerController.delegate = self
         multiImagePickerController.delegate = self
-        
-        // Delete Button
         let deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteNote))
         deleteButton.tintColor = .red
         self.navigationItem.rightBarButtonItem = deleteButton
-        
-        // Set Default Message
         setDefaultImage()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
 }
 
 // MARK: Default Image
 extension EditNoteViewController {
-    
-    // Set Default Images
-    
     private func setDefaultImage() {
         guard let note = note else { return }
-        
         for image in note.images {
             let defaultImageView = UIImageView()
             let url = URL(string: image)
@@ -84,48 +55,41 @@ extension EditNoteViewController {
         defaultImageView.kf.setImage(with: url)
         coverImage = defaultImageView.image
     }
+    
 }
 
 // MARK: Delete Note
 extension EditNoteViewController {
     @objc private func deleteNote() {
-        
-        let controller = UIAlertController(title: "是否要刪除筆記", message: "刪除後即無法回復內容", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
+        showAlternativeAlert("是否要刪除筆記", "刪除後即無法回復內容", {
+            LKProgressHUD.show()
             self.confirmDeletion()
-        }
-        confirmAction.setValue(UIColor.red, forKey: "titleTextColor")
-        controller.addAction(confirmAction)
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        controller.addAction(cancelAction)
-        
-        self.present(controller, animated: true, completion: nil)
-        
+        }, {
+            return
+        })
     }
     
     func confirmDeletion() {
-        
-        let controller = UIAlertController(title: "刪除成功", message: "", preferredStyle: .alert)
-        controller.view.tintColor = UIColor.gray
         guard let noteToBeDeleted = note?.noteId else { return }
-        noteManager.deleteNote(noteId: noteToBeDeleted) { result in
+        NoteManager.shared.deleteNote(noteId: noteToBeDeleted) { result in
             switch result {
             case .success:
-                let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
                 DispatchQueue.main.async {
-                    self.loadingAnimation.loadingView.pause()
-                    self.loadingAnimation.loadingView.isHidden = true
-                    cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
-                    controller.addAction(cancelAction)
-                    self.present(controller, animated: true, completion: nil)
+                    LKProgressHUD.dismiss()
+                    self.showBasicConfirmationAlert("刪除成功", nil) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             case.failure:
-                print(result)
+                DispatchQueue.main.async {
+                    LKProgressHUD.dismiss()
+                    self.showBasicConfirmationAlert("刪除失敗", nil) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                }
             }
+            
         }
-        
     }
     
 }
@@ -134,7 +98,6 @@ extension EditNoteViewController {
 extension EditNoteViewController {
     
     func configureAddNoteTableView () {
-        
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddTitleTableViewCell.self), bundle: nil)
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddContentTableViewCell.self), bundle: nil)
         addNoteTableView.registerCellWithNib(identifier: String(describing: AddKeywordsTableViewCell.self), bundle: nil)
@@ -145,14 +108,11 @@ extension EditNoteViewController {
         addNoteTableView.delegate = self
         addNoteTableView.separatorStyle = .none
         addNoteTableView.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(addNoteTableView)
-        
         addNoteTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
         addNoteTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         addNoteTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         addNoteTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
     }
     
 }
@@ -200,49 +160,34 @@ extension EditNoteViewController: UITableViewDataSource, CoverDelegate, SelectIm
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AddPhotosTableViewCell.self), for: indexPath)
             guard let addPhotosCell = cell as? AddPhotosTableViewCell else { return cell }
             addPhotosCell.delegate = self
-            
             addPhotosCell.hideDeleteButton()
-            
             for item in 0...3 {
-                
                 addPhotosCell.bookImageViews[item].image = UIImage(systemName: "text.book.closed")
-                
             }
-            
             for item in 0..<contentImages.count {
-                
                 addPhotosCell.bookImageViews[item].image = contentImages[item]
-                
                 for button in addPhotosCell.deleteButtons where button.tag == item {
                     button.isHidden = false
                 }
-                
             }
             return addPhotosCell
         }
     }
+    
 }
 
 // MARK: Table View Delegate
 extension EditNoteViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //        if indexPath.row == 0 {
-        //            return 100
-        //        } else if indexPath.row == 1 {
-        //            return 300
-        //        } else if indexPath.row == 2 {
-        //            return 165
-        //        } else if indexPath.row == 3{
-        //            return 500
-        //        } else {
-        //            return 600
-        //        }
-        
+//        if indexPath.row == 1 {
+//            return 300
+//        } else if indexPath.row == 4 {
+//            return 600
+//        } else {
+//            return  UITableView.automaticDimension
+//        }
         if indexPath.row == 1 {
             return 300
-        } else if indexPath.row == 4 {
-            return 600
         } else {
             return  UITableView.automaticDimension
         }
@@ -252,9 +197,7 @@ extension EditNoteViewController: UITableViewDelegate {
 extension EditNoteViewController {
     
     private func detectLabels(image: UIImage?, shouldUseCustomModel: Bool) {
-        
         var resultsText = ""
-        
         guard let image = image else { return }
         
         // [START config_label]
@@ -274,7 +217,6 @@ extension EditNoteViewController {
         weak var weakSelf = self
         onDeviceLabeler.process(visionImage) { labels, error in
             guard weakSelf != nil else {
-                print("Self is nil!")
                 return
             }
             guard error == nil, let labels = labels, !labels.isEmpty else {
@@ -286,7 +228,6 @@ extension EditNoteViewController {
                 return "Label: \(label.text), Confidence: \(label.confidence), Index: \(label.index)"
             }.joined(separator: "\n")
             self.note?.keywords.append(resultsText)
-            print("==========\(resultsText)")
             self.detectTextOnDevice(image: image)
             // [END_EXCLUDE]
         }
@@ -296,30 +237,20 @@ extension EditNoteViewController {
     private func detectTextOnDevice(image: UIImage?) {
         
         guard let image = image else { return }
-        
         let options = ChineseTextRecognizerOptions()
-        
         let textRecognizer = TextRecognizer.textRecognizer(options: options)
         
         // Initialize a `VisionImage` object with the given `UIImage`.
         let visionImage = VisionImage(image: image)
         visionImage.orientation = image.imageOrientation
-        
         process(visionImage, with: textRecognizer)
     }
     
     private func process(_ visionImage: VisionImage, with textRecognizer: TextRecognizer?) {
-        
         weak var weakSelf = self
-        
         var resultsText = ""
-        
         textRecognizer?.process(visionImage) { text, error in
-            
             guard weakSelf != nil else {
-                
-                print("Self is nil!")
-                
                 return
             }
             guard error == nil, let text = text else {
@@ -329,7 +260,6 @@ extension EditNoteViewController {
             }
             resultsText += "\(text.text)"
             self.note?.keywords.append(resultsText)
-            print("xxxxxxxxxx\(resultsText)")
             LKProgressHUD.dismiss()
         }
     }
@@ -337,26 +267,22 @@ extension EditNoteViewController {
 }
 
 private enum Constants {
-  static let images = ["image_has_text.jpg"]
-  static let detectionNoResultsMessage = "No results returned."
-  static let failedToDetectObjectsMessage = "Failed to detect objects in image."
+    static let images = ["image_has_text.jpg"]
+    static let detectionNoResultsMessage = "No results returned."
+    static let failedToDetectObjectsMessage = "Failed to detect objects in image."
 }
 
 // MARK: UIIMagePicker Delegate
 extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         if  picker == imagePickerController {
-            
             if let image = info[.editedImage] as? UIImage {
                 coverImage = image
                 LKProgressHUD.show()
                 self.detectLabels(image: coverImage, shouldUseCustomModel: false)
             }
-            
         } else {
-            
             if let image = info[.originalImage] as? UIImage {
                 if self.contentImages.count < 4 {
                     self.contentImages.insert(image, at: 0)
@@ -365,13 +291,9 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
                     self.contentImages.insert(image, at: 0)
                 }
             }
-            
         }
-        
         addNoteTableView.reloadData()
-        
         picker.dismiss(animated: true)
-        
     }
     
     func deleteImage(_ index: Int) {
@@ -386,54 +308,52 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
     }
     
     func buttonDidSelect() {
-        
         let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
-        // 相機
+        // Camera
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePicture()
         }
         cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
-        // 相薄
+        // Album
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbum()
         }
         savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
         
-        // 手繪版
+        // Drawing Pad
         let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
             self.openDrawingPad()
         }
         drawingPadAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(drawingPadAction)
         
-        // 取消
+        // Cancel
         let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
         controller.addAction(cancelAction)
-        
         self.present(controller, animated: true, completion: nil)
         
     }
     
-    /// 開啟相機
+    // Open Camera
     func takePicture() {
         imagePickerController.sourceType = .camera
         imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
-    /// 開啟相簿
+    // Open Album
     func openPhotosAlbum() {
         imagePickerController.sourceType = .savedPhotosAlbum
         imagePickerController.allowsEditing = true
         self.present(imagePickerController, animated: true)
     }
     
-    // 開啟手繪版
+    // Open Drawing Pad
     func openDrawingPad() {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
         guard let viewController = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
@@ -448,41 +368,38 @@ extension EditNoteViewController: UIImagePickerControllerDelegate, UINavigationC
 extension EditNoteViewController: PHPickerViewControllerDelegate{
     
     func selectMultiImages() {
-        
         let controller = UIAlertController(title: "請上傳筆記", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
         
-        // 相機
+        // Camera
         let cameraAction = UIAlertAction(title: "相機", style: .default) { _ in
             self.takePictureForMulti()
         }
         cameraAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(cameraAction)
         
-        // 相薄
+        // Album
         let savedPhotosAlbumAction = UIAlertAction(title: "相簿", style: .default) { _ in
             self.openPhotosAlbumForMulti()
         }
         savedPhotosAlbumAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(savedPhotosAlbumAction)
         
-        // 手繪版
+        // Drawing Pad
         let drawingPadAction = UIAlertAction(title: "手繪板", style: .default) { _ in
             self.openDrawingPadForMulti()
         }
         drawingPadAction.setValue(UIColor.black, forKey: "titleTextColor")
         controller.addAction(drawingPadAction)
         
-        // 取消
+        // Cancel
         let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
         controller.addAction(cancelAction)
-        
         self.present(controller, animated: true, completion: nil)
         
     }
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        
         picker.dismiss(animated: true)
         if results.count != 0 {
             for result in results {
@@ -508,36 +425,27 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
         }
     }
     
-    // 開啟相簿多選
     func openPhotosAlbumForMulti() {
         // MARK: Multi - images Picker
         var configuration = PHPickerConfiguration()
-        
         configuration.filter = .images
-        
         configuration.selectionLimit = 4
-        
         let pHPImagePicker = PHPickerViewController(configuration: configuration)
-        
         pHPImagePicker.delegate = self
-        
         self.present(pHPImagePicker, animated: true)
     }
     
-    // 開啟相機（content photo）
     func takePictureForMulti() {
         multiImagePickerController.sourceType = .camera
         self.present(multiImagePickerController, animated: true)
     }
     
-    // 開啟手繪版
     func openDrawingPadForMulti() {
         let storyBoard = UIStoryboard(name: "DrawingPad", bundle: nil)
         guard let viewController = storyBoard.instantiateViewController(withIdentifier: "DrawingPadViewController") as? DrawingPadViewController else { return }
         self.navigationController?.pushViewController(viewController, animated: true)
         viewController.imageProvider = { [weak self] image in
             if let image = image as? UIImage {
-                // 判斷是否超過4張
                 if self?.contentImages.count ?? 0 < 4 {
                     self?.contentImages.insert(image, at: 0)
                 }  else {
@@ -548,7 +456,6 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
                     self?.addNoteTableView.reloadData()
                 }
             }
-            
         }
     }
     
@@ -556,47 +463,26 @@ extension EditNoteViewController: PHPickerViewControllerDelegate{
 
 extension EditNoteViewController {
     
-    func configureAnimation() {
-        loadingAnimation.loadingView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loadingAnimation.loadingView)
-        loadingAnimation.loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingAnimation.loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    }
-    
     func uploadNote() {
-        
         guard let note = self.note else { return }
-        
         if note.title != "" && note.content != "" && note.category != "" && note.keywords != [] && coverImage != UIImage(systemName: "magazine") && contentImages != [] {
-            
             upload()
-            
         } else {
-            let controller = UIAlertController(title: "請上傳完整資料", message: "", preferredStyle: .alert)
-            controller.view.tintColor = UIColor.gray
-            let cancelAction = UIAlertAction(title: "確認", style: .destructive, handler: nil)
-            controller.addAction(cancelAction)
-            self.present(controller, animated: true, completion: nil)
+            showBasicConfirmationAlert("請上傳完整資料", nil)
         }
     }
     
     func upload() {
-        
         let group = DispatchGroup()
-        let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
-        controller.view.tintColor = UIColor.gray
-        
         group.enter()
-        // Loading Animation
         LKProgressHUD.show()
         guard let image = coverImage else { return }
-        noteManager.uploadPhoto(image: image) { result in
+        NoteManager.shared.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
                 self.note?.cover = "\(url)"
-                print("\(url)")
-            case .failure(let error):
-                print("\(error)")
+            case .failure:
+                return
             }
             group.leave()
         }
@@ -605,7 +491,7 @@ extension EditNoteViewController {
         self.note?.images = []
         for image in images {
             group.enter()
-            noteManager.uploadPhoto(image: image) { result in
+            NoteManager.shared.uploadPhoto(image: image) { result in
                 switch result {
                 case .success(let url):
                     self.note?.images.append("\(url)")
@@ -618,24 +504,24 @@ extension EditNoteViewController {
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            print("123")
             guard let editedNote = self.note else { return }
-            self.noteManager.updateNote(note: editedNote, noteId: editedNote.noteId) { [weak self] result in
+            NoteManager.shared.updateNote(note: editedNote, noteId: editedNote.noteId) { [weak self] result in
                 switch result {
                 case .success:
-                    let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in
-                        self?.navigationController?.popToRootViewController(animated: true)
-                    }
                     DispatchQueue.main.async {
                         LKProgressHUD.dismiss()
-                        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
-                        controller.addAction(cancelAction)
-                        self?.present(controller, animated: true, completion: nil)
+                        self?.showBasicConfirmationAlert("更新成功", nil) {
+                            self?.navigationController?.popToRootViewController(animated: true)
+                        }
                     }
                 case.failure:
-                    print(result)
+                    LKProgressHUD.dismiss()
+                    self?.showBasicConfirmationAlert("更新失敗", "請檢查網路連線") {
+                        self?.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             }
         }
     }
+    
 }
