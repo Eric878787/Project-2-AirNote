@@ -9,28 +9,21 @@ import UIKit
 
 class BlockListViewController: BaseViewController {
     
+    // MARK: Properties
     @IBOutlet weak var blockListTableView: UITableView!
-    
-    // Data Source
     var user: User?
     var users: [User] = []
     var blockList: [User] = []
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         blockListTableView.separatorStyle = .none
-
         blockListTableView.dataSource = self
-        
         blockListTableView.delegate = self
-        
         self.navigationItem.title = "封鎖用戶"
-        
         blockListTableView.registerCellWithNib(identifier: String(describing: BlockListTableViewCell.self), bundle: nil)
-        
         self.tabBarController?.tabBar.isHidden = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,43 +41,26 @@ class BlockListViewController: BaseViewController {
 extension BlockListViewController: BlockListDelegate {
     
     func unblockUser(_ didselect: BlockListTableViewCell) {
-        
         guard let indexPath = self.blockListTableView.indexPath(for: didselect) else { return }
-        
         blockList.remove(at: indexPath.row)
-        
         updateUser()
-        
     }
     
     
     private func updateUser() {
-        
         self.user?.blockUsers = []
-        
         for blockedUser in blockList {
-            
             self.user?.blockUsers.append(blockedUser.uid)
-            
         }
-        
-        guard let  userToBeUpdated =  self.user else { return }
-        
+        guard let userToBeUpdated =  self.user else { return }
         UserManager.shared.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { result in
-            
             switch result {
-                
             case .success:
-                
                 self.blockListTableView.reloadData()
-                
             case .failure:
-                
                 self.showBasicConfirmationAlert("解除封鎖失敗", "請檢查網路連線")
-                
             }
         }
-        
     }
     
 }
@@ -96,7 +72,6 @@ extension BlockListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let blockListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BlockListTableViewCell", for: indexPath)
         guard let cell = blockListTableViewCell as? BlockListTableViewCell else { return blockListTableViewCell }
         let url = URL(string: blockList[indexPath.row].userAvatar)
@@ -104,7 +79,6 @@ extension BlockListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.userAvatar.kf.indicatorType = .activity
         cell.userAvatar.kf.setImage(with: url)
         cell.userName.text = blockList[indexPath.row].userName
-        
         return cell
     }
     
