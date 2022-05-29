@@ -338,7 +338,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="10"/>
                                                 <connections>
-                                                    <action selector="followerTouched:" destination="NH5-8q-8BS" eventType="touchUpInside" id="jtu-UT-95m"/>
+                                                    <action selector="didTouchFollowerButton:" destination="NH5-8q-8BS" eventType="touchUpInside" id="2Zw-4X-Zxa"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -357,7 +357,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="100"/>
                                                 <connections>
-                                                    <action selector="followingToched:" destination="NH5-8q-8BS" eventType="touchUpInside" id="wb4-TC-dJ1"/>
+                                                    <action selector="didTouchFollowingButton:" destination="NH5-8q-8BS" eventType="touchUpInside" id="l1Q-wr-wR9"/>
                                                 </connections>
                                             </button>
                                         </subviews>

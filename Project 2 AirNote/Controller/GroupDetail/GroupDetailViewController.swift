@@ -10,65 +10,39 @@ import Kingfisher
 
 class GroupDetailViewController: BaseViewController {
     
+    // MARK: Properties
     @IBOutlet weak var groupDetailCollectionView: UICollectionView!
-    
     @IBOutlet weak var chatRoomButton: UIButton!
-    
-    // Data
     var group: Group?
     var owner: User?
     var users: [User] = []
     var user: User?
     var userToBeBlocked = ""
-    
-    // Data Manager
-    private var groupManager = GroupManager()
-    private var userManager = UserManager()
-    
-    // DeleteButton
     private var deleteButton = UIBarButtonItem()
     
-    // MARK: Loading Animation
-    private var loadingAnimation = LottieAnimation()
-    
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Register Cell
         registerCell()
-        
-        // CollectionView DataSource & Delegate
         groupDetailCollectionView.dataSource = self
         groupDetailCollectionView.delegate = self
-        
-        // CollectionView Layout
         groupDetailCollectionView.collectionViewLayout = configureLayout()
-        
-        // Config Button
         configButton()
-        
-        // Delete Button
         deleteButton = UIBarButtonItem(image: UIImage(systemName: "clear"), style: .plain, target: self, action: #selector(deleteGroup))
         deleteButton.tintColor = .red
         self.navigationItem.rightBarButtonItem = deleteButton
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //  Delete Button Enable
         if group?.groupOwner == user?.uid {
             self.navigationItem.rightBarButtonItem = deleteButton
         } else {
             self.navigationItem.rightBarButtonItem = nil
         }
-        
-        // Mapping Group Owner
         for user in users where user.uid == group?.groupOwner {
             owner = user
         }
-        
     }
     
 }
@@ -76,60 +50,41 @@ class GroupDetailViewController: BaseViewController {
 extension GroupDetailViewController: TitleSupplementaryViewDelegate {
     
     func didTouchellipsis() {
-        
         userToBeBlocked = group?.groupOwner ?? ""
         openActionList()
-        
     }
     
     @objc private func openActionList() {
-        
         showBlockUserAlert {
             self.blockUser()
         }
-        
     }
     
     private func blockUser() {
         
         guard userToBeBlocked != user?.uid else {
-            
             let controller = UIAlertController(title: "無法封鎖本人帳號", message: nil, preferredStyle: .alert)
             let action = UIAlertAction(title: "確認", style: .default)
             controller.addAction(action)
             self.present(controller, animated: true)
-            
             return
         }
         guard let followers = self.user?.followers else { return }
-        
         guard let followings = self.user?.followings else { return }
-        
         self.user?.followers = followers.filter { $0 != userToBeBlocked}
-        
         self.user?.followings = followings.filter { $0 != userToBeBlocked}
-        
         user?.blockUsers.append(userToBeBlocked)
-        
         guard let currentUser = user else { return }
-        
         UserManager.shared.updateUser(user: currentUser, uid: currentUser.uid) { result in
-            
             switch result {
-                
             case .success:
-                
                 self.showBasicConfirmationAlert("封鎖成功", "確認") {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
-                
             case .failure:
-                
                 self.showBasicConfirmationAlert("封鎖失敗", "請檢查網路連線")
-                
             }
         }
-        
     }
     
 }
@@ -137,11 +92,10 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
 // MARK: Delete Group
 extension GroupDetailViewController {
     @objc private func deleteGroup() {
-        
         let controller = UIAlertController(title: "是否要刪除讀書會", message: "刪除後即無法回復內容", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
             guard let groupToBeDeleted = self.group?.groupId else { return }
-            self.groupManager.deleteGroup(groupId: groupToBeDeleted) { result in
+            GroupManager.shared.deleteGroup(groupId: groupToBeDeleted) { result in
                 switch result {
                 case .success:
                     self.updateUser(groupId: groupToBeDeleted)
@@ -154,7 +108,6 @@ extension GroupDetailViewController {
         controller.addAction(confirmAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(cancelAction)
-        
         self.present(controller, animated: true, completion: nil)
     }
     
@@ -199,7 +152,6 @@ extension GroupDetailViewController: NoteTitleDelegate {
     
     
     func toProfilePage() {
-        
         if owner?.uid != FirebaseManager.shared.currentUser?.uid {
             let storyBoard = UIStoryboard(name: "Profile", bundle: nil)
             guard let viewController =  storyBoard.instantiateViewController(withIdentifier: "OtherProfileViewController") as? OtherProfileViewController else { return }
@@ -216,7 +168,6 @@ extension GroupDetailViewController: NoteTitleDelegate {
 extension GroupDetailViewController: GroupTitleDelegate {
     
     func joinOrQuit(_ selectedCell: GroupTitleCollectionViewCell) {
-        
         if isMember() == true {
             quitGroup()
         } else {
@@ -224,17 +175,13 @@ extension GroupDetailViewController: GroupTitleDelegate {
         }
         
     }
-    
-    // update group & user
+
     private func joinGroup() {
         let controller = UIAlertController(title: "加入成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
-        
         self.user?.joinedGroups.append(self.group?.groupId ?? "")
-        
         guard let userToBeUpdated = self.user else { return }
-        
-        userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { [weak self] result in
+        UserManager.shared.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { [weak self] result in
             switch result {
             case .success:
                 self?.group?.groupMembers.append(self?.user?.uid ?? "")
@@ -246,17 +193,13 @@ extension GroupDetailViewController: GroupTitleDelegate {
         
     }
     
-    // update group & user
     private func quitGroup() {
         let controller = UIAlertController(title: "退出成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
-        
         guard let joinedGroups = self.user?.joinedGroups else { return }
-        self.user?.joinedGroups = joinedGroups.filter { $0 != self.group?.groupId } 
-        
+        self.user?.joinedGroups = joinedGroups.filter { $0 != self.group?.groupId }
         guard let userToBeUpdated = self.user else { return }
-        
-        userManager.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { [weak self] result in
+        UserManager.shared.updateUser(user: userToBeUpdated, uid: userToBeUpdated.uid) { [weak self] result in
             switch result {
             case .success:
                 guard let groupMembers = self?.group?.groupMembers else { return }
@@ -270,7 +213,6 @@ extension GroupDetailViewController: GroupTitleDelegate {
     }
     
     private func updateGroup(_ controller: UIAlertController) {
-        
         guard let groupToBeUpdated = self.group else { return }
         GroupManager.shared.updateGroup(group: groupToBeUpdated, groupId: groupToBeUpdated.groupId) { [weak self] result in
             switch result {
@@ -307,7 +249,6 @@ extension GroupDetailViewController {
         chatRoomButton.clipsToBounds = true
         chatRoomButton.layer.cornerRadius = 10
         chatRoomButton.addTarget(self, action: #selector(toChatRoom), for: .touchUpInside)
-        
         if isMember() == true {
             chatRoomButton.isEnabled = true
             chatRoomButton.setTitleColor(.white, for: .normal)
@@ -366,9 +307,7 @@ extension GroupDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let group = group else { return UICollectionViewCell()}
-        
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCoverCollectionViewCell.reuseIdentifer, for: indexPath)
@@ -442,10 +381,8 @@ extension GroupDetailViewController: UICollectionViewDataSource {
         guard let group = group else { return UICollectionReusableView()}
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath)
                 as? TitleSupplementaryView else { return UICollectionReusableView() }
-        
         header.delegate = self
         header.blockUserDelegate = self
-        
         switch indexPath.section {
         case 0:
             header.avatar.isHidden = false
@@ -502,7 +439,6 @@ extension GroupDetailViewController {
     
     private func configureLayout() -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
             switch sectionIndex {
             case 0:
                 return self.configSection0()
@@ -524,21 +460,15 @@ extension GroupDetailViewController {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
-        
         let groupHeight = NSCollectionLayoutDimension.fractionalWidth(0.8)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: groupHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
         section.boundarySupplementaryItems = [sectionHeader]
-        
         return section
     }
     
@@ -547,53 +477,40 @@ extension GroupDetailViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5)
-        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(80))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-        
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         section.boundarySupplementaryItems = [sectionHeader]
-        
         return section
     }
     
     private func configSection2() -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5)
-        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-        
         return section
     }
     
     private func configSection3() -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(45))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         section.boundarySupplementaryItems = [sectionHeader]
-        
         return section
     }
     
@@ -601,9 +518,7 @@ extension GroupDetailViewController {
 
 // MARK: CollectionView Delegate
 extension GroupDetailViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if indexPath.section == 0 {
             let viewController = ImageViewerViewController()
             viewController.images.append(self.group?.groupCover ?? "")

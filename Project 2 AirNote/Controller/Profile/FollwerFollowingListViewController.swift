@@ -9,27 +9,22 @@ import UIKit
 
 class FollwerFollowingListViewController: UIViewController {
     
+    // MARK: Properties
     @IBOutlet weak var tableView: UITableView!
     
-    // Data Source
+    // Data
     var userList: [User] = []
     var navItemTitle =  ""
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.separatorStyle = .none
-        
         tableView.dataSource = self
-        
         tableView.delegate = self
-        
         self.navigationItem.title = navItemTitle
-        
         tableView.registerCellWithNib(identifier: String(describing: BlockListTableViewCell.self), bundle: nil)
-        
         self.tabBarController?.tabBar.isHidden = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,12 +39,7 @@ class FollwerFollowingListViewController: UIViewController {
     
 }
 
-extension BlockListViewController {
-    
-}
-
 extension FollwerFollowingListViewController: UITableViewDataSource, UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         userList.count
     }
