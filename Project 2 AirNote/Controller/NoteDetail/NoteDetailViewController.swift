@@ -254,7 +254,7 @@ extension NoteDetailViewController: NoteTitleDelegate {
             case .success:
                 self.fetchNote()
                 var userToBeUpdated: User?
-                for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid{
+                for user in self.users where user.uid == FirebaseManager.shared.currentUser?.uid {
                     userToBeUpdated = user
                 }
                 

@@ -19,7 +19,6 @@ class CafeMapViewController: BaseViewController, CLLocationManagerDelegate {
     @IBOutlet weak var cafeMapView: MKMapView!
     @IBOutlet weak var bringToUserLocationButton: UIButton!
     let locationManager = CLLocationManager()
-    private var cafeManager = CafeManager()
     var cafes: [Cafe] = []
     var delegate: CafeAddressDelegate?
     
@@ -64,11 +63,12 @@ extension CafeMapViewController {
     }
     
     func fetchCafesInfo() {
-        cafeManager.fetchCafeInfo { result in
+        CafeManager.shared.fetchCafeInfo { result in
+            
             switch result {
             case .success(let cafes):
                 self.cafes = cafes
-    
+                self.layoutGroup()
             case .failure(let error):
                 self.showBasicConfirmationAlert("讀取錯誤", "\(error)")
             }

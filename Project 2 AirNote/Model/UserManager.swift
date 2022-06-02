@@ -13,6 +13,8 @@ class UserManager {
     
     static let shared = UserManager()
     
+    private init() {}
+    
     lazy var dataBase = Firestore.firestore()
     
     func createUser(_ user: inout User, _ documentId: String, completion: @escaping (Result<String, Error>) -> Void) {

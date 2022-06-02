@@ -44,11 +44,7 @@ class DiscoverStudyGroupsViewController: BaseViewController {
     // Category
     private var selectedCategoryIndex = 0
     var categories: [GeneralCategory] = [.all, .finance, .sport, .language, .communication, .marketing, .lifestyle, .entertainment]
-    
-    // Data Provider
-    private var groupManager = GroupManager()
-    var userManager = UserManager()
-    
+
     // Groups Data
     private var groups: [Group] = []
     private var filterGroups: [Group] = []
@@ -249,7 +245,7 @@ extension DiscoverStudyGroupsViewController {
 extension DiscoverStudyGroupsViewController {
     
     private func fetchGroups() {
-        self.groupManager.fetchGroups { [weak self] result in
+        GroupManager.shared.fetchGroups { [weak self] result in
             switch result {
             case .success( let existingGroup ):
                 self?.groups = existingGroup
@@ -262,7 +258,7 @@ extension DiscoverStudyGroupsViewController {
     }
     
     private func fetchUsers() {
-        self.userManager.fetchUsers { [weak self] result in
+        UserManager.shared.fetchUsers { [weak self] result in
             switch result {
             case .success(let existingUser):
                 self?.users = existingUser

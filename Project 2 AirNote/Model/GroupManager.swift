@@ -17,6 +17,8 @@ class GroupManager {
     
     static let shared = GroupManager()
     
+    private init() {}
+    
     func fetchGroups(completion: @escaping (Result<[Group], Error>) -> Void) {
         
         dataBase.collection("Groups").order(by: "createdTime", descending: true).getDocuments() { (querySnapshot, error) in

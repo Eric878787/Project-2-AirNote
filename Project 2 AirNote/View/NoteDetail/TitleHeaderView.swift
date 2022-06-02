@@ -87,8 +87,9 @@ class TitleSupplementaryView: UICollectionReusableView {
             avatar.heightAnchor.constraint(equalToConstant: 40),
             name.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 5),
             name.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
-            name.trailingAnchor.constraint(equalTo: blockButton.leadingAnchor, constant: 5),
+            name.trailingAnchor.constraint(equalTo: blockButton.leadingAnchor, constant: -5),
             blockButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            blockButton.widthAnchor.constraint(equalTo: avatar.widthAnchor),
             blockButton.centerYAnchor.constraint(equalTo: avatar.centerYAnchor)
             
         ])
