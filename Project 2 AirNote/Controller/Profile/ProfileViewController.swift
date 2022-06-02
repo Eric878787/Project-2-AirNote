@@ -86,9 +86,10 @@ class ProfileViewController: BaseViewController {
             textField.placeholder = "暱稱"
         }
         
-        let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in // ?
+        let action = UIAlertAction(title: "確認", style: .default) { [unowned controller] _ in
             
-            self.currentUser?.userName = controller.textFields?[0].text ?? ""
+            guard let textField = controller.textFields?[0] else { return }
+            self.currentUser?.userName = textField.text != "" ? textField.text! : "新用戶"
             LKProgressHUD.show()
             self.updateUserName()
             

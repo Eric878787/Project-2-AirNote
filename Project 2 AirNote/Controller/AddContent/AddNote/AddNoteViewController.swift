@@ -26,8 +26,6 @@ class AddNoteViewController: BaseViewController {
     private var coverImage = UIImage(systemName: "magazine")
     private let multiImagePickerController = UIImagePickerController()
     private var contentImages: [UIImage] = []
-    private var noteManager = NoteManager()
-    private var loadingAnimation = LottieAnimation()
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -393,14 +391,6 @@ extension AddNoteViewController: PHPickerViewControllerDelegate{
 }
 
 extension AddNoteViewController {
-    
-    func configureAnimation() {
-        loadingAnimation.loadingView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loadingAnimation.loadingView)
-        loadingAnimation.loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingAnimation.loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    }
-    
     func uploadNote() {
         if note.title != "" && note.content != "" && note.category != "" && note.keywords != [] && coverImage != UIImage(systemName: "magazine") && contentImages != [] {
             upload()
@@ -421,7 +411,7 @@ extension AddNoteViewController {
         group.enter()
         LKProgressHUD.show()
         guard let image = coverImage else { return }
-        noteManager.uploadPhoto(image: image) { result in
+        NoteManager.shared.uploadPhoto(image: image) { result in
             switch result {
             case .success(let url):
                 self.note.cover = "\(url)"
@@ -435,7 +425,7 @@ extension AddNoteViewController {
         let images = contentImages
         for image in images {
             group.enter()
-            noteManager.uploadPhoto(image: image) { result in
+            NoteManager.shared.uploadPhoto(image: image) { result in
                 switch result {
                 case .success(let url):
                     self.note.images.append("\(url)")
@@ -448,7 +438,7 @@ extension AddNoteViewController {
         }
         
         group.notify(queue: DispatchQueue.global()) {
-            self.noteManager.createNote(note: &self.note) { result in
+            NoteManager.shared.createNote(note: &self.note) { result in
                 switch result {
                 case .success(let noteId):
                     let cancelAction = UIAlertAction(title: "確認", style: .destructive) { _ in

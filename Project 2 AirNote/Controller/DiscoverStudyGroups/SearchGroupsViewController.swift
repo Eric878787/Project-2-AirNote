@@ -12,8 +12,6 @@ class SearchGroupsViewController: BaseViewController {
     // MARK: Properties
     private var searchGroupsTableView = UITableView(frame: .zero)
     private var searchController = UISearchController()
-    private var groupManager = GroupManager()
-    private var userManager = UserManager()
     private var groups: [Group] = []
     private lazy var filteredgroups: [Group] = []
     private var users: [User] = []
@@ -137,7 +135,7 @@ extension SearchGroupsViewController {
 extension SearchGroupsViewController {
     
     private func fetchGroups() {
-        self.groupManager.fetchGroups { [weak self] result in
+        GroupManager.shared.fetchGroups { [weak self] result in
             switch result {
             case .success(let existingNote):
                 self?.groups = existingNote
@@ -151,7 +149,7 @@ extension SearchGroupsViewController {
     
     private func fetchUsers() {
         
-        self.userManager.fetchUsers { [weak self] result in
+        UserManager.shared.fetchUsers { [weak self] result in
             switch result {
             case .success(let existingUser):
                 self?.users = existingUser

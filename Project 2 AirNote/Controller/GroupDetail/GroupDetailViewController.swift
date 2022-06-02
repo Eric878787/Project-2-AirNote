@@ -61,7 +61,6 @@ extension GroupDetailViewController: TitleSupplementaryViewDelegate {
     }
     
     private func blockUser() {
-        
         guard userToBeBlocked != user?.uid else {
             let controller = UIAlertController(title: "無法封鎖本人帳號", message: nil, preferredStyle: .alert)
             let action = UIAlertAction(title: "確認", style: .default)
