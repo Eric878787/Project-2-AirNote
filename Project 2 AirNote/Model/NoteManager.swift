@@ -14,6 +14,8 @@ class NoteManager {
     
     static let shared = NoteManager()
     
+    private init() {}
+    
     lazy var dataBase = Firestore.firestore()
     
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
@@ -45,19 +47,15 @@ class NoteManager {
     
     func fetchNote(_ noteId: String, completion: @escaping (Result<Note, Error>) -> Void) {
         
-        dataBase.collection("Note").document(noteId).getDocument { (document, error) in
+        dataBase.collection("Notes").document(noteId).getDocument { (document, error) in
             
-            if let error = error {
-                
-                completion(.failure(error))
-                
-            } else {
-                
+            if let document = document, document.exists {
+              
                 var fetchedNote: Note?
                 
                 do {
                     
-                    if let note = try document?.data(as: Note.self, decoder: Firestore.Decoder()) {
+                    if let note = try? document.data(as: Note.self, decoder: Firestore.Decoder()) {
                         
                         fetchedNote = note
                         
@@ -71,6 +69,12 @@ class NoteManager {
                 guard let note = fetchedNote else { return }
                 
                 completion(.success(note))
+                
+            } else {
+                
+                guard let error = error else { return }
+                
+                completion(.failure(error))
                 
             }
             

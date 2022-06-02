@@ -28,7 +28,6 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        contentView.backgroundColor = .systemGray2
         avatarImageView.clipsToBounds = true
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
@@ -46,7 +45,6 @@ class NoteCommentCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        print("1111111")
         commentTouchHandler?()
     }
     

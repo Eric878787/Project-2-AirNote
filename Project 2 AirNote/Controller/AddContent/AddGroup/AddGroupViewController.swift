@@ -429,7 +429,6 @@ extension AddGroupViewController: UploadDelegate, CafeAddressDelegate {
 
 // MARK: Fetch and Update User
 extension AddGroupViewController {
-    
     func fetchAndUpdateUser(groupId: String) {
         let controller = UIAlertController(title: "上傳成功", message: "", preferredStyle: .alert)
         controller.view.tintColor = UIColor.gray
