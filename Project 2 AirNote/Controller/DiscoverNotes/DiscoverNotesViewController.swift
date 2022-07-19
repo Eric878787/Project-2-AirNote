@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import AVFoundation
 
 class DiscoverNotesViewController: BaseViewController {
     
@@ -92,11 +93,15 @@ extension DiscoverNotesViewController {
         NoteManager.shared.fetchNotes { [weak self] result in
             switch result {
             case .success(let existingNotes):
+                self?.notes = existingNotes
+                self?.filteredNotes = existingNotes
+                
                 if let blockedUids = self?.currentUser?.blockUsers {
                     let notesWithoutBlockedContent = existingNotes.filter { !blockedUids.contains($0.authorId) }
                     self?.notes = notesWithoutBlockedContent
                     self?.filteredNotes = notesWithoutBlockedContent
                 }
+                
                 DispatchQueue.main.async {
                     LKProgressHUD.dismiss()
                     self?.notesCollectionView.reloadData()
@@ -116,6 +121,7 @@ extension DiscoverNotesViewController {
                 self?.storeCurrentUser(existingUsers)
                 
                 // Filter Blocked Users
+                self?.users = existingUsers
                 if let blockedUids = self?.currentUser?.blockUsers {
                     let filteredUsers = existingUsers.filter { !blockedUids.contains($0.uid) }
                     self?.users = filteredUsers
